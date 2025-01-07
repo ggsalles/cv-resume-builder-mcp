@@ -29,10 +29,10 @@ namespace WEDLC.Forms
         {
             try
             {
-                var strConexao = "datasource=localhost;uid=gustavo;password=;database=clinica";
+                var strConexao = "datasource=localhost;uid=gustavo;password=Gustavo12345!;database=clinica";
                 var conexao = new MySqlConnection(strConexao);
                 conexao.Open();
-                MessageBox.Show("Conexão Ok!", "Aviso", MessageBoxButtons.OK);
+                MessageBox.Show("Conexão Ok!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
