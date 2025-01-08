@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 
-
 namespace WEDLC.Banco
 {
 
@@ -33,9 +32,10 @@ namespace WEDLC.Banco
             return dt;
         }
 
-        public string critptografiaSenha(string pSenha)
+        public string critptografiaSenha(string pSenha, string pUsuario, out byte[] pCifrado)
         {
             string senha = pSenha;
+            string mensagem = pUsuario;
 
             Rfc2898DeriveBytes chave = new Rfc2898DeriveBytes(senha, sal);
             // criptografa os dados
@@ -54,40 +54,51 @@ namespace WEDLC.Banco
                     {
                         moveBytes(crypto, StreamDestino);
                         textoCifrado = StreamDestino.ToArray();
+                        pCifrado = textoCifrado;
                     }
                 }
             }
 
-            senha = senha + Convert.ToBase64String(textoCifrado) + "    ::  senha => " + pSenha + Environment.NewLine;
+            //senha = senha + Convert.ToBase64String(textoCifrado) + "    ::  senha => " + pSenha + Environment.NewLine;
+
+            senha = senha + Convert.ToBase64String(textoCifrado);
 
             return senha;
         }
 
-        public string descritptografiaSenha(string pSenha)
+        public string descritptografiaSenha(string pSenha, byte[] pCifrado)
         {
 
-            string senha = pSenha;
-
-            Rfc2898DeriveBytes chave = new Rfc2898DeriveBytes(senha, sal);
-            var algoritmo = new RijndaelManaged();
-
-            algoritmo.Key = chave.GetBytes(16);
-            algoritmo.IV = chave.GetBytes(16);
-            using (var StreamFonte = new MemoryStream(textoCifrado))
             {
-                using (MemoryStream StreamDestino = new MemoryStream())
+                if ((pCifrado == null))
                 {
-                    using (CryptoStream crypto = new CryptoStream(StreamFonte, algoritmo.CreateDecryptor(), CryptoStreamMode.Read))
+                    MessageBox.Show("Os dados não estão criptografados!");
+                    return "";
+                }
+
+                string msgDescriptografada = "";
+
+                Rfc2898DeriveBytes chave = new Rfc2898DeriveBytes(pSenha, sal);
+                var algoritmo = new RijndaelManaged();
+
+                algoritmo.Key = chave.GetBytes(16);
+                algoritmo.IV = chave.GetBytes(16);
+                using (var StreamFonte = new MemoryStream(pCifrado))
+                {
+                    using (MemoryStream StreamDestino = new MemoryStream())
                     {
-                        moveBytes(crypto, StreamDestino);
-                        byte[] bytesDescriptografados = StreamDestino.ToArray();
-                        var mensagemDescriptografada = new UnicodeEncoding().GetString(bytesDescriptografados);
-                        senha = mensagemDescriptografada;
+                        using (CryptoStream crypto = new CryptoStream(StreamFonte, algoritmo.CreateDecryptor(), CryptoStreamMode.Read))
+                        {
+                            moveBytes(crypto, StreamDestino);
+                            byte[] bytesDescriptografados = StreamDestino.ToArray();
+                            var mensagemDescriptografada = new UnicodeEncoding().GetString(bytesDescriptografados);
+                            msgDescriptografada = mensagemDescriptografada;
+                        }
                     }
                 }
+                return msgDescriptografada;
             }
 
-            return senha;
         }
 
         private void moveBytes(Stream fonte, Stream destino)

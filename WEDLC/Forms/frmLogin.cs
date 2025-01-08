@@ -33,11 +33,26 @@ namespace WEDLC.Forms
             {
                 DataTable dtAux = new DataTable();
                 clLogin objclLogin = new clLogin();
-                dtAux =  objclLogin.buscaUsuarioLogin(txtUsuario.Text.ToString());
+
+                string pCripto = "";
+                string pDescripto = "";
+                byte[] pCifrado;
+
+                pCripto = objclLogin.critptografiaSenha(txtSenha.Text.ToString(), txtUsuario.Text.ToString(), out pCifrado);
+                pDescripto = objclLogin.descritptografiaSenha(txtSenha.Text.ToString(), pCifrado);
+
+                dtAux = objclLogin.buscaUsuarioLogin(txtUsuario.Text.ToString());
+
                 if (dtAux.Rows.Count == 0)
                 {
                     MessageBox.Show("Usuário não cadastrado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+
+                if (pDescripto != txtUsuario.Text.ToString())
+                {
+                    MessageBox.Show("Senha Inválida!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
                 else
                 {
                     MessageBox.Show("Usuário conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
