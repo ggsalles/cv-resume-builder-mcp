@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WEDLC.Banco;
+
 
 
 namespace WEDLC.Forms
@@ -21,7 +23,7 @@ namespace WEDLC.Forms
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-      
+
 
         }
 
@@ -29,10 +31,17 @@ namespace WEDLC.Forms
         {
             try
             {
-                var strConexao = "datasource=localhost;uid=gustavo;password=Gustavo12345!;database=clinica";
-                var conexao = new MySqlConnection(strConexao);
-                conexao.Open();
-                MessageBox.Show("Conexão Ok!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DataTable dtAux = new DataTable();
+                clLogin objclLogin = new clLogin();
+                dtAux =  objclLogin.buscaUsuarioLogin(txtUsuario.Text.ToString());
+                if (dtAux.Rows.Count == 0)
+                {
+                    MessageBox.Show("Usuário não cadastrado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Usuário conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
