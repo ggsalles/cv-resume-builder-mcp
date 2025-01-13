@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WEDLC.Banco;
 
-
-
 namespace WEDLC.Forms
 {
     public partial class frmLogin : Form
@@ -43,9 +41,28 @@ namespace WEDLC.Forms
 
                 dtAux = objclLogin.buscaUsuarioLogin(txtUsuario.Text.ToString());
 
+                // Se não econtrou ninguém...
                 if (dtAux.Rows.Count == 0)
                 {
                     MessageBox.Show("Usuário não cadastrado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                // Se encontrou e for troca de senha...
+                if (dtAux.Rows.Count == 1 && dtAux.Rows[0]["nome"].ToString() == txtUsuario.Text.ToString() && dtAux.Rows[0]["trocasenha"].ToString() == "1")
+                {
+
+                    objclLogin.Nome = txtUsuario.Text.ToString();
+                    objclLogin.Senha = txtSenha.Text.ToString();
+
+                    // Deixa o form de senha invisivél
+                    this.Hide();
+
+                    // Cria um objeto para o form de troca de senhas abrir
+                    frmTrocaSenha objTrocaSenha = new frmTrocaSenha(objclLogin);
+                    //objTrocaSenha.objCllogin = objclLogin;
+                    //Abre o form de senha modal
+                    objTrocaSenha.ShowDialog();
+
                 }
 
                 if (pDescripto != txtUsuario.Text.ToString())
@@ -55,7 +72,7 @@ namespace WEDLC.Forms
 
                 else
                 {
-                    MessageBox.Show("Usuário conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Usuário " + txtUsuario.Text.ToString() +  "conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)

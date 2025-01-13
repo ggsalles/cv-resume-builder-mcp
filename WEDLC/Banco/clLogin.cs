@@ -16,11 +16,26 @@ namespace WEDLC.Banco
         private string mensagem = "";
         private byte[] textoCifrado;
 
+        private string nome; // field
+        private string senha; // field
+        private string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["P_WEDLC"].ConnectionString;
+
+        public string Nome   // property
+        {
+            get { return nome; }   // get method
+            set { nome = value; }  // set method
+        }
+
+           public string Senha   // property
+        {
+            get { return senha; }   // get method
+            set { senha = value; }  // set method
+        }
+
         public DataTable buscaUsuarioLogin(string pNome)
 
         {
-            var strConexao = System.Configuration.ConfigurationManager.ConnectionStrings["P_WEDLC"].ConnectionString;
-            var conexao = new MySqlConnection(strConexao);
+            var conexao = new MySqlConnection(stringConexao);
             conexao.Open();
             MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_login", conexao);
             sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
@@ -32,10 +47,10 @@ namespace WEDLC.Banco
             return dt;
         }
 
-        public string critptografiaSenha(string pSenha, string pUsuario, out byte[] pCifrado)
+        public string critptografiaSenha(string pSenha, string pNome, out byte[] pCifrado)
         {
             string senha = pSenha;
-            string mensagem = pUsuario;
+            string mensagem = pNome;
 
             Rfc2898DeriveBytes chave = new Rfc2898DeriveBytes(senha, sal);
             // criptografa os dados
@@ -109,6 +124,37 @@ namespace WEDLC.Banco
             {
                 destino.Write(bytes, 0, contador);
                 contador = fonte.Read(bytes, 0, bytes.Length - 1);
+            }
+        }
+
+        public bool incluiLogin()
+        {
+            var conexao = new MySqlConnection(stringConexao);
+
+            conexao.Open();
+
+            MySqlParameter[] pParam = new MySqlParameter[2];
+            MySqlCommand command = new MySqlCommand();
+
+            pParam[0] = new MySqlParameter("pNome", MySqlDbType.VarChar);
+            pParam[0].Value = nome;
+
+            pParam[1] = new MySqlParameter("pPassword", MySqlDbType.VarChar);
+            pParam[1].Value = senha;
+
+            command.Connection = conexao;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "pr_trocasenha";
+            command.Parameters.AddRange(pParam);
+
+            if (command.ExecuteNonQuery() == 1)
+
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

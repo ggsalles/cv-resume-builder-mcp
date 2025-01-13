@@ -1,6 +1,6 @@
 ﻿namespace WEDLC.Forms
 {
-    partial class frmLogin
+    partial class frmTrocaSenha
     {
         /// <summary>
         /// Required designer variable.
@@ -28,46 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnSair = new System.Windows.Forms.Button();
             this.grpLogin = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.lblUsuario = new System.Windows.Forms.Label();
+            this.lblNovaSenha = new System.Windows.Forms.Label();
             this.txtSenha = new System.Windows.Forms.TextBox();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtNovaSenha = new System.Windows.Forms.TextBox();
+            this.btnSair = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
             this.grpLogin.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnOk
-            // 
-            this.btnOk.Location = new System.Drawing.Point(13, 124);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // btnSair
-            // 
-            this.btnSair.Location = new System.Drawing.Point(156, 124);
-            this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(75, 23);
-            this.btnSair.TabIndex = 1;
-            this.btnSair.Text = "Sair";
-            this.btnSair.UseVisualStyleBackColor = true;
-            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
             // grpLogin
             // 
             this.grpLogin.Controls.Add(this.label2);
-            this.grpLogin.Controls.Add(this.lblUsuario);
+            this.grpLogin.Controls.Add(this.lblNovaSenha);
             this.grpLogin.Controls.Add(this.txtSenha);
-            this.grpLogin.Controls.Add(this.txtUsuario);
-            this.grpLogin.Location = new System.Drawing.Point(13, 13);
+            this.grpLogin.Controls.Add(this.txtNovaSenha);
+            this.grpLogin.Location = new System.Drawing.Point(12, 12);
             this.grpLogin.Name = "grpLogin";
             this.grpLogin.Size = new System.Drawing.Size(218, 105);
-            this.grpLogin.TabIndex = 2;
+            this.grpLogin.TabIndex = 5;
             this.grpLogin.TabStop = false;
             // 
             // label2
@@ -79,14 +59,14 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Senha";
             // 
-            // lblUsuario
+            // lblNovaSenha
             // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(11, 24);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(43, 13);
-            this.lblUsuario.TabIndex = 2;
-            this.lblUsuario.Text = "Usuário";
+            this.lblNovaSenha.AutoSize = true;
+            this.lblNovaSenha.Location = new System.Drawing.Point(11, 24);
+            this.lblNovaSenha.Name = "lblNovaSenha";
+            this.lblNovaSenha.Size = new System.Drawing.Size(67, 13);
+            this.lblNovaSenha.TabIndex = 2;
+            this.lblNovaSenha.Text = "Nova Senha";
             // 
             // txtSenha
             // 
@@ -96,29 +76,48 @@
             this.txtSenha.Size = new System.Drawing.Size(115, 20);
             this.txtSenha.TabIndex = 1;
             // 
-            // txtUsuario
+            // txtNovaSenha
             // 
-            this.txtUsuario.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtUsuario.Location = new System.Drawing.Point(92, 23);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(115, 20);
-            this.txtUsuario.TabIndex = 0;
+            this.txtNovaSenha.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtNovaSenha.Location = new System.Drawing.Point(92, 23);
+            this.txtNovaSenha.Name = "txtNovaSenha";
+            this.txtNovaSenha.Size = new System.Drawing.Size(115, 20);
+            this.txtNovaSenha.TabIndex = 0;
             // 
-            // frmLogin
+            // btnSair
+            // 
+            this.btnSair.Location = new System.Drawing.Point(155, 123);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Size = new System.Drawing.Size(75, 23);
+            this.btnSair.TabIndex = 4;
+            this.btnSair.Text = "Sair";
+            this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            // 
+            // btnOk
+            // 
+            this.btnOk.Location = new System.Drawing.Point(12, 123);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 3;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
+            // frmTrocaSenha
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(243, 162);
+            this.ClientSize = new System.Drawing.Size(242, 156);
             this.ControlBox = false;
             this.Controls.Add(this.grpLogin);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnOk);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmLogin";
+            this.Name = "frmTrocaSenha";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Login";
-            this.Load += new System.EventHandler(this.frmLogin_Load);
+            this.Text = "Troca Senha";
             this.grpLogin.ResumeLayout(false);
             this.grpLogin.PerformLayout();
             this.ResumeLayout(false);
@@ -127,12 +126,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.GroupBox grpLogin;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lblUsuario;
+        private System.Windows.Forms.Label lblNovaSenha;
         private System.Windows.Forms.TextBox txtSenha;
-        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.TextBox txtNovaSenha;
+        private System.Windows.Forms.Button btnSair;
+        private System.Windows.Forms.Button btnOk;
     }
 }
