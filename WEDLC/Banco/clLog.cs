@@ -67,10 +67,12 @@ namespace WEDLC.Banco
             if (command.ExecuteNonQuery() == 1)
 
             {
+                conexao.Close();
                 return true;
             }
             else
             {
+                conexao.Close();
                 return false;
             }
         }

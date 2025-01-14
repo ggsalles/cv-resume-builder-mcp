@@ -82,7 +82,9 @@
             // 
             // txtSenha
             // 
+            this.txtSenha.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.txtSenha.Location = new System.Drawing.Point(168, 60);
+            this.txtSenha.MaxLength = 6;
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(115, 20);
@@ -92,6 +94,7 @@
             // 
             this.txtNovaSenha.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
             this.txtNovaSenha.Location = new System.Drawing.Point(168, 19);
+            this.txtNovaSenha.MaxLength = 6;
             this.txtNovaSenha.Name = "txtNovaSenha";
             this.txtNovaSenha.PasswordChar = '*';
             this.txtNovaSenha.Size = new System.Drawing.Size(115, 20);
@@ -102,7 +105,7 @@
             this.btnSair.Location = new System.Drawing.Point(240, 110);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(75, 23);
-            this.btnSair.TabIndex = 4;
+            this.btnSair.TabIndex = 3;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
@@ -112,7 +115,7 @@
             this.btnOk.Location = new System.Drawing.Point(12, 110);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 3;
+            this.btnOk.TabIndex = 2;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -132,6 +135,7 @@
             this.Name = "frmTrocaSenha";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Troca Senha";
+            this.Shown += new System.EventHandler(this.frmTrocaSenha_Shown);
             this.grpLogin.ResumeLayout(false);
             this.grpLogin.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTrocaSenha)).EndInit();

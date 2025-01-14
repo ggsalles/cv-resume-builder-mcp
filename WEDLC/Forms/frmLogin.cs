@@ -19,11 +19,6 @@ namespace WEDLC.Forms
             InitializeComponent();
         }
 
-        private void frmLogin_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnOk_Click(object sender, EventArgs e)
         {
             try
@@ -62,6 +57,7 @@ namespace WEDLC.Forms
 
                     MessageBox.Show("Você será redirecionado para o formulário de troca de senha.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                    objclLogin.Id = Int16.Parse(dtAux.Rows[0]["id"].ToString());
                     objclLogin.Nome = txtUsuario.Text.ToString();
                     objclLogin.Senha = txtSenha.Text.ToString();
 

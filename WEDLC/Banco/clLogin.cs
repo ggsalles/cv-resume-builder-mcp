@@ -15,9 +15,16 @@ namespace WEDLC.Banco
         private byte[] sal = new byte[] { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1, 0x0 };
         private byte[] textoCifrado;
 
+        private int _id; // field
         private string _nome; // field
         private string _senha; // field
         public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["P_WEDLC"].ConnectionString;
+
+        public int Id   // property
+        {
+            get { return _id; }   // get method
+            set { _id = value; }  // set method
+        }
 
         public string Nome   // property
         {
@@ -149,10 +156,12 @@ namespace WEDLC.Banco
             if (command.ExecuteNonQuery() == 1)
 
             {
+                conexao.Close();
                 return true;
             }
             else
             {
+                conexao.Close();
                 return false;
             }
         }

@@ -53,12 +53,12 @@ namespace WEDLC.Forms
                     objCllogin.Senha = pCripto;
                     var retorno = objCllogin.incluiLogin();
 
-                    MessageBox.Show("A troca de senha foi efetuada com sucesso. Voltando para a tela de login.    ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("A troca da senha foi efetuada com sucesso. Voltando para a tela de login.    ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // GRAVA LOG
                     clLog objclLog = new clLog();
                     objclLog.Idlogdescricao = 2; // descrição LOGIN na tabela LOGDESCRICAO
-                    objclLog.Idusuario = Int32.Parse(dtAux.Rows[0]["id"].ToString());
+                    objclLog.Idusuario = Int32.Parse(objCllogin.Id.ToString());
                     objclLog.Descerrovs = "";
 
                     if (objclLog.incluiLogin() == false)
@@ -98,6 +98,11 @@ namespace WEDLC.Forms
                 return false;
             }
             return true;
+        }
+
+        private void frmTrocaSenha_Shown(object sender, EventArgs e)
+        {
+            txtNovaSenha.Focus();
         }
     }
 }
