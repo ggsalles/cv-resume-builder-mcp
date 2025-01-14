@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.grpLogin = new System.Windows.Forms.GroupBox();
+            this.picTrocaSenha = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblNovaSenha = new System.Windows.Forms.Label();
             this.txtSenha = new System.Windows.Forms.TextBox();
@@ -36,24 +37,35 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.grpLogin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTrocaSenha)).BeginInit();
             this.SuspendLayout();
             // 
             // grpLogin
             // 
+            this.grpLogin.Controls.Add(this.picTrocaSenha);
             this.grpLogin.Controls.Add(this.label2);
             this.grpLogin.Controls.Add(this.lblNovaSenha);
             this.grpLogin.Controls.Add(this.txtSenha);
             this.grpLogin.Controls.Add(this.txtNovaSenha);
             this.grpLogin.Location = new System.Drawing.Point(12, 12);
             this.grpLogin.Name = "grpLogin";
-            this.grpLogin.Size = new System.Drawing.Size(218, 105);
+            this.grpLogin.Size = new System.Drawing.Size(303, 92);
             this.grpLogin.TabIndex = 5;
             this.grpLogin.TabStop = false;
+            // 
+            // picTrocaSenha
+            // 
+            this.picTrocaSenha.Image = global::WEDLC.Properties.Resources.trocasenha;
+            this.picTrocaSenha.Location = new System.Drawing.Point(6, 16);
+            this.picTrocaSenha.Name = "picTrocaSenha";
+            this.picTrocaSenha.Size = new System.Drawing.Size(64, 60);
+            this.picTrocaSenha.TabIndex = 5;
+            this.picTrocaSenha.TabStop = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 67);
+            this.label2.Location = new System.Drawing.Point(87, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 3;
@@ -62,7 +74,7 @@
             // lblNovaSenha
             // 
             this.lblNovaSenha.AutoSize = true;
-            this.lblNovaSenha.Location = new System.Drawing.Point(11, 24);
+            this.lblNovaSenha.Location = new System.Drawing.Point(87, 20);
             this.lblNovaSenha.Name = "lblNovaSenha";
             this.lblNovaSenha.Size = new System.Drawing.Size(67, 13);
             this.lblNovaSenha.TabIndex = 2;
@@ -70,7 +82,7 @@
             // 
             // txtSenha
             // 
-            this.txtSenha.Location = new System.Drawing.Point(92, 64);
+            this.txtSenha.Location = new System.Drawing.Point(168, 60);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(115, 20);
@@ -79,14 +91,15 @@
             // txtNovaSenha
             // 
             this.txtNovaSenha.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtNovaSenha.Location = new System.Drawing.Point(92, 23);
+            this.txtNovaSenha.Location = new System.Drawing.Point(168, 19);
             this.txtNovaSenha.Name = "txtNovaSenha";
+            this.txtNovaSenha.PasswordChar = '*';
             this.txtNovaSenha.Size = new System.Drawing.Size(115, 20);
             this.txtNovaSenha.TabIndex = 0;
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(155, 123);
+            this.btnSair.Location = new System.Drawing.Point(240, 110);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(75, 23);
             this.btnSair.TabIndex = 4;
@@ -96,7 +109,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(12, 123);
+            this.btnOk.Location = new System.Drawing.Point(12, 110);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 3;
@@ -108,11 +121,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(242, 156);
+            this.ClientSize = new System.Drawing.Size(327, 143);
             this.ControlBox = false;
             this.Controls.Add(this.grpLogin);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnOk);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmTrocaSenha";
@@ -120,6 +134,7 @@
             this.Text = "Troca Senha";
             this.grpLogin.ResumeLayout(false);
             this.grpLogin.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTrocaSenha)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -133,5 +148,6 @@
         private System.Windows.Forms.TextBox txtNovaSenha;
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.PictureBox picTrocaSenha;
     }
 }

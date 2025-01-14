@@ -21,11 +21,11 @@ namespace WEDLC.Forms
             this.objCllogin = objCllogin;
         }
 
-  
+
         private void btnSair_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Atenção. O processo de troca de senha não foi efetuado. Redirecionado o sistema para a tela de login.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            Sair();
+            Close();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace WEDLC.Forms
                 {
 
                     DataTable dtAux = new DataTable();
-               
+
                     string pCripto = "";
                     byte[] pCifrado;
 
@@ -53,13 +53,36 @@ namespace WEDLC.Forms
                     objCllogin.Senha = pCripto;
                     var retorno = objCllogin.incluiLogin();
 
-                    MessageBox.Show("Troca de senha efetuado com sucesso. Voltando para a tela de login.    ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Sair();
+                    MessageBox.Show("A troca de senha foi efetuada com sucesso. Voltando para a tela de login.    ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // GRAVA LOG
+                    clLog objclLog = new clLog();
+                    objclLog.Idlogdescricao = 2; // descrição LOGIN na tabela LOGDESCRICAO
+                    objclLog.Idusuario = Int32.Parse(dtAux.Rows[0]["id"].ToString());
+                    objclLog.Descerrovs = "";
+
+                    if (objclLog.incluiLogin() == false)
+                    {
+                        MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    Close();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+
+                // GRAVA LOG
+                clLog objclLog = new clLog();
+                objclLog.Idlogdescricao = 3; // descrição GENÉRICO na tabela LOGDESCRICAO
+                objclLog.Idusuario = 9999;
+                objclLog.Descerrovs = ex.Message.ToString();
+
+                if (objclLog.incluiLogin() == false)
+                {
+                    MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
         }
@@ -75,13 +98,6 @@ namespace WEDLC.Forms
                 return false;
             }
             return true;
-        }
-
-        private void Sair()
-        {
-            frmLogin objLogin = new frmLogin();
-            objLogin.ShowDialog();
-            Close();
         }
     }
 }

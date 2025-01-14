@@ -13,23 +13,22 @@ namespace WEDLC.Banco
     {
 
         private byte[] sal = new byte[] { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1, 0x0 };
-        private string mensagem = "";
         private byte[] textoCifrado;
 
-        private string nome; // field
-        private string senha; // field
-        private string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["P_WEDLC"].ConnectionString;
+        private string _nome; // field
+        private string _senha; // field
+        public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["P_WEDLC"].ConnectionString;
 
         public string Nome   // property
         {
-            get { return nome; }   // get method
-            set { nome = value; }  // set method
+            get { return _nome; }   // get method
+            set { _nome = value; }  // set method
         }
 
            public string Senha   // property
         {
-            get { return senha; }   // get method
-            set { senha = value; }  // set method
+            get { return _senha; }   // get method
+            set { _senha = value; }  // set method
         }
 
         public DataTable buscaUsuarioLogin(string pNome)
@@ -76,7 +75,7 @@ namespace WEDLC.Banco
 
             //senha = senha + Convert.ToBase64String(textoCifrado) + "    ::  senha => " + pSenha + Environment.NewLine;
 
-            senha = senha + Convert.ToBase64String(textoCifrado);
+            senha = Convert.ToBase64String(textoCifrado);
 
             return senha;
         }
@@ -137,10 +136,10 @@ namespace WEDLC.Banco
             MySqlCommand command = new MySqlCommand();
 
             pParam[0] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-            pParam[0].Value = nome;
+            pParam[0].Value = _nome;
 
             pParam[1] = new MySqlParameter("pPassword", MySqlDbType.VarChar);
-            pParam[1].Value = senha;
+            pParam[1].Value = _senha;
 
             command.Connection = conexao;
             command.CommandType = CommandType.StoredProcedure;

@@ -22,22 +22,29 @@ namespace WEDLC.Forms
         private void frmLogin_Load(object sender, EventArgs e)
         {
 
-
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             try
             {
+
+                if (validaDados() == false)
+                {
+                    return;
+                }
+
                 DataTable dtAux = new DataTable();
                 clLogin objclLogin = new clLogin();
+                clLog objclLog = new clLog();
 
                 string pCripto = "";
-                string pDescripto = "";
                 byte[] pCifrado;
 
+                // Rotina que critpografa a senha
                 pCripto = objclLogin.critptografiaSenha(txtSenha.Text.ToString(), txtUsuario.Text.ToString(), out pCifrado);
-                pDescripto = objclLogin.descritptografiaSenha(txtSenha.Text.ToString(), pCifrado);
+
+                //pDescripto = objclLogin.descritptografiaSenha(txtSenha.Text.ToString(), pCifrado);
 
                 dtAux = objclLogin.buscaUsuarioLogin(txtUsuario.Text.ToString());
 
@@ -45,45 +52,89 @@ namespace WEDLC.Forms
                 if (dtAux.Rows.Count == 0)
                 {
                     MessageBox.Show("Usuário não cadastrado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dtAux.Dispose();
+                    return;
                 }
 
                 // Se encontrou e for troca de senha...
                 if (dtAux.Rows.Count == 1 && dtAux.Rows[0]["nome"].ToString() == txtUsuario.Text.ToString() && dtAux.Rows[0]["trocasenha"].ToString() == "1")
                 {
 
+                    MessageBox.Show("Você será redirecionado para o formulário de troca de senha.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
                     objclLogin.Nome = txtUsuario.Text.ToString();
                     objclLogin.Senha = txtSenha.Text.ToString();
 
-                    // Deixa o form de senha invisivél
-                    this.Hide();
+                    // Deixa o form de senha invisivel
+                    this.Visible = false;
 
                     // Cria um objeto para o form de troca de senhas abrir
                     frmTrocaSenha objTrocaSenha = new frmTrocaSenha(objclLogin);
-                    //objTrocaSenha.objCllogin = objclLogin;
+
                     //Abre o form de senha modal
                     objTrocaSenha.ShowDialog();
 
+                    // Deixa o form da senha visivel novamente
+                    this.Visible = true;
+
+                    txtSenha.Text = "";
+
+                    return;
+
                 }
 
-                if (pDescripto != txtUsuario.Text.ToString())
+                if (pCripto != dtAux.Rows[0]["password"].ToString())
                 {
                     MessageBox.Show("Senha Inválida!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dtAux.Dispose();
+                    return;
                 }
 
                 else
                 {
-                    MessageBox.Show("Usuário " + txtUsuario.Text.ToString() +  "conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Usuário " + txtUsuario.Text.ToString().ToUpper() + " conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // GRAVA LOG
+                    objclLog.Idlogdescricao = 1; // descrição LOGIN na tabela LOGDESCRICAO
+                    objclLog.Idusuario = Int32.Parse(dtAux.Rows[0]["id"].ToString());
+                    objclLog.Descerrovs = "";
+
+                    if (objclLog.incluiLogin() == false)
+                    {
+                        MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
 
+                // GRAVA LOG
+                clLog objclLog = new clLog();
+                objclLog.Idlogdescricao = 3; // descrição GENÉRICO na tabela LOGDESCRICAO
+                objclLog.Idusuario = 9999;
+                objclLog.Descerrovs = ex.Message.ToString();
+
+                if (objclLog.incluiLogin() == false)
+                {
+                    MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         private void btnSair_Click(object sender, EventArgs e)
         {
-            Close();
+            this.Close();
+        }
+
+        private bool validaDados()
+        {
+            if (txtUsuario.Text.ToString().Length == 0 || txtSenha.Text.ToString().Length == 0)
+            {
+                MessageBox.Show("O preenchimento dos campos usuário e senha são obrigatórios.", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
         }
     }
 

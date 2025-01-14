@@ -31,11 +31,13 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.grpLogin = new System.Windows.Forms.GroupBox();
+            this.picLogin = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.grpLogin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogin)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOk
@@ -50,7 +52,7 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(156, 124);
+            this.btnSair.Location = new System.Drawing.Point(239, 127);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(75, 23);
             this.btnSair.TabIndex = 1;
@@ -60,20 +62,30 @@
             // 
             // grpLogin
             // 
+            this.grpLogin.Controls.Add(this.picLogin);
             this.grpLogin.Controls.Add(this.label2);
             this.grpLogin.Controls.Add(this.lblUsuario);
             this.grpLogin.Controls.Add(this.txtSenha);
             this.grpLogin.Controls.Add(this.txtUsuario);
             this.grpLogin.Location = new System.Drawing.Point(13, 13);
             this.grpLogin.Name = "grpLogin";
-            this.grpLogin.Size = new System.Drawing.Size(218, 105);
+            this.grpLogin.Size = new System.Drawing.Size(301, 105);
             this.grpLogin.TabIndex = 2;
             this.grpLogin.TabStop = false;
+            // 
+            // picLogin
+            // 
+            this.picLogin.Image = global::WEDLC.Properties.Resources.login;
+            this.picLogin.Location = new System.Drawing.Point(11, 19);
+            this.picLogin.Name = "picLogin";
+            this.picLogin.Size = new System.Drawing.Size(64, 60);
+            this.picLogin.TabIndex = 4;
+            this.picLogin.TabStop = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 67);
+            this.label2.Location = new System.Drawing.Point(96, 66);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 3;
@@ -82,7 +94,7 @@
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(11, 24);
+            this.lblUsuario.Location = new System.Drawing.Point(96, 23);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(43, 13);
             this.lblUsuario.TabIndex = 2;
@@ -90,7 +102,8 @@
             // 
             // txtSenha
             // 
-            this.txtSenha.Location = new System.Drawing.Point(92, 64);
+            this.txtSenha.Location = new System.Drawing.Point(177, 63);
+            this.txtSenha.MaxLength = 6;
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(115, 20);
@@ -99,7 +112,8 @@
             // txtUsuario
             // 
             this.txtUsuario.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtUsuario.Location = new System.Drawing.Point(92, 23);
+            this.txtUsuario.Location = new System.Drawing.Point(177, 22);
+            this.txtUsuario.MaxLength = 20;
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(115, 20);
             this.txtUsuario.TabIndex = 0;
@@ -108,11 +122,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(243, 162);
+            this.ClientSize = new System.Drawing.Size(326, 158);
             this.ControlBox = false;
             this.Controls.Add(this.grpLogin);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnOk);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLogin";
@@ -121,6 +136,7 @@
             this.Load += new System.EventHandler(this.frmLogin_Load);
             this.grpLogin.ResumeLayout(false);
             this.grpLogin.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogin)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -134,5 +150,6 @@
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.PictureBox picLogin;
     }
 }
