@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grpLogin = new System.Windows.Forms.GroupBox();
             this.picTrocaSenha = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,6 +37,7 @@
             this.txtNovaSenha = new System.Windows.Forms.TextBox();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.grpLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTrocaSenha)).BeginInit();
             this.SuspendLayout();
@@ -89,6 +91,7 @@
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(115, 20);
             this.txtSenha.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtSenha, "Repita a mesma senha informada do campo nova senha");
             // 
             // txtNovaSenha
             // 
@@ -99,6 +102,7 @@
             this.txtNovaSenha.PasswordChar = '*';
             this.txtNovaSenha.Size = new System.Drawing.Size(115, 20);
             this.txtNovaSenha.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtNovaSenha, "Informe a nova senha com 6 dígitos");
             // 
             // btnSair
             // 
@@ -153,5 +157,6 @@
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.PictureBox picTrocaSenha;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

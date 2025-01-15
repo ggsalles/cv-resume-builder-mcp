@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.grpLogin = new System.Windows.Forms.GroupBox();
@@ -36,6 +37,7 @@
             this.lblUsuario = new System.Windows.Forms.Label();
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.grpLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogin)).BeginInit();
             this.SuspendLayout();
@@ -108,6 +110,7 @@
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(115, 20);
             this.txtSenha.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtSenha, "Informe a senha de 6 dígitos");
             // 
             // txtUsuario
             // 
@@ -117,6 +120,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(115, 20);
             this.txtUsuario.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtUsuario, "Informe o nome do usuário");
             // 
             // frmLogin
             // 
@@ -150,5 +154,6 @@
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.PictureBox picLogin;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
