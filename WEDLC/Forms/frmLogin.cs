@@ -99,6 +99,8 @@ namespace WEDLC.Forms
                     {
                         MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
+                    Close();
                 }
             }
             catch (Exception ex)

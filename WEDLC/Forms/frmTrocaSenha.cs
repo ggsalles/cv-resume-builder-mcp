@@ -90,11 +90,19 @@ namespace WEDLC.Forms
         private Boolean validacampos(string novasenha, string senha)
 
         {
+            if (txtNovaSenha.Text.ToString().Length == 0 || txtSenha.Text.ToString().Length == 0)
+            {
+                MessageBox.Show("Os campos Nova Senha e Senha devem ser preenchidos.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtNovaSenha.Focus();
+                return false;
+            }
+
             if (novasenha != senha)
             {
-                MessageBox.Show("As senhas não são iguais. Por favor, informe-as novamente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("As senhas não são iguais. Por favor, informe-as novamente.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtNovaSenha.Text = "";
                 txtSenha.Text = "";
+                txtNovaSenha.Focus();
                 return false;
             }
             return true;
