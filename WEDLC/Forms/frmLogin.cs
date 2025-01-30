@@ -85,7 +85,6 @@ namespace WEDLC.Forms
                     dtAux.Dispose();
                     return;
                 }
-
                 else
                 {
                     MessageBox.Show("Usuário " + txtUsuario.Text.ToString().ToUpper() + " conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
