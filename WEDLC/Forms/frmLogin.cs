@@ -97,6 +97,18 @@ namespace WEDLC.Forms
                     if (objclLog.incluiLogin() == false)
                     {
                         MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                    else
+                    {
+                        // Cria um objeto para o form principal abrir
+                        frmPrincipal objPrincipal = new frmPrincipal();
+
+                        //Abre o form principal
+                        objPrincipal.ShowDialog();
+
+                        //Fecha o form login
+                        this.Close();
                     }
 
                     Close();
