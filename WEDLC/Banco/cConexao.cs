@@ -21,7 +21,7 @@ namespace WEDLC.Banco
 
             if (eAmbiente == Ambiente.Local) 
             {
-                conexao = System.Configuration.ConfigurationManager.ConnectionStrings["L_WEDLC"].ConnectionString; // Desenv
+                conexao = System.Configuration.ConfigurationManager.ConnectionStrings["L_WEDLC"].ConnectionString; // Desenvolvimento
             }
             else if (eAmbiente == Ambiente.Remoto)
             {
