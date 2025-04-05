@@ -12,17 +12,22 @@ namespace WEDLC.Banco
     public class clLogin
     {
 
+        public cConexao objCconexao;
+
         private byte[] sal = new byte[] { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1, 0x0 };
         private byte[] textoCifrado;
 
         private int _id; // field
         private string _nome; // field
         private string _senha; // field
-        public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["P_WEDLC"].ConnectionString;
+        private string stringConexao; // field
 
+        //public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["L_WEDLC"].ConnectionString; // Producao
+        //public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["R_WEDLC"].ConnectionString; // Remoto
+     
         public int Id   // property
         {
-            get { return _id; }   // get method
+            get { return _id; }   // get method"
             set { _id = value; }  // set method
         }
 
@@ -38,10 +43,33 @@ namespace WEDLC.Banco
             set { _senha = value; }  // set method
         }
 
+        public string ConexaoLocal()   // property
+        {
+            objCconexao = new cConexao();
+            stringConexao = objCconexao.buscaStringConexao(cConexao.Ambiente.Local);
+            return stringConexao;
+
+        }
+
+        public string ConexaoRemoto()   // property
+        {
+            objCconexao = new cConexao();
+            stringConexao = objCconexao.buscaStringConexao(cConexao.Ambiente.Remoto);
+            return stringConexao;
+
+        }
+
+        public MySqlConnection MySqlConection() // Determina a instância que será usada para a conexão: 1 - local; 2 - Remoto
+        {
+            var conexao = new MySqlConnection(ConexaoLocal());
+
+            return conexao;
+        }
+
         public DataTable buscaUsuarioLogin(string pNome)
 
         {
-            var conexao = new MySqlConnection(stringConexao);
+            var conexao = MySqlConection();
             conexao.Open();
             MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_login", conexao);
             sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
@@ -135,7 +163,7 @@ namespace WEDLC.Banco
 
         public bool incluiLogin()
         {
-            var conexao = new MySqlConnection(stringConexao);
+            var conexao = MySqlConection();
 
             conexao.Open();
 
