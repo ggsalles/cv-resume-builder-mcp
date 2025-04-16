@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,20 +11,23 @@ namespace WEDLC.Banco
     {
         public enum Ambiente
         {
-            Local = 1,
-            Remoto = 2
+            LOCAL = 1,
+            REMOTO = 2
         }
 
         public string conexao;
+        
+        //Determina o ambiente de conexao atual
+        public Ambiente cAmbiente = Ambiente.LOCAL;
 
-        public string buscaStringConexao(Ambiente eAmbiente)
+        public string buscaStringConexao()
         {
 
-            if (eAmbiente == Ambiente.Local) 
+            if (cAmbiente == Ambiente.LOCAL) 
             {
                 conexao = System.Configuration.ConfigurationManager.ConnectionStrings["L_WEDLC"].ConnectionString; // Desenvolvimento
             }
-            else if (eAmbiente == Ambiente.Remoto)
+            else if (cAmbiente == Ambiente.REMOTO)
             {
                 conexao = System.Configuration.ConfigurationManager.ConnectionStrings["R_WEDLC"].ConnectionString; // Remoto
             }
@@ -31,5 +35,17 @@ namespace WEDLC.Banco
             return conexao;
         }
 
+        public MySqlConnection MySqlConection() // Determina a instância que será usada para a conexão: 1 - local; 2 - Remoto
+        {
+            var conexao = new MySqlConnection(Conexao());
+            return conexao;
+        }
+
+        public string Conexao()   // property
+        {
+            var stringConexao = this.buscaStringConexao();
+            return stringConexao;
+
+        }
     }
 }

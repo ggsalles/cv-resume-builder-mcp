@@ -10,8 +10,7 @@ namespace WEDLC.Banco
         private string _datalog;
         private int _idusuario;
         private string _descerrovs;
-        public clLogin objClogin;
-
+        
         public int IdLog   // property
         {
             get { return _idlog; }   // get method
@@ -44,10 +43,9 @@ namespace WEDLC.Banco
 
         public bool incluiLogin()
         {
-            objClogin = new clLogin();
 
-            var conexao = objClogin.MySqlConection();
-
+            cConexao objcConexao = new cConexao();
+            var conexao = objcConexao.MySqlConection();
             conexao.Open();
 
             MySqlParameter[] pParam = new MySqlParameter[3];

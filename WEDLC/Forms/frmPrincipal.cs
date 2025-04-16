@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using WEDLC.Banco;
 
 namespace WEDLC.Forms
 {
@@ -15,11 +9,28 @@ namespace WEDLC.Forms
         public frmPrincipal()
         {
             InitializeComponent();
+            cConexao objcConexao = new cConexao();
+            this.Text = this.Text + ": " + " Conectado no ambiente: " + objcConexao.cAmbiente.ToString();
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (MessageBox.Show("Tem certeza que deseja sair?","Atenção!",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                this.Close();
+            }
+            
+        }
+
+        private void especialidadeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            // Cria um objeto para o form de troca de senhas abrir
+            frmEspecializacao objEspeciualizacao = new frmEspecializacao();
+
+            //Abre o form de especialização não modal
+            objEspeciualizacao.Show();
+
         }
     }
 }

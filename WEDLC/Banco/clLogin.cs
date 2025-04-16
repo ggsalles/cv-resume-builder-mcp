@@ -43,25 +43,10 @@ namespace WEDLC.Banco
             set { _senha = value; }  // set method
         }
 
-        public string ConexaoLocal()   // property
-        {
-            objCconexao = new cConexao();
-            stringConexao = objCconexao.buscaStringConexao(cConexao.Ambiente.Local);
-            return stringConexao;
-
-        }
-
-        public string ConexaoRemoto()   // property
-        {
-            objCconexao = new cConexao();
-            stringConexao = objCconexao.buscaStringConexao(cConexao.Ambiente.Remoto);
-            return stringConexao;
-
-        }
-
         public MySqlConnection MySqlConection() // Determina a instância que será usada para a conexão: 1 - local; 2 - Remoto
         {
-            var conexao = new MySqlConnection(ConexaoLocal());
+            cConexao objcConexao = new cConexao();
+            var conexao = new MySqlConnection(objcConexao.Conexao());
 
             return conexao;
         }
@@ -69,7 +54,8 @@ namespace WEDLC.Banco
         public DataTable buscaUsuarioLogin(string pNome)
 
         {
-            var conexao = MySqlConection();
+            cConexao objcConexao = new cConexao();
+            var conexao = objcConexao.MySqlConection();
             conexao.Open();
             MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_login", conexao);
             sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;

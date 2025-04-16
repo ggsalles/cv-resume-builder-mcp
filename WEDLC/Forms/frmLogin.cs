@@ -1,12 +1,5 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WEDLC.Banco;
 
@@ -82,6 +75,7 @@ namespace WEDLC.Forms
                 if (pCripto != dtAux.Rows[0]["password"].ToString())
                 {
                     MessageBox.Show("Senha Inválida!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSenha.Focus();
                     dtAux.Dispose();
                     return;
                 }
@@ -101,14 +95,16 @@ namespace WEDLC.Forms
                     }
                     else
                     {
+
+                        //Fecha o form login
+                        this.Hide();
+
                         // Cria um objeto para o form principal abrir
                         frmPrincipal objPrincipal = new frmPrincipal();
 
                         //Abre o form principal
                         objPrincipal.ShowDialog();
 
-                        //Fecha o form login
-                        this.Close();
                     }
 
                     Close();

@@ -73,6 +73,7 @@
       <HintPath>..\packages\MySql.Data.9.1.0\lib\net462\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.6.0\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
@@ -117,8 +118,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cConexao.cs" />
+    <Compile Include="Banco\cEspecializacao.cs" />
     <Compile Include="Banco\clLog.cs" />
     <Compile Include="Banco\clLogin.cs" />
+    <Compile Include="Forms\frmEspecializacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmEspecializacao.Designer.cs">
+      <DependentUpon>frmEspecializacao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +147,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\frmEspecializacao.resx">
+      <DependentUpon>frmEspecializacao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
