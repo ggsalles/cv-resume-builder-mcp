@@ -106,9 +106,11 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(240, 110);
+            this.btnSair.Image = global::WEDLC.Properties.Resources.exit;
+            this.btnSair.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSair.Location = new System.Drawing.Point(230, 110);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(75, 23);
+            this.btnSair.Size = new System.Drawing.Size(85, 27);
             this.btnSair.TabIndex = 3;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
@@ -116,9 +118,11 @@
             // 
             // btnOk
             // 
+            this.btnOk.Image = global::WEDLC.Properties.Resources.ok;
+            this.btnOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOk.Location = new System.Drawing.Point(12, 110);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.Size = new System.Drawing.Size(85, 27);
             this.btnOk.TabIndex = 2;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;

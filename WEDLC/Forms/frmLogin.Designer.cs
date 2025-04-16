@@ -29,34 +29,26 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.btnOk = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.grpLogin = new System.Windows.Forms.GroupBox();
-            this.picLogin = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.picLogin = new System.Windows.Forms.PictureBox();
+            this.btnOk = new System.Windows.Forms.Button();
             this.grpLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogin)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnOk
-            // 
-            this.btnOk.Location = new System.Drawing.Point(13, 124);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 2;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(239, 127);
+            this.btnSair.Image = global::WEDLC.Properties.Resources.exit;
+            this.btnSair.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSair.Location = new System.Drawing.Point(229, 124);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(75, 23);
+            this.btnSair.Size = new System.Drawing.Size(85, 27);
             this.btnSair.TabIndex = 3;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
@@ -74,15 +66,6 @@
             this.grpLogin.Size = new System.Drawing.Size(301, 105);
             this.grpLogin.TabIndex = 2;
             this.grpLogin.TabStop = false;
-            // 
-            // picLogin
-            // 
-            this.picLogin.Image = global::WEDLC.Properties.Resources.login;
-            this.picLogin.Location = new System.Drawing.Point(11, 19);
-            this.picLogin.Name = "picLogin";
-            this.picLogin.Size = new System.Drawing.Size(64, 60);
-            this.picLogin.TabIndex = 4;
-            this.picLogin.TabStop = false;
             // 
             // label2
             // 
@@ -121,6 +104,27 @@
             this.txtUsuario.Size = new System.Drawing.Size(115, 20);
             this.txtUsuario.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtUsuario, "Informe o nome do usuário");
+            // 
+            // picLogin
+            // 
+            this.picLogin.Image = global::WEDLC.Properties.Resources.login;
+            this.picLogin.Location = new System.Drawing.Point(11, 19);
+            this.picLogin.Name = "picLogin";
+            this.picLogin.Size = new System.Drawing.Size(64, 60);
+            this.picLogin.TabIndex = 4;
+            this.picLogin.TabStop = false;
+            // 
+            // btnOk
+            // 
+            this.btnOk.Image = global::WEDLC.Properties.Resources.ok;
+            this.btnOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOk.Location = new System.Drawing.Point(13, 124);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(85, 27);
+            this.btnOk.TabIndex = 2;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // frmLogin
             // 

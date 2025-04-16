@@ -207,6 +207,7 @@
     <Content Include="Imagens\cancel.png" />
     <Content Include="Imagens\cancelblue.png" />
     <Content Include="Imagens\exit.png" />
+    <Content Include="Imagens\ok.png" />
     <Content Include="Imagens\save.png" />
     <Content Include="Imagens\trash.png" />
   </ItemGroup>
