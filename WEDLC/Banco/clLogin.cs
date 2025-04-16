@@ -20,7 +20,6 @@ namespace WEDLC.Banco
         private int _id; // field
         private string _nome; // field
         private string _senha; // field
-        private string stringConexao; // field
 
         //public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["L_WEDLC"].ConnectionString; // Producao
         //public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["R_WEDLC"].ConnectionString; // Remoto
