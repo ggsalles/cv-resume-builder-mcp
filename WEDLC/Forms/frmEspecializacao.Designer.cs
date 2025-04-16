@@ -34,12 +34,12 @@
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.grpBotoes = new System.Windows.Forms.GroupBox();
-            this.grdDados = new System.Windows.Forms.DataGridView();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnGravar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
+            this.grdDados = new System.Windows.Forms.DataGridView();
             this.grpBoxDados.SuspendLayout();
             this.grpBotoes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
@@ -106,15 +106,6 @@
             this.grpBotoes.TabIndex = 1;
             this.grpBotoes.TabStop = false;
             // 
-            // grdDados
-            // 
-            this.grdDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdDados.Location = new System.Drawing.Point(12, 85);
-            this.grdDados.Name = "grdDados";
-            this.grdDados.Size = new System.Drawing.Size(640, 168);
-            this.grdDados.TabIndex = 4;
-            this.grdDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDados_CellClick);
-            // 
             // btnCancelar
             // 
             this.btnCancelar.Enabled = false;
@@ -130,6 +121,7 @@
             // 
             // btnExcluir
             // 
+            this.btnExcluir.Enabled = false;
             this.btnExcluir.Image = global::WEDLC.Properties.Resources.trash;
             this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExcluir.Location = new System.Drawing.Point(283, 13);
@@ -176,6 +168,15 @@
             this.btnNovo.Text = "Novo";
             this.btnNovo.UseVisualStyleBackColor = true;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+            // 
+            // grdDados
+            // 
+            this.grdDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdDados.Location = new System.Drawing.Point(12, 85);
+            this.grdDados.Name = "grdDados";
+            this.grdDados.Size = new System.Drawing.Size(640, 168);
+            this.grdDados.TabIndex = 4;
+            this.grdDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDados_CellClick);
             // 
             // frmEspecializacao
             // 

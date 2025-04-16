@@ -13,8 +13,9 @@ namespace WEDLC.Forms
         {
             INSERT = 0,
             UPDATE = 1,
-            DELETE = 2
-
+            DELETE = 2,
+            SAVE = 3,
+            CANCELAR = 4
         }
 
         public Acao cAcao = Acao.UPDATE;
@@ -31,8 +32,11 @@ namespace WEDLC.Forms
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
+            //Determina a acao
+            cAcao = Acao.INSERT;
+
             //Prepara os botões para a inclusão
-            controlaBotao(true);
+            controlaBotao();
 
             //limpa controles
             txtCodigo.Text = string.Empty;
@@ -47,16 +51,35 @@ namespace WEDLC.Forms
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;
 
-            //Determina a acao
-            cAcao = Acao.INSERT;
-
         }
-        private void controlaBotao(bool libera)
+        private void controlaBotao()
         {
-            btnNovo.Enabled = !libera;
-            btnGravar.Enabled = libera;
-            btnCancelar.Enabled = libera;
-            btnExcluir.Enabled = !libera;
+            //Se clicou em novo
+            if (cAcao == Acao.INSERT)
+            {
+                btnNovo.Enabled = false;
+                btnGravar.Enabled = true;
+                btnCancelar.Enabled = true;
+                btnExcluir.Enabled = false;
+            }
+
+            //Se clicou em gravar
+            if (cAcao == Acao.SAVE || cAcao == Acao.CANCELAR)
+            {
+                btnNovo.Enabled = true;
+                btnGravar.Enabled = false;
+                btnCancelar.Enabled = false;
+                btnExcluir.Enabled = false;
+            }
+
+            //Se clicou em gravar
+            if (cAcao == Acao.UPDATE)
+            {
+                btnNovo.Enabled = false;
+                btnGravar.Enabled = true;
+                btnCancelar.Enabled = true;
+                btnExcluir.Enabled = true;
+            }
 
         }
 
@@ -127,7 +150,11 @@ namespace WEDLC.Forms
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            controlaBotao(false);
+
+            //Determina a acao
+            cAcao = Acao.CANCELAR;
+
+            controlaBotao();
 
             //limpa controles
             txtCodigo.Text = string.Empty;
@@ -139,7 +166,7 @@ namespace WEDLC.Forms
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;
 
-            //Determina a acao
+            //Determina a acao default
             cAcao = Acao.UPDATE;
 
             //Carrega o grid
@@ -187,13 +214,16 @@ namespace WEDLC.Forms
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
+                //Determina a acao
+                cAcao = Acao.UPDATE;
+
                 txtCodigo.Text = grdDados.Rows[e.RowIndex].Cells[0].Value.ToString();
                 txtNome.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
 
                 //libera os controles 
-                btnGravar.Enabled = true;
-                txtNome.Enabled = true;
+                controlaBotao();
 
+                txtNome.Enabled = true;
                 txtNome.Focus();
             }
         }
@@ -204,6 +234,7 @@ namespace WEDLC.Forms
             if (txtCodigo.Text.Length == 0)
             {
                 MessageBox.Show("Não existe nenhum item selecionado para exclusão!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
             //Determina a acao
