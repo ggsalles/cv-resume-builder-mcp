@@ -34,12 +34,12 @@
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.grpBotoes = new System.Windows.Forms.GroupBox();
+            this.grdDados = new System.Windows.Forms.DataGridView();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnGravar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
-            this.grdDados = new System.Windows.Forms.DataGridView();
             this.grpBoxDados.SuspendLayout();
             this.grpBotoes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
@@ -106,9 +106,20 @@
             this.grpBotoes.TabIndex = 1;
             this.grpBotoes.TabStop = false;
             // 
+            // grdDados
+            // 
+            this.grdDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdDados.Location = new System.Drawing.Point(12, 85);
+            this.grdDados.Name = "grdDados";
+            this.grdDados.Size = new System.Drawing.Size(640, 168);
+            this.grdDados.TabIndex = 4;
+            this.grdDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDados_CellClick);
+            // 
             // btnCancelar
             // 
             this.btnCancelar.Enabled = false;
+            this.btnCancelar.Image = global::WEDLC.Properties.Resources.cancelblue;
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.Location = new System.Drawing.Point(192, 13);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(85, 27);
@@ -119,6 +130,8 @@
             // 
             // btnExcluir
             // 
+            this.btnExcluir.Image = global::WEDLC.Properties.Resources.trash;
+            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExcluir.Location = new System.Drawing.Point(283, 13);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(85, 27);
@@ -130,6 +143,8 @@
             // btnGravar
             // 
             this.btnGravar.Enabled = false;
+            this.btnGravar.Image = global::WEDLC.Properties.Resources.save;
+            this.btnGravar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGravar.Location = new System.Drawing.Point(101, 13);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(85, 27);
@@ -140,6 +155,8 @@
             // 
             // btnSair
             // 
+            this.btnSair.Image = global::WEDLC.Properties.Resources.exit;
+            this.btnSair.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSair.Location = new System.Drawing.Point(549, 13);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(85, 27);
@@ -150,6 +167,8 @@
             // 
             // btnNovo
             // 
+            this.btnNovo.Image = global::WEDLC.Properties.Resources.add;
+            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnNovo.Location = new System.Drawing.Point(9, 13);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(85, 27);
@@ -157,15 +176,6 @@
             this.btnNovo.Text = "Novo";
             this.btnNovo.UseVisualStyleBackColor = true;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
-            // 
-            // grdDados
-            // 
-            this.grdDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdDados.Location = new System.Drawing.Point(12, 85);
-            this.grdDados.Name = "grdDados";
-            this.grdDados.Size = new System.Drawing.Size(640, 168);
-            this.grdDados.TabIndex = 4;
-            this.grdDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDados_CellClick);
             // 
             // frmEspecializacao
             // 
