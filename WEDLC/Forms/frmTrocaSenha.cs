@@ -52,7 +52,7 @@ namespace WEDLC.Forms
                     // GRAVA LOG
                     clLog objclLog = new clLog();
                     objclLog.Idlogdescricao = 2; // descrição LOGIN na tabela LOGDESCRICAO
-                    objclLog.Idusuario = Int32.Parse(objCllogin.Id.ToString());
+                    objclLog.Idusuario = Int32.Parse(objCllogin.idusuario.ToString());
                     objclLog.Descerrovs = "";
 
                     if (objclLog.incluiLogin() == false)

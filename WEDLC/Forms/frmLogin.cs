@@ -50,7 +50,7 @@ namespace WEDLC.Forms
 
                     MessageBox.Show("Você será redirecionado para o formulário de troca de senha.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    objclLogin.Id = Int16.Parse(dtAux.Rows[0]["id"].ToString());
+                    objclLogin.idusuario = Int16.Parse(dtAux.Rows[0]["id"].ToString());
                     objclLogin.Nome = txtUsuario.Text.ToString();
                     objclLogin.Senha = txtSenha.Text.ToString();
 
@@ -72,6 +72,7 @@ namespace WEDLC.Forms
 
                 }
 
+                // Se for diferente...
                 if (pCripto != dtAux.Rows[0]["password"].ToString())
                 {
                     MessageBox.Show("Senha Inválida!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -85,7 +86,7 @@ namespace WEDLC.Forms
 
                     // GRAVA LOG
                     objclLog.Idlogdescricao = 1; // descrição LOGIN na tabela LOGDESCRICAO
-                    objclLog.Idusuario = Int32.Parse(dtAux.Rows[0]["id"].ToString());
+                    objclLog.Idusuario = Int32.Parse(dtAux.Rows[0]["idusuario"].ToString());
                     objclLog.Descerrovs = "";
 
                     if (objclLog.incluiLogin() == false)

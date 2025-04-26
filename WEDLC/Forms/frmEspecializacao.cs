@@ -19,6 +19,9 @@ namespace WEDLC.Forms
 
         public Acao cAcao = Acao.UPDATE;
 
+        //Código do módulo
+        public const int codModulo  = 1;
+
         public frmEspecializacao()
         {
             InitializeComponent();
@@ -151,7 +154,7 @@ namespace WEDLC.Forms
             grdDados.DataSource = null;
 
             //Renomeia as colunas do datatable
-            dt.Columns["codigo"].ColumnName = "Código";
+            dt.Columns["idespecializacao"].ColumnName = "Código";
             dt.Columns["nome"].ColumnName = "Nome";
 
             grdDados.DataSource = dt;
@@ -194,7 +197,7 @@ namespace WEDLC.Forms
                 }
                 else if (cAcao == Acao.UPDATE)
                 {
-                    objEspecializacao.Codigo = int.Parse(txtCodigo.Text);
+                    objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
 
                     //Solicita a confirmação do usuário para alteração
                     if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -213,7 +216,7 @@ namespace WEDLC.Forms
                 }
                 else if (cAcao == Acao.DELETE)
                 {
-                    objEspecializacao.Codigo = int.Parse(txtCodigo.Text);
+                    objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
 
                     //Solicita a confirmação do usuário para alteração
                     if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

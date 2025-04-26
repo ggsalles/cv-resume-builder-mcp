@@ -17,17 +17,17 @@ namespace WEDLC.Banco
         private byte[] sal = new byte[] { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1, 0x0 };
         private byte[] textoCifrado;
 
-        private int _id; // field
+        private int _idusuario; // field
         private string _nome; // field
         private string _senha; // field
 
         //public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["L_WEDLC"].ConnectionString; // Producao
         //public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["R_WEDLC"].ConnectionString; // Remoto
      
-        public int Id   // property
+        public int idusuario   // property
         {
-            get { return _id; }   // get method"
-            set { _id = value; }  // set method
+            get { return _idusuario; }   // get method"
+            set { _idusuario = value; }  // set method
         }
 
         public string Nome   // property

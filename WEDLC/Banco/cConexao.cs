@@ -18,7 +18,7 @@ namespace WEDLC.Banco
         public string conexao;
         
         //Determina o ambiente de conexao atual
-        public Ambiente cAmbiente = Ambiente.LOCAL;
+        public Ambiente cAmbiente = Ambiente.REMOTO;
 
         public string buscaStringConexao()
         {
