@@ -37,8 +37,12 @@ namespace WEDLC.Forms
             //Popula o grid
             this.populaGrid(0, 0, "", "");
 
+            this.KeyPreview = true;
+
             //Configura o grid
             configuraGrid();
+
+            cAcao = Acao.CANCELAR;
         }
 
         private void controlaBotao()
@@ -71,35 +75,6 @@ namespace WEDLC.Forms
             }
 
         }
-
-        private void btnSair_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnNovo_Click(object sender, EventArgs e)
-        {
-            //Determina a acao
-            cAcao = Acao.INSERT;
-
-            //Prepara os botões para a inclusão
-            controlaBotao();
-
-            //limpa controles
-            txtCodigo.Text = string.Empty;
-            txtNome.Text = string.Empty;
-
-            //Desbloqueia controles
-            txtNome.Enabled = true;
-
-            //Deixa o foco no nome
-            txtNome.Focus();
-
-            //Desmarca a seleção do grid
-            grdDados.CurrentCell = null;
-
-        }
-
         private void configuraGrid()
         {
 
@@ -109,12 +84,14 @@ namespace WEDLC.Forms
             //grdDados.Columns[1].Name = "Nome";
 
             // Ajustando o tamanho das colunas
-            grdDados.Columns[0].Width = 80;
-            grdDados.Columns[1].Width = 300;
+            grdDados.Columns[0].Width = 80; //ID
+            grdDados.Columns[1].Width = 80; //Sigla
+            grdDados.Columns[2].Width = 350; //Nome
 
             // Desabilita a edição da coluna
             grdDados.Columns[0].ReadOnly = true;
             grdDados.Columns[1].ReadOnly = true;
+            grdDados.Columns[2].ReadOnly = true;
 
             // Configurando outras propriedades
             //grdDados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Preenche automaticamente
@@ -124,6 +101,8 @@ namespace WEDLC.Forms
 
             //Deixa o grid zebrado
             grdDados.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue;
+
+            grdDados.KeyPress += new KeyPressEventHandler(grdDados_KeyPress);
 
             //// Adicionando algumas linhas de exemplo
             //string[] row1 = new string[] { "1", "Gustavo" };
@@ -155,6 +134,7 @@ namespace WEDLC.Forms
 
             //Renomeia as colunas do datatable
             dt.Columns["idespecializacao"].ColumnName = "Código";
+            dt.Columns["sigla"].ColumnName = "Sigla";
             dt.Columns["nome"].ColumnName = "Nome";
 
             grdDados.DataSource = dt;
@@ -162,9 +142,23 @@ namespace WEDLC.Forms
 
         public bool validaCampos()
         {
+            if (txtCodigo.Text.ToString().Trim().Length == 0)
+            {
+                MessageBox.Show("O campo código não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtCodigo.Focus();
+                return false;
+            }
+
+            if (txtSigla.Text.ToString().Trim().Length == 0)
+            {
+                MessageBox.Show("O campo sigla não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtSigla.Focus();
+                return false;
+            }
+
             if (txtNome.Text.ToString().Trim().Length == 0)
             {
-                MessageBox.Show("Favor preencher o nome", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("O campo nome não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtNome.Focus();
                 return false;
             }
@@ -173,10 +167,33 @@ namespace WEDLC.Forms
 
         }
 
+        private void btnNovo_Click(object sender, EventArgs e)
+        {
+            //Determina a acao
+            cAcao = Acao.INSERT;
+
+            //Prepara os botões para a inclusão
+            controlaBotao();
+
+            //limpa controles
+            txtCodigo.Text = string.Empty;
+            txtCodigo.Enabled = false; //Desabilita o campo código
+            txtSigla.Text = string.Empty;
+            txtNome.Text = string.Empty;
+
+            //Deixa o foco no nome
+            txtSigla.Focus();
+
+            //Desmarca a seleção do grid
+            grdDados.CurrentCell = null;
+
+        }
         private void btnGravar_Click(object sender, EventArgs e)
         {
             cEspecializacao objEspecializacao = new cEspecializacao();
+
             objEspecializacao.Nome = txtNome.Text;
+            objEspecializacao.Sigla = txtSigla.Text;
 
             //Valida campos
             if (validaCampos() == true)
@@ -240,51 +257,28 @@ namespace WEDLC.Forms
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-
             //Determina a acao
             cAcao = Acao.CANCELAR;
 
             controlaBotao();
 
-            //limpa controles
-            txtCodigo.Text = string.Empty;
-            txtNome.Text = string.Empty;
+            //Habilita o campo código
+            txtCodigo.Enabled = true;
 
-            //Bloqueia controles
-            txtNome.Enabled = false;
+            //Limpa os campos
+            limpaControles();
 
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;
-
-            //Determina a acao default
-            cAcao = Acao.UPDATE;
 
             //Carrega o grid
             carregaTela();
         }
 
-        private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                //Determina a acao
-                cAcao = Acao.UPDATE;
-
-                txtCodigo.Text = grdDados.Rows[e.RowIndex].Cells[0].Value.ToString();
-                txtNome.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
-
-                //libera os controles 
-                controlaBotao();
-
-                txtNome.Enabled = true;
-                txtNome.Focus();
-            }
-        }
-
         private void btnExcluir_Click(object sender, EventArgs e)
         {
             //valida codigo para exclusão
-            if (txtCodigo.Text.Length == 0)
+            if (txtCodigo.Text.Length == 0 || txtSigla.Text.Length == 0 || txtNome.Text.Length == 0)
             {
                 MessageBox.Show("Não existe nenhum item selecionado para exclusão!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -297,49 +291,64 @@ namespace WEDLC.Forms
             btnGravar_Click(sender, e);
         }
 
-        private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
+        private void btnSair_Click(object sender, EventArgs e)
         {
-            int tipopesquisa = 0; //Código que retorna todo select   
-            int idespecializacao = 0; //Código da especialização
-
-            //Limpa campos
-            txtSigla.Text = string.Empty;
-            txtNome.Text = string.Empty;
-
-            // Verifica a quantidade de caracteres
-            if (txtCodigo.Text.Length == 0)
-            {
-                tipopesquisa = 0;
-            }
-            else
-            {
-                tipopesquisa = 1;
-                idespecializacao = int.Parse(txtCodigo.Text);
-            }
-
-            this.populaGrid(tipopesquisa, idespecializacao, "", "");
+            this.Close();
         }
 
-        private void txtNome_KeyUp(object sender, KeyEventArgs e)
+        private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int tipopesquisa = 3; //Código que pesquisa pelo nome 
-            string nome = string.Empty; //Código da especialização
-
-            //Limpa campos
-            txtCodigo.Text = string.Empty;
-            txtSigla.Text = string.Empty;
-
-            if (txtNome.Text.Length == 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                tipopesquisa = 0;
-            }
-            else
-            {
-                tipopesquisa = 3;
-                nome = txtNome.Text;
+                //Determina a acao
+                cAcao = Acao.UPDATE;
+
+                txtCodigo.Text = grdDados.Rows[e.RowIndex].Cells[0].Value.ToString();
+                txtSigla.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
+                txtNome.Text = grdDados.Rows[e.RowIndex].Cells[2].Value.ToString();
+
+                //libera os controles 
+                controlaBotao();
+
+                //Desabilita o campo código
+                txtCodigo.Enabled = false;
+
+                txtSigla.Focus();
             }
 
-            this.populaGrid(tipopesquisa, 0, "", nome);
+            // Desabilita a edição da coluna
+            grdDados.Columns[0].ReadOnly = true;
+            grdDados.Columns[1].ReadOnly = true;
+            grdDados.Columns[2].ReadOnly = true;
+        }
+
+        private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
+        {
+            //Determina a acao
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            {
+                int tipopesquisa = 0; //Código que retorna todo select   
+                int idespecializacao = 0; //Código da especialização
+
+                //Limpa campos
+                txtSigla.Text = string.Empty;
+                txtNome.Text = string.Empty;
+
+                // Verifica a quantidade de caracteres
+                if (txtCodigo.Text.Length == 0)
+                {
+                    tipopesquisa = 0;
+                }
+                else
+                {
+                    tipopesquisa = 1;
+                    idespecializacao = int.Parse(txtCodigo.Text);
+                }
+
+                this.populaGrid(tipopesquisa, idespecializacao, "", "");
+                this.configuraGrid();
+            }
+
         }
 
         private void txtSigla_KeyUp(object sender, KeyEventArgs e)
@@ -347,21 +356,85 @@ namespace WEDLC.Forms
             int tipopesquisa = 2; //Código que pesquisa pela sigla   
             string sigla = string.Empty; //Código da especialização
 
-            //Limpa campos
+            //Determina a acao
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            {
+
+                //Limpa campos
+                txtCodigo.Text = string.Empty;
+                txtNome.Text = string.Empty;
+
+                if (txtSigla.Text.Length == 0)
+                {
+                    tipopesquisa = 0;
+                }
+                else
+                {
+                    tipopesquisa = 2;
+                    sigla = txtSigla.Text;
+                }
+
+                this.populaGrid(tipopesquisa, 0, sigla, "");
+                this.configuraGrid();
+            }
+        }
+
+        private void txtNome_KeyUp(object sender, KeyEventArgs e)
+        {
+            int tipopesquisa = 3; //Código que pesquisa pelo nome 
+            string nome = string.Empty; //Código da especialização
+
+            //Determina a acao
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            {
+
+                //Limpa campos
+                txtCodigo.Text = string.Empty;
+                txtSigla.Text = string.Empty;
+
+                if (txtNome.Text.Length == 0)
+                {
+                    tipopesquisa = 0;
+                }
+                else
+                {
+                    tipopesquisa = 3;
+                    nome = txtNome.Text;
+                }
+
+                this.populaGrid(tipopesquisa, 0, "", nome);
+                this.configuraGrid();
+            }
+        }
+
+        private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void grdDados_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se a tecla pressionada é a barra de espaço
+            if (e.KeyChar == (char)Keys.Space)
+            {
+                // Cancela o evento para impedir que a barra de espaço seja registrada
+                e.Handled = true;
+            }
+        }
+
+        private void limpaControles()
+        {
             txtCodigo.Text = string.Empty;
+            txtSigla.Text = string.Empty;
             txtNome.Text = string.Empty;
 
-            if (txtSigla.Text.Length == 0)
-            {
-                tipopesquisa = 0;
-            }
-            else
-            {
-                tipopesquisa = 2;
-                sigla = txtSigla.Text;
-            }
-
-            this.populaGrid(tipopesquisa, 0, sigla, "");
+            //Desmarca a seleção do grid
+            grdDados.CurrentCell = null;
         }
     }
 }

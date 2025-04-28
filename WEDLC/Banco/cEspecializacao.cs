@@ -13,6 +13,7 @@ namespace WEDLC.Banco
     {
         private int _idespecializacao;
         private string _nome;
+        private string _sigla;
 
         public int IdEspecializacao   // property
         {
@@ -24,6 +25,12 @@ namespace WEDLC.Banco
         {
             get { return _nome; }   // get method
             set { _nome = value; }  // set method
+        }
+
+        public string Sigla   // property
+        {
+            get { return _sigla; }   // get method
+            set { _sigla = value; }  // set method
         }
 
         public DataTable buscaEspecializacao(int pTipopesquisa, int pIdEspecializacao, string pSigla, string pNome)
@@ -53,11 +60,14 @@ namespace WEDLC.Banco
             var conexao = objcConexao.MySqlConection();
             conexao.Open();
 
-            MySqlParameter[] pParam = new MySqlParameter[1];
+            MySqlParameter[] pParam = new MySqlParameter[2];
             MySqlCommand command = new MySqlCommand();
 
             pParam[0] = new MySqlParameter("pNome", MySqlDbType.VarChar);
             pParam[0].Value = _nome;
+
+            pParam[1] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
+            pParam[1].Value = _sigla;
 
             command.Connection = conexao;
             command.CommandType = CommandType.StoredProcedure;
@@ -83,15 +93,17 @@ namespace WEDLC.Banco
             var conexao = objcConexao.MySqlConection();
             conexao.Open();
 
-            MySqlParameter[] pParam = new MySqlParameter[2];
+            MySqlParameter[] pParam = new MySqlParameter[3];
             MySqlCommand command = new MySqlCommand();
 
             pParam[0] = new MySqlParameter("pIdEpescializacao", MySqlDbType.Int32);
             pParam[0].Value = _idespecializacao;
 
-            pParam[1] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-            pParam[1].Value = _nome;
+            pParam[1] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
+            pParam[1].Value = _sigla;
 
+            pParam[2] = new MySqlParameter("pNome", MySqlDbType.VarChar);
+            pParam[2].Value = _nome;
 
             command.Connection = conexao;
             command.CommandType = CommandType.StoredProcedure;

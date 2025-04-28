@@ -29,19 +29,20 @@
         private void InitializeComponent()
         {
             this.grpBoxDados = new System.Windows.Forms.GroupBox();
+            this.txtSigla = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.lblNome = new System.Windows.Forms.Label();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.grpBotoes = new System.Windows.Forms.GroupBox();
+            this.btnAlterar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnGravar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
             this.grdDados = new System.Windows.Forms.DataGridView();
-            this.txtSigla = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.grpBoxDados.SuspendLayout();
             this.grpBotoes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
@@ -60,6 +61,24 @@
             this.grpBoxDados.Size = new System.Drawing.Size(640, 67);
             this.grpBoxDados.TabIndex = 0;
             this.grpBoxDados.TabStop = false;
+            // 
+            // txtSigla
+            // 
+            this.txtSigla.Location = new System.Drawing.Point(115, 35);
+            this.txtSigla.MaxLength = 10;
+            this.txtSigla.Name = "txtSigla";
+            this.txtSigla.Size = new System.Drawing.Size(103, 20);
+            this.txtSigla.TabIndex = 2;
+            this.txtSigla.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSigla_KeyUp);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(112, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Sigla";
             // 
             // txtNome
             // 
@@ -86,6 +105,7 @@
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(103, 20);
             this.txtCodigo.TabIndex = 1;
+            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigo_KeyPress);
             this.txtCodigo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCodigo_KeyUp);
             // 
             // lblCodigo
@@ -99,6 +119,7 @@
             // 
             // grpBotoes
             // 
+            this.grpBotoes.Controls.Add(this.btnAlterar);
             this.grpBotoes.Controls.Add(this.btnCancelar);
             this.grpBotoes.Controls.Add(this.btnExcluir);
             this.grpBotoes.Controls.Add(this.btnGravar);
@@ -110,15 +131,27 @@
             this.grpBotoes.TabIndex = 1;
             this.grpBotoes.TabStop = false;
             // 
+            // btnAlterar
+            // 
+            this.btnAlterar.Enabled = false;
+            this.btnAlterar.Image = global::WEDLC.Properties.Resources.edit;
+            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAlterar.Location = new System.Drawing.Point(100, 13);
+            this.btnAlterar.Name = "btnAlterar";
+            this.btnAlterar.Size = new System.Drawing.Size(85, 27);
+            this.btnAlterar.TabIndex = 4;
+            this.btnAlterar.Text = "Alterar";
+            this.btnAlterar.UseVisualStyleBackColor = true;
+            // 
             // btnCancelar
             // 
             this.btnCancelar.Enabled = false;
             this.btnCancelar.Image = global::WEDLC.Properties.Resources.cancelblue;
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(192, 13);
+            this.btnCancelar.Location = new System.Drawing.Point(373, 13);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(85, 27);
-            this.btnCancelar.TabIndex = 5;
+            this.btnCancelar.TabIndex = 7;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -128,7 +161,7 @@
             this.btnExcluir.Enabled = false;
             this.btnExcluir.Image = global::WEDLC.Properties.Resources.trash;
             this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluir.Location = new System.Drawing.Point(283, 13);
+            this.btnExcluir.Location = new System.Drawing.Point(191, 13);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(85, 27);
             this.btnExcluir.TabIndex = 5;
@@ -141,10 +174,10 @@
             this.btnGravar.Enabled = false;
             this.btnGravar.Image = global::WEDLC.Properties.Resources.save;
             this.btnGravar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGravar.Location = new System.Drawing.Point(101, 13);
+            this.btnGravar.Location = new System.Drawing.Point(282, 13);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(85, 27);
-            this.btnGravar.TabIndex = 4;
+            this.btnGravar.TabIndex = 6;
             this.btnGravar.Text = "Gravar";
             this.btnGravar.UseVisualStyleBackColor = true;
             this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
@@ -156,7 +189,7 @@
             this.btnSair.Location = new System.Drawing.Point(549, 13);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(85, 27);
-            this.btnSair.TabIndex = 6;
+            this.btnSair.TabIndex = 8;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
@@ -181,24 +214,7 @@
             this.grdDados.Size = new System.Drawing.Size(640, 168);
             this.grdDados.TabIndex = 4;
             this.grdDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDados_CellClick);
-            // 
-            // txtSigla
-            // 
-            this.txtSigla.Location = new System.Drawing.Point(115, 35);
-            this.txtSigla.MaxLength = 10;
-            this.txtSigla.Name = "txtSigla";
-            this.txtSigla.Size = new System.Drawing.Size(103, 20);
-            this.txtSigla.TabIndex = 2;
-            this.txtSigla.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSigla_KeyUp);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(112, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Sigla";
+            this.grdDados.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.grdDados_KeyPress);
             // 
             // frmEspecializacao
             // 
@@ -210,6 +226,7 @@
             this.Controls.Add(this.grpBotoes);
             this.Controls.Add(this.grpBoxDados);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmEspecializacao";
@@ -240,5 +257,6 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.TextBox txtSigla;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAlterar;
     }
 }

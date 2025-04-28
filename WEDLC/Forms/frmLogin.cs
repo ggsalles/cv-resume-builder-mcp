@@ -16,7 +16,6 @@ namespace WEDLC.Forms
         {
             try
             {
-
                 if (validaDados() == false)
                 {
                     return;

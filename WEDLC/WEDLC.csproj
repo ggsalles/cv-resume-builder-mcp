@@ -206,6 +206,7 @@
     <Content Include="Imagens\add.png" />
     <Content Include="Imagens\cancel.png" />
     <Content Include="Imagens\cancelblue.png" />
+    <None Include="Imagens\edit.png" />
     <Content Include="Imagens\exit.png" />
     <Content Include="Imagens\ok.png" />
     <Content Include="Imagens\save.png" />
