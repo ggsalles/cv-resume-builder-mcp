@@ -26,7 +26,7 @@ namespace WEDLC.Banco
             set { _nome = value; }  // set method
         }
 
-        public DataTable buscaEspecializacao(int pIdEpescializacao, string pNome)
+        public DataTable buscaEspecializacao(int pTipopesquisa, int pIdEspecializacao, string pSigla, string pNome)
 
         {
             cConexao objcConexao = new cConexao();
@@ -34,7 +34,10 @@ namespace WEDLC.Banco
             conexao.Open();
             MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscaespecializacao", conexao);
             sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-            sqlDa.SelectCommand.Parameters.AddWithValue("pIdEpescializacao", pIdEpescializacao);
+            sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
+            sqlDa.SelectCommand.Parameters.AddWithValue("pIdEspecializacao", pIdEspecializacao);
+            sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
+            sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
             //sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
             DataTable dt = new DataTable();
             sqlDa.Fill(dt);

@@ -40,6 +40,8 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
             this.grdDados = new System.Windows.Forms.DataGridView();
+            this.txtSigla = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.grpBoxDados.SuspendLayout();
             this.grpBotoes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
@@ -47,6 +49,8 @@
             // 
             // grpBoxDados
             // 
+            this.grpBoxDados.Controls.Add(this.txtSigla);
+            this.grpBoxDados.Controls.Add(this.label1);
             this.grpBoxDados.Controls.Add(this.txtNome);
             this.grpBoxDados.Controls.Add(this.lblNome);
             this.grpBoxDados.Controls.Add(this.txtCodigo);
@@ -59,17 +63,17 @@
             // 
             // txtNome
             // 
-            this.txtNome.Enabled = false;
-            this.txtNome.Location = new System.Drawing.Point(115, 35);
+            this.txtNome.Location = new System.Drawing.Point(224, 35);
             this.txtNome.MaxLength = 50;
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(519, 20);
+            this.txtNome.Size = new System.Drawing.Size(416, 20);
             this.txtNome.TabIndex = 2;
+            this.txtNome.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNome_KeyUp);
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(112, 19);
+            this.lblNome.Location = new System.Drawing.Point(221, 19);
             this.lblNome.Name = "lblNome";
             this.lblNome.Size = new System.Drawing.Size(35, 13);
             this.lblNome.TabIndex = 2;
@@ -77,12 +81,12 @@
             // 
             // txtCodigo
             // 
-            this.txtCodigo.Enabled = false;
             this.txtCodigo.Location = new System.Drawing.Point(6, 35);
             this.txtCodigo.MaxLength = 10;
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(103, 20);
             this.txtCodigo.TabIndex = 1;
+            this.txtCodigo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCodigo_KeyUp);
             // 
             // lblCodigo
             // 
@@ -178,6 +182,24 @@
             this.grdDados.TabIndex = 4;
             this.grdDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDados_CellClick);
             // 
+            // txtSigla
+            // 
+            this.txtSigla.Location = new System.Drawing.Point(115, 35);
+            this.txtSigla.MaxLength = 10;
+            this.txtSigla.Name = "txtSigla";
+            this.txtSigla.Size = new System.Drawing.Size(103, 20);
+            this.txtSigla.TabIndex = 2;
+            this.txtSigla.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSigla_KeyUp);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(112, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Sigla";
+            // 
             // frmEspecializacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -216,5 +238,7 @@
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.Button btnExcluir;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.TextBox txtSigla;
+        private System.Windows.Forms.Label label1;
     }
 }

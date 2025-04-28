@@ -20,7 +20,7 @@ namespace WEDLC.Forms
         public Acao cAcao = Acao.UPDATE;
 
         //Código do módulo
-        public const int codModulo  = 1;
+        public const int codModulo = 1;
 
         public frmEspecializacao()
         {
@@ -35,7 +35,7 @@ namespace WEDLC.Forms
         public void carregaTela()
         {
             //Popula o grid
-            this.populaGrid();
+            this.populaGrid(0, 0, "", "");
 
             //Configura o grid
             configuraGrid();
@@ -136,20 +136,20 @@ namespace WEDLC.Forms
             grdDados.CurrentCell = null;
         }
 
-        private DataTable retornaEspecializacao(int codigo, string nome)
+        private DataTable buscaEspecializacao(int tipopesquisa, int idespecializacao, string sigla, string nome)
         {
             DataTable dtAux = new DataTable();
             cEspecializacao objcEspecializacao = new cEspecializacao();
 
-            dtAux = objcEspecializacao.buscaEspecializacao(codigo, nome);
+            dtAux = objcEspecializacao.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
 
             return dtAux;
         }
 
-        private void populaGrid()
+        private void populaGrid(int tipopesquisa, int idespecializacao, string sigla, string nome)
         {
             DataTable dt = new DataTable();
-            dt = this.retornaEspecializacao(0, "");
+            dt = this.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
 
             grdDados.DataSource = null;
 
@@ -295,6 +295,73 @@ namespace WEDLC.Forms
 
             //Chama o gravra
             btnGravar_Click(sender, e);
+        }
+
+        private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
+        {
+            int tipopesquisa = 0; //Código que retorna todo select   
+            int idespecializacao = 0; //Código da especialização
+
+            //Limpa campos
+            txtSigla.Text = string.Empty;
+            txtNome.Text = string.Empty;
+
+            // Verifica a quantidade de caracteres
+            if (txtCodigo.Text.Length == 0)
+            {
+                tipopesquisa = 0;
+            }
+            else
+            {
+                tipopesquisa = 1;
+                idespecializacao = int.Parse(txtCodigo.Text);
+            }
+
+            this.populaGrid(tipopesquisa, idespecializacao, "", "");
+        }
+
+        private void txtNome_KeyUp(object sender, KeyEventArgs e)
+        {
+            int tipopesquisa = 3; //Código que pesquisa pelo nome 
+            string nome = string.Empty; //Código da especialização
+
+            //Limpa campos
+            txtCodigo.Text = string.Empty;
+            txtSigla.Text = string.Empty;
+
+            if (txtNome.Text.Length == 0)
+            {
+                tipopesquisa = 0;
+            }
+            else
+            {
+                tipopesquisa = 3;
+                nome = txtNome.Text;
+            }
+
+            this.populaGrid(tipopesquisa, 0, "", nome);
+        }
+
+        private void txtSigla_KeyUp(object sender, KeyEventArgs e)
+        {
+            int tipopesquisa = 2; //Código que pesquisa pela sigla   
+            string sigla = string.Empty; //Código da especialização
+
+            //Limpa campos
+            txtCodigo.Text = string.Empty;
+            txtNome.Text = string.Empty;
+
+            if (txtSigla.Text.Length == 0)
+            {
+                tipopesquisa = 0;
+            }
+            else
+            {
+                tipopesquisa = 2;
+                sigla = txtSigla.Text;
+            }
+
+            this.populaGrid(tipopesquisa, 0, sigla, "");
         }
     }
 }
