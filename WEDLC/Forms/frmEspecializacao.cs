@@ -37,6 +37,7 @@ namespace WEDLC.Forms
             //Popula o grid
             this.populaGrid(0, 0, "", "");
 
+            // Ativa a visualização do click no form
             this.KeyPreview = true;
 
             //Configura o grid
@@ -44,7 +45,6 @@ namespace WEDLC.Forms
 
             cAcao = Acao.CANCELAR;
         }
-
         private void controlaBotao()
         {
             //Se clicou em novo
@@ -139,7 +139,6 @@ namespace WEDLC.Forms
 
             grdDados.DataSource = dt;
         }
-
         public bool validaCampos()
         {
             if (txtCodigo.Text.ToString().Trim().Length == 0)
@@ -166,7 +165,6 @@ namespace WEDLC.Forms
             return true;
 
         }
-
         private void btnNovo_Click(object sender, EventArgs e)
         {
             //Determina a acao
@@ -254,7 +252,6 @@ namespace WEDLC.Forms
                 btnCancelar_Click(sender, e);
             }
         }
-
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             //Determina a acao
@@ -274,7 +271,6 @@ namespace WEDLC.Forms
             //Carrega o grid
             carregaTela();
         }
-
         private void btnExcluir_Click(object sender, EventArgs e)
         {
             //valida codigo para exclusão
@@ -321,7 +317,6 @@ namespace WEDLC.Forms
             grdDados.Columns[1].ReadOnly = true;
             grdDados.Columns[2].ReadOnly = true;
         }
-
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
             //Determina a acao
@@ -350,7 +345,6 @@ namespace WEDLC.Forms
             }
 
         }
-
         private void txtSigla_KeyUp(object sender, KeyEventArgs e)
         {
             int tipopesquisa = 2; //Código que pesquisa pela sigla   
@@ -378,7 +372,6 @@ namespace WEDLC.Forms
                 this.configuraGrid();
             }
         }
-
         private void txtNome_KeyUp(object sender, KeyEventArgs e)
         {
             int tipopesquisa = 3; //Código que pesquisa pelo nome 
@@ -406,7 +399,6 @@ namespace WEDLC.Forms
                 this.configuraGrid();
             }
         }
-
         private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
