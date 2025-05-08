@@ -34,5 +34,17 @@ namespace WEDLC.Forms
             //Abre o form de especialização não modal
             objEspecializacao.Show();
         }
+
+        private void nervoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Cria um objeto para o form de troca de senhas abrir
+            frmNervo objNervo = new frmNervo();
+
+            // Define o form pai como o form principal
+            objNervo.MdiParent = this;
+
+            //Abre o form de especialização não modal
+            objNervo.Show();
+        }
     }
 }

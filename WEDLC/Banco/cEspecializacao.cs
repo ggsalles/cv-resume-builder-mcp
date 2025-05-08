@@ -46,10 +46,20 @@ namespace WEDLC.Banco
             sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
             sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
             //sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
+
             DataTable dt = new DataTable();
             sqlDa.Fill(dt);
+
+            // Se retornou algum registro...
+            if (dt.Rows.Count > 0)
+            {
+     
+            }
+
+            //Fecha a conexão
             conexao.Close();
 
+            // Retorna o DataTable
             return dt;
         }
 
