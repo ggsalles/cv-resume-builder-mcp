@@ -100,7 +100,8 @@ namespace WEDLC.Forms
                         this.Hide();
 
                         // Cria um objeto para o form principal abrir
-                        frmPrincipal objPrincipal = new frmPrincipal();
+                        frmPrincipal objPrincipal = new frmPrincipal(txtUsuario.Text,null);
+                        //objPrincipal.FindForm().Text = objPrincipal.FindForm().Text + ": " + txtUsuario.Text.ToString();
 
                         //Abre o form principal
                         objPrincipal.ShowDialog();

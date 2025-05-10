@@ -9,13 +9,15 @@ namespace WEDLC.Forms
 {
     public partial class frmPrincipal : Form
     {
-        public frmPrincipal()
+        public frmPrincipal(string pUsuario, string pSenha)
+
         {
             InitializeComponent();
+                 
             string ip = ObterIPExterno();
             string mac = ObterMACAddress();
             cConexao objcConexao = new cConexao();
-            this.Text = this.Text + ": " + " Conectado no ambiente: " + objcConexao.cAmbiente.ToString() + " Servidor: " + ip + " Endereço MAC: " + mac;
+            this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao.cAmbiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac;
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
