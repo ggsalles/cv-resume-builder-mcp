@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
+using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
@@ -10,7 +12,7 @@ namespace WEDLC.Banco
         private string _datalog;
         private int _idusuario;
         private string _descerrovs;
-        
+
         public int IdLog   // property
         {
             get { return _idlog; }   // get method
@@ -41,43 +43,77 @@ namespace WEDLC.Banco
             set { _descerrovs = value; }  // set method
         }
 
-        public bool incluiLogin()
+        cConexao objcConexao = new cConexao();
+        MySqlConnection conexao = new MySqlConnection();
+
+        public bool conectaBanco()
         {
-
-            cConexao objcConexao = new cConexao();
-            var conexao = objcConexao.MySqlConection();
+            conexao = objcConexao.MySqlConection();
             conexao.Open();
-
-            MySqlParameter[] pParam = new MySqlParameter[3];
-            MySqlCommand command = new MySqlCommand();
-
-            pParam[0] = new MySqlParameter("pIdLogDescricao", MySqlDbType.Int16);
-            pParam[0].Value = _idlogdescricao;
-
-            pParam[1] = new MySqlParameter("pIdUsuario", MySqlDbType.Int16);
-            pParam[1].Value = _idusuario;
-
-            pParam[2] = new MySqlParameter("pDescerrovs", MySqlDbType.VarChar);
-            pParam[2].Value = _descerrovs;
-
-            command.Connection = conexao;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "pr_log";
-            command.Parameters.AddRange(pParam);
-
-            if (command.ExecuteNonQuery() == 1)
-
+            if (conexao.State == ConnectionState.Open)
             {
-                conexao.Close();
                 return true;
             }
             else
             {
-                conexao.Close();
                 return false;
             }
         }
 
-    }
+        public bool incluiLogin()
+        {
+            try
+            {
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
 
+            try
+            {
+                MySqlParameter[] pParam = new MySqlParameter[3];
+                MySqlCommand command = new MySqlCommand();
+
+                pParam[0] = new MySqlParameter("pIdLogDescricao", MySqlDbType.Int16);
+                pParam[0].Value = _idlogdescricao;
+
+                pParam[1] = new MySqlParameter("pIdUsuario", MySqlDbType.Int16);
+                pParam[1].Value = _idusuario;
+
+                pParam[2] = new MySqlParameter("pDescerrovs", MySqlDbType.VarChar);
+                pParam[2].Value = _descerrovs;
+
+                command.Connection = conexao;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "pr_log";
+                command.Parameters.AddRange(pParam);
+
+                if (command.ExecuteNonQuery() == 1)
+
+                {
+                    conexao.Close();
+                    return true;
+                }
+                else
+                {
+                    conexao.Close();
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                // Fecha a conexão  
+                conexao.Close();
+                return false;
+            }
+
+        }
+    }
 }

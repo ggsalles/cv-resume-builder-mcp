@@ -42,28 +42,64 @@ namespace WEDLC.Banco
             set { _senha = value; }  // set method
         }
 
+        cConexao objcConexao = new cConexao();
+        MySqlConnection conexao = new MySqlConnection();
+
+        public bool conectaBanco()
+        {
+            conexao = objcConexao.MySqlConection();
+            conexao.Open();
+            if (conexao.State == ConnectionState.Open)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public MySqlConnection MySqlConection() // Determina a instância que será usada para a conexão: 1 - local; 2 - Remoto
         {
             cConexao objcConexao = new cConexao();
             var conexao = new MySqlConnection(objcConexao.Conexao());
-
             return conexao;
         }
 
         public DataTable buscaUsuarioLogin(string pNome)
 
         {
-            cConexao objcConexao = new cConexao();
-            var conexao = objcConexao.MySqlConection();
-            conexao.Open();
-            MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_login", conexao);
-            sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-            sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
-            DataTable dt = new DataTable();
-            sqlDa.Fill(dt);
-            conexao.Close();
+            try
+            {
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
 
-            return dt;
+            try
+            {
+                MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_login", conexao);
+                sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
+                DataTable dt = new DataTable();
+                sqlDa.Fill(dt);
+                conexao.Close();
+
+                return dt;
+            }
+            catch (Exception)
+            {
+                // Fecha a conexão  
+                conexao.Close();
+                return null;
+            }
         }
 
         public string critptografiaSenha(string pSenha, string pNome, out byte[] pCifrado)

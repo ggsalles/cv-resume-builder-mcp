@@ -118,10 +118,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cConexao.cs" />
+    <Compile Include="Banco\cMusculo.cs" />
     <Compile Include="Banco\cNervo.cs" />
     <Compile Include="Banco\cEspecializacao.cs" />
     <Compile Include="Banco\clLog.cs" />
     <Compile Include="Banco\clLogin.cs" />
+    <Compile Include="Forms\frmMusculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMusculo.Designer.cs">
+      <DependentUpon>frmMusculo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmNervo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +161,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\frmMusculo.resx">
+      <DependentUpon>frmMusculo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmNervo.resx">
       <DependentUpon>frmNervo.cs</DependentUpon>
     </EmbeddedResource>

@@ -35,6 +35,7 @@
             this.tabelasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.especializacaoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nervoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.músculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +77,7 @@
             // 
             this.tabelasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.especializacaoToolStripMenuItem,
+            this.músculoToolStripMenuItem,
             this.nervoToolStripMenuItem});
             this.tabelasToolStripMenuItem.Name = "tabelasToolStripMenuItem";
             this.tabelasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
@@ -85,7 +87,7 @@
             // 
             this.especializacaoToolStripMenuItem.Name = "especializacaoToolStripMenuItem";
             this.especializacaoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.especializacaoToolStripMenuItem.Text = "Especializacao";
+            this.especializacaoToolStripMenuItem.Text = "Especialização";
             this.especializacaoToolStripMenuItem.Click += new System.EventHandler(this.especializacaoToolStripMenuItem_Click);
             // 
             // nervoToolStripMenuItem
@@ -94,6 +96,13 @@
             this.nervoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.nervoToolStripMenuItem.Text = "Nervo";
             this.nervoToolStripMenuItem.Click += new System.EventHandler(this.nervoToolStripMenuItem_Click);
+            // 
+            // músculoToolStripMenuItem
+            // 
+            this.músculoToolStripMenuItem.Name = "músculoToolStripMenuItem";
+            this.músculoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.músculoToolStripMenuItem.Text = "Músculo";
+            this.músculoToolStripMenuItem.Click += new System.EventHandler(this.músculoToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 
@@ -128,5 +137,6 @@
         private System.Windows.Forms.ToolStripMenuItem tabelasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem especializacaoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nervoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem músculoToolStripMenuItem;
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Net;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using System.Net.NetworkInformation;
+
 
 namespace WEDLC.Forms
 {
@@ -9,8 +12,10 @@ namespace WEDLC.Forms
         public frmPrincipal()
         {
             InitializeComponent();
+            string ip = ObterIPExterno();
+            string mac = ObterMACAddress();
             cConexao objcConexao = new cConexao();
-            this.Text = this.Text + ": " + " Conectado no ambiente: " + objcConexao.cAmbiente.ToString();
+            this.Text = this.Text + ": " + " Conectado no ambiente: " + objcConexao.cAmbiente.ToString() + " Servidor: " + ip + " Endereço MAC: " + mac;
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -21,7 +26,6 @@ namespace WEDLC.Forms
             }
             
         }
-
         private void especializacaoToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -45,6 +49,37 @@ namespace WEDLC.Forms
 
             //Abre o form de especialização não modal
             objNervo.Show();
+        }
+
+        private void músculoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Cria um objeto para o form de troca de senhas abrir
+            frmMusculo objMusculo = new frmMusculo();
+
+            // Define o form pai como o form principal
+            objMusculo.MdiParent = this;
+
+            //Abre o form de especialização não modal
+            objMusculo.Show();
+        }
+
+        public string ObterIPExterno()
+        {
+            string enderecoIP = new WebClient().DownloadString("http://icanhazip.com").Trim();
+            return enderecoIP;
+        }
+
+        public string ObterMACAddress()
+        {
+            var nics = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (var nic in nics)
+            {
+                if (nic.OperationalStatus == OperationalStatus.Up)
+                {
+                    return BitConverter.ToString(nic.GetPhysicalAddress().GetAddressBytes());
+                }
+            }
+            return "MAC Address não encontrado";
         }
     }
 }

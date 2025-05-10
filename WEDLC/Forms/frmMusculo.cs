@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Activities.Statements;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -6,7 +7,7 @@ using WEDLC.Banco;
 
 namespace WEDLC.Forms
 {
-    public partial class frmEspecializacao : Form
+    public partial class frmMusculo : Form
     {
         public enum Acao
         {
@@ -22,29 +23,40 @@ namespace WEDLC.Forms
         //Código do módulo
         public const int codModulo = 1;
 
-        public frmEspecializacao()
+        public frmMusculo()
         {
             InitializeComponent();
         }
 
-        private void frmEspecializacao_Load(object sender, EventArgs e)
+        private void frmMusculo_Load(object sender, EventArgs e)
         {
             carregaTela();
         }
 
         public void carregaTela()
         {
-            //Popula o grid
-            this.populaGrid(0, 0, "", "");
+            try
+            {
+                //Popula o grid
+                this.populaGrid(0, 0, "", "");
 
-            // Ativa a visualização do click no form
-            this.KeyPreview = true;
+                // Ativa a visualização do click no form
+                this.KeyPreview = true;
 
-            //Configura o grid
-            configuraGrid();
+                //Configura o grid
+                configuraGrid();
 
-            cAcao = Acao.CANCELAR;
+                cAcao = Acao.CANCELAR;
+
+                txtCodigo.Focus();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao carregar a tela!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
+
         private void controlaBotao()
         {
             //Se clicou em novo
@@ -86,12 +98,16 @@ namespace WEDLC.Forms
             // Ajustando o tamanho das colunas
             grdDados.Columns[0].Width = 80; //ID
             grdDados.Columns[1].Width = 80; //Sigla
-            grdDados.Columns[2].Width = 350; //Nome
+            grdDados.Columns[2].Width = 250; //Nome
+            grdDados.Columns[3].Width = 80; //Norm LMD
+            grdDados.Columns[4].Width = 80; //Norm NCM
 
             // Desabilita a edição da coluna
             grdDados.Columns[0].ReadOnly = true;
             grdDados.Columns[1].ReadOnly = true;
             grdDados.Columns[2].ReadOnly = true;
+            grdDados.Columns[3].ReadOnly = true;
+            grdDados.Columns[4].ReadOnly = true;
 
             // Configurando outras propriedades
             //grdDados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Preenche automaticamente
@@ -115,51 +131,55 @@ namespace WEDLC.Forms
             grdDados.CurrentCell = null;
         }
 
-        private DataTable buscaEspecializacao(int tipopesquisa, int idespecializacao, string sigla, string nome)
+        private DataTable buscaMusculo(int tipopesquisa, int idmusculo, string sigla, string nome)
         {
             try
             {
                 DataTable dtAux = new DataTable();
-                cEspecializacao objcEspecializacao = new cEspecializacao();
+                cMusculo objcMusculo = new cMusculo();
 
-                dtAux = objcEspecializacao.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
+                dtAux = objcMusculo.buscaMusculo(tipopesquisa, idmusculo, sigla, nome);
 
                 return dtAux;
-
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro ao tentar buscar a especialização!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao tentar buscar o músculo!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }
 
-        private void populaGrid(int tipopesquisa, int idespecializacao, string sigla, string nome)
+        private void populaGrid(int tipopesquisa, int idmusculo, string sigla, string nome)
+
         {
             try
             {
                 DataTable dt = new DataTable();
-                dt = this.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
+                dt = this.buscaMusculo(tipopesquisa, idmusculo, sigla, nome);
 
                 grdDados.DataSource = null;
 
                 //Renomeia as colunas do datatable
-                dt.Columns["idespecializacao"].ColumnName = "Código";
+                dt.Columns["idmusculo"].ColumnName = "Código";
                 dt.Columns["sigla"].ColumnName = "Sigla";
                 dt.Columns["nome"].ColumnName = "Nome";
-
+                dt.Columns["raizes"].ColumnName = "Raizes";
+                dt.Columns["inervacao"].ColumnName = "Inervação";
                 grdDados.DataSource = dt;
-
+                this.configuraGrid();
             }
             catch (Exception)
             {
                 MessageBox.Show("Erro ao tentar populaGrid!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
         }
+
         public bool validaCampos()
         {
-            if (txtCodigo.Text.ToString().Trim().Length == 0)
+
+            if (txtCodigo.Text.ToString().Trim().Length == 0 && cAcao != Acao.INSERT)
             {
                 MessageBox.Show("O campo código não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtCodigo.Focus();
@@ -179,7 +199,6 @@ namespace WEDLC.Forms
                 txtNome.Focus();
                 return false;
             }
-
             return true;
 
         }
@@ -193,9 +212,15 @@ namespace WEDLC.Forms
 
             //limpa controles
             txtCodigo.Text = string.Empty;
-            txtCodigo.Enabled = false; //Desabilita o campo código
             txtSigla.Text = string.Empty;
             txtNome.Text = string.Empty;
+            txtInervacao.Text = string.Empty;
+            txtRaizes.Text = string.Empty;
+
+            txtCodigo.Enabled = false; //Desabilita o campo código
+
+            txtRaizes.Enabled = true; //Habilita o campo raizes
+            txtInervacao.Enabled = true; //Habilita o campo inervação
 
             //Deixa o foco no nome
             txtSigla.Focus();
@@ -206,69 +231,80 @@ namespace WEDLC.Forms
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            cEspecializacao objEspecializacao = new cEspecializacao();
-
-            objEspecializacao.Nome = txtNome.Text;
-            objEspecializacao.Sigla = txtSigla.Text;
-
-            //Valida campos
-            if (validaCampos() == true)
+            try
             {
-                if (cAcao == Acao.INSERT)
+                cMusculo objMusculo = new cMusculo();
+
+                objMusculo.Nome = txtNome.Text;
+                objMusculo.Sigla = txtSigla.Text;
+                objMusculo.Raizes = txtRaizes.Text;
+                objMusculo.Inervacao = txtInervacao.Text;
+
+                //Valida campos
+                if (validaCampos() == true)
                 {
-                    if (objEspecializacao.incluiEspecialidade() == true)
+                    if (cAcao == Acao.INSERT)
                     {
-                        MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-
-                    }
-                }
-                else if (cAcao == Acao.UPDATE)
-                {
-                    objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
-
-                    //Solicita a confirmação do usuário para alteração
-                    if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        if (objEspecializacao.atualizaEspecializacao() == true)
+                        if (objMusculo.incluiMusculo() == true)
                         {
-                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         }
                         else
                         {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
+
                         }
-
                     }
-                }
-                else if (cAcao == Acao.DELETE)
-                {
-                    objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
-
-                    //Solicita a confirmação do usuário para alteração
-                    if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    else if (cAcao == Acao.UPDATE)
                     {
-                        if (objEspecializacao.excluiEspecializacao() == true)
+                        //Recebe o código do musculo transformado em inteiro
+                        objMusculo.IdMusculo = int.Parse(txtCodigo.Text);
+
+                        //Solicita a confirmação do usuário para alteração
+                        if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
+                            if (objMusculo.atualizamusculo() == true)
+                            {
+                                MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
                         }
                     }
-                }
+                    else if (cAcao == Acao.DELETE)
+                    {
+                        objMusculo.IdMusculo = int.Parse(txtCodigo.Text);
 
-                //Chama o evento cancelar
-                btnCancelar_Click(sender, e);
+                        //Solicita a confirmação do usuário para alteração
+                        if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            if (objMusculo.excluiNervo() == true)
+                            {
+                                MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                    }
+
+                    //Chama o evento cancelar
+                    btnCancelar_Click(sender, e);
+                }
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar gravar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -279,6 +315,10 @@ namespace WEDLC.Forms
 
             //Habilita o campo código
             txtCodigo.Enabled = true;
+
+            //Desabilita os campos normncs, normncm e normlmd
+            txtRaizes.Enabled = false;
+            txtInervacao.Enabled = false;
 
             //Limpa os campos
             limpaControles();
@@ -320,12 +360,16 @@ namespace WEDLC.Forms
                 txtCodigo.Text = grdDados.Rows[e.RowIndex].Cells[0].Value.ToString();
                 txtSigla.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtNome.Text = grdDados.Rows[e.RowIndex].Cells[2].Value.ToString();
+                txtRaizes.Text = grdDados.Rows[e.RowIndex].Cells[3].Value.ToString();
+                txtInervacao.Text = grdDados.Rows[e.RowIndex].Cells[4].Value.ToString();
 
                 //libera os controles 
                 controlaBotao();
 
                 //Desabilita o campo código
                 txtCodigo.Enabled = false;
+                txtRaizes.Enabled = true;
+                txtInervacao.Enabled = true;
 
                 txtSigla.Focus();
             }
@@ -334,6 +378,8 @@ namespace WEDLC.Forms
             grdDados.Columns[0].ReadOnly = true;
             grdDados.Columns[1].ReadOnly = true;
             grdDados.Columns[2].ReadOnly = true;
+            grdDados.Columns[3].ReadOnly = true;
+            grdDados.Columns[4].ReadOnly = true;
         }
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
@@ -346,6 +392,8 @@ namespace WEDLC.Forms
                 //Limpa campos
                 txtSigla.Text = string.Empty;
                 txtNome.Text = string.Empty;
+                txtRaizes.Text = string.Empty;
+                txtInervacao.Text = string.Empty;
 
                 // Verifica a quantidade de caracteres
                 if (txtCodigo.Text.Length == 0)
@@ -359,7 +407,6 @@ namespace WEDLC.Forms
                 }
 
                 this.populaGrid(tipopesquisa, idespecializacao, "", "");
-                this.configuraGrid();
             }
 
         }
@@ -375,6 +422,8 @@ namespace WEDLC.Forms
                 //Limpa campos
                 txtCodigo.Text = string.Empty;
                 txtNome.Text = string.Empty;
+                txtRaizes.Text = string.Empty;
+                txtInervacao.Text = string.Empty;
 
                 if (txtSigla.Text.Length == 0)
                 {
@@ -402,6 +451,8 @@ namespace WEDLC.Forms
                 //Limpa campos
                 txtCodigo.Text = string.Empty;
                 txtSigla.Text = string.Empty;
+                txtRaizes.Text = string.Empty;
+                txtInervacao.Text = string.Empty;
 
                 if (txtNome.Text.Length == 0)
                 {
@@ -436,12 +487,13 @@ namespace WEDLC.Forms
                 e.Handled = true;
             }
         }
-
         private void limpaControles()
         {
             txtCodigo.Text = string.Empty;
             txtSigla.Text = string.Empty;
             txtNome.Text = string.Empty;
+            txtRaizes.Text = string.Empty;
+            txtInervacao.Text = string.Empty;
 
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;

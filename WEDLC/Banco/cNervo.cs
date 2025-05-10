@@ -1,11 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows.Forms;
-
 
 namespace WEDLC.Banco
 {
@@ -54,14 +50,43 @@ namespace WEDLC.Banco
             set { _normncs = value; }  // set method
         }
 
+        // Construtor
+        cConexao objcConexao = new cConexao();
+        MySqlConnection conexao = new MySqlConnection();
+
+        public bool conectaBanco()
+        {
+            conexao = objcConexao.MySqlConection();
+            conexao.Open();
+            if (conexao.State == ConnectionState.Open)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public DataTable buscaNervo(int pTipopesquisa, int pIdNervo, string pSigla, string pNome)
 
         {
             try
             {
-                cConexao objcConexao = new cConexao();
-                var conexao = objcConexao.MySqlConection();
-                conexao.Open();
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
                 MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscanervo", conexao);
                 sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                 sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
@@ -81,127 +106,181 @@ namespace WEDLC.Banco
             }
             catch (Exception)
             {
-
-                throw;
+                // Fecha a conexão  
+                conexao.Close();
+                return null;
             }
         }
 
         public bool incluiNervo()
         {
-
-            cConexao objcConexao = new cConexao();
-            var conexao = objcConexao.MySqlConection();
-            conexao.Open();
-
-            MySqlParameter[] pParam = new MySqlParameter[5];
-            MySqlCommand command = new MySqlCommand();
-
-            pParam[0] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
-            pParam[0].Value = _sigla;
-
-            pParam[1] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-            pParam[1].Value = _nome;
-
-            pParam[2] = new MySqlParameter("pNormLmd", MySqlDbType.VarChar);
-            pParam[2].Value = _normlmd;
-
-            pParam[3] = new MySqlParameter("pNormNcs", MySqlDbType.VarChar);
-            pParam[3].Value = _normncs;
-
-            pParam[4] = new MySqlParameter("pNormNcm", MySqlDbType.VarChar);
-            pParam[4].Value = _normncm;
-
-            command.Connection = conexao;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "pr_incluinervo";
-            command.Parameters.AddRange(pParam);
-
-            if (command.ExecuteNonQuery() == 1)
-
+            try
             {
-                conexao.Close();
-                return true;
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
             }
-            else
+            catch (Exception)
             {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
+                MySqlParameter[] pParam = new MySqlParameter[5];
+                MySqlCommand command = new MySqlCommand();
+
+                pParam[0] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
+                pParam[0].Value = _sigla;
+
+                pParam[1] = new MySqlParameter("pNome", MySqlDbType.VarChar);
+                pParam[1].Value = _nome;
+
+                pParam[2] = new MySqlParameter("pNormLmd", MySqlDbType.VarChar);
+                pParam[2].Value = _normlmd;
+
+                pParam[3] = new MySqlParameter("pNormNcs", MySqlDbType.VarChar);
+                pParam[3].Value = _normncs;
+
+                pParam[4] = new MySqlParameter("pNormNcm", MySqlDbType.VarChar);
+                pParam[4].Value = _normncm;
+
+                command.Connection = conexao;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "pr_incluinervo";
+                command.Parameters.AddRange(pParam);
+
+                if (command.ExecuteNonQuery() == 1)
+
+                {
+                    conexao.Close();
+                    return true;
+                }
+                else
+                {
+                    conexao.Close();
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                // Fecha a conexão  
                 conexao.Close();
                 return false;
             }
+         
         }
         public bool atualizanervo()
         {
-
-            cConexao objcConexao = new cConexao();
-            var conexao = objcConexao.MySqlConection();
-            conexao.Open();
-
-            MySqlParameter[] pParam = new MySqlParameter[6];
-            MySqlCommand command = new MySqlCommand();
-
-            pParam[0] = new MySqlParameter("pIdNervo", MySqlDbType.Int32);
-            pParam[0].Value = _idnervo;
-
-            pParam[1] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
-            pParam[1].Value = _sigla;
-
-            pParam[2] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-            pParam[2].Value = _nome;
-
-            pParam[3] = new MySqlParameter("pNormLmd", MySqlDbType.VarChar);
-            pParam[3].Value = _normlmd;
-
-            pParam[4] = new MySqlParameter("pNormNcm", MySqlDbType.VarChar);
-            pParam[4].Value = _normncm;
-
-            pParam[5] = new MySqlParameter("pNormNcs", MySqlDbType.VarChar);
-            pParam[5].Value = _normncs;
-
-            command.Connection = conexao;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "pr_atualizanervo";
-            command.Parameters.AddRange(pParam);
-
-            if (command.ExecuteNonQuery() == 1)
-
+            try
             {
-                conexao.Close();
-                return true;
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
             }
-            else
+            catch (Exception)
             {
-                conexao.Close();
-                return false;
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
+                MySqlParameter[] pParam = new MySqlParameter[6];
+                MySqlCommand command = new MySqlCommand();
+
+                pParam[0] = new MySqlParameter("pIdNervo", MySqlDbType.Int32);
+                pParam[0].Value = _idnervo;
+
+                pParam[1] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
+                pParam[1].Value = _sigla;
+
+                pParam[2] = new MySqlParameter("pNome", MySqlDbType.VarChar);
+                pParam[2].Value = _nome;
+
+                pParam[3] = new MySqlParameter("pNormLmd", MySqlDbType.VarChar);
+                pParam[3].Value = _normlmd;
+
+                pParam[4] = new MySqlParameter("pNormNcm", MySqlDbType.VarChar);
+                pParam[4].Value = _normncm;
+
+                pParam[5] = new MySqlParameter("pNormNcs", MySqlDbType.VarChar);
+                pParam[5].Value = _normncs;
+
+                command.Connection = conexao;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "pr_atualizanervo";
+                command.Parameters.AddRange(pParam);
+
+                if (command.ExecuteNonQuery() == 1)
+
+                {
+                    conexao.Close();
+                    return true;
+                }
+                else
+                {
+                    conexao.Close();
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Fix: Return null instead of a boolean to match the DataTable return type  ;
             }
         }
 
         public bool excluiNervo()
         {
-
-            cConexao objcConexao = new cConexao();
-            var conexao = objcConexao.MySqlConection();
-            conexao.Open();
-
-            MySqlParameter[] pParam = new MySqlParameter[1];
-            MySqlCommand command = new MySqlCommand();
-
-            pParam[0] = new MySqlParameter("pIdNervo", MySqlDbType.Int32);
-            pParam[0].Value = _idnervo;
-
-            command.Connection = conexao;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "pr_excluinervo";
-            command.Parameters.AddRange(pParam);
-
-            if (command.ExecuteNonQuery() == 1)
-
+            try
             {
-                conexao.Close();
-                return true;
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
             }
-            else
+            catch (Exception)
             {
-                conexao.Close();
-                return false;
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
+                MySqlParameter[] pParam = new MySqlParameter[1];
+                MySqlCommand command = new MySqlCommand();
+
+                pParam[0] = new MySqlParameter("pIdNervo", MySqlDbType.Int32);
+                pParam[0].Value = _idnervo;
+
+                command.Connection = conexao;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "pr_excluinervo";
+                command.Parameters.AddRange(pParam);
+
+                if (command.ExecuteNonQuery() == 1)
+
+                {
+                    conexao.Close();
+                    return true;
+                }
+                else
+                {
+                    conexao.Close();
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Fix: Return null instead of a boolean to match the DataTable return type  ;
             }
         }
     }
