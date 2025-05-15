@@ -123,6 +123,12 @@
     <Compile Include="Banco\cEspecializacao.cs" />
     <Compile Include="Banco\clLog.cs" />
     <Compile Include="Banco\clLogin.cs" />
+    <Compile Include="Forms\frmFolha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmFolha.Designer.cs">
+      <DependentUpon>frmFolha.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmMusculo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +167,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\frmFolha.resx">
+      <DependentUpon>frmFolha.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmMusculo.resx">
       <DependentUpon>frmMusculo.cs</DependentUpon>
     </EmbeddedResource>
@@ -226,7 +235,9 @@
     <Content Include="Imagens\add.png" />
     <Content Include="Imagens\cancel.png" />
     <Content Include="Imagens\cancelblue.png" />
+    <None Include="Imagens\up.png" />
     <None Include="Imagens\edit.png" />
+    <None Include="Imagens\down.png" />
     <Content Include="Imagens\exit.png" />
     <Content Include="Imagens\ok.png" />
     <Content Include="Imagens\save.png" />
