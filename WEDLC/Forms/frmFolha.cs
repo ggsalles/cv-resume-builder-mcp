@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WEDLC.Forms
 {
@@ -22,6 +24,9 @@ namespace WEDLC.Forms
         //Código do módulo
         public const int codModulo = 1;
 
+        public DataTable dtTipoFolha = new DataTable();
+        public DataTable dtGrupo = new DataTable();
+
         public frmFolha()
         {
             InitializeComponent();
@@ -29,7 +34,8 @@ namespace WEDLC.Forms
 
         private void frmFolha_Load(object sender, EventArgs e)
         {
-            carregaTela();
+            //carregaTela();
+            carregaCombo();
         }
 
         public void carregaTela()
@@ -48,13 +54,26 @@ namespace WEDLC.Forms
 
         public void carregaCombo()
         {
-            //DataView dv1 = new DataView(dt);
-            //dv1.RowFilter = "NOME like '%" + cbox_nomeobrigacao.Text + "%'";
-            //cbox_nomeobrigacao.DataSource = dv1;
-            //cbox_nomeobrigacao.ValueMember = "CODENOME";
-            //cbox_nomeobrigacao.DisplayMember = "NOME";
-            //cbox_nomeobrigacao.Refresh();
 
+            carregaTipo();
+            carregaGrupo(0);
+
+            //cboTipo.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
+            //cboTipo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+
+            ////Carrega o combo de tipo de folha
+
+            //cTipoFolha objcTipoFolha = new cTipoFolha();
+            //dtTipoFolha = objcTipoFolha.buscaTipoFolha();
+
+            //DataRow newRow = dtTipoFolha.NewRow();
+            //newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            //dtTipoFolha.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+
+            //cboTipo.DataSource = dtTipoFolha;
+            //cboTipo.ValueMember = "idtipofolha";
+            //cboTipo.DisplayMember = "descricao";
+            //cboTipo.Refresh();
         }
 
         private void controlaBotao()
@@ -114,7 +133,7 @@ namespace WEDLC.Forms
             //Deixa o grid zebrado
             grdDados.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue;
 
-            grdDados.KeyPress += new KeyPressEventHandler(grdDados_KeyPress);
+            //grdDados.KeyPress += new KeyPressEventHandler(grdDados_KeyPress);
 
             //// Adicionando algumas linhas de exemplo
             //string[] row1 = new string[] { "1", "Gustavo" };
@@ -127,14 +146,14 @@ namespace WEDLC.Forms
             grdDados.CurrentCell = null;
         }
 
-        private DataTable buscaEspecializacao(int tipopesquisa, int idespecializacao, string sigla, string nome)
+        private DataTable buscaTipoFolha()
         {
             try
             {
                 DataTable dtAux = new DataTable();
-                cEspecializacao objcEspecializacao = new cEspecializacao();
+                cFolha objcTipoFolha = new cFolha();
 
-                dtAux = objcEspecializacao.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
+                dtAux = objcTipoFolha.buscaTipoFolha();
 
                 return dtAux;
 
@@ -151,7 +170,7 @@ namespace WEDLC.Forms
             try
             {
                 DataTable dt = new DataTable();
-                dt = this.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
+                //dt = this.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
 
                 grdDados.DataSource = null;
 
@@ -418,11 +437,6 @@ namespace WEDLC.Forms
             }
         }
 
-        private void grdDados_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
         private void limpaControles()
         {
             txtCodigo.Text = string.Empty;
@@ -431,6 +445,72 @@ namespace WEDLC.Forms
 
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;
+        }
+
+        private void cboTipo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            FiltrarComboTipo(cboTipo.Text.ToString());
+        }
+
+        private void FiltrarComboTipo(string texto)
+        {
+            DataTable dt = (DataTable)cboTipo.DataSource;
+            bool existe = dt.AsEnumerable().Any(row => row.Field<string>("descricao") == cboTipo.Text);
+            if (existe == false)
+            {
+                MessageBox.Show("Selecione um item válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboTipo.Focus();
+            }
+        }
+
+        public void carregaTipo()
+        {
+            //Carrega o combo de tipo de folha
+            cboTipo.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
+            cboTipo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+
+            cFolha objcTipoFolha = new cFolha();
+            dtTipoFolha = objcTipoFolha.buscaTipoFolha();
+            DataRow newRow = dtTipoFolha.NewRow();
+            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            dtTipoFolha.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+            cboTipo.DataSource = dtTipoFolha;
+            cboTipo.ValueMember = "idtipofolha";
+            cboTipo.DisplayMember = "descricao";
+            cboTipo.Refresh();
+        }
+
+        public void carregaGrupo(int pTipoFolha)
+        {
+            //Carrega o combo de tipo de folha
+            cboGrupo.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
+            cboGrupo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+
+            cFolha objcTipoFolha = new cFolha();
+            dtGrupo = objcTipoFolha.buscaGrupoFolha(pTipoFolha);
+            DataRow newRow = dtGrupo.NewRow();
+            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            dtGrupo.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+            cboGrupo.DataSource = dtGrupo;
+            cboGrupo.ValueMember = "idgrupo";
+            cboGrupo.DisplayMember = "descricao";
+            cboGrupo.Refresh();
+        }
+
+        private void FiltrarComboGrupo(string texto)
+        {
+            DataTable dt = (DataTable)cboGrupo.DataSource;
+            bool existe = dt.AsEnumerable().Any(row => row.Field<string>("descricao") == cboGrupo.Text);
+            if (existe == false)
+            {
+                MessageBox.Show("Selecione um item válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboGrupo.Focus();
+            }
+        }
+
+        private void cboGrupo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            FiltrarComboGrupo(cboGrupo.Text.ToString());
         }
     }
 }

@@ -83,5 +83,17 @@ namespace WEDLC.Forms
             }
             return "MAC Address não encontrado";
         }
+
+        private void folhaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Cria um objeto para o form de troca de senhas abrir
+            frmFolha objFolha = new frmFolha();
+
+            // Define o form pai como o form principal
+            objFolha.MdiParent = this;
+
+            //Abre o form de especialização não modal
+            objFolha.Show();
+        }
     }
 }

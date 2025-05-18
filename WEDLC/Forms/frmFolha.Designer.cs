@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.grpBoxDados = new System.Windows.Forms.GroupBox();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cboGrupo = new System.Windows.Forms.ComboBox();
+            this.cboTipo = new System.Windows.Forms.ComboBox();
             this.txtSigla = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
@@ -83,8 +84,8 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.grpBoxDados.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.grpBotoes.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
@@ -99,7 +100,6 @@
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.SuspendLayout();
             // 
             // grpBoxDados
@@ -107,8 +107,8 @@
             this.grpBoxDados.Controls.Add(this.dataGridView4);
             this.grpBoxDados.Controls.Add(this.label3);
             this.grpBoxDados.Controls.Add(this.label2);
-            this.grpBoxDados.Controls.Add(this.comboBox2);
-            this.grpBoxDados.Controls.Add(this.comboBox1);
+            this.grpBoxDados.Controls.Add(this.cboGrupo);
+            this.grpBoxDados.Controls.Add(this.cboTipo);
             this.grpBoxDados.Controls.Add(this.txtSigla);
             this.grpBoxDados.Controls.Add(this.label1);
             this.grpBoxDados.Controls.Add(this.txtNome);
@@ -121,10 +121,18 @@
             this.grpBoxDados.TabIndex = 0;
             this.grpBoxDados.TabStop = false;
             // 
+            // dataGridView4
+            // 
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Location = new System.Drawing.Point(6, 61);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.Size = new System.Drawing.Size(1130, 168);
+            this.dataGridView4.TabIndex = 8;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(567, 18);
+            this.label3.Location = new System.Drawing.Point(566, 19);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(28, 13);
             this.label3.TabIndex = 7;
@@ -133,27 +141,29 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(682, 18);
+            this.label2.Location = new System.Drawing.Point(718, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Grupo";
             // 
-            // comboBox2
+            // cboGrupo
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(679, 34);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(103, 21);
-            this.comboBox2.TabIndex = 5;
+            this.cboGrupo.FormattingEnabled = true;
+            this.cboGrupo.Location = new System.Drawing.Point(718, 35);
+            this.cboGrupo.Name = "cboGrupo";
+            this.cboGrupo.Size = new System.Drawing.Size(140, 21);
+            this.cboGrupo.TabIndex = 5;
+            this.cboGrupo.Validating += new System.ComponentModel.CancelEventHandler(this.cboGrupo_Validating);
             // 
-            // comboBox1
+            // cboTipo
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(567, 34);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(103, 21);
-            this.comboBox1.TabIndex = 4;
+            this.cboTipo.FormattingEnabled = true;
+            this.cboTipo.Location = new System.Drawing.Point(566, 35);
+            this.cboTipo.Name = "cboTipo";
+            this.cboTipo.Size = new System.Drawing.Size(146, 21);
+            this.cboTipo.TabIndex = 4;
+            this.cboTipo.Validating += new System.ComponentModel.CancelEventHandler(this.cboTipo_Validating);
             // 
             // txtSigla
             // 
@@ -549,7 +559,7 @@
             this.groupBox9.Size = new System.Drawing.Size(263, 45);
             this.groupBox9.TabIndex = 4;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Blink Reflex";
+            this.groupBox9.Text = "NSPD";
             // 
             // radioButton7
             // 
@@ -582,7 +592,7 @@
             this.groupBox8.Size = new System.Drawing.Size(264, 45);
             this.groupBox8.TabIndex = 3;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Blink Reflex";
+            this.groupBox8.Text = "Reflexo H";
             // 
             // radioButton5
             // 
@@ -615,7 +625,7 @@
             this.groupBox7.Size = new System.Drawing.Size(263, 45);
             this.groupBox7.TabIndex = 2;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Blink Reflex";
+            this.groupBox7.Text = "RBC";
             // 
             // radioButton3
             // 
@@ -672,14 +682,6 @@
             this.radioButton1.Text = "Sim";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // dataGridView4
-            // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(6, 61);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(1130, 168);
-            this.dataGridView4.TabIndex = 8;
-            // 
             // frmFolha
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -703,6 +705,7 @@
             this.Load += new System.EventHandler(this.frmFolha_Load);
             this.grpBoxDados.ResumeLayout(false);
             this.grpBoxDados.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.grpBotoes.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -725,7 +728,6 @@
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -748,8 +750,8 @@
         private System.Windows.Forms.Button btnAlterar;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cboGrupo;
+        private System.Windows.Forms.ComboBox cboTipo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;

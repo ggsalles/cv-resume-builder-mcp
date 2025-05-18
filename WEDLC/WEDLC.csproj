@@ -123,6 +123,7 @@
     <Compile Include="Banco\cEspecializacao.cs" />
     <Compile Include="Banco\clLog.cs" />
     <Compile Include="Banco\clLogin.cs" />
+    <Compile Include="Banco\cFolha.cs" />
     <Compile Include="Forms\frmFolha.cs">
       <SubType>Form</SubType>
     </Compile>
