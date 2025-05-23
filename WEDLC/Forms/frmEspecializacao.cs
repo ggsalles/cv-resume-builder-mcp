@@ -159,12 +159,12 @@ namespace WEDLC.Forms
         }
         public bool validaCampos()
         {
-            if (txtCodigo.Text.ToString().Trim().Length == 0)
-            {
-                MessageBox.Show("O campo código não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCodigo.Focus();
-                return false;
-            }
+            //if (txtCodigo.Text.ToString().Trim().Length == 0)
+            //{
+            //    MessageBox.Show("O campo código não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    txtCodigo.Focus();
+            //    return false;
+            //}
 
             if (txtSigla.Text.ToString().Trim().Length == 0)
             {

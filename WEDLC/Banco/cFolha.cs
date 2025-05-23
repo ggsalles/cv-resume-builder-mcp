@@ -111,5 +111,48 @@ namespace WEDLC.Banco
                 return null;
             }
         }
+
+        public DataTable buscaFolha(int pTipopesquisa, Int32 pIdFolha, string pSigla, string pNome)
+
+        {
+            try
+            {
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
+                MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscafolha", conexao);
+                sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
+                sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", pIdFolha);
+                sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
+                sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
+
+                DataTable dt = new DataTable();
+                sqlDa.Fill(dt);
+
+                //Fecha a conexão
+                conexao.Close();
+
+                // Retorna o DataTable
+                return dt;
+            }
+            catch (Exception)
+            {
+                // Fecha a conexão  
+                conexao.Close();
+                return null;
+            }
+        }
     }
 }

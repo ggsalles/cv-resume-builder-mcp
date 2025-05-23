@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Activities.Expressions;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -34,8 +36,9 @@ namespace WEDLC.Forms
 
         private void frmFolha_Load(object sender, EventArgs e)
         {
-            //carregaTela();
             carregaCombo();
+            carregaTela();
+
         }
 
         public void carregaTela()
@@ -57,23 +60,11 @@ namespace WEDLC.Forms
 
             carregaTipo();
             carregaGrupo(0);
+            CarregaComboSimNao(cboSimNaoBlink);
+            CarregaComboSimNao(cboSimNaoNSPD);
+            CarregaComboSimNao(cboSimNaoRBC);
+            CarregaComboSimNao(cboSimNaoReflexo);
 
-            //cboTipo.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
-            //cboTipo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
-
-            ////Carrega o combo de tipo de folha
-
-            //cTipoFolha objcTipoFolha = new cTipoFolha();
-            //dtTipoFolha = objcTipoFolha.buscaTipoFolha();
-
-            //DataRow newRow = dtTipoFolha.NewRow();
-            //newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
-            //dtTipoFolha.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
-
-            //cboTipo.DataSource = dtTipoFolha;
-            //cboTipo.ValueMember = "idtipofolha";
-            //cboTipo.DisplayMember = "descricao";
-            //cboTipo.Refresh();
         }
 
         private void controlaBotao()
@@ -108,42 +99,28 @@ namespace WEDLC.Forms
         }
         private void configuraGrid()
         {
-
-            //Configurando as colunas manualmente
-            //grdDados.ColumnCount = 2; // Define o número de colunas
-            //grdDados.Columns[0].Name = "Código";
-            //grdDados.Columns[1].Name = "Nome";
-
-            // Ajustando o tamanho das colunas
+            // Ajustando o tamanho das colunas e ocultando as que não são necessárias
             grdDados.Columns[0].Width = 80; //ID
-            grdDados.Columns[1].Width = 80; //Sigla
+            grdDados.Columns[1].Width = 120; //Sigla
             grdDados.Columns[2].Width = 350; //Nome
+            grdDados.Columns[3].Visible = false; //IdTipo
+            grdDados.Columns[4].Width = 80; //Tipo
+            grdDados.Columns[5].Visible = false; //IdGrupo
+            grdDados.Columns[6].Width = 80; //Grupo
 
             // Desabilita a edição da coluna
             grdDados.Columns[0].ReadOnly = true;
             grdDados.Columns[1].ReadOnly = true;
             grdDados.Columns[2].ReadOnly = true;
+            grdDados.Columns[4].ReadOnly = true;
+            grdDados.Columns[6].ReadOnly = true;
 
             // Configurando outras propriedades
-            //grdDados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Preenche automaticamente
             grdDados.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
             grdDados.MultiSelect = false; // Impede seleção múltipla
-            grdDados.AllowUserToAddRows = false;
-
-            //Deixa o grid zebrado
-            grdDados.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue;
-
-            //grdDados.KeyPress += new KeyPressEventHandler(grdDados_KeyPress);
-
-            //// Adicionando algumas linhas de exemplo
-            //string[] row1 = new string[] { "1", "Gustavo" };
-            //string[] row2 = new string[] { "2", "Viviane" };
-
-            //grdDados.Rows.Add(row1);
-            //grdDados.Rows.Add(row2);
-
-            //Desmarca a seleção do grid
-            grdDados.CurrentCell = null;
+            grdDados.AllowUserToAddRows = false; // Impede adição de novas linhas
+            grdDados.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
+            grdDados.CurrentCell = null; // Desmarca a célula atual
         }
 
         private DataTable buscaTipoFolha()
@@ -165,19 +142,42 @@ namespace WEDLC.Forms
             }
         }
 
-        private void populaGrid(int tipopesquisa, int idespecializacao, string sigla, string nome)
+        private DataTable buscaFolha(int tipopesquisa, Int32 idfolha, string sigla, string nome)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cFolha objcTipoFolha = new cFolha();
+
+                dtAux = objcTipoFolha.buscaFolha(tipopesquisa, idfolha, sigla, nome);
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar buscar a folha!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private void populaGrid(int tipopesquisa, Int32 idfolha, string sigla, string nome)
         {
             try
             {
                 DataTable dt = new DataTable();
-                //dt = this.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
+                dt = this.buscaFolha (tipopesquisa, idfolha, sigla, nome);
 
-                grdDados.DataSource = null;
+                grdEstudoPotenciais.DataSource = null;
 
                 //Renomeia as colunas do datatable
-                dt.Columns["idespecializacao"].ColumnName = "Código";
+                dt.Columns["idfolha"].ColumnName = "Código";
                 dt.Columns["sigla"].ColumnName = "Sigla";
                 dt.Columns["nome"].ColumnName = "Nome";
+                dt.Columns["idtipofolha"].ColumnName = "IdTipoFolha";
+                dt.Columns["descricaotipo"].ColumnName = "Tipo";
+                dt.Columns["idgrupo"].ColumnName = "IdGrupo";
+                dt.Columns["descricaogrupo"].ColumnName = "Grupo";
 
                 grdDados.DataSource = dt;
 
@@ -190,13 +190,6 @@ namespace WEDLC.Forms
         }
         public bool validaCampos()
         {
-            if (txtCodigo.Text.ToString().Trim().Length == 0)
-            {
-                MessageBox.Show("O campo código não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCodigo.Focus();
-                return false;
-            }
-
             if (txtSigla.Text.ToString().Trim().Length == 0)
             {
                 MessageBox.Show("O campo sigla não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -232,7 +225,7 @@ namespace WEDLC.Forms
             txtSigla.Focus();
 
             //Desmarca a seleção do grid
-            grdDados.CurrentCell = null;
+            grdEstudoPotenciais.CurrentCell = null;
 
         }
         private void btnGravar_Click(object sender, EventArgs e)
@@ -315,7 +308,7 @@ namespace WEDLC.Forms
             limpaControles();
 
             //Desmarca a seleção do grid
-            grdDados.CurrentCell = null;
+            grdEstudoPotenciais.CurrentCell = null;
 
             //Carrega o grid
             carregaTela();
@@ -341,10 +334,6 @@ namespace WEDLC.Forms
             this.Close();
         }
 
-        private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
             //Determina a acao
@@ -442,9 +431,11 @@ namespace WEDLC.Forms
             txtCodigo.Text = string.Empty;
             txtSigla.Text = string.Empty;
             txtNome.Text = string.Empty;
+            cboTipo.SelectedIndex = 0;
+            cboGrupo.SelectedIndex = 0;
 
             //Desmarca a seleção do grid
-            grdDados.CurrentCell = null;
+            grdEstudoPotenciais.CurrentCell = null;
         }
 
         private void cboTipo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -511,6 +502,67 @@ namespace WEDLC.Forms
         private void cboGrupo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             FiltrarComboGrupo(cboGrupo.Text.ToString());
+        }
+
+        private void cboTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboTipo_Validated(object sender, EventArgs e)
+        {
+            if (cboTipo.SelectedValue.ToString() == "")
+            {
+                carregaGrupo(0); // carrega tudo
+            }
+            else
+            {
+                carregaGrupo(int.Parse(cboTipo.SelectedValue.ToString()));
+                cboGrupo.Focus();
+            }
+        }
+
+        private void CarregaComboSimNao(System.Windows.Forms.ComboBox objCombo)
+        {
+            objCombo.DisplayMember = "Descricao";
+            objCombo.ValueMember = "Id";
+            objCombo.Items.Add(new cSimNao { Id = "0", Descricao = "Nenhum" });
+            objCombo.Items.Add(new cSimNao { Id = "1", Descricao = "Sim" });
+            objCombo.Items.Add(new cSimNao { Id = "2", Descricao = "Não" });
+
+            objCombo.DropDownStyle = ComboBoxStyle.DropDownList; // Define o estilo do ComboBox como DropDownList
+            objCombo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+            objCombo.SelectedIndex = 0; // Define o índice padrão como 0 (primeiro item);
+        }
+
+        private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                //Determina a acao
+                cAcao = Acao.UPDATE;
+
+                txtCodigo.Text = grdDados.Rows[e.RowIndex].Cells[0].Value.ToString();
+                txtSigla.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
+                txtNome.Text = grdDados.Rows[e.RowIndex].Cells[2].Value.ToString();
+                cboTipo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[3].Value.ToString();
+                cboGrupo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[5].Value.ToString();
+
+                //libera os controles 
+                controlaBotao();
+
+                //Desabilita o campo código
+                txtCodigo.Enabled = false;
+
+                txtSigla.Focus();
+            }
+
+            // Desabilita a edição da coluna
+            grdDados.Columns[0].ReadOnly = true;
+            grdDados.Columns[1].ReadOnly = true;
+            grdDados.Columns[2].ReadOnly = true;
+
         }
     }
 }

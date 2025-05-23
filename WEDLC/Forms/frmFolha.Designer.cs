@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.grpBoxDados = new System.Windows.Forms.GroupBox();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.grdDados = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cboGrupo = new System.Windows.Forms.ComboBox();
@@ -50,51 +50,47 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtEstudoPotencia = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.grdDados = new System.Windows.Forms.DataGridView();
+            this.grdEstudoPotenciais = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cboAvalicaoMuscular = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.grdAvaliacaoMuscular = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cboNeuroConducaoMotora = new System.Windows.Forms.ComboBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.grdNeuroCondMotora = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.cboNeuroConducaoSensorial = new System.Windows.Forms.ComboBox();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.grdNeuroCondSensorial = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton8 = new System.Windows.Forms.RadioButton();
+            this.cboSimNaoNSPD = new System.Windows.Forms.ComboBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.cboSimNaoReflexo = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.cboSimNaoRBC = new System.Windows.Forms.ComboBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.cboSimNaoBlink = new System.Windows.Forms.ComboBox();
             this.grpBoxDados.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
             this.grpBotoes.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdEstudoPotenciais)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdAvaliacaoMuscular)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdNeuroCondMotora)).BeginInit();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdNeuroCondSensorial)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -104,7 +100,7 @@
             // 
             // grpBoxDados
             // 
-            this.grpBoxDados.Controls.Add(this.dataGridView4);
+            this.grpBoxDados.Controls.Add(this.grdDados);
             this.grpBoxDados.Controls.Add(this.label3);
             this.grpBoxDados.Controls.Add(this.label2);
             this.grpBoxDados.Controls.Add(this.cboGrupo);
@@ -121,13 +117,14 @@
             this.grpBoxDados.TabIndex = 0;
             this.grpBoxDados.TabStop = false;
             // 
-            // dataGridView4
+            // grdDados
             // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(6, 61);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(1130, 168);
-            this.dataGridView4.TabIndex = 8;
+            this.grdDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdDados.Location = new System.Drawing.Point(6, 61);
+            this.grdDados.Name = "grdDados";
+            this.grdDados.Size = new System.Drawing.Size(1130, 168);
+            this.grdDados.TabIndex = 6;
+            this.grdDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDados_CellClick);
             // 
             // label3
             // 
@@ -149,6 +146,7 @@
             // 
             // cboGrupo
             // 
+            this.cboGrupo.Enabled = false;
             this.cboGrupo.FormattingEnabled = true;
             this.cboGrupo.Location = new System.Drawing.Point(718, 35);
             this.cboGrupo.Name = "cboGrupo";
@@ -158,12 +156,15 @@
             // 
             // cboTipo
             // 
+            this.cboTipo.Enabled = false;
             this.cboTipo.FormattingEnabled = true;
             this.cboTipo.Location = new System.Drawing.Point(566, 35);
             this.cboTipo.Name = "cboTipo";
             this.cboTipo.Size = new System.Drawing.Size(146, 21);
             this.cboTipo.TabIndex = 4;
+            this.cboTipo.SelectedIndexChanged += new System.EventHandler(this.cboTipo_SelectedIndexChanged);
             this.cboTipo.Validating += new System.ComponentModel.CancelEventHandler(this.cboTipo_Validating);
+            this.cboTipo.Validated += new System.EventHandler(this.cboTipo_Validated);
             // 
             // txtSigla
             // 
@@ -242,7 +243,7 @@
             this.btnAlterar.Location = new System.Drawing.Point(100, 13);
             this.btnAlterar.Name = "btnAlterar";
             this.btnAlterar.Size = new System.Drawing.Size(85, 27);
-            this.btnAlterar.TabIndex = 4;
+            this.btnAlterar.TabIndex = 28;
             this.btnAlterar.Text = "Alterar";
             this.btnAlterar.UseVisualStyleBackColor = true;
             // 
@@ -254,7 +255,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(373, 13);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(85, 27);
-            this.btnCancelar.TabIndex = 7;
+            this.btnCancelar.TabIndex = 31;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -267,7 +268,7 @@
             this.btnExcluir.Location = new System.Drawing.Point(191, 13);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(85, 27);
-            this.btnExcluir.TabIndex = 5;
+            this.btnExcluir.TabIndex = 29;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
             this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
@@ -280,7 +281,7 @@
             this.btnGravar.Location = new System.Drawing.Point(282, 13);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(85, 27);
-            this.btnGravar.TabIndex = 6;
+            this.btnGravar.TabIndex = 30;
             this.btnGravar.Text = "Gravar";
             this.btnGravar.UseVisualStyleBackColor = true;
             this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
@@ -292,7 +293,7 @@
             this.btnSair.Location = new System.Drawing.Point(1052, 13);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(85, 27);
-            this.btnSair.TabIndex = 8;
+            this.btnSair.TabIndex = 32;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
@@ -304,7 +305,7 @@
             this.btnNovo.Location = new System.Drawing.Point(9, 13);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(85, 27);
-            this.btnNovo.TabIndex = 3;
+            this.btnNovo.TabIndex = 27;
             this.btnNovo.Text = "Novo";
             this.btnNovo.UseVisualStyleBackColor = true;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
@@ -313,9 +314,10 @@
             // 
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.txtEstudoPotencia);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.grdDados);
+            this.groupBox1.Controls.Add(this.grdEstudoPotenciais);
+            this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(876, 260);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(282, 194);
@@ -329,7 +331,7 @@
             this.button2.Location = new System.Drawing.Point(246, 38);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(27, 24);
-            this.button2.TabIndex = 9;
+            this.button2.TabIndex = 21;
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -338,16 +340,16 @@
             this.button1.Location = new System.Drawing.Point(213, 38);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(27, 24);
-            this.button1.TabIndex = 6;
+            this.button1.TabIndex = 20;
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // txtEstudoPotencia
             // 
-            this.textBox2.Location = new System.Drawing.Point(9, 40);
-            this.textBox2.MaxLength = 10;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(198, 20);
-            this.textBox2.TabIndex = 8;
+            this.txtEstudoPotencia.Location = new System.Drawing.Point(9, 40);
+            this.txtEstudoPotencia.MaxLength = 10;
+            this.txtEstudoPotencia.Name = "txtEstudoPotencia";
+            this.txtEstudoPotencia.Size = new System.Drawing.Size(198, 20);
+            this.txtEstudoPotencia.TabIndex = 19;
             // 
             // label5
             // 
@@ -358,21 +360,22 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Código";
             // 
-            // grdDados
+            // grdEstudoPotenciais
             // 
-            this.grdDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdDados.Location = new System.Drawing.Point(9, 68);
-            this.grdDados.Name = "grdDados";
-            this.grdDados.Size = new System.Drawing.Size(264, 111);
-            this.grdDados.TabIndex = 6;
+            this.grdEstudoPotenciais.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdEstudoPotenciais.Location = new System.Drawing.Point(9, 68);
+            this.grdEstudoPotenciais.Name = "grdEstudoPotenciais";
+            this.grdEstudoPotenciais.Size = new System.Drawing.Size(264, 111);
+            this.grdEstudoPotenciais.TabIndex = 22;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.comboBox3);
+            this.groupBox2.Controls.Add(this.cboAvalicaoMuscular);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.dataGridView1);
+            this.groupBox2.Controls.Add(this.grdAvaliacaoMuscular);
+            this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(12, 260);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(282, 194);
@@ -380,13 +383,13 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Avaliação Muscular";
             // 
-            // comboBox3
+            // cboAvalicaoMuscular
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(9, 38);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(198, 21);
-            this.comboBox3.TabIndex = 10;
+            this.cboAvalicaoMuscular.FormattingEnabled = true;
+            this.cboAvalicaoMuscular.Location = new System.Drawing.Point(9, 38);
+            this.cboAvalicaoMuscular.Name = "cboAvalicaoMuscular";
+            this.cboAvalicaoMuscular.Size = new System.Drawing.Size(198, 21);
+            this.cboAvalicaoMuscular.TabIndex = 7;
             // 
             // button3
             // 
@@ -403,7 +406,7 @@
             this.button4.Location = new System.Drawing.Point(213, 38);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(27, 24);
-            this.button4.TabIndex = 6;
+            this.button4.TabIndex = 8;
             this.button4.UseVisualStyleBackColor = true;
             // 
             // label4
@@ -415,21 +418,22 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Código";
             // 
-            // dataGridView1
+            // grdAvaliacaoMuscular
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(9, 68);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(264, 111);
-            this.dataGridView1.TabIndex = 6;
+            this.grdAvaliacaoMuscular.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdAvaliacaoMuscular.Location = new System.Drawing.Point(9, 68);
+            this.grdAvaliacaoMuscular.Name = "grdAvaliacaoMuscular";
+            this.grdAvaliacaoMuscular.Size = new System.Drawing.Size(264, 111);
+            this.grdAvaliacaoMuscular.TabIndex = 10;
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.comboBox4);
+            this.groupBox3.Controls.Add(this.cboNeuroConducaoMotora);
             this.groupBox3.Controls.Add(this.button5);
             this.groupBox3.Controls.Add(this.button6);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.dataGridView2);
+            this.groupBox3.Controls.Add(this.grdNeuroCondMotora);
+            this.groupBox3.Enabled = false;
             this.groupBox3.Location = new System.Drawing.Point(300, 260);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(282, 194);
@@ -437,13 +441,13 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Neuro Condução Motora";
             // 
-            // comboBox4
+            // cboNeuroConducaoMotora
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(9, 38);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(198, 21);
-            this.comboBox4.TabIndex = 10;
+            this.cboNeuroConducaoMotora.FormattingEnabled = true;
+            this.cboNeuroConducaoMotora.Location = new System.Drawing.Point(9, 38);
+            this.cboNeuroConducaoMotora.Name = "cboNeuroConducaoMotora";
+            this.cboNeuroConducaoMotora.Size = new System.Drawing.Size(198, 21);
+            this.cboNeuroConducaoMotora.TabIndex = 11;
             // 
             // button5
             // 
@@ -451,7 +455,7 @@
             this.button5.Location = new System.Drawing.Point(246, 38);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(27, 24);
-            this.button5.TabIndex = 9;
+            this.button5.TabIndex = 13;
             this.button5.UseVisualStyleBackColor = true;
             // 
             // button6
@@ -460,7 +464,7 @@
             this.button6.Location = new System.Drawing.Point(213, 38);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(27, 24);
-            this.button6.TabIndex = 6;
+            this.button6.TabIndex = 12;
             this.button6.UseVisualStyleBackColor = true;
             // 
             // label6
@@ -472,21 +476,22 @@
             this.label6.TabIndex = 7;
             this.label6.Text = "Código";
             // 
-            // dataGridView2
+            // grdNeuroCondMotora
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(9, 68);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(264, 111);
-            this.dataGridView2.TabIndex = 6;
+            this.grdNeuroCondMotora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdNeuroCondMotora.Location = new System.Drawing.Point(9, 68);
+            this.grdNeuroCondMotora.Name = "grdNeuroCondMotora";
+            this.grdNeuroCondMotora.Size = new System.Drawing.Size(264, 111);
+            this.grdNeuroCondMotora.TabIndex = 14;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.comboBox5);
+            this.groupBox4.Controls.Add(this.cboNeuroConducaoSensorial);
             this.groupBox4.Controls.Add(this.button7);
             this.groupBox4.Controls.Add(this.button8);
             this.groupBox4.Controls.Add(this.label7);
-            this.groupBox4.Controls.Add(this.dataGridView3);
+            this.groupBox4.Controls.Add(this.grdNeuroCondSensorial);
+            this.groupBox4.Enabled = false;
             this.groupBox4.Location = new System.Drawing.Point(588, 260);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(282, 194);
@@ -494,13 +499,13 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Neuro Condução Sensorial";
             // 
-            // comboBox5
+            // cboNeuroConducaoSensorial
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(9, 38);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(198, 21);
-            this.comboBox5.TabIndex = 10;
+            this.cboNeuroConducaoSensorial.FormattingEnabled = true;
+            this.cboNeuroConducaoSensorial.Location = new System.Drawing.Point(9, 38);
+            this.cboNeuroConducaoSensorial.Name = "cboNeuroConducaoSensorial";
+            this.cboNeuroConducaoSensorial.Size = new System.Drawing.Size(198, 21);
+            this.cboNeuroConducaoSensorial.TabIndex = 15;
             // 
             // button7
             // 
@@ -508,7 +513,7 @@
             this.button7.Location = new System.Drawing.Point(246, 38);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(27, 24);
-            this.button7.TabIndex = 9;
+            this.button7.TabIndex = 17;
             this.button7.UseVisualStyleBackColor = true;
             // 
             // button8
@@ -517,7 +522,7 @@
             this.button8.Location = new System.Drawing.Point(213, 38);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(27, 24);
-            this.button8.TabIndex = 6;
+            this.button8.TabIndex = 16;
             this.button8.UseVisualStyleBackColor = true;
             // 
             // label7
@@ -529,13 +534,13 @@
             this.label7.TabIndex = 7;
             this.label7.Text = "Código";
             // 
-            // dataGridView3
+            // grdNeuroCondSensorial
             // 
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(9, 68);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(264, 111);
-            this.dataGridView3.TabIndex = 6;
+            this.grdNeuroCondSensorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdNeuroCondSensorial.Location = new System.Drawing.Point(9, 68);
+            this.grdNeuroCondSensorial.Name = "grdNeuroCondSensorial";
+            this.grdNeuroCondSensorial.Size = new System.Drawing.Size(264, 111);
+            this.grdNeuroCondSensorial.TabIndex = 18;
             // 
             // groupBox5
             // 
@@ -543,6 +548,7 @@
             this.groupBox5.Controls.Add(this.groupBox8);
             this.groupBox5.Controls.Add(this.groupBox7);
             this.groupBox5.Controls.Add(this.groupBox6);
+            this.groupBox5.Enabled = false;
             this.groupBox5.Location = new System.Drawing.Point(12, 460);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(1146, 76);
@@ -552,8 +558,7 @@
             // 
             // groupBox9
             // 
-            this.groupBox9.Controls.Add(this.radioButton7);
-            this.groupBox9.Controls.Add(this.radioButton8);
+            this.groupBox9.Controls.Add(this.cboSimNaoNSPD);
             this.groupBox9.Location = new System.Drawing.Point(864, 19);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(263, 45);
@@ -561,32 +566,17 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "NSPD";
             // 
-            // radioButton7
+            // cboSimNaoNSPD
             // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(54, 19);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(45, 17);
-            this.radioButton7.TabIndex = 2;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "Não";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton8
-            // 
-            this.radioButton8.AutoSize = true;
-            this.radioButton8.Location = new System.Drawing.Point(6, 19);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(42, 17);
-            this.radioButton8.TabIndex = 1;
-            this.radioButton8.TabStop = true;
-            this.radioButton8.Text = "Sim";
-            this.radioButton8.UseVisualStyleBackColor = true;
+            this.cboSimNaoNSPD.FormattingEnabled = true;
+            this.cboSimNaoNSPD.Location = new System.Drawing.Point(6, 18);
+            this.cboSimNaoNSPD.Name = "cboSimNaoNSPD";
+            this.cboSimNaoNSPD.Size = new System.Drawing.Size(201, 21);
+            this.cboSimNaoNSPD.TabIndex = 26;
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.radioButton5);
-            this.groupBox8.Controls.Add(this.radioButton6);
+            this.groupBox8.Controls.Add(this.cboSimNaoReflexo);
             this.groupBox8.Location = new System.Drawing.Point(585, 19);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(264, 45);
@@ -594,32 +584,17 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Reflexo H";
             // 
-            // radioButton5
+            // cboSimNaoReflexo
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(54, 19);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(45, 17);
-            this.radioButton5.TabIndex = 2;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "Não";
-            this.radioButton5.UseVisualStyleBackColor = true;
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(6, 19);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(42, 17);
-            this.radioButton6.TabIndex = 1;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "Sim";
-            this.radioButton6.UseVisualStyleBackColor = true;
+            this.cboSimNaoReflexo.FormattingEnabled = true;
+            this.cboSimNaoReflexo.Location = new System.Drawing.Point(6, 18);
+            this.cboSimNaoReflexo.Name = "cboSimNaoReflexo";
+            this.cboSimNaoReflexo.Size = new System.Drawing.Size(192, 21);
+            this.cboSimNaoReflexo.TabIndex = 25;
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.radioButton3);
-            this.groupBox7.Controls.Add(this.radioButton4);
+            this.groupBox7.Controls.Add(this.cboSimNaoRBC);
             this.groupBox7.Location = new System.Drawing.Point(297, 19);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(263, 45);
@@ -627,32 +602,17 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "RBC";
             // 
-            // radioButton3
+            // cboSimNaoRBC
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(54, 19);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(45, 17);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Não";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(6, 19);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(42, 17);
-            this.radioButton4.TabIndex = 1;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "Sim";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.cboSimNaoRBC.FormattingEnabled = true;
+            this.cboSimNaoRBC.Location = new System.Drawing.Point(6, 18);
+            this.cboSimNaoRBC.Name = "cboSimNaoRBC";
+            this.cboSimNaoRBC.Size = new System.Drawing.Size(192, 21);
+            this.cboSimNaoRBC.TabIndex = 24;
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.radioButton2);
-            this.groupBox6.Controls.Add(this.radioButton1);
+            this.groupBox6.Controls.Add(this.cboSimNaoBlink);
             this.groupBox6.Location = new System.Drawing.Point(9, 19);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(264, 45);
@@ -660,27 +620,13 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Blink Reflex";
             // 
-            // radioButton2
+            // cboSimNaoBlink
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(54, 19);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(45, 17);
-            this.radioButton2.TabIndex = 2;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Não";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(42, 17);
-            this.radioButton1.TabIndex = 1;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Sim";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.cboSimNaoBlink.FormattingEnabled = true;
+            this.cboSimNaoBlink.Location = new System.Drawing.Point(6, 19);
+            this.cboSimNaoBlink.Name = "cboSimNaoBlink";
+            this.cboSimNaoBlink.Size = new System.Drawing.Size(192, 21);
+            this.cboSimNaoBlink.TabIndex = 23;
             // 
             // frmFolha
             // 
@@ -705,29 +651,25 @@
             this.Load += new System.EventHandler(this.frmFolha_Load);
             this.grpBoxDados.ResumeLayout(false);
             this.grpBoxDados.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdDados)).EndInit();
             this.grpBotoes.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdDados)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdEstudoPotenciais)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdAvaliacaoMuscular)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdNeuroCondMotora)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdNeuroCondSensorial)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
             this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -753,42 +695,38 @@
         private System.Windows.Forms.ComboBox cboGrupo;
         private System.Windows.Forms.ComboBox cboTipo;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtEstudoPotencia;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridView grdDados;
+        private System.Windows.Forms.DataGridView grdEstudoPotenciais;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cboAvalicaoMuscular;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView grdAvaliacaoMuscular;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox cboNeuroConducaoMotora;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView grdNeuroCondMotora;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox cboNeuroConducaoSensorial;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView grdNeuroCondSensorial;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.RadioButton radioButton7;
-        private System.Windows.Forms.RadioButton radioButton8;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton6;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.DataGridView grdDados;
+        private System.Windows.Forms.ComboBox cboSimNaoReflexo;
+        private System.Windows.Forms.ComboBox cboSimNaoRBC;
+        private System.Windows.Forms.ComboBox cboSimNaoBlink;
+        private System.Windows.Forms.ComboBox cboSimNaoNSPD;
     }
 }
