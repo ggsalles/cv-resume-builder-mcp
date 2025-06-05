@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Activities.Expressions;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using WEDLC.Banco;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WEDLC.Forms
 {
@@ -28,6 +26,9 @@ namespace WEDLC.Forms
 
         public DataTable dtTipoFolha = new DataTable();
         public DataTable dtGrupo = new DataTable();
+        public DataTable dtAvaliacaoMuscular = new DataTable();
+        public DataTable dtNeuroCondMotora = new DataTable();
+        public DataTable dtNeuroCondSenorial = new DataTable();
 
         public frmFolha()
         {
@@ -38,19 +39,17 @@ namespace WEDLC.Forms
         {
             carregaCombo();
             carregaTela();
-
         }
-
         public void carregaTela()
         {
             //Popula o grid
-            this.populaGrid(0, 0, "", "");
+            this.populaGridDados(0, 0, "", "");
 
             // Ativa a visualização do click no form
             this.KeyPreview = true;
 
             //Configura o grid
-            configuraGrid();
+            configuraGridDados();
 
             cAcao = Acao.CANCELAR;
         }
@@ -66,7 +65,6 @@ namespace WEDLC.Forms
             CarregaComboSimNao(cboSimNaoReflexo);
 
         }
-
         private void controlaBotao()
         {
             //Se clicou em novo
@@ -95,9 +93,8 @@ namespace WEDLC.Forms
                 btnCancelar.Enabled = true;
                 btnExcluir.Enabled = true;
             }
-
         }
-        private void configuraGrid()
+        private void configuraGridDados()
         {
             // Ajustando o tamanho das colunas e ocultando as que não são necessárias
             grdDados.Columns[0].Width = 80; //ID
@@ -122,26 +119,6 @@ namespace WEDLC.Forms
             grdDados.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
             grdDados.CurrentCell = null; // Desmarca a célula atual
         }
-
-        private DataTable buscaTipoFolha()
-        {
-            try
-            {
-                DataTable dtAux = new DataTable();
-                cFolha objcTipoFolha = new cFolha();
-
-                dtAux = objcTipoFolha.buscaTipoFolha();
-
-                return dtAux;
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao tentar buscar a especialização!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return new DataTable(); // Return an empty DataTable to fix CS0126  
-            }
-        }
-
         private DataTable buscaFolha(int tipopesquisa, Int32 idfolha, string sigla, string nome)
         {
             try
@@ -160,16 +137,68 @@ namespace WEDLC.Forms
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }
-
-        private void populaGrid(int tipopesquisa, Int32 idfolha, string sigla, string nome)
+        private DataTable buscaAvalicaoMuscular(Int32 idfolha)
         {
             try
             {
-                DataTable dt = new DataTable();
-                dt = this.buscaFolha (tipopesquisa, idfolha, sigla, nome);
+                DataTable dtAux = new DataTable();
+                cFolha objcTipoFolha = new cFolha();
 
-                grdEstudoPotenciais.DataSource = null;
+                dtAux = objcTipoFolha.buscaAvalicaoMuscular(idfolha);
 
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar buscar a avaliação muscular!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+        private DataTable buscaNeuroConducaoMotora(Int32 idfolha)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cFolha objcTipoFolha = new cFolha();
+
+                dtAux = objcTipoFolha.buscaNeuroConducaoMotora(idfolha);
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar buscar a neuro condução motora !", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+        private DataTable buscaNeuroConducaoSensorial(Int32 idfolha)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cFolha objcTipoFolha = new cFolha();
+
+                dtAux = objcTipoFolha.buscaNeuroConducaoSensorial(idfolha);
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar buscar a neuro condução sensorial!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+        private void populaGridDados(int tipopesquisa, Int32 idfolha, string sigla, string nome)
+        {
+            try
+            {
+                DataTable dt = this.buscaFolha(tipopesquisa, idfolha, sigla, nome);
+
+                grdDados.DataSource = null;
+            
                 //Renomeia as colunas do datatable
                 dt.Columns["idfolha"].ColumnName = "Código";
                 dt.Columns["sigla"].ColumnName = "Sigla";
@@ -179,8 +208,9 @@ namespace WEDLC.Forms
                 dt.Columns["idgrupo"].ColumnName = "IdGrupo";
                 dt.Columns["descricaogrupo"].ColumnName = "Grupo";
 
+                grdDados.SuspendLayout();
                 grdDados.DataSource = dt;
-
+                grdDados.ResumeLayout();
             }
             catch (Exception)
             {
@@ -205,8 +235,8 @@ namespace WEDLC.Forms
             }
 
             return true;
-
         }
+
         private void btnNovo_Click(object sender, EventArgs e)
         {
             //Determina a acao
@@ -225,7 +255,7 @@ namespace WEDLC.Forms
             txtSigla.Focus();
 
             //Desmarca a seleção do grid
-            grdEstudoPotenciais.CurrentCell = null;
+            grdEstudoPotencial.CurrentCell = null;
 
         }
         private void btnGravar_Click(object sender, EventArgs e)
@@ -307,8 +337,13 @@ namespace WEDLC.Forms
             //Limpa os campos
             limpaControles();
 
+            limpaComboGridAvaliacaoMuscular();
+            limpaComboGridNeuroCondMotora();
+            limpaComboGridNeuroCondSensorial();
+            limpaComboGridEstudoPotencial();
+
             //Desmarca a seleção do grid
-            grdEstudoPotenciais.CurrentCell = null;
+            grdEstudoPotencial.CurrentCell = null;
 
             //Carrega o grid
             carregaTela();
@@ -333,7 +368,6 @@ namespace WEDLC.Forms
         {
             this.Close();
         }
-
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
             //Determina a acao
@@ -357,11 +391,11 @@ namespace WEDLC.Forms
                     idespecializacao = int.Parse(txtCodigo.Text);
                 }
 
-                this.populaGrid(tipopesquisa, idespecializacao, "", "");
-                this.configuraGrid();
+                this.populaGridDados(tipopesquisa, idespecializacao, "", "");
+                this.configuraGridDados();
             }
-
         }
+
         private void txtSigla_KeyUp(object sender, KeyEventArgs e)
         {
             int tipopesquisa = 2; //Código que pesquisa pela sigla   
@@ -385,8 +419,8 @@ namespace WEDLC.Forms
                     sigla = txtSigla.Text;
                 }
 
-                this.populaGrid(tipopesquisa, 0, sigla, "");
-                this.configuraGrid();
+                this.populaGridDados(tipopesquisa, 0, sigla, "");
+                this.configuraGridDados();
             }
         }
         private void txtNome_KeyUp(object sender, KeyEventArgs e)
@@ -412,8 +446,8 @@ namespace WEDLC.Forms
                     nome = txtNome.Text;
                 }
 
-                this.populaGrid(tipopesquisa, 0, "", nome);
-                this.configuraGrid();
+                this.populaGridDados(tipopesquisa, 0, "", nome);
+                this.configuraGridDados();
             }
         }
         private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
@@ -435,7 +469,7 @@ namespace WEDLC.Forms
             cboGrupo.SelectedIndex = 0;
 
             //Desmarca a seleção do grid
-            grdEstudoPotenciais.CurrentCell = null;
+            grdEstudoPotencial.CurrentCell = null;
         }
 
         private void cboTipo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -463,29 +497,85 @@ namespace WEDLC.Forms
             cFolha objcTipoFolha = new cFolha();
             dtTipoFolha = objcTipoFolha.buscaTipoFolha();
             DataRow newRow = dtTipoFolha.NewRow();
+            newRow["idtipofolha"] = 0; // Defina o valor desejado para a primeira linha
             newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
             dtTipoFolha.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
             cboTipo.DataSource = dtTipoFolha;
             cboTipo.ValueMember = "idtipofolha";
             cboTipo.DisplayMember = "descricao";
-            cboTipo.Refresh();
+            //cboTipo.Refresh();
         }
 
         public void carregaGrupo(int pTipoFolha)
         {
+
+            dtGrupo = new cFolha().buscaGrupoFolha(pTipoFolha);
+            DataRow newRow = dtGrupo.NewRow();
+            newRow["idgrupo"] = 0; // Defina o valor desejado para a primeira linha
+            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            dtGrupo.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+
             //Carrega o combo de tipo de folha
             cboGrupo.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboGrupo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
-
-            cFolha objcTipoFolha = new cFolha();
-            dtGrupo = objcTipoFolha.buscaGrupoFolha(pTipoFolha);
-            DataRow newRow = dtGrupo.NewRow();
-            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
-            dtGrupo.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
-            cboGrupo.DataSource = dtGrupo;
             cboGrupo.ValueMember = "idgrupo";
             cboGrupo.DisplayMember = "descricao";
-            cboGrupo.Refresh();
+            cboGrupo.DataSource = dtGrupo;
+
+        }
+
+        public void carregaComboAvaliacaoMuscular(int pTipoFolha)
+        {
+
+            dtAvaliacaoMuscular = new cFolha().carregaComboAvaliacaoMuscular(pTipoFolha);
+            DataRow newRow = dtAvaliacaoMuscular.NewRow();
+            newRow["idmusculo"] = 0; // Defina o valor desejado para a primeira linha
+            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            dtAvaliacaoMuscular.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+
+            //Carrega o combo de tipo de folha
+            cboAvaliacaoMuscular.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
+            cboAvaliacaoMuscular.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+            cboAvaliacaoMuscular.DataSource = dtAvaliacaoMuscular;
+            cboAvaliacaoMuscular.ValueMember = "idmusculo";
+            cboAvaliacaoMuscular.DisplayMember = "descricao";
+
+        }
+
+        public void carregaComboNeuroCondMotora(int pTipoFolha)
+        {
+
+            dtNeuroCondMotora = new cFolha().carregaComboNeuroConducaoMotora(pTipoFolha);
+            DataRow newRow = dtNeuroCondMotora.NewRow();
+            newRow["idnervo"] = 0; // Defina o valor desejado para a primeira linha
+            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            dtNeuroCondMotora.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+
+            //Carrega o combo conducao motora
+            cboNeuroConducaoMotora.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
+            cboNeuroConducaoMotora.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+            cboNeuroConducaoMotora.DataSource = dtNeuroCondMotora;
+            cboNeuroConducaoMotora.ValueMember = "idnervo";
+            cboNeuroConducaoMotora.DisplayMember = "descricao";
+
+        }
+
+        public void carregaComboNeuroCondSensorial(int pTipoFolha)
+        {
+
+            dtNeuroCondSenorial = new cFolha().carregaComboNeuroConducaoSensorial(pTipoFolha);
+            DataRow newRow = dtNeuroCondSenorial.NewRow();
+            newRow["idnervo"] = 0; // Defina o valor desejado para a primeira linha
+            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            dtNeuroCondSenorial.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+
+            //Carrega o combo de tipo de folha
+            cboNeuroConducaoSensorial.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
+            cboNeuroConducaoSensorial.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+            cboNeuroConducaoSensorial.DataSource = dtNeuroCondSenorial;
+            cboNeuroConducaoSensorial.ValueMember = "idnervo";
+            cboNeuroConducaoSensorial.DisplayMember = "descricao";
+
         }
 
         private void FiltrarComboGrupo(string texto)
@@ -502,11 +592,6 @@ namespace WEDLC.Forms
         private void cboGrupo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             FiltrarComboGrupo(cboGrupo.Text.ToString());
-        }
-
-        private void cboTipo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void cboTipo_Validated(object sender, EventArgs e)
@@ -555,6 +640,29 @@ namespace WEDLC.Forms
                 //Desabilita o campo código
                 txtCodigo.Enabled = false;
 
+                //Carrega grid avaliacao muscular
+                this.populaGridAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                this.configuraObjGrid(grdAvaliacaoMuscular);
+                this.carregaComboAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                grpAvaliacaoMuscular.Enabled = true;
+
+                //Carrega grid neuro condução motora
+                this.populaGridNeuroConducaoMotora(int.Parse(txtCodigo.Text));
+                this.configuraObjGrid(grdNeuroCondMotora);
+                this.carregaComboNeuroCondMotora(int.Parse(txtCodigo.Text));
+                grpNeuroCondMotora.Enabled = true;
+
+                //Carrega grid neuro condução sensorial
+                this.populaGridNeuroConducaoSensorial(int.Parse(txtCodigo.Text));
+                this.configuraObjGrid(grdNeuroCondSensorial);
+                this.carregaComboNeuroCondSensorial(int.Parse(txtCodigo.Text));
+                grpNeuroCondSensorial.Enabled = true;
+
+                //Carrega grid estudo potencial
+                this.populaGridEstudoPotencial(int.Parse(txtCodigo.Text));
+                this.configuraObjGrid(grdEstudoPotencial);
+                grpEstudoPotenEvocado.Enabled = true;
+
                 txtSigla.Focus();
             }
 
@@ -562,6 +670,185 @@ namespace WEDLC.Forms
             grdDados.Columns[0].ReadOnly = true;
             grdDados.Columns[1].ReadOnly = true;
             grdDados.Columns[2].ReadOnly = true;
+
+        }
+
+        private void configuraObjGrid(DataGridView objGrid)
+        {
+            // Ajustando o tamanho das colunas e ocultando as que não são necessárias
+            objGrid.Columns[0].Visible = false; //idAvalicao
+            objGrid.Columns[1].Visible = false; //idMusculo
+            objGrid.Columns[2].Width = 200; //Descricao
+
+            // Desabilita a edição da coluna
+            objGrid.Columns[0].ReadOnly = true;
+            objGrid.Columns[1].ReadOnly = true;
+            objGrid.Columns[2].ReadOnly = true;
+
+            // Configurando outras propriedades
+            objGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
+            objGrid.MultiSelect = false; // Impede seleção múltipla
+            objGrid.AllowUserToAddRows = false; // Impede adição de novas linhas
+            objGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
+            objGrid.CurrentCell = null; // Desmarca a célula atual
+        }
+
+        private void populaGridAvaliacaoMuscular(Int32 idfolha)
+        {
+            try
+            {
+                DataTable dt = this.buscaAvalicaoMuscular(idfolha);
+
+                grdAvaliacaoMuscular.DataSource = null;
+
+                //Renomeia as colunas do datatable
+                dt.Columns["idavaliacaomuscular"].ColumnName = "IdAvaliacaoMuscular";
+                dt.Columns["idmusculo"].ColumnName = "IdMusculo";
+                dt.Columns["descricao"].ColumnName = "Descricao";
+
+                grdAvaliacaoMuscular.SuspendLayout();
+                grdAvaliacaoMuscular.DataSource = dt;
+                grdAvaliacaoMuscular.ResumeLayout();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na populaGridAvaliacaoMuscular!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+        private void populaGridNeuroConducaoMotora(Int32 idfolha)
+        {
+            try
+            {
+                DataTable dt = this.buscaNeuroConducaoMotora(idfolha);
+
+                grdNeuroCondMotora.DataSource = null;
+
+                //Renomeia as colunas do datatable
+                dt.Columns["idneurocondmotora"].ColumnName = "IdNeuroCondMotora";
+                dt.Columns["idnervo"].ColumnName = "IdNervo";
+                dt.Columns["descricao"].ColumnName = "Descricao";
+
+                grdNeuroCondMotora.SuspendLayout(); //otimiza a atualização do grid
+                grdNeuroCondMotora.DataSource = dt;
+                grdNeuroCondMotora.ResumeLayout(); //otimiza a atualização do grid
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na populaGridAvaliacaoMuscular!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void populaGridNeuroConducaoSensorial(Int32 idfolha)
+        {
+            try
+            {
+                DataTable dt = this.buscaNeuroConducaoSensorial(idfolha);
+
+                grdNeuroCondSensorial.DataSource = null;
+
+                //Renomeia as colunas do datatable
+                dt.Columns["idneurocondsensorial"].ColumnName = "IdNeuroCondSensorial";
+                dt.Columns["idnervo"].ColumnName = "IdNervo";
+                dt.Columns["descricao"].ColumnName = "Descricao";
+
+                grdNeuroCondSensorial.SuspendLayout(); //otimiza a atualização do grid
+                grdNeuroCondSensorial.DataSource = dt;
+                grdNeuroCondSensorial.ResumeLayout(); //otimiza a atualização do grid
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na populaGridNeuroConduçãoSensorial!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void populaGridEstudoPotencial(Int32 idfolha)
+        {
+            try
+            {
+                DataTable dt = this.buscaEstudoPotenEvocado(idfolha);
+
+                grdEstudoPotencial.DataSource = null;
+
+                //Renomeia as colunas do datatable
+                dt.Columns["idestudopotenevocado"].ColumnName = "IdEstudoPotenEvocado";
+                dt.Columns["idfolha"].ColumnName = "IdFolha";
+                dt.Columns["descricao"].ColumnName = "Descricao";
+
+                grdEstudoPotencial.SuspendLayout();
+                grdEstudoPotencial.DataSource = dt;
+                grdEstudoPotencial.ResumeLayout();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na populaGridEstudoPotencial!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private DataTable buscaEstudoPotenEvocado(Int32 idfolha)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cFolha objcTipoFolha = new cFolha();
+
+                dtAux = objcTipoFolha.buscaEstudoPotenEvocado(idfolha);
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar buscar a neuro condução sensorial!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private void limpaComboGridAvaliacaoMuscular()
+        {
+            cboAvaliacaoMuscular.DataSource = null;
+            cboAvaliacaoMuscular.Items.Clear();
+            cboAvaliacaoMuscular.Text = string.Empty;
+            cboAvaliacaoMuscular.SelectedIndex = -1;
+
+            grdAvaliacaoMuscular.DataSource = null;
+
+            grpAvaliacaoMuscular.Enabled = false;
+        }
+        private void limpaComboGridNeuroCondMotora()
+        {
+            cboNeuroConducaoMotora.DataSource = null;
+            cboNeuroConducaoMotora.Items.Clear();
+            cboNeuroConducaoMotora.Text = string.Empty;
+            cboNeuroConducaoMotora.SelectedIndex = -1;
+
+            grdNeuroCondMotora.DataSource = null;
+
+            grpNeuroCondMotora.Enabled = false;
+        }
+        private void limpaComboGridNeuroCondSensorial()
+        {
+            cboNeuroConducaoSensorial.DataSource = null;
+            cboNeuroConducaoSensorial.Items.Clear();
+            cboNeuroConducaoSensorial.Text = string.Empty;
+            cboNeuroConducaoSensorial.SelectedIndex = -1;
+
+            grdNeuroCondSensorial.DataSource = null;
+
+            grpNeuroCondSensorial.Enabled = false;
+        }
+        private void limpaComboGridEstudoPotencial()
+        {
+            grdEstudoPotencial.DataSource = null;
+            grpEstudoPotenEvocado.Enabled = false;
 
         }
     }

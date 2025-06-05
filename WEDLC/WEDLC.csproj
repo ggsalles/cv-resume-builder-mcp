@@ -240,6 +240,7 @@
     <None Include="Imagens\up.png" />
     <None Include="Imagens\edit.png" />
     <None Include="Imagens\down.png" />
+    <None Include="Imagens\delete.png" />
     <Content Include="Imagens\exit.png" />
     <Content Include="Imagens\ok.png" />
     <Content Include="Imagens\save.png" />
