@@ -16,8 +16,8 @@ namespace WEDLC.Forms
                  
             string ip = ObterIPExterno();
             string mac = ObterMACAddress();
-            cConexao objcConexao = new cConexao();
-            this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao.cAmbiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac;
+            GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
+            this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac;
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)

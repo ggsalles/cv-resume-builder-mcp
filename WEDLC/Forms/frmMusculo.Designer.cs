@@ -40,7 +40,6 @@
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.grpBotoes = new System.Windows.Forms.GroupBox();
-            this.btnAlterar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnGravar = new System.Windows.Forms.Button();
@@ -163,7 +162,6 @@
             // 
             // grpBotoes
             // 
-            this.grpBotoes.Controls.Add(this.btnAlterar);
             this.grpBotoes.Controls.Add(this.btnCancelar);
             this.grpBotoes.Controls.Add(this.btnExcluir);
             this.grpBotoes.Controls.Add(this.btnGravar);
@@ -175,24 +173,12 @@
             this.grpBotoes.TabIndex = 1;
             this.grpBotoes.TabStop = false;
             // 
-            // btnAlterar
-            // 
-            this.btnAlterar.Enabled = false;
-            this.btnAlterar.Image = global::WEDLC.Properties.Resources.edit;
-            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAlterar.Location = new System.Drawing.Point(97, 13);
-            this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(85, 27);
-            this.btnAlterar.TabIndex = 4;
-            this.btnAlterar.Text = "Alterar";
-            this.btnAlterar.UseVisualStyleBackColor = true;
-            // 
             // btnCancelar
             // 
             this.btnCancelar.Enabled = false;
             this.btnCancelar.Image = global::WEDLC.Properties.Resources.cancelblue;
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(373, 13);
+            this.btnCancelar.Location = new System.Drawing.Point(279, 13);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(85, 27);
             this.btnCancelar.TabIndex = 7;
@@ -205,7 +191,7 @@
             this.btnExcluir.Enabled = false;
             this.btnExcluir.Image = global::WEDLC.Properties.Resources.trash;
             this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluir.Location = new System.Drawing.Point(188, 13);
+            this.btnExcluir.Location = new System.Drawing.Point(97, 13);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(85, 27);
             this.btnExcluir.TabIndex = 5;
@@ -218,7 +204,7 @@
             this.btnGravar.Enabled = false;
             this.btnGravar.Image = global::WEDLC.Properties.Resources.save;
             this.btnGravar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGravar.Location = new System.Drawing.Point(282, 13);
+            this.btnGravar.Location = new System.Drawing.Point(188, 13);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(85, 27);
             this.btnGravar.TabIndex = 6;
@@ -301,7 +287,6 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.TextBox txtSigla;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnAlterar;
         private System.Windows.Forms.TextBox txtInervacao;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtRaizes;

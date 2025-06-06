@@ -29,12 +29,12 @@ namespace WEDLC.Banco
             set { _sigla = value; }  // set method
         }
 
-        cConexao objcConexao = new cConexao();
+        GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
 
         public bool conectaBanco()
         {
-            conexao = objcConexao.MySqlConection();
+            conexao = objcConexao.CriarConexao();
             conexao.Open();
             if (conexao.State == ConnectionState.Open)
             {
@@ -65,22 +65,26 @@ namespace WEDLC.Banco
 
             try
             {
-                MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscaespecializacao", conexao);
-                sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
-                sqlDa.SelectCommand.Parameters.AddWithValue("pIdEspecializacao", pIdEspecializacao);
-                sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
-                sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
-                //sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
+                using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscaespecializacao", conexao)
+)
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdEspecializacao", pIdEspecializacao);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
+                    //sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
 
-                DataTable dt = new DataTable();
-                sqlDa.Fill(dt);
-       
-                //Fecha a conexão
-                conexao.Close();
+                    DataTable dt = new DataTable();
+                    sqlDa.Fill(dt);
 
-                // Retorna o DataTable
-                return dt;
+                    //Fecha a conexão
+                    conexao.Close();
+
+                    // Retorna o DataTable
+                    return dt;
+                }
+
             }
             catch (System.Exception)
             {
@@ -92,156 +96,118 @@ namespace WEDLC.Banco
 
         public bool incluiEspecialidade()
         {
+            // Validação de entrada
+            if (string.IsNullOrEmpty(_nome) || string.IsNullOrEmpty(_sigla))
+            {
+                MessageBox.Show("Nome e sigla são obrigatórios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             try
             {
-                if (conectaBanco() == false)
+                if (!conectaBanco())
                 {
                     MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false; // Fix: Return null instead of a boolean to match the DataTable return type  
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false; // Fix: Return null instead of a boolean to match the DataTable return type  
-            }
-
-            try
-            {
-                MySqlParameter[] pParam = new MySqlParameter[2];
-                MySqlCommand command = new MySqlCommand();
-
-                pParam[0] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-                pParam[0].Value = _nome;
-
-                pParam[1] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
-                pParam[1].Value = _sigla;
-
-                command.Connection = conexao;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "pr_incluiespecializacao";
-                command.Parameters.AddRange(pParam);
-
-                if (command.ExecuteNonQuery() == 1)
-
-                {
-                    conexao.Close();
-                    return true;
-                }
-                else
-                {
-                    conexao.Close();
                     return false;
                 }
+
+                using (var command = new MySqlCommand())
+                {
+                    command.Connection = conexao;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "pr_incluiespecializacao";
+
+                    command.Parameters.AddWithValue("pNome", _nome);
+                    command.Parameters.AddWithValue("pSigla", _sigla);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    conexao.Close();
+
+                    return rowsAffected > 0; // Retorna true se pelo menos uma linha foi afetada
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Fecha a conexão  
-                conexao.Close();
-                return false; ;
+                MessageBox.Show($"Erro: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexao?.Close(); // Fecha a conexão se existir
+                return false;
             }
         }
         public bool atualizaEspecializacao()
         {
+            // Validação de entrada
+            if (_idespecializacao <= 0 || string.IsNullOrEmpty(_sigla) || string.IsNullOrEmpty(_nome))
+            {
+                MessageBox.Show("ID, sigla e nome são obrigatórios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             try
             {
-                if (conectaBanco() == false)
+                if (!conectaBanco())
                 {
                     MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false; // Fix: Return null instead of a boolean to match the DataTable return type  
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false; // Fix: Return null instead of a boolean to match the DataTable return type  
-            }
-
-            try
-            {
-                MySqlParameter[] pParam = new MySqlParameter[3];
-                MySqlCommand command = new MySqlCommand();
-
-                pParam[0] = new MySqlParameter("pIdEpescializacao", MySqlDbType.Int32);
-                pParam[0].Value = _idespecializacao;
-
-                pParam[1] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
-                pParam[1].Value = _sigla;
-
-                pParam[2] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-                pParam[2].Value = _nome;
-
-                command.Connection = conexao;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "pr_atualizaespecializacao";
-                command.Parameters.AddRange(pParam);
-
-                if (command.ExecuteNonQuery() == 1)
-
-                {
-                    conexao.Close();
-                    return true;
-                }
-                else
-                {
-                    conexao.Close();
                     return false;
                 }
+
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = conexao;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "pr_atualizaespecializacao";
+
+                    command.Parameters.AddWithValue("pIdEspecializacao", _idespecializacao);
+                    command.Parameters.AddWithValue("pSigla", _sigla);
+                    command.Parameters.AddWithValue("pNome", _nome);
+
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+                    conexao.Close();
+                    return sucesso;
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Fecha a conexão  
-                conexao.Close();
-                return false; ;
+                MessageBox.Show($"Erro ao atualizar: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexao?.Close();
+                return false;
             }
         }
 
         public bool excluiEspecializacao()
         {
+            // Validação de entrada
+            if (_idespecializacao <= 0)
+            {
+                MessageBox.Show("ID de especialização inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             try
             {
-                if (conectaBanco() == false)
+                if (!conectaBanco())
                 {
                     MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false; // Fix: Return null instead of a boolean to match the DataTable return type  
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false; // Fix: Return null instead of a boolean to match the DataTable return type  
-            }
-
-            try
-            {
-                MySqlParameter[] pParam = new MySqlParameter[1];
-                MySqlCommand command = new MySqlCommand();
-
-                pParam[0] = new MySqlParameter("pIdEpescializacao", MySqlDbType.Int32);
-                pParam[0].Value = _idespecializacao;
-
-                command.Connection = conexao;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "pr_excluiespecializacao";
-                command.Parameters.AddRange(pParam);
-
-                if (command.ExecuteNonQuery() == 1)
-
-                {
-                    conexao.Close();
-                    return true;
-                }
-                else
-                {
-                    conexao.Close();
                     return false;
                 }
+
+                using (var command = new MySqlCommand())
+                {
+                    command.Connection = conexao;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "pr_excluiespecializacao";
+
+                    command.Parameters.AddWithValue("pIdEspecializacao", _idespecializacao);
+
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+                    conexao.Close();
+                    return sucesso;
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Fecha a conexão  
-                conexao.Close();
-                return false; ;
+                MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexao?.Close();
+                return false;
             }
         }
     }

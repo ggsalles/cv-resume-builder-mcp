@@ -242,7 +242,8 @@ namespace WEDLC.Forms
         {
             try
             {
-                long proximoId = GetNextSequenceValue("folha_sequence");
+
+                long proximoId = new cSequence().GetNextSequenceValue("folha_sequence");
                 txtCodigo.Text = proximoId.ToString();
 
                 //Determina a acao

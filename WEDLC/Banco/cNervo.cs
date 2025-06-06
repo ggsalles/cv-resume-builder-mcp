@@ -51,12 +51,12 @@ namespace WEDLC.Banco
         }
 
         // Construtor
-        cConexao objcConexao = new cConexao();
+        GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
 
         public bool conectaBanco()
         {
-            conexao = objcConexao.MySqlConection();
+            conexao = objcConexao.CriarConexao();
             conexao.Open();
             if (conexao.State == ConnectionState.Open)
             {

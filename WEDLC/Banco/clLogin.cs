@@ -12,7 +12,7 @@ namespace WEDLC.Banco
     public class clLogin
     {
 
-        public cConexao objCconexao;
+        public GerenciadorConexaoMySQL objCconexao;
 
         private byte[] sal = new byte[] { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1, 0x0 };
         private byte[] textoCifrado;
@@ -42,12 +42,12 @@ namespace WEDLC.Banco
             set { _senha = value; }  // set method
         }
 
-        cConexao objcConexao = new cConexao();
+        GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
 
         public bool conectaBanco()
         {
-            conexao = objcConexao.MySqlConection();
+            conexao = objcConexao.CriarConexao();
             conexao.Open();
             if (conexao.State == ConnectionState.Open)
             {
@@ -61,8 +61,8 @@ namespace WEDLC.Banco
 
         public MySqlConnection MySqlConection() // Determina a instância que será usada para a conexão: 1 - local; 2 - Remoto
         {
-            cConexao objcConexao = new cConexao();
-            var conexao = new MySqlConnection(objcConexao.Conexao());
+            GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
+            var conexao = new MySqlConnection(objcConexao.CriarConexao().ConnectionString);
             return conexao;
         }
 
