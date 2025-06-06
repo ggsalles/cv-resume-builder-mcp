@@ -55,8 +55,8 @@
             this.grdEstudoPotencial = new System.Windows.Forms.DataGridView();
             this.grpAvaliacaoMuscular = new System.Windows.Forms.GroupBox();
             this.cboAvaliacaoMuscular = new System.Windows.Forms.ComboBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnExcluiAvaliacaoMuscular = new System.Windows.Forms.Button();
+            this.btnIncluiAvaliacaoMuscular = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.grdAvaliacaoMuscular = new System.Windows.Forms.DataGridView();
             this.grpNeuroCondMotora = new System.Windows.Forms.GroupBox();
@@ -370,8 +370,8 @@
             // grpAvaliacaoMuscular
             // 
             this.grpAvaliacaoMuscular.Controls.Add(this.cboAvaliacaoMuscular);
-            this.grpAvaliacaoMuscular.Controls.Add(this.button3);
-            this.grpAvaliacaoMuscular.Controls.Add(this.button4);
+            this.grpAvaliacaoMuscular.Controls.Add(this.btnExcluiAvaliacaoMuscular);
+            this.grpAvaliacaoMuscular.Controls.Add(this.btnIncluiAvaliacaoMuscular);
             this.grpAvaliacaoMuscular.Controls.Add(this.label4);
             this.grpAvaliacaoMuscular.Controls.Add(this.grdAvaliacaoMuscular);
             this.grpAvaliacaoMuscular.Enabled = false;
@@ -390,23 +390,25 @@
             this.cboAvaliacaoMuscular.Size = new System.Drawing.Size(198, 21);
             this.cboAvaliacaoMuscular.TabIndex = 7;
             // 
-            // button3
+            // btnExcluiAvaliacaoMuscular
             // 
-            this.button3.Image = global::WEDLC.Properties.Resources.up;
-            this.button3.Location = new System.Drawing.Point(246, 38);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(27, 24);
-            this.button3.TabIndex = 9;
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnExcluiAvaliacaoMuscular.Image = global::WEDLC.Properties.Resources.up;
+            this.btnExcluiAvaliacaoMuscular.Location = new System.Drawing.Point(246, 38);
+            this.btnExcluiAvaliacaoMuscular.Name = "btnExcluiAvaliacaoMuscular";
+            this.btnExcluiAvaliacaoMuscular.Size = new System.Drawing.Size(27, 24);
+            this.btnExcluiAvaliacaoMuscular.TabIndex = 9;
+            this.btnExcluiAvaliacaoMuscular.UseVisualStyleBackColor = true;
+            this.btnExcluiAvaliacaoMuscular.Click += new System.EventHandler(this.btnExcluiAvaliacaoMuscular_Click);
             // 
-            // button4
+            // btnIncluiAvaliacaoMuscular
             // 
-            this.button4.Image = global::WEDLC.Properties.Resources.down;
-            this.button4.Location = new System.Drawing.Point(213, 38);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(27, 24);
-            this.button4.TabIndex = 8;
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnIncluiAvaliacaoMuscular.Image = global::WEDLC.Properties.Resources.down;
+            this.btnIncluiAvaliacaoMuscular.Location = new System.Drawing.Point(213, 38);
+            this.btnIncluiAvaliacaoMuscular.Name = "btnIncluiAvaliacaoMuscular";
+            this.btnIncluiAvaliacaoMuscular.Size = new System.Drawing.Size(27, 24);
+            this.btnIncluiAvaliacaoMuscular.TabIndex = 8;
+            this.btnIncluiAvaliacaoMuscular.UseVisualStyleBackColor = true;
+            this.btnIncluiAvaliacaoMuscular.Click += new System.EventHandler(this.btnIncluiAvaliacaoMuscular_Click);
             // 
             // label4
             // 
@@ -701,8 +703,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox grpAvaliacaoMuscular;
         private System.Windows.Forms.ComboBox cboAvaliacaoMuscular;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnExcluiAvaliacaoMuscular;
+        private System.Windows.Forms.Button btnIncluiAvaliacaoMuscular;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView grdAvaliacaoMuscular;
         private System.Windows.Forms.GroupBox grpNeuroCondMotora;

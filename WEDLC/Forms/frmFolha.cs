@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -198,7 +199,7 @@ namespace WEDLC.Forms
                 DataTable dt = this.buscaFolha(tipopesquisa, idfolha, sigla, nome);
 
                 grdDados.DataSource = null;
-            
+
                 //Renomeia as colunas do datatable
                 dt.Columns["idfolha"].ColumnName = "Código";
                 dt.Columns["sigla"].ColumnName = "Sigla";
@@ -239,23 +240,34 @@ namespace WEDLC.Forms
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            //Determina a acao
-            cAcao = Acao.INSERT;
+            try
+            {
+                long proximoId = GetNextSequenceValue("folha_sequence");
+                txtCodigo.Text = proximoId.ToString();
 
-            //Prepara os botões para a inclusão
-            controlaBotao();
+                //Determina a acao
+                cAcao = Acao.INSERT;
 
-            //limpa controles
-            txtCodigo.Text = string.Empty;
-            txtCodigo.Enabled = false; //Desabilita o campo código
-            txtSigla.Text = string.Empty;
-            txtNome.Text = string.Empty;
+                //Prepara os botões para a inclusão
+                controlaBotao();
 
-            //Deixa o foco no nome
-            txtSigla.Focus();
+                //limpa controles
+                txtCodigo.Text = string.Empty;
+                txtCodigo.Enabled = false; //Desabilita o campo código
+                txtSigla.Text = string.Empty;
+                txtNome.Text = string.Empty;
 
-            //Desmarca a seleção do grid
-            grdEstudoPotencial.CurrentCell = null;
+                //Deixa o foco no nome
+                txtSigla.Focus();
+
+                //Desmarca a seleção do grid
+                grdEstudoPotencial.CurrentCell = null;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}");
+            }
 
         }
         private void btnGravar_Click(object sender, EventArgs e)
@@ -622,54 +634,58 @@ namespace WEDLC.Forms
 
         private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            try
             {
-                //Determina a acao
-                cAcao = Acao.UPDATE;
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    //Determina a acao
+                    cAcao = Acao.UPDATE;
 
-                txtCodigo.Text = grdDados.Rows[e.RowIndex].Cells[0].Value.ToString();
-                txtSigla.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
-                txtNome.Text = grdDados.Rows[e.RowIndex].Cells[2].Value.ToString();
-                cboTipo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[3].Value.ToString();
-                cboGrupo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[5].Value.ToString();
+                    txtCodigo.Text = grdDados.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    txtSigla.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
+                    txtNome.Text = grdDados.Rows[e.RowIndex].Cells[2].Value.ToString();
+                    cboTipo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[3].Value.ToString();
+                    cboGrupo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[5].Value.ToString();
 
-                //libera os controles 
-                controlaBotao();
+                    //libera os controles 
+                    controlaBotao();
 
-                //Desabilita o campo código
-                txtCodigo.Enabled = false;
+                    //Desabilita o campo código
+                    txtCodigo.Enabled = false;
 
-                //Carrega grid avaliacao muscular
-                this.populaGridAvaliacaoMuscular(int.Parse(txtCodigo.Text));
-                this.configuraObjGrid(grdAvaliacaoMuscular);
-                this.carregaComboAvaliacaoMuscular(int.Parse(txtCodigo.Text));
-                grpAvaliacaoMuscular.Enabled = true;
+                    //Carrega grid avaliacao muscular
+                    carregaGridAvaliacaoMuscular();
 
-                //Carrega grid neuro condução motora
-                this.populaGridNeuroConducaoMotora(int.Parse(txtCodigo.Text));
-                this.configuraObjGrid(grdNeuroCondMotora);
-                this.carregaComboNeuroCondMotora(int.Parse(txtCodigo.Text));
-                grpNeuroCondMotora.Enabled = true;
+                    //Carrega grid neuro condução motora
+                    this.populaGridNeuroConducaoMotora(int.Parse(txtCodigo.Text));
+                    this.configuraObjGrid(grdNeuroCondMotora);
+                    this.carregaComboNeuroCondMotora(int.Parse(txtCodigo.Text));
+                    grpNeuroCondMotora.Enabled = true;
 
-                //Carrega grid neuro condução sensorial
-                this.populaGridNeuroConducaoSensorial(int.Parse(txtCodigo.Text));
-                this.configuraObjGrid(grdNeuroCondSensorial);
-                this.carregaComboNeuroCondSensorial(int.Parse(txtCodigo.Text));
-                grpNeuroCondSensorial.Enabled = true;
+                    //Carrega grid neuro condução sensorial
+                    this.populaGridNeuroConducaoSensorial(int.Parse(txtCodigo.Text));
+                    this.configuraObjGrid(grdNeuroCondSensorial);
+                    this.carregaComboNeuroCondSensorial(int.Parse(txtCodigo.Text));
+                    grpNeuroCondSensorial.Enabled = true;
 
-                //Carrega grid estudo potencial
-                this.populaGridEstudoPotencial(int.Parse(txtCodigo.Text));
-                this.configuraObjGrid(grdEstudoPotencial);
-                grpEstudoPotenEvocado.Enabled = true;
+                    //Carrega grid estudo potencial
+                    this.populaGridEstudoPotencial(int.Parse(txtCodigo.Text));
+                    this.configuraObjGrid(grdEstudoPotencial);
+                    grpEstudoPotenEvocado.Enabled = true;
 
-                txtSigla.Focus();
+                    txtSigla.Focus();
+                }
+
+                // Desabilita a edição da coluna
+                grdDados.Columns[0].ReadOnly = true;
+                grdDados.Columns[1].ReadOnly = true;
+                grdDados.Columns[2].ReadOnly = true;
             }
-
-            // Desabilita a edição da coluna
-            grdDados.Columns[0].ReadOnly = true;
-            grdDados.Columns[1].ReadOnly = true;
-            grdDados.Columns[2].ReadOnly = true;
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao selecionar um item na grid dados!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
         }
 
@@ -851,5 +867,113 @@ namespace WEDLC.Forms
             grpEstudoPotenEvocado.Enabled = false;
 
         }
+
+        private void btnIncluiAvaliacaoMuscular_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //valida inclusão
+                if (cboAvaliacaoMuscular.SelectedValue == null || cboAvaliacaoMuscular.SelectedValue.ToString() == "0")
+                {
+                    MessageBox.Show("Selecione um item válido!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cboAvaliacaoMuscular.Focus();
+                    return;
+                }
+                //verifica se existe itens no combo para inlcusão
+                if (cboAvaliacaoMuscular.Items.Count == 0 || cboAvaliacaoMuscular.SelectedIndex == 0)
+                {
+                    MessageBox.Show("Não existem itens para inclusão!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cboAvaliacaoMuscular.Focus();
+                    return;
+                }
+                //chama a procedure de inclusão da avaliação muscular
+                cAvaliacaoMuscular objAvaliacaoMuscular = new cAvaliacaoMuscular();
+                objAvaliacaoMuscular.IdFolha = int.Parse(txtCodigo.Text);
+                objAvaliacaoMuscular.IdMusculo = int.Parse(cboAvaliacaoMuscular.SelectedValue.ToString());
+                if (objAvaliacaoMuscular.incluiAvaliacaoMuscular() == true)
+                {
+                    MessageBox.Show("Avaliação muscular incluída com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //Carrega o grid
+                    this.populaGridAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao tentar incluir avaliação muscular!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                carregaComboAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                carregaGridAvaliacaoMuscular();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar incluir uma avaliação muscular!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+        }
+
+        private void carregaGridAvaliacaoMuscular()
+        {
+            try
+            {
+                //Carrega grid avaliacao muscular
+                this.populaGridAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                this.configuraObjGrid(grdAvaliacaoMuscular);
+                this.carregaComboAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                grpAvaliacaoMuscular.Enabled = true;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao carregar a grid de avaliação muscular!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void btnExcluiAvaliacaoMuscular_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Valida se existe item no grid
+                if (grdAvaliacaoMuscular.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Selecione um item para exclusão!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //Verifica se o item selecionado é válido
+                if (grdAvaliacaoMuscular.SelectedRows[0].Cells[0].Value == null || grdAvaliacaoMuscular.SelectedRows[0].Cells[0].Value.ToString() == "0")
+                {
+                    MessageBox.Show("Selecione um item válido!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //Solicita a confirmação do usuário para exclusão
+                if (MessageBox.Show("Tem certeza que deseja excluir este item?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    cAvaliacaoMuscular objAvaliacaoMuscular = new cAvaliacaoMuscular();
+                    objAvaliacaoMuscular.IdAvaliacaoMuscular = int.Parse(grdAvaliacaoMuscular.SelectedRows[0].Cells[0].Value.ToString());
+                    if (objAvaliacaoMuscular.excluiAvaliacaoMuscular() == true)
+                    {
+                        MessageBox.Show("Avaliação muscular excluída com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //Carrega o grid
+                        this.populaGridAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                    }
+
+                    carregaComboAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                    carregaGridAvaliacaoMuscular();
+
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao tentar excluir avaliação muscular!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+       
     }
 }
