@@ -7,8 +7,11 @@ namespace WEDLC.Banco
 {
     public class cFolha
     {
-        public int IdTipoFolha { get; set; }
-        public string Descricao { get; set; }
+        public Int32 IdFolha { get; set; }
+        public string Nome{ get; set; }
+        public string Sigla { get; set; }
+        public Int32 IdTipoFolha { get; set; }
+        public Int32 IdGrupoFolha { get; set; }
 
         // Construtor
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
@@ -464,6 +467,77 @@ namespace WEDLC.Banco
                 conexao.Close();
                 return null;
             }
+        }
+
+        public bool incluiFolha(cFolha pFolha, out Int32 ultimoId)
+
+        {
+            try
+
+            {
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ultimoId = -1;
+                    return false;
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ultimoId = -1;
+                return false;
+            }
+
+            try
+            {
+                ultimoId = 0;
+
+                MySqlParameter[] pParam = new MySqlParameter[4];
+                MySqlCommand command = new MySqlCommand();
+
+                pParam[0] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
+                pParam[0].Value = pFolha.Sigla;
+
+                pParam[1] = new MySqlParameter("pNome", MySqlDbType.VarChar);
+                pParam[1].Value = pFolha.Nome;
+
+                pParam[2] = new MySqlParameter("pRaizes", MySqlDbType.VarChar);
+                pParam[2].Value = pFolha.IdTipoFolha;
+
+                pParam[3] = new MySqlParameter("pInervacao", MySqlDbType.VarChar);
+                pParam[3].Value = pFolha.IdGrupoFolha;
+
+                command.Connection = conexao;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "pr_incluimusculo";
+                command.Parameters.AddRange(pParam);
+
+                if (command.ExecuteNonQuery() == 1)
+                {
+
+                    ultimoId = (int)command.LastInsertedId;
+                    conexao.Close();
+                    return true;
+
+                }
+                else
+                {
+                    ultimoId = -1;
+                    conexao.Close();
+                    return true;
+     
+                }
+            }
+
+            catch (Exception)
+            {
+                conexao.Close();
+                ultimoId = -1;
+                return false;
+            }
+
         }
     }
 }

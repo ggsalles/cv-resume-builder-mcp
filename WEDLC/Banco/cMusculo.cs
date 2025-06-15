@@ -79,22 +79,24 @@ namespace WEDLC.Banco
 
             try
             {
-                MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscamusculo", conexao);
-                sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
-                sqlDa.SelectCommand.Parameters.AddWithValue("pIdMusculo", pIdMusculo);
-                sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
-                sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
-                sqlDa.SelectCommand.Parameters.AddWithValue("pRaizes", pNome);
-                sqlDa.SelectCommand.Parameters.AddWithValue("pInervacao", pNome);
-                DataTable dt = new DataTable();
-                sqlDa.Fill(dt);
+                using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscamusculo", conexao))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdMusculo", pIdMusculo);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pRaizes", pNome);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pInervacao", pNome);
+                    DataTable dt = new DataTable();
+                    sqlDa.Fill(dt);
 
-                // Fecha a conexão  
-                conexao.Close();
+                    // Fecha a conexão  
+                    conexao.Close();
 
-                // Retorna o DataTable  
-                return dt;
+                    // Retorna o DataTable  
+                    return dt;
+                }
             }
             catch (Exception)
             {
@@ -106,175 +108,129 @@ namespace WEDLC.Banco
         }
 
         public bool incluiMusculo()
-
         {
-            try
-
+            if (!conectaBanco())
             {
-                if (conectaBanco() == false)
-                {
-                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Melhor lançar exceção ou retornar false e tratar a mensagem em outra camada
                 return false;
             }
 
             try
             {
-                MySqlParameter[] pParam = new MySqlParameter[4];
-                MySqlCommand command = new MySqlCommand();
-
-                pParam[0] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
-                pParam[0].Value = _sigla;
-
-                pParam[1] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-                pParam[1].Value = _nome;
-
-                pParam[2] = new MySqlParameter("pRaizes", MySqlDbType.VarChar);
-                pParam[2].Value = _raizes;
-
-                pParam[3] = new MySqlParameter("pInervacao", MySqlDbType.VarChar);
-                pParam[3].Value = _inervacao;
-
-                command.Connection = conexao;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "pr_incluimusculo";
-                command.Parameters.AddRange(pParam);
-
-                if (command.ExecuteNonQuery() == 1)
+                using (var command = new MySqlCommand("pr_incluimusculo", conexao))
                 {
-                    conexao.Close();
-                    return true;
-                }
-                else
-                {
-                    conexao.Close();
-                    return false;
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddRange(new MySqlParameter[]
+                    {
+                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = _sigla },
+                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = _nome },
+                new MySqlParameter("pRaizes", MySqlDbType.VarChar) { Value = _raizes },
+                new MySqlParameter("pInervacao", MySqlDbType.VarChar) { Value = _inervacao }
+                    });
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
                 }
             }
-
-            catch (Exception)
+            catch (MySqlException ex)
             {
-                conexao.Close();
+                // Logar o erro ex.Message para diagnóstico
+                MessageBox.Show($"Erro ao incluir músculo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-
+            finally
+            {
+                if (conexao != null && conexao.State == ConnectionState.Open)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
         public bool atualizamusculo()
         {
-            try
+            // Validação básica dos dados
+            if (_idmusculo <= 0)
             {
-                if (conectaBanco() == false)
-                {
-                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
+                // Id inválido
+                return false;
             }
-            catch (Exception)
+
+            if (!conectaBanco())
             {
-                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             try
-
             {
-                MySqlParameter[] pParam = new MySqlParameter[5];
-                MySqlCommand command = new MySqlCommand();
-
-                pParam[0] = new MySqlParameter("pIdMusculo", MySqlDbType.Int32);
-                pParam[0].Value = _idmusculo;
-
-                pParam[1] = new MySqlParameter("pSigla", MySqlDbType.VarChar);
-                pParam[1].Value = _sigla;
-
-                pParam[2] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-                pParam[2].Value = _nome;
-
-                pParam[3] = new MySqlParameter("pRaizes", MySqlDbType.VarChar);
-                pParam[3].Value = _raizes;
-
-                pParam[4] = new MySqlParameter("pInervacao", MySqlDbType.VarChar);
-                pParam[4].Value = _inervacao;
-
-                command.Connection = conexao;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "pr_atualizamusculo";
-                command.Parameters.AddRange(pParam);
-
-                if (command.ExecuteNonQuery() == 1)
-
+                using (var command = new MySqlCommand("pr_atualizamusculo", conexao))
                 {
-                    conexao.Close();
-                    return true;
-                }
-                else
-                {
-                    conexao.Close();
-                    return false;
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddRange(new MySqlParameter[]
+                    {
+                new MySqlParameter("pIdMusculo", MySqlDbType.Int32) { Value = _idmusculo },
+                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = _sigla ?? string.Empty },
+                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = _nome ?? string.Empty },
+                new MySqlParameter("pRaizes", MySqlDbType.VarChar) { Value = _raizes ?? string.Empty },
+                new MySqlParameter("pInervacao", MySqlDbType.VarChar) { Value = _inervacao ?? string.Empty }
+                    });
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0; // Considera sucesso se qualquer linha foi afetada
                 }
             }
-            catch (Exception)
+            catch (MySqlException ex)
             {
-                conexao.Close();
+                // Logar o erro (ex.Message, ex.StackTrace) para diagnóstico
+                MessageBox.Show($"Erro ao atualizar músculo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-
+            finally
+            {
+                if (conexao?.State == ConnectionState.Open)
+                    conexao.Close();
+            }
         }
 
-        public bool excluiNervo()
+        public bool excluiMusculo()
         {
-            try
-            {
-                if (conectaBanco() == false)
-                {
-                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // Validação inicial
+            if (_idmusculo <= 0)
                 return false;
-            }
+
+            // Conexão
+            if (!conectaBanco())
+                return false;
 
             try
             {
-                MySqlParameter[] pParam = new MySqlParameter[1];
-                MySqlCommand command = new MySqlCommand();
-
-                pParam[0] = new MySqlParameter("pIdMusculo", MySqlDbType.Int32);
-                pParam[0].Value = _idmusculo;
-
-                command.Connection = conexao;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "pr_excluimusculo";
-                command.Parameters.AddRange(pParam);
-
-                if (command.ExecuteNonQuery() == 1)
-
+                using (var command = new MySqlCommand("pr_excluimusculo", conexao))
                 {
-                    conexao.Close();
-                    return true;
-                }
-                else
-                {
-                    conexao.Close();
-                    return false;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("pIdMusculo", _idmusculo);
+
+                    // Qualquer número positivo indica sucesso
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+                    return sucesso;
                 }
             }
-            catch (Exception)
+            catch (MySqlException ex)
             {
-                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Log específico para erros de banco
+                Console.Error.WriteLine($"Erro ao excluir músculo: {ex.Message}");
                 return false;
+            }
+            catch (Exception ex)
+            {
+                // Log para outros tipos de erro
+                Console.Error.WriteLine($"Erro inesperado: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                conexao?.Close();
             }
         }
     }

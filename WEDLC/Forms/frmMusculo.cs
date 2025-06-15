@@ -284,7 +284,7 @@ namespace WEDLC.Forms
                         //Solicita a confirmação do usuário para alteração
                         if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            if (objMusculo.excluiNervo() == true)
+                            if (objMusculo.excluiMusculo() == true)
                             {
                                 MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }

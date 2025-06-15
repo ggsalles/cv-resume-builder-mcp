@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
+    <Compile Include="Banco\cNeuroConducaoMotora.cs" />
     <Compile Include="Banco\GerenciadorConexaoMySQL.cs" />
     <Compile Include="Banco\cMusculo.cs" />
     <Compile Include="Banco\cNervo.cs" />
@@ -237,6 +238,7 @@
   <ItemGroup>
     <Content Include="ILLink\ILLink.Descriptors.LibraryBuild.xml" />
     <Content Include="Imagens\add.png" />
+    <None Include="Imagens\add1.png" />
     <Content Include="Imagens\cancel.png" />
     <Content Include="Imagens\cancelblue.png" />
     <None Include="Imagens\up.png" />
