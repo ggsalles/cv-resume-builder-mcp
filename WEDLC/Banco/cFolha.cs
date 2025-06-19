@@ -503,21 +503,27 @@ namespace WEDLC.Banco
                 pParam[1] = new MySqlParameter("pNome", MySqlDbType.VarChar);
                 pParam[1].Value = pFolha.Nome;
 
-                pParam[2] = new MySqlParameter("pRaizes", MySqlDbType.VarChar);
+                pParam[2] = new MySqlParameter("pIdTipoFolha", MySqlDbType.Int32);
                 pParam[2].Value = pFolha.IdTipoFolha;
 
-                pParam[3] = new MySqlParameter("pInervacao", MySqlDbType.VarChar);
+                pParam[3] = new MySqlParameter("pIdGrupoFolha", MySqlDbType.Int32);
                 pParam[3].Value = pFolha.IdGrupoFolha;
+
+                // Parâmetro de saída
+                MySqlParameter outputParam = new MySqlParameter("@p_sequence", MySqlDbType.Int32);
+                outputParam.Direction = ParameterDirection.Output;
+                command.Parameters.Add(outputParam);
+
 
                 command.Connection = conexao;
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "pr_incluimusculo";
+                command.CommandText = "pr_incluifolha";
                 command.Parameters.AddRange(pParam);
 
                 if (command.ExecuteNonQuery() == 1)
                 {
 
-                    ultimoId = (int)command.LastInsertedId;
+                    ultimoId = Convert.ToInt32(outputParam.Value);
                     conexao.Close();
                     return true;
 

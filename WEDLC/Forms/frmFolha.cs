@@ -33,6 +33,7 @@ namespace WEDLC.Forms
         public DataTable dtAvaliacaoMuscular = new DataTable();
         public DataTable dtNeuroCondMotora = new DataTable();
         public DataTable dtNeuroCondSenorial = new DataTable();
+        public DataTable dtEstudoPotencial = new DataTable();
 
         public frmFolha()
         {
@@ -238,6 +239,19 @@ namespace WEDLC.Forms
                 return false;
             }
 
+            if (cboTipo.SelectedValue == null || cboTipo.SelectedValue.ToString() == "0")
+            {
+                MessageBox.Show("O campo tipo não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cboTipo.Focus();
+                return false;
+            }
+            if (cboGrupo.SelectedValue == null || cboGrupo.SelectedValue.ToString() == "0")
+            {
+                MessageBox.Show("O campo grupo não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cboGrupo.Focus();
+                return false;
+            }
+
             return true;
         }
 
@@ -277,68 +291,91 @@ namespace WEDLC.Forms
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            cEspecializacao objEspecializacao = new cEspecializacao();
-
-            objEspecializacao.Nome = txtNome.Text;
-            objEspecializacao.Sigla = txtSigla.Text;
-
             //Valida campos
             if (validaCampos() == true)
             {
+                Int32 ultimoIdFolha = 0; // Inicializa o ID da folha
+                cFolha objFolha = new cFolha();
+
+                objFolha.Sigla = txtSigla.Text;
+                objFolha.Nome = txtNome.Text;
+                objFolha.IdTipoFolha = int.Parse(cboTipo.SelectedValue.ToString());
+                objFolha.IdGrupoFolha = int.Parse(cboGrupo.SelectedValue.ToString());
+
                 if (cAcao == Acao.INSERT)
                 {
-                    if (objEspecializacao.incluiEspecialidade() == true)
+                    if (objFolha.incluiFolha(objFolha, out ultimoIdFolha))
                     {
-                        MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Folha " + ultimoIdFolha + " foi incluida com sucesso! ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                        if (cboTipo.SelectedIndex == 1) //ENMG
+                        {
+                            cTestesEspeciais objTestesEspeciais = new cTestesEspeciais();
+
+                            objTestesEspeciais.IdFolha = ultimoIdFolha;
+                            objTestesEspeciais.blinkreflex = cboSimNaoBlink.SelectedIndex == 0 ? 1 : 2;
+                            objTestesEspeciais.rbc = cboSimNaoRBC.SelectedIndex == 0 ? 1 : 2;
+                            objTestesEspeciais.reflexoh = cboSimNaoReflexo.SelectedIndex == 0 ? 1 : 2;
+                            objTestesEspeciais.nspd = cboSimNaoNSPD.SelectedIndex == 0 ? 1 : 2;
+                            objTestesEspeciais.IncluiTestesEspeciais();
+
+                        }
+
+                        txtCodigo.Text = ultimoIdFolha.ToString(); // Atualiza o campo de código com o ID da nova folha
+                        carregaTela(); // Recarrega a tela para mostrar a nova folha incluída
+                        cAcao = Acao.SAVE; // Muda a ação para SAVE após inclusão bem-sucedida
+                        controlaBotao(); // Atualiza os botões para o estado de SAVE
+                        grdDados.Enabled = true; // Habilita o grid de dados
+                        btnComplemento.Enabled = true; // Habilita o botão de complemento
+                        btnComplemento_Click(sender, e); // Chama o evento de complemento para carregar os dados adicionais
+                        
                     }
                     else
                     {
                         MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
-
                     }
                 }
                 else if (cAcao == Acao.UPDATE)
                 {
-                    objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
+                    objFolha.IdFolha = int.Parse(txtCodigo.Text);
 
                     //Solicita a confirmação do usuário para alteração
                     if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        if (objEspecializacao.atualizaEspecializacao() == true)
-                        {
-                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
+                        //if (objFolha.atualizaEspecializacao() == true)
+                        //{
+                        //    MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //}
+                        //else
+                        //{
+                        //    MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //    return;
+                        //}
 
                     }
                 }
                 else if (cAcao == Acao.DELETE)
                 {
-                    objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
+                    objFolha.IdFolha = int.Parse(txtCodigo.Text);
 
-                    //Solicita a confirmação do usuário para alteração
-                    if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        if (objEspecializacao.excluiEspecializacao() == true)
-                        {
-                            MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
+                    ////Solicita a confirmação do usuário para alteração
+                    //if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    //{
+                    //    if (objEspecializacao.excluiEspecializacao() == true)
+                    //    {
+                    //        MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //    }
+                    //    else
+                    //    {
+                    //        MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //        return;
+                    //    }
+                    //}
                 }
 
                 //Chama o evento cancelar
-                btnCancelar_Click(sender, e);
+                //btnCancelar_Click(sender, e);
             }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -638,13 +675,11 @@ namespace WEDLC.Forms
         {
             objCombo.DisplayMember = "Descricao";
             objCombo.ValueMember = "Id";
-            objCombo.Items.Add(new cSimNao { Id = "0", Descricao = "Nenhum" });
             objCombo.Items.Add(new cSimNao { Id = "1", Descricao = "Sim" });
             objCombo.Items.Add(new cSimNao { Id = "2", Descricao = "Não" });
-
             objCombo.DropDownStyle = ComboBoxStyle.DropDownList; // Define o estilo do ComboBox como DropDownList
             objCombo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
-            objCombo.SelectedIndex = 0; // Define o índice padrão como 0 (primeiro item);
+            objCombo.SelectedIndex = 1; // Define o índice padrão como Não;
         }
 
         private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -797,17 +832,17 @@ namespace WEDLC.Forms
         {
             try
             {
-                DataTable dt = this.buscaEstudoPotenEvocado(idfolha);
+                DataTable dtEstudoPotencial = this.buscaEstudoPotenEvocado(idfolha);
 
                 grdEstudoPotencial.DataSource = null;
 
                 //Renomeia as colunas do datatable
-                dt.Columns["idestudopotenevocado"].ColumnName = "IdEstudoPotenEvocado";
-                dt.Columns["idfolha"].ColumnName = "IdFolha";
-                dt.Columns["descricao"].ColumnName = "Descricao";
+                dtEstudoPotencial.Columns["idestudopotenevocado"].ColumnName = "IdEstudoPotenEvocado";
+                dtEstudoPotencial.Columns["idfolha"].ColumnName = "IdFolha";
+                dtEstudoPotencial.Columns["descricao"].ColumnName = "Descricao";
 
                 grdEstudoPotencial.SuspendLayout();
-                grdEstudoPotencial.DataSource = dt;
+                grdEstudoPotencial.DataSource = dtEstudoPotencial;
                 grdEstudoPotencial.ResumeLayout();
 
             }
@@ -1073,8 +1108,8 @@ namespace WEDLC.Forms
             cboGrupo.SelectedIndex = 0; // Reseta o combo de grupo
             cboTipo.Enabled = pEnabled; //Habilita o combo de tipo
             cboGrupo.Enabled = pEnabled; //Habilita o combo de grupo
-                                         //Desmarca a seleção do grid
-            grdEstudoPotencial.CurrentCell = null;
+
+            grdEstudoPotencial.CurrentCell = null; //Desmarca a seleção do grid
         }
 
         private void btnIncluiNeuroCondMotora_Click(object sender, EventArgs e)
@@ -1290,6 +1325,15 @@ namespace WEDLC.Forms
                     return;
                 }
 
+                DataView dv = new DataView((DataTable) grdEstudoPotencial.DataSource);
+                dv.RowFilter = "Descricao = " + "'" + txtEstudoPotencial.Text.ToString().Trim() + "'";
+                if (dv.Count > 0)
+                {
+                    MessageBox.Show("Já existe um estudo potencial com esta descrição!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEstudoPotencial.Focus();
+                    return;
+                }
+
                 //chama a procedure de inclusão da avaliação muscular
                 cEstudoPotencialEvocado objEstudoPotencialEvocado = new cEstudoPotencialEvocado();
                 objEstudoPotencialEvocado.IdFolha = int.Parse(txtCodigo.Text);
@@ -1336,7 +1380,7 @@ namespace WEDLC.Forms
                 {
                     cEstudoPotencialEvocado objEstudoPotencialEvocado = new cEstudoPotencialEvocado();
                     objEstudoPotencialEvocado.IdEstudoPotenEvocado = int.Parse(grdEstudoPotencial.SelectedRows[0].Cells[0].Value.ToString());
-                    if (objEstudoPotencialEvocado.ExcluiEstudoPotencialEvocado () == true)
+                    if (objEstudoPotencialEvocado.ExcluiEstudoPotencialEvocado() == true)
                     {
                         MessageBox.Show("Estudo potencial evocado excluído com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //Carrega o grid

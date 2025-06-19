@@ -205,6 +205,7 @@
             // 
             // txtCodigo
             // 
+            this.txtCodigo.ForeColor = System.Drawing.Color.Red;
             this.txtCodigo.Location = new System.Drawing.Point(6, 35);
             this.txtCodigo.MaxLength = 10;
             this.txtCodigo.Name = "txtCodigo";

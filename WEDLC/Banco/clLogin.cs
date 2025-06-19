@@ -199,7 +199,7 @@ namespace WEDLC.Banco
 
             command.Connection = conexao;
             command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "pr_trocasenha";
+            command.CommandText = "pr_incluilogin";
             command.Parameters.AddRange(pParam);
 
             if (command.ExecuteNonQuery() == 1)
