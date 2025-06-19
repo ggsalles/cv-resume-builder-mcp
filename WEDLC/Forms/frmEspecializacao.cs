@@ -337,7 +337,7 @@ namespace WEDLC.Forms
         }
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
-            //Determina a acao
+            //Determina a acao e valida se vai efetuar a pesquisa
             if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
             {
                 int tipopesquisa = 0; //Código que retorna todo select   

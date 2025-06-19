@@ -1,16 +1,19 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace WEDLC.Banco
 {
-    public class cNeuroConducaoMotora
+    public class cEstudoPotencialEvocado
     {
         public Int32 IdFolha { get; set; }
-        public Int32 IdNeuroCondMotora { get; set; }
-
-        public Int32 IdNervo { get; set; }
+        public Int32 IdEstudoPotenEvocado { get; set; }
+        public string Descricao{ get; set; }
 
         // Construtor
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
@@ -30,12 +33,12 @@ namespace WEDLC.Banco
             }
         }
 
-        public bool IncluiNeuroConducaoMotora()
+        public bool IncluiEstudoPotencialEvocado()
         {
             // Validação básica dos dados
-            if (IdFolha == 0 || IdNervo == 0)
+            if (IdFolha == 0)
             {
-                Debug.WriteLine("IDs inválidos para inclusão de neurocondução motora");
+                Debug.WriteLine("ID inválido para inclusão do Estudo Potencial Evocado");
                 return false;
             }
 
@@ -44,7 +47,7 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var command = new MySqlCommand("pr_incluineuroconducaomotora", conexao))
+                using (var command = new MySqlCommand("pr_incluiestudopotenevocado", conexao))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -52,7 +55,7 @@ namespace WEDLC.Banco
                     {
                 // Considerar usar tipo correto (Int32 se forem números)
                 new MySqlParameter("pIdFolha", MySqlDbType.Int32) { Value = IdFolha },
-                new MySqlParameter("pIdNervo", MySqlDbType.Int32) { Value = IdNervo }
+                 new MySqlParameter("pDescricao", MySqlDbType.VarChar) { Value = Descricao }
                     });
 
                     int rowsAffected = command.ExecuteNonQuery();
@@ -66,12 +69,12 @@ namespace WEDLC.Banco
             }
             catch (MySqlException ex)
             {
-                Debug.WriteLine($"Erro MySQL ao incluir neurocondução motora: {ex.Message}");
+                Debug.WriteLine($"Erro MySQL ao incluir estudo potencial evocado: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Erro inesperado ao incluir neurocondução motora: {ex.Message}");
+                Debug.WriteLine($"Erro inesperado ao incluir estudo potencial evocado: {ex.Message}");
                 return false;
             }
             finally
@@ -79,12 +82,12 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
-        public bool ExcluiNeuroConducaoMotora()
+        public bool ExcluiEstudoPotencialEvocado()
         {
             // Validação básica do ID
-            if (IdNeuroCondMotora <= 0)
+            if (IdEstudoPotenEvocado <= 0)
             {
-                Debug.WriteLine("ID inválido para exclusão de neurocondução motora");
+                Debug.WriteLine("ID inválido para exclusão de estudo potencial evocado");
                 return false;
             }
 
@@ -93,10 +96,10 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var command = new MySqlCommand("pr_excluineuroconducaomotora", conexao))
+                using (var command = new MySqlCommand("pr_excluiestudopotenevocado", conexao))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pIdNeuroCondMotora", IdNeuroCondMotora);
+                    command.Parameters.AddWithValue("pIdEstudoPotenEvocado", IdEstudoPotenEvocado);
 
                     int rowsAffected = command.ExecuteNonQuery();
                     return rowsAffected > 0; // Considera sucesso se qualquer linha foi afetada
@@ -104,17 +107,17 @@ namespace WEDLC.Banco
             }
             catch (MySqlException ex) when (ex.Number == 1451) // Código para FK violation
             {
-                Debug.WriteLine($"Não foi possível excluir: registro possui relacionamentos. ID: {IdNeuroCondMotora}");
+                Debug.WriteLine($"Não foi possível excluir: registro possui relacionamentos. ID: {IdEstudoPotenEvocado}");
                 return false;
             }
             catch (MySqlException ex)
             {
-                Debug.WriteLine($"Erro MySQL ao excluir neurocondução motora ID {IdNeuroCondMotora}: {ex.Message}");
+                Debug.WriteLine($"Erro MySQL ao excluir  estudo potencial evocado {IdEstudoPotenEvocado}: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Erro inesperado ao excluir neurocondução motora ID {IdNeuroCondMotora}: {ex.Message}");
+                Debug.WriteLine($"Erro inesperado ao excluir  estudo potencial evocado ID {IdEstudoPotenEvocado}: {ex.Message}");
                 return false;
             }
             finally

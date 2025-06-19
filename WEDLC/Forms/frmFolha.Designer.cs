@@ -58,8 +58,8 @@
             this.cboSimNaoBlink = new System.Windows.Forms.ComboBox();
             this.grpNeuroCondSensorial = new System.Windows.Forms.GroupBox();
             this.cboNeuroConducaoSensorial = new System.Windows.Forms.ComboBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnExcluiNeuroCondSensorial = new System.Windows.Forms.Button();
+            this.btnIncluiNeuroCondSensorial = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.grdNeuroCondSensorial = new System.Windows.Forms.DataGridView();
             this.grpNeuroCondMotora = new System.Windows.Forms.GroupBox();
@@ -75,9 +75,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.grdAvaliacaoMuscular = new System.Windows.Forms.DataGridView();
             this.grpEstudoPotenEvocado = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.txtEstudoPotencia = new System.Windows.Forms.TextBox();
+            this.btnExcluiEstudoPotencial = new System.Windows.Forms.Button();
+            this.btnIncluiEstudoPotencial = new System.Windows.Forms.Button();
+            this.txtEstudoPotencial = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.grdEstudoPotencial = new System.Windows.Forms.DataGridView();
             this.btnComplemento = new System.Windows.Forms.Button();
@@ -166,7 +166,6 @@
             this.cboTipo.Size = new System.Drawing.Size(146, 21);
             this.cboTipo.TabIndex = 4;
             this.cboTipo.Validating += new System.ComponentModel.CancelEventHandler(this.cboTipo_Validating);
-            this.cboTipo.Validated += new System.EventHandler(this.cboTipo_Validated);
             // 
             // txtSigla
             // 
@@ -403,8 +402,8 @@
             // grpNeuroCondSensorial
             // 
             this.grpNeuroCondSensorial.Controls.Add(this.cboNeuroConducaoSensorial);
-            this.grpNeuroCondSensorial.Controls.Add(this.button7);
-            this.grpNeuroCondSensorial.Controls.Add(this.button8);
+            this.grpNeuroCondSensorial.Controls.Add(this.btnExcluiNeuroCondSensorial);
+            this.grpNeuroCondSensorial.Controls.Add(this.btnIncluiNeuroCondSensorial);
             this.grpNeuroCondSensorial.Controls.Add(this.label7);
             this.grpNeuroCondSensorial.Controls.Add(this.grdNeuroCondSensorial);
             this.grpNeuroCondSensorial.Enabled = false;
@@ -423,23 +422,25 @@
             this.cboNeuroConducaoSensorial.Size = new System.Drawing.Size(198, 21);
             this.cboNeuroConducaoSensorial.TabIndex = 15;
             // 
-            // button7
+            // btnExcluiNeuroCondSensorial
             // 
-            this.button7.Image = global::WEDLC.Properties.Resources.up;
-            this.button7.Location = new System.Drawing.Point(246, 38);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(27, 24);
-            this.button7.TabIndex = 17;
-            this.button7.UseVisualStyleBackColor = true;
+            this.btnExcluiNeuroCondSensorial.Image = global::WEDLC.Properties.Resources.up;
+            this.btnExcluiNeuroCondSensorial.Location = new System.Drawing.Point(246, 38);
+            this.btnExcluiNeuroCondSensorial.Name = "btnExcluiNeuroCondSensorial";
+            this.btnExcluiNeuroCondSensorial.Size = new System.Drawing.Size(27, 24);
+            this.btnExcluiNeuroCondSensorial.TabIndex = 17;
+            this.btnExcluiNeuroCondSensorial.UseVisualStyleBackColor = true;
+            this.btnExcluiNeuroCondSensorial.Click += new System.EventHandler(this.btnExcluiNeuroCondSensorial_Click);
             // 
-            // button8
+            // btnIncluiNeuroCondSensorial
             // 
-            this.button8.Image = global::WEDLC.Properties.Resources.down;
-            this.button8.Location = new System.Drawing.Point(213, 38);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(27, 24);
-            this.button8.TabIndex = 16;
-            this.button8.UseVisualStyleBackColor = true;
+            this.btnIncluiNeuroCondSensorial.Image = global::WEDLC.Properties.Resources.down;
+            this.btnIncluiNeuroCondSensorial.Location = new System.Drawing.Point(213, 38);
+            this.btnIncluiNeuroCondSensorial.Name = "btnIncluiNeuroCondSensorial";
+            this.btnIncluiNeuroCondSensorial.Size = new System.Drawing.Size(27, 24);
+            this.btnIncluiNeuroCondSensorial.TabIndex = 16;
+            this.btnIncluiNeuroCondSensorial.UseVisualStyleBackColor = true;
+            this.btnIncluiNeuroCondSensorial.Click += new System.EventHandler(this.btnIncluiNeuroCondSensorial_Click);
             // 
             // label7
             // 
@@ -580,9 +581,9 @@
             // 
             // grpEstudoPotenEvocado
             // 
-            this.grpEstudoPotenEvocado.Controls.Add(this.button2);
-            this.grpEstudoPotenEvocado.Controls.Add(this.button1);
-            this.grpEstudoPotenEvocado.Controls.Add(this.txtEstudoPotencia);
+            this.grpEstudoPotenEvocado.Controls.Add(this.btnExcluiEstudoPotencial);
+            this.grpEstudoPotenEvocado.Controls.Add(this.btnIncluiEstudoPotencial);
+            this.grpEstudoPotenEvocado.Controls.Add(this.txtEstudoPotencial);
             this.grpEstudoPotenEvocado.Controls.Add(this.label5);
             this.grpEstudoPotenEvocado.Controls.Add(this.grdEstudoPotencial);
             this.grpEstudoPotenEvocado.Enabled = false;
@@ -593,31 +594,33 @@
             this.grpEstudoPotenEvocado.TabStop = false;
             this.grpEstudoPotenEvocado.Text = "Estudo de Potenciais Evocados";
             // 
-            // button2
+            // btnExcluiEstudoPotencial
             // 
-            this.button2.Image = global::WEDLC.Properties.Resources.delete;
-            this.button2.Location = new System.Drawing.Point(246, 38);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(27, 24);
-            this.button2.TabIndex = 21;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnExcluiEstudoPotencial.Image = global::WEDLC.Properties.Resources.delete;
+            this.btnExcluiEstudoPotencial.Location = new System.Drawing.Point(246, 38);
+            this.btnExcluiEstudoPotencial.Name = "btnExcluiEstudoPotencial";
+            this.btnExcluiEstudoPotencial.Size = new System.Drawing.Size(27, 24);
+            this.btnExcluiEstudoPotencial.TabIndex = 21;
+            this.btnExcluiEstudoPotencial.UseVisualStyleBackColor = true;
+            this.btnExcluiEstudoPotencial.Click += new System.EventHandler(this.btnExcluiEstudoPotencial_Click);
             // 
-            // button1
+            // btnIncluiEstudoPotencial
             // 
-            this.button1.Image = global::WEDLC.Properties.Resources.down;
-            this.button1.Location = new System.Drawing.Point(213, 38);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(27, 24);
-            this.button1.TabIndex = 20;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnIncluiEstudoPotencial.Image = global::WEDLC.Properties.Resources.down;
+            this.btnIncluiEstudoPotencial.Location = new System.Drawing.Point(213, 38);
+            this.btnIncluiEstudoPotencial.Name = "btnIncluiEstudoPotencial";
+            this.btnIncluiEstudoPotencial.Size = new System.Drawing.Size(27, 24);
+            this.btnIncluiEstudoPotencial.TabIndex = 20;
+            this.btnIncluiEstudoPotencial.UseVisualStyleBackColor = true;
+            this.btnIncluiEstudoPotencial.Click += new System.EventHandler(this.btnIncluiEstudoPotencial_Click);
             // 
-            // txtEstudoPotencia
+            // txtEstudoPotencial
             // 
-            this.txtEstudoPotencia.Location = new System.Drawing.Point(9, 40);
-            this.txtEstudoPotencia.MaxLength = 10;
-            this.txtEstudoPotencia.Name = "txtEstudoPotencia";
-            this.txtEstudoPotencia.Size = new System.Drawing.Size(198, 20);
-            this.txtEstudoPotencia.TabIndex = 19;
+            this.txtEstudoPotencial.Location = new System.Drawing.Point(9, 40);
+            this.txtEstudoPotencial.MaxLength = 30;
+            this.txtEstudoPotencial.Name = "txtEstudoPotencial";
+            this.txtEstudoPotencial.Size = new System.Drawing.Size(198, 20);
+            this.txtEstudoPotencial.TabIndex = 19;
             // 
             // label5
             // 
@@ -645,7 +648,7 @@
             this.btnComplemento.Size = new System.Drawing.Size(27, 24);
             this.btnComplemento.TabIndex = 13;
             this.btnComplemento.UseVisualStyleBackColor = true;
-            this.btnComplemento.Click += new System.EventHandler(this.btnComplemento_Click_1);
+            this.btnComplemento.Click += new System.EventHandler(this.btnComplemento_Click);
             // 
             // frmFolha
             // 
@@ -723,8 +726,8 @@
         private System.Windows.Forms.ComboBox cboSimNaoBlink;
         private System.Windows.Forms.GroupBox grpNeuroCondSensorial;
         private System.Windows.Forms.ComboBox cboNeuroConducaoSensorial;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnExcluiNeuroCondSensorial;
+        private System.Windows.Forms.Button btnIncluiNeuroCondSensorial;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView grdNeuroCondSensorial;
         private System.Windows.Forms.GroupBox grpNeuroCondMotora;
@@ -740,9 +743,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView grdAvaliacaoMuscular;
         private System.Windows.Forms.GroupBox grpEstudoPotenEvocado;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtEstudoPotencia;
+        private System.Windows.Forms.Button btnExcluiEstudoPotencial;
+        private System.Windows.Forms.Button btnIncluiEstudoPotencial;
+        private System.Windows.Forms.TextBox txtEstudoPotencial;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView grdEstudoPotencial;
         private System.Windows.Forms.Button btnComplemento;

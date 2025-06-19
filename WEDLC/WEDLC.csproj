@@ -118,7 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
+    <Compile Include="Banco\cEstudoPotencialEvocado.cs" />
     <Compile Include="Banco\cNeuroConducaoMotora.cs" />
+    <Compile Include="Banco\cNeuroConducaoSensorial.cs" />
     <Compile Include="Banco\GerenciadorConexaoMySQL.cs" />
     <Compile Include="Banco\cMusculo.cs" />
     <Compile Include="Banco\cNervo.cs" />

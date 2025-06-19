@@ -242,7 +242,7 @@ namespace WEDLC.Forms
                     //Solicita a confirmação do usuário para alteração
                     if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        if (objNervo.atualizanervo() == true)
+                        if (objNervo.AtualizaNervo() == true)
                         {
                             MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -261,7 +261,7 @@ namespace WEDLC.Forms
                     //Solicita a confirmação do usuário para alteração
                     if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        if (objNervo.excluiNervo() == true)
+                        if (objNervo.ExcluiNervo() == true)
                         {
                             MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }

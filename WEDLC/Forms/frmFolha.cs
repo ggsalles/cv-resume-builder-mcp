@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using WEDLC.Banco;
@@ -61,7 +62,7 @@ namespace WEDLC.Forms
         {
 
             carregaTipo();
-            carregaGrupo(0);
+            carregaGrupo(0); // carrega apenas o selecione
             CarregaComboSimNao(cboSimNaoBlink);
             CarregaComboSimNao(cboSimNaoNSPD);
             CarregaComboSimNao(cboSimNaoRBC);
@@ -481,10 +482,24 @@ namespace WEDLC.Forms
 
         private void cboTipo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            FiltrarComboTipo(cboTipo.Text.ToString());
+            if (cboTipo.SelectedValue == null || !int.TryParse(cboTipo.SelectedValue.ToString(), out int tipoId))
+            {
+                carregaGrupo(0); // carrega tudo
+            }
+            else
+            {
+                carregaGrupo(tipoId);
+                cboGrupo.Focus();
+            }
+
+            //Determina a acao e valida se vai efetuar a pesquisa
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            {
+                bool retorno = FiltrarComboTipo(cboTipo.Text.ToString());
+            }
         }
 
-        private void FiltrarComboTipo(string texto)
+        private bool FiltrarComboTipo(string texto)
         {
             DataTable dt = (DataTable)cboTipo.DataSource;
             bool existe = dt.AsEnumerable().Any(row => row.Field<string>("descricao") == cboTipo.Text);
@@ -492,7 +507,10 @@ namespace WEDLC.Forms
             {
                 MessageBox.Show("Selecione um item válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cboTipo.Focus();
+                return false; // Retorna falso se o item não existir
             }
+
+            return true; // Retorna verdadeiro se o item existir
         }
 
         public void carregaTipo()
@@ -614,19 +632,6 @@ namespace WEDLC.Forms
         private void cboGrupo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             FiltrarComboGrupo(cboGrupo.Text.ToString());
-        }
-
-        private void cboTipo_Validated(object sender, EventArgs e)
-        {
-            if (cboTipo.SelectedValue == null || !int.TryParse(cboTipo.SelectedValue.ToString(), out int tipoId))
-            {
-                carregaGrupo(0); // carrega tudo
-            }
-            else
-            {
-                carregaGrupo(tipoId);
-                cboGrupo.Focus();
-            }
         }
 
         private void CarregaComboSimNao(System.Windows.Forms.ComboBox objCombo)
@@ -890,6 +895,7 @@ namespace WEDLC.Forms
                     cboAvaliacaoMuscular.Focus();
                     return;
                 }
+
                 //chama a procedure de inclusão da avaliação muscular
                 cAvaliacaoMuscular objAvaliacaoMuscular = new cAvaliacaoMuscular();
                 objAvaliacaoMuscular.IdFolha = int.Parse(txtCodigo.Text);
@@ -1023,21 +1029,12 @@ namespace WEDLC.Forms
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            grpComplemento.Enabled = true;
-        }
-
         private void btnComplemento_Click(object sender, EventArgs e)
-        {
-            grpComplemento.Enabled = true;
-        }
-
-        private void btnComplemento_Click_1(object sender, EventArgs e)
         {
             grpComplemento.Enabled = true; // Habilita o grupo de complemento
             cAcao = Acao.COMPLEMENTO; // Define a ação como complemento
             controlaBotao(); // Controla os botões de ação
+            habilitaDesabilitaComplementos();
             grdDados.Enabled = true; // Habilita o grid de dados
 
         }
@@ -1051,7 +1048,7 @@ namespace WEDLC.Forms
             carregaComboAvaliacaoMuscular(0);
             carregaComboNeuroCondMotora(0);
             carregaComboNeuroCondSensorial(0);
-            txtEstudoPotencia.Text = string.Empty; // Limpa o campo de estudo potencial
+            txtEstudoPotencial.Text = string.Empty; // Limpa o campo de estudo potencial
 
             grdAvaliacaoMuscular.DataSource = null; // Limpa o grid de avaliação muscular
             grdNeuroCondMotora.DataSource = null; // Limpa o grid de neuro condução motora
@@ -1143,7 +1140,7 @@ namespace WEDLC.Forms
                 if (MessageBox.Show("Tem certeza que deseja excluir este item?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     cNeuroConducaoMotora objNeuroConducaoMotora = new cNeuroConducaoMotora();
-                    objNeuroConducaoMotora.IdNeuroCondMotora= int.Parse(grdNeuroCondMotora.SelectedRows[0].Cells[0].Value.ToString());
+                    objNeuroConducaoMotora.IdNeuroCondMotora = int.Parse(grdNeuroCondMotora.SelectedRows[0].Cells[0].Value.ToString());
                     if (objNeuroConducaoMotora.ExcluiNeuroConducaoMotora() == true)
                     {
                         MessageBox.Show("Neuro condução motora excluída com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1154,10 +1151,209 @@ namespace WEDLC.Forms
                     carregaComboNeuroCondMotora(int.Parse(txtCodigo.Text));
                     carregaGridNeuroCondMotora();
                 }
-             }
+            }
             catch (Exception)
             {
                 MessageBox.Show("Erro ao tentar excluir a neuro condução motora!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void habilitaDesabilitaComplementos()
+        {
+            btnComplemento.Enabled = true; // Habilita o botão de complemento
+            grpTestesEspeciais.Enabled = false; // Desabilita o grupo de testes especiais
+
+            if (cboTipo.SelectedIndex == 1) //ENMG
+            {
+                grpAvaliacaoMuscular.Enabled = true; // Habilita o grupo de avaliação muscular
+                grpNeuroCondMotora.Enabled = true; // Habilita o grupo de neuro condução motora
+                grpNeuroCondSensorial.Enabled = true; // Habilita o grupo de neuro condução sensorial
+                grpEstudoPotenEvocado.Enabled = false; // Desabilita o grupo de estudo potencial
+                grpTestesEspeciais.Enabled = true; // Habilita o grupo de testes especiais
+
+            }
+            else if (cboTipo.SelectedIndex == 2) //FIXO
+            {
+                grpAvaliacaoMuscular.Enabled = false; // Habilita o grupo de avaliação muscular
+                grpNeuroCondMotora.Enabled = false; // Habilita o grupo de neuro condução motora
+                grpNeuroCondSensorial.Enabled = false; // Habilita o grupo de neuro condução sensorial
+                grpEstudoPotenEvocado.Enabled = false; // Desabilita o grupo de estudo potencial
+            }
+
+            else if (cboTipo.SelectedIndex == 3) //RAIZ
+            {
+                grpAvaliacaoMuscular.Enabled = false; // Habilita o grupo de avaliação muscular
+                grpNeuroCondMotora.Enabled = false; // Habilita o grupo de neuro condução motora
+                grpNeuroCondSensorial.Enabled = false; // Habilita o grupo de neuro condução sensorial
+                grpEstudoPotenEvocado.Enabled = true; // Habilita o grupo de estudo potencial
+                btnComplemento.Enabled = false; // Desabilita o botão de complemento, pois não há complementos para este tipo
+            }
+
+        }
+
+        private void btnIncluiNeuroCondSensorial_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //valida inclusão
+                if (cboNeuroConducaoSensorial.SelectedValue == null || cboNeuroConducaoSensorial.SelectedValue.ToString() == "0")
+                {
+                    MessageBox.Show("Selecione um item válido!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cboNeuroConducaoSensorial.Focus();
+                    return;
+                }
+                //verifica se existe itens no combo para inlcusão
+                if (cboNeuroConducaoSensorial.Items.Count == 0 || cboNeuroConducaoSensorial.SelectedIndex == 0)
+                {
+                    MessageBox.Show("Não existem itens para inclusão!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cboNeuroConducaoSensorial.Focus();
+                    return;
+                }
+                //chama a procedure de inclusão da avaliação muscular
+                cNeuroConducaoSensorial objNeuroConducaoSensorial = new cNeuroConducaoSensorial();
+                objNeuroConducaoSensorial.IdFolha = int.Parse(txtCodigo.Text);
+                objNeuroConducaoSensorial.IdNervo = int.Parse(cboNeuroConducaoSensorial.SelectedValue.ToString());
+                if (objNeuroConducaoSensorial.IncluiNeuroConducaoSensorial() == true)
+                {
+                    MessageBox.Show("Neuro condução sensorial incluida com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //Carrega o grid
+                    this.populaGridNeuroConducaoSensorial(int.Parse(txtCodigo.Text));
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao tentar incluir uma neuro condução sensorial!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                carregaComboNeuroCondSensorial(int.Parse(txtCodigo.Text));
+                carregaGridNeuroCondSensorial();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar incluir uma neuro condução sensorial!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void btnExcluiNeuroCondSensorial_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Valida se existe item no grid
+                if (grdNeuroCondSensorial.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Selecione um item para exclusão!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //Verifica se o item selecionado é válido
+                if (grdNeuroCondSensorial.SelectedRows[0].Cells[0].Value == null || grdNeuroCondSensorial.SelectedRows[0].Cells[0].Value.ToString() == "0")
+                {
+                    MessageBox.Show("Selecione um item válido!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //Solicita a confirmação do usuário para exclusão
+                if (MessageBox.Show("Tem certeza que deseja excluir este item?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    cNeuroConducaoSensorial objNeuroConducaoSensorial = new cNeuroConducaoSensorial();
+                    objNeuroConducaoSensorial.IdNeuroCondSensorial = int.Parse(grdNeuroCondSensorial.SelectedRows[0].Cells[0].Value.ToString());
+                    if (objNeuroConducaoSensorial.ExcluiNeuroConducaoSensorial() == true)
+                    {
+                        MessageBox.Show("Neuro condução sensorial excluída com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //Carrega o grid
+                        this.populaGridNeuroConducaoSensorial(int.Parse(txtCodigo.Text));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Neuro condução sensorial excluída com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    carregaComboNeuroCondSensorial(int.Parse(txtCodigo.Text));
+                    carregaGridNeuroCondSensorial();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar excluir a neuro condução motora!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void btnIncluiEstudoPotencial_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //valida inclusão
+                if (txtEstudoPotencial.Text.Trim().Length == 0)
+                {
+                    MessageBox.Show("Informe um valor válido!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEstudoPotencial.Focus();
+                    return;
+                }
+
+                //chama a procedure de inclusão da avaliação muscular
+                cEstudoPotencialEvocado objEstudoPotencialEvocado = new cEstudoPotencialEvocado();
+                objEstudoPotencialEvocado.IdFolha = int.Parse(txtCodigo.Text);
+                objEstudoPotencialEvocado.Descricao = txtEstudoPotencial.Text.Trim();
+                if (objEstudoPotencialEvocado.IncluiEstudoPotencialEvocado() == true)
+                {
+                    MessageBox.Show("Estudo potencial incluido com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //Carrega o grid
+                    this.populaGridEstudoPotencial(int.Parse(txtCodigo.Text));
+                    txtEstudoPotencial.Text = string.Empty; // Limpa o campo de estudo potencial
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao tentar incluir um Estudo Potêncial!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                carregaGridEstudoPotencial();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar incluir um Estudo Potêncial!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void btnExcluiEstudoPotencial_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Valida se existe item no grid
+                if (grdEstudoPotencial.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Selecione um item para exclusão!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //Verifica se o item selecionado é válido
+                if (grdEstudoPotencial.SelectedRows[0].Cells[0].Value == null || grdEstudoPotencial.SelectedRows[0].Cells[0].Value.ToString() == "0")
+                {
+                    MessageBox.Show("Selecione um item válido!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //Solicita a confirmação do usuário para exclusão
+                if (MessageBox.Show("Tem certeza que deseja excluir este item?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    cEstudoPotencialEvocado objEstudoPotencialEvocado = new cEstudoPotencialEvocado();
+                    objEstudoPotencialEvocado.IdEstudoPotenEvocado = int.Parse(grdEstudoPotencial.SelectedRows[0].Cells[0].Value.ToString());
+                    if (objEstudoPotencialEvocado.ExcluiEstudoPotencialEvocado () == true)
+                    {
+                        MessageBox.Show("Estudo potencial evocado excluído com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //Carrega o grid
+                        this.populaGridEstudoPotencial(int.Parse(txtCodigo.Text));
+                        txtEstudoPotencial.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erro ao tentar excluir estudo potencial evocado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    carregaGridEstudoPotencial();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar excluir o estudo potencial evocado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

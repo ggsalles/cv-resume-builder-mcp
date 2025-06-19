@@ -5,10 +5,10 @@ using System.Diagnostics;
 
 namespace WEDLC.Banco
 {
-    public class cNeuroConducaoMotora
+    public class cNeuroConducaoSensorial
     {
         public Int32 IdFolha { get; set; }
-        public Int32 IdNeuroCondMotora { get; set; }
+        public Int32 IdNeuroCondSensorial { get; set; }
 
         public Int32 IdNervo { get; set; }
 
@@ -30,12 +30,12 @@ namespace WEDLC.Banco
             }
         }
 
-        public bool IncluiNeuroConducaoMotora()
+        public bool IncluiNeuroConducaoSensorial()
         {
             // Validação básica dos dados
             if (IdFolha == 0 || IdNervo == 0)
             {
-                Debug.WriteLine("IDs inválidos para inclusão de neurocondução motora");
+                Debug.WriteLine("IDs inválidos para inclusão de neurocondução sensorial");
                 return false;
             }
 
@@ -44,7 +44,7 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var command = new MySqlCommand("pr_incluineuroconducaomotora", conexao))
+                using (var command = new MySqlCommand("pr_incluineuroconducaosensorial", conexao))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -66,7 +66,7 @@ namespace WEDLC.Banco
             }
             catch (MySqlException ex)
             {
-                Debug.WriteLine($"Erro MySQL ao incluir neurocondução motora: {ex.Message}");
+                Debug.WriteLine($"Erro MySQL ao incluir neurocondução sensorial: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
@@ -79,12 +79,12 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
-        public bool ExcluiNeuroConducaoMotora()
+        public bool ExcluiNeuroConducaoSensorial()
         {
             // Validação básica do ID
-            if (IdNeuroCondMotora <= 0)
+            if (IdNeuroCondSensorial <= 0)
             {
-                Debug.WriteLine("ID inválido para exclusão de neurocondução motora");
+                Debug.WriteLine("ID inválido para exclusão de neurocondução sensorial");
                 return false;
             }
 
@@ -93,10 +93,10 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var command = new MySqlCommand("pr_excluineuroconducaomotora", conexao))
+                using (var command = new MySqlCommand("pr_excluineuroconducaosensorial", conexao))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pIdNeuroCondMotora", IdNeuroCondMotora);
+                    command.Parameters.AddWithValue("pIdNeuroCondSensorial", IdNeuroCondSensorial);
 
                     int rowsAffected = command.ExecuteNonQuery();
                     return rowsAffected > 0; // Considera sucesso se qualquer linha foi afetada
@@ -104,17 +104,17 @@ namespace WEDLC.Banco
             }
             catch (MySqlException ex) when (ex.Number == 1451) // Código para FK violation
             {
-                Debug.WriteLine($"Não foi possível excluir: registro possui relacionamentos. ID: {IdNeuroCondMotora}");
+                Debug.WriteLine($"Não foi possível excluir: registro possui relacionamentos. ID: {IdNeuroCondSensorial}");
                 return false;
             }
             catch (MySqlException ex)
             {
-                Debug.WriteLine($"Erro MySQL ao excluir neurocondução motora ID {IdNeuroCondMotora}: {ex.Message}");
+                Debug.WriteLine($"Erro MySQL ao excluir neurocondução sensorial ID {IdNeuroCondSensorial}: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Erro inesperado ao excluir neurocondução motora ID {IdNeuroCondMotora}: {ex.Message}");
+                Debug.WriteLine($"Erro inesperado ao excluir neurocondução sensorial ID {IdNeuroCondSensorial}: {ex.Message}");
                 return false;
             }
             finally
