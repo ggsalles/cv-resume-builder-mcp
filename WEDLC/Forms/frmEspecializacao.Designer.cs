@@ -84,7 +84,7 @@
             this.txtNome.Location = new System.Drawing.Point(224, 35);
             this.txtNome.MaxLength = 50;
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(416, 20);
+            this.txtNome.Size = new System.Drawing.Size(410, 20);
             this.txtNome.TabIndex = 2;
             this.txtNome.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNome_KeyUp);
             // 

@@ -1,6 +1,6 @@
 ﻿namespace WEDLC.Forms
 {
-    partial class frmMusculo
+    partial class frmComentarios
     {
         /// <summary>
         /// Required designer variable.
@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             this.grpBoxDados = new System.Windows.Forms.GroupBox();
-            this.txtInervacao = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtRaizes = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtSigla = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
@@ -46,6 +42,8 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
             this.grdDados = new System.Windows.Forms.DataGridView();
+            this.txtTexto = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.grpBoxDados.SuspendLayout();
             this.grpBotoes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
@@ -53,10 +51,8 @@
             // 
             // grpBoxDados
             // 
-            this.grpBoxDados.Controls.Add(this.txtInervacao);
-            this.grpBoxDados.Controls.Add(this.label3);
-            this.grpBoxDados.Controls.Add(this.txtRaizes);
             this.grpBoxDados.Controls.Add(this.label2);
+            this.grpBoxDados.Controls.Add(this.txtTexto);
             this.grpBoxDados.Controls.Add(this.txtSigla);
             this.grpBoxDados.Controls.Add(this.label1);
             this.grpBoxDados.Controls.Add(this.txtNome);
@@ -65,45 +61,9 @@
             this.grpBoxDados.Controls.Add(this.lblCodigo);
             this.grpBoxDados.Location = new System.Drawing.Point(12, 12);
             this.grpBoxDados.Name = "grpBoxDados";
-            this.grpBoxDados.Size = new System.Drawing.Size(699, 106);
+            this.grpBoxDados.Size = new System.Drawing.Size(699, 228);
             this.grpBoxDados.TabIndex = 0;
             this.grpBoxDados.TabStop = false;
-            // 
-            // txtInervacao
-            // 
-            this.txtInervacao.Enabled = false;
-            this.txtInervacao.Location = new System.Drawing.Point(333, 76);
-            this.txtInervacao.MaxLength = 30;
-            this.txtInervacao.Name = "txtInervacao";
-            this.txtInervacao.Size = new System.Drawing.Size(360, 20);
-            this.txtInervacao.TabIndex = 14;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(330, 60);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 13);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "Inervação";
-            // 
-            // txtRaizes
-            // 
-            this.txtRaizes.Enabled = false;
-            this.txtRaizes.Location = new System.Drawing.Point(6, 76);
-            this.txtRaizes.MaxLength = 30;
-            this.txtRaizes.Name = "txtRaizes";
-            this.txtRaizes.Size = new System.Drawing.Size(321, 20);
-            this.txtRaizes.TabIndex = 12;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 60);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(39, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Raizes";
             // 
             // txtSigla
             // 
@@ -135,7 +95,7 @@
             // lblNome
             // 
             this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(221, 19);
+            this.lblNome.Location = new System.Drawing.Point(224, 19);
             this.lblNome.Name = "lblNome";
             this.lblNome.Size = new System.Drawing.Size(35, 13);
             this.lblNome.TabIndex = 2;
@@ -154,7 +114,7 @@
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Location = new System.Drawing.Point(3, 19);
+            this.lblCodigo.Location = new System.Drawing.Point(6, 19);
             this.lblCodigo.Name = "lblCodigo";
             this.lblCodigo.Size = new System.Drawing.Size(40, 13);
             this.lblCodigo.TabIndex = 0;
@@ -167,7 +127,7 @@
             this.grpBotoes.Controls.Add(this.btnGravar);
             this.grpBotoes.Controls.Add(this.btnSair);
             this.grpBotoes.Controls.Add(this.btnNovo);
-            this.grpBotoes.Location = new System.Drawing.Point(11, 298);
+            this.grpBotoes.Location = new System.Drawing.Point(11, 418);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(700, 49);
             this.grpBotoes.TabIndex = 1;
@@ -239,18 +199,38 @@
             // grdDados
             // 
             this.grdDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdDados.Location = new System.Drawing.Point(11, 124);
+            this.grdDados.Location = new System.Drawing.Point(11, 246);
             this.grdDados.Name = "grdDados";
             this.grdDados.Size = new System.Drawing.Size(700, 168);
             this.grdDados.TabIndex = 4;
             this.grdDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDados_CellClick);
             this.grdDados.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.grdDados_KeyPress);
             // 
-            // frmMusculo
+            // txtTexto
+            // 
+            this.txtTexto.AcceptsReturn = true;
+            this.txtTexto.Location = new System.Drawing.Point(6, 83);
+            this.txtTexto.MaxLength = 4000;
+            this.txtTexto.Multiline = true;
+            this.txtTexto.Name = "txtTexto";
+            this.txtTexto.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtTexto.Size = new System.Drawing.Size(687, 133);
+            this.txtTexto.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 67);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Texto";
+            // 
+            // frmComentarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(723, 357);
+            this.ClientSize = new System.Drawing.Size(723, 477);
             this.ControlBox = false;
             this.Controls.Add(this.grdDados);
             this.Controls.Add(this.grpBotoes);
@@ -259,9 +239,9 @@
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmMusculo";
+            this.Name = "frmComentarios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Músculos";
+            this.Text = "Comentários";
             this.Load += new System.EventHandler(this.frmMusculo_Load);
             this.grpBoxDados.ResumeLayout(false);
             this.grpBoxDados.PerformLayout();
@@ -287,9 +267,7 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.TextBox txtSigla;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtInervacao;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtRaizes;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtTexto;
     }
 }

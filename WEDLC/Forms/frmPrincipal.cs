@@ -96,5 +96,17 @@ namespace WEDLC.Forms
             //Abre o form de especialização não modal
             objFolha.Show();
         }
+
+        private void comentárioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Cria um objeto para o form de troca de senhas abrir
+            frmComentarios objComentario = new frmComentarios();
+
+            // Define o form pai como o form principal
+            objComentario.MdiParent = this;
+
+            //Abre o form de especialização não modal
+            objComentario.Show();
+        }
     }
 }

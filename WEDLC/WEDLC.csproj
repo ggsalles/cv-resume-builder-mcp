@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
+    <Compile Include="Banco\cComentario.cs" />
     <Compile Include="Banco\cEstudoPotencialEvocado.cs" />
     <Compile Include="Banco\cNeuroConducaoMotora.cs" />
     <Compile Include="Banco\cNeuroConducaoSensorial.cs" />
@@ -136,6 +137,12 @@
     </Compile>
     <Compile Include="Forms\frmFolha.Designer.cs">
       <DependentUpon>frmFolha.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmComentarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmComentarios.Designer.cs">
+      <DependentUpon>frmComentarios.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmMusculo.cs">
       <SubType>Form</SubType>
@@ -177,6 +184,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\frmFolha.resx">
       <DependentUpon>frmFolha.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmComentarios.resx">
+      <DependentUpon>frmComentarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmMusculo.resx">
       <DependentUpon>frmMusculo.cs</DependentUpon>
