@@ -545,5 +545,45 @@ namespace WEDLC.Banco
             }
 
         }
+
+        public bool atualizaFolha()
+        {
+            // Validação de entrada
+            if (IdFolha <= 0)
+            {
+                MessageBox.Show("ID obrigatório.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            try
+            {
+                if (!conectaBanco())
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = conexao;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "pr_atualizafolha";
+
+                    command.Parameters.AddWithValue("pIdFolha", IdFolha);
+                    command.Parameters.AddWithValue("pNome", Nome);
+                    command.Parameters.AddWithValue("pSigla", Sigla);
+
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+                    conexao.Close();
+                    return sucesso;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao atualizar: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexao?.Close();
+                return false;
+            }
+        }
     }
 }

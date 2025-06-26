@@ -344,16 +344,16 @@ namespace WEDLC.Forms
                     //Solicita a confirmação do usuário para alteração
                     if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        //if (objFolha.atualizaEspecializacao() == true)
-                        //{
-                        //    MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        //}
-                        //else
-                        //{
-                        //    MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        //    return;
-                        //}
-
+                        if (objFolha.atualizaFolha() == true)
+                        {
+                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        btnCancelar_Click(sender, e);
                     }
                 }
                 else if (cAcao == Acao.DELETE)
@@ -696,6 +696,7 @@ namespace WEDLC.Forms
                     txtSigla.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
                     txtNome.Text = grdDados.Rows[e.RowIndex].Cells[2].Value.ToString();
                     cboTipo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[3].Value.ToString();
+                    carregaGrupo(int.Parse(cboTipo.SelectedValue.ToString()));
                     cboGrupo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[5].Value.ToString();
 
                     //libera os controles 
@@ -1407,36 +1408,6 @@ namespace WEDLC.Forms
             }
         }
 
-        private void cboSimNaoBlink_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cAcao == Acao.COMPLEMENTO && cboTipo.SelectedIndex == 1) // Se for ENMG
-                {
-                    cTestesEspeciais objTestesEspeciais = new cTestesEspeciais();
-
-                    objTestesEspeciais.IdFolha = int.Parse(txtCodigo.Text);
-                    objTestesEspeciais.blinkreflex = cboSimNaoBlink.SelectedIndex == 0 ? 1 : 2;
-                    objTestesEspeciais.rbc = cboSimNaoRBC.SelectedIndex == 0 ? 1 : 2;
-                    objTestesEspeciais.reflexoh = cboSimNaoReflexo.SelectedIndex == 0 ? 1 : 2;
-                    objTestesEspeciais.nspd = cboSimNaoNSPD.SelectedIndex == 0 ? 1 : 2;
-
-                    if (objTestesEspeciais.atualizaTestesEspeciais() == false)
-                    {
-                        MessageBox.Show("Erro ao tentar atualizar os testes especiais!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                }
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao tentar atualizar os testes especiais!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-        }
-
         public void carregaTestesEspeciais(int pIdFolha)
         {
             try
@@ -1474,19 +1445,9 @@ namespace WEDLC.Forms
                     {
                         { valorDesejado = "Não"; }
                     }
-                    index = cboSimNaoNSPD.FindStringExact(valorDesejado);
-                    cboSimNaoNSPD.SelectedIndex = index;
-                    if (int.Parse(dt.Rows[0][4].ToString()) == 1)
-                    {
-                        valorDesejado = "Sim";
-                    }
-                    else
-                    {
-                        { valorDesejado = "Não"; }
-                    }
                     index = cboSimNaoRBC.FindStringExact(valorDesejado);
                     cboSimNaoRBC.SelectedIndex = index;
-                    if (int.Parse(dt.Rows[0][5].ToString()) == 1)
+                    if (int.Parse(dt.Rows[0][4].ToString()) == 1)
                     {
                         valorDesejado = "Sim";
                     }
@@ -1496,12 +1457,72 @@ namespace WEDLC.Forms
                     }
                     index = cboSimNaoReflexo.FindStringExact(valorDesejado);
                     cboSimNaoReflexo.SelectedIndex = index;
+                    if (int.Parse(dt.Rows[0][5].ToString()) == 1)
+                    {
+                        valorDesejado = "Sim";
+                    }
+                    else
+                    {
+                        { valorDesejado = "Não"; }
+                    }
+                    index = cboSimNaoNSPD.FindStringExact(valorDesejado);
+                    cboSimNaoNSPD.SelectedIndex = index;
 
                 }
             }
             catch (Exception)
             {
                 MessageBox.Show("Erro ao carregar testes especiais!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void cboSimNaoBlink_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AtualizaTestesEspeciais();
+        }
+
+        private void cboSimNaoRBC_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AtualizaTestesEspeciais();
+        }
+
+        private void cboSimNaoReflexo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AtualizaTestesEspeciais();
+        }
+
+        private void cboSimNaoNSPD_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AtualizaTestesEspeciais();
+        }
+
+        private void AtualizaTestesEspeciais()
+        {
+            try
+            {
+                if (cAcao == Acao.COMPLEMENTO && cboTipo.SelectedIndex == 1) // Se for ENMG
+                {
+                    cTestesEspeciais objTestesEspeciais = new cTestesEspeciais();
+
+                    objTestesEspeciais.IdFolha = int.Parse(txtCodigo.Text);
+                    objTestesEspeciais.blinkreflex = cboSimNaoBlink.SelectedIndex == 0 ? 1 : 2;
+                    objTestesEspeciais.rbc = cboSimNaoRBC.SelectedIndex == 0 ? 1 : 2;
+                    objTestesEspeciais.reflexoh = cboSimNaoReflexo.SelectedIndex == 0 ? 1 : 2;
+                    objTestesEspeciais.nspd = cboSimNaoNSPD.SelectedIndex == 0 ? 1 : 2;
+
+                    if (objTestesEspeciais.atualizaTestesEspeciais() == false)
+                    {
+                        MessageBox.Show("Erro ao tentar atualizar os testes especiais!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar atualizar os testes especiais!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

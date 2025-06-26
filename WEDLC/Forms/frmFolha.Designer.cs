@@ -345,6 +345,7 @@
             this.cboSimNaoNSPD.Name = "cboSimNaoNSPD";
             this.cboSimNaoNSPD.Size = new System.Drawing.Size(201, 21);
             this.cboSimNaoNSPD.TabIndex = 26;
+            this.cboSimNaoNSPD.SelectedIndexChanged += new System.EventHandler(this.cboSimNaoNSPD_SelectedIndexChanged);
             // 
             // groupBox8
             // 
@@ -363,6 +364,7 @@
             this.cboSimNaoReflexo.Name = "cboSimNaoReflexo";
             this.cboSimNaoReflexo.Size = new System.Drawing.Size(192, 21);
             this.cboSimNaoReflexo.TabIndex = 25;
+            this.cboSimNaoReflexo.SelectedIndexChanged += new System.EventHandler(this.cboSimNaoReflexo_SelectedIndexChanged);
             // 
             // groupBox7
             // 
@@ -381,6 +383,7 @@
             this.cboSimNaoRBC.Name = "cboSimNaoRBC";
             this.cboSimNaoRBC.Size = new System.Drawing.Size(192, 21);
             this.cboSimNaoRBC.TabIndex = 24;
+            this.cboSimNaoRBC.SelectedIndexChanged += new System.EventHandler(this.cboSimNaoRBC_SelectedIndexChanged);
             // 
             // groupBox6
             // 
