@@ -121,8 +121,11 @@ namespace WEDLC.Forms
             {
                 DataTable dtAux = new DataTable();
                 cEspecializacao objcEspecializacao = new cEspecializacao();
+                objcEspecializacao.IdEspecializacao = idespecializacao;
+                objcEspecializacao.Sigla = sigla;
+                objcEspecializacao.Nome = nome;
 
-                dtAux = objcEspecializacao.buscaEspecializacao(tipopesquisa, idespecializacao, sigla, nome);
+                dtAux = objcEspecializacao.buscaEspecializacao();
 
                 return dtAux;
 

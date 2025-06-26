@@ -399,6 +399,7 @@
             this.cboSimNaoBlink.Name = "cboSimNaoBlink";
             this.cboSimNaoBlink.Size = new System.Drawing.Size(192, 21);
             this.cboSimNaoBlink.TabIndex = 23;
+            this.cboSimNaoBlink.SelectedIndexChanged += new System.EventHandler(this.cboSimNaoBlink_SelectedIndexChanged);
             // 
             // grpNeuroCondSensorial
             // 

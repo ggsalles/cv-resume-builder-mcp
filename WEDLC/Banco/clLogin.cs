@@ -17,30 +17,12 @@ namespace WEDLC.Banco
         private byte[] sal = new byte[] { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1, 0x0 };
         private byte[] textoCifrado;
 
-        private int _idusuario; // field
-        private string _nome; // field
-        private string _senha; // field
+        public int Idusuario { get; set; } // field
+        public string Nome { get; set; } // field
+        public string Senha { get; set; } // field
 
         //public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["L_WEDLC"].ConnectionString; // Producao
         //public string stringConexao = System.Configuration.ConfigurationManager.ConnectionStrings["R_WEDLC"].ConnectionString; // Remoto
-     
-        public int idusuario   // property
-        {
-            get { return _idusuario; }   // get method"
-            set { _idusuario = value; }  // set method
-        }
-
-        public string Nome   // property
-        {
-            get { return _nome; }   // get method
-            set { _nome = value; }  // set method
-        }
-
-           public string Senha   // property
-        {
-            get { return _senha; }   // get method
-            set { _senha = value; }  // set method
-        }
 
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
@@ -188,14 +170,17 @@ namespace WEDLC.Banco
 
             conexao.Open();
 
-            MySqlParameter[] pParam = new MySqlParameter[2];
+            MySqlParameter[] pParam = new MySqlParameter[3];
             MySqlCommand command = new MySqlCommand();
 
             pParam[0] = new MySqlParameter("pNome", MySqlDbType.VarChar);
-            pParam[0].Value = _nome;
+            pParam[0].Value = Nome;
 
             pParam[1] = new MySqlParameter("pPassword", MySqlDbType.VarChar);
-            pParam[1].Value = _senha;
+            pParam[1].Value = Senha;
+
+            pParam[2] = new MySqlParameter("pIdUsuario", MySqlDbType.Int16);
+            pParam[2].Value = Idusuario;
 
             command.Connection = conexao;
             command.CommandType = CommandType.StoredProcedure;

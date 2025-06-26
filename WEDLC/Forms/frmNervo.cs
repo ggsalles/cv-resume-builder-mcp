@@ -127,8 +127,12 @@ namespace WEDLC.Forms
         {
             DataTable dtAux = new DataTable();
             cNervo objcNervo = new cNervo();
+            objcNervo.TipoPesquisa = tipopesquisa;
+            objcNervo.IdNervo = idnervo;
+            objcNervo.Sigla = sigla;
+            objcNervo.Nome = nome;
 
-            dtAux = objcNervo.buscaNervo(tipopesquisa, idnervo, sigla, nome);
+            dtAux = objcNervo.buscaNervo();
 
             return dtAux;
         }

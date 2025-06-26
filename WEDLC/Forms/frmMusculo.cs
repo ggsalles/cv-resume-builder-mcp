@@ -138,7 +138,12 @@ namespace WEDLC.Forms
                 DataTable dtAux = new DataTable();
                 cMusculo objcMusculo = new cMusculo();
 
-                dtAux = objcMusculo.buscaMusculo(tipopesquisa, idmusculo, sigla, nome);
+                //Configura os parâmetros de pesquisa
+                objcMusculo.TipoPesquisa = tipopesquisa;
+                objcMusculo.IdMusculo = idmusculo;
+                objcMusculo.Sigla = sigla;
+
+                dtAux = objcMusculo.buscaMusculo();
 
                 return dtAux;
             }

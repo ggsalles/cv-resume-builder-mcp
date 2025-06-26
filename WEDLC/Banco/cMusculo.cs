@@ -8,41 +8,12 @@ namespace WEDLC.Banco
 {
     public class cMusculo
     {
-        private int _idmusculo;
-        private string _nome;
-        private string _sigla;
-        private string _raizes;
-        private string _inervacao;
-
-        public int IdMusculo   // property
-        {
-            get { return _idmusculo; }   // get method
-            set { _idmusculo = value; }  // set method
-        }
-
-        public string Sigla   // property
-        {
-            get { return _sigla; }   // get method
-            set { _sigla = value; }  // set method
-        }
-
-        public string Nome   // property
-        {
-            get { return _nome; }   // get method
-            set { _nome = value; }  // set method
-        }
-
-        public string Raizes   // property
-        {
-            get { return _raizes; }   // get method
-            set { _raizes = value; }  // set method
-        }
-
-        public string Inervacao   // property
-        {
-            get { return _inervacao; }   // get method
-            set { _inervacao = value; }  // set method
-        }
+        public int TipoPesquisa { get; set; }
+        public int IdMusculo { get; set; }
+        public string Nome { get; set; }
+        public string Sigla { get; set; }
+        public string Raizes { get; set; }
+        public string Inervacao { get; set; }
 
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
@@ -61,7 +32,7 @@ namespace WEDLC.Banco
             }
         }
 
-        public DataTable buscaMusculo(int pTipopesquisa, int pIdMusculo, string pSigla, string pNome)
+        public DataTable buscaMusculo()
         {
             try
             {
@@ -82,12 +53,12 @@ namespace WEDLC.Banco
                 using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscamusculo", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdMusculo", pIdMusculo);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pRaizes", pNome);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pInervacao", pNome);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", TipoPesquisa);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdMusculo", IdMusculo);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", Sigla);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pNome", Nome);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pRaizes", Raizes);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pInervacao", Inervacao);
                     DataTable dt = new DataTable();
                     sqlDa.Fill(dt);
 
@@ -123,10 +94,10 @@ namespace WEDLC.Banco
 
                     command.Parameters.AddRange(new MySqlParameter[]
                     {
-                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = _sigla },
-                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = _nome },
-                new MySqlParameter("pRaizes", MySqlDbType.VarChar) { Value = _raizes },
-                new MySqlParameter("pInervacao", MySqlDbType.VarChar) { Value = _inervacao }
+                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = Sigla },
+                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = Nome },
+                new MySqlParameter("pRaizes", MySqlDbType.VarChar) { Value = Raizes },
+                new MySqlParameter("pInervacao", MySqlDbType.VarChar) { Value = Inervacao }
                     });
 
                     int rowsAffected = command.ExecuteNonQuery();
@@ -151,7 +122,7 @@ namespace WEDLC.Banco
         public bool atualizamusculo()
         {
             // Validação básica dos dados
-            if (_idmusculo <= 0)
+            if (IdMusculo <= 0)
             {
                 // Id inválido
                 return false;
@@ -170,11 +141,11 @@ namespace WEDLC.Banco
 
                     command.Parameters.AddRange(new MySqlParameter[]
                     {
-                new MySqlParameter("pIdMusculo", MySqlDbType.Int32) { Value = _idmusculo },
-                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = _sigla ?? string.Empty },
-                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = _nome ?? string.Empty },
-                new MySqlParameter("pRaizes", MySqlDbType.VarChar) { Value = _raizes ?? string.Empty },
-                new MySqlParameter("pInervacao", MySqlDbType.VarChar) { Value = _inervacao ?? string.Empty }
+                new MySqlParameter("pIdMusculo", MySqlDbType.Int32) { Value = IdMusculo },
+                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = Sigla ?? string.Empty },
+                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = Nome ?? string.Empty },
+                new MySqlParameter("pRaizes", MySqlDbType.VarChar) { Value = Raizes ?? string.Empty },
+                new MySqlParameter("pInervacao", MySqlDbType.VarChar) { Value = Inervacao ?? string.Empty }
                     });
 
                     int rowsAffected = command.ExecuteNonQuery();
@@ -197,7 +168,7 @@ namespace WEDLC.Banco
         public bool excluiMusculo()
         {
             // Validação inicial
-            if (_idmusculo <= 0)
+            if (IdMusculo <= 0)
                 return false;
 
             // Conexão
@@ -209,7 +180,7 @@ namespace WEDLC.Banco
                 using (var command = new MySqlCommand("pr_excluimusculo", conexao))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pIdMusculo", _idmusculo);
+                    command.Parameters.AddWithValue("pIdMusculo", IdMusculo);
 
                     // Qualquer número positivo indica sucesso
                     bool sucesso = command.ExecuteNonQuery() > 0;

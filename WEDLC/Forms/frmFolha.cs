@@ -42,6 +42,7 @@ namespace WEDLC.Forms
 
         private void frmFolha_Load(object sender, EventArgs e)
         {
+            this.DoubleBuffered = true;
             carregaCombo();
             carregaTela();
         }
@@ -328,7 +329,7 @@ namespace WEDLC.Forms
                         grdDados.Enabled = true; // Habilita o grid de dados
                         btnComplemento.Enabled = true; // Habilita o botão de complemento
                         btnComplemento_Click(sender, e); // Chama o evento de complemento para carregar os dados adicionais
-                        
+
                     }
                     else
                     {
@@ -717,6 +718,11 @@ namespace WEDLC.Forms
                     //Carrega grid estudo potencial
                     carregaGridEstudoPotencial();
 
+                    if (cboTipo.SelectedIndex == 1) //se for do tipo ENMG
+                    {
+                        carregaTestesEspeciais(int.Parse(txtCodigo.Text));
+                    }
+
                     txtSigla.Focus();
                 }
 
@@ -1096,7 +1102,6 @@ namespace WEDLC.Forms
             CarregaComboSimNao(cboSimNaoNSPD); // Carrega o combo de sim/não para NSPD
 
         }
-
         private void controlaDadosFolha(Boolean pEnabled)
         {
             txtCodigo.Text = string.Empty;
@@ -1325,7 +1330,7 @@ namespace WEDLC.Forms
                     return;
                 }
 
-                DataView dv = new DataView((DataTable) grdEstudoPotencial.DataSource);
+                DataView dv = new DataView((DataTable)grdEstudoPotencial.DataSource);
                 dv.RowFilter = "Descricao = " + "'" + txtEstudoPotencial.Text.ToString().Trim() + "'";
                 if (dv.Count > 0)
                 {
@@ -1398,6 +1403,105 @@ namespace WEDLC.Forms
             catch (Exception)
             {
                 MessageBox.Show("Erro ao tentar excluir o estudo potencial evocado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void cboSimNaoBlink_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cAcao == Acao.COMPLEMENTO && cboTipo.SelectedIndex == 1) // Se for ENMG
+                {
+                    cTestesEspeciais objTestesEspeciais = new cTestesEspeciais();
+
+                    objTestesEspeciais.IdFolha = int.Parse(txtCodigo.Text);
+                    objTestesEspeciais.blinkreflex = cboSimNaoBlink.SelectedIndex == 0 ? 1 : 2;
+                    objTestesEspeciais.rbc = cboSimNaoRBC.SelectedIndex == 0 ? 1 : 2;
+                    objTestesEspeciais.reflexoh = cboSimNaoReflexo.SelectedIndex == 0 ? 1 : 2;
+                    objTestesEspeciais.nspd = cboSimNaoNSPD.SelectedIndex == 0 ? 1 : 2;
+
+                    if (objTestesEspeciais.atualizaTestesEspeciais() == false)
+                    {
+                        MessageBox.Show("Erro ao tentar atualizar os testes especiais!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar atualizar os testes especiais!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        public void carregaTestesEspeciais(int pIdFolha)
+        {
+            try
+            {
+                string valorDesejado = ""; // Valor que você deseja selecionar no combo
+                int index = 0; // Variável para armazenar o índice do item encontrado
+
+                // Reseta os valores dos combos de testes especiais para (não)
+                cboSimNaoBlink.SelectedIndex = 1;
+                cboSimNaoNSPD.SelectedIndex = 1;
+                cboSimNaoRBC.SelectedIndex = 1;
+                cboSimNaoReflexo.SelectedIndex = 1;
+
+                cTestesEspeciais objTestesEspeciais = new cTestesEspeciais();
+                objTestesEspeciais.IdFolha = pIdFolha;
+                DataTable dt = objTestesEspeciais.carregaTestesEspeciais(pIdFolha);
+                if (dt.Rows.Count > 0)
+                {
+                    if (int.Parse(dt.Rows[0][2].ToString()) == 1)
+                    {
+                        valorDesejado = "Sim";
+                    }
+                    else
+                    {
+                        { valorDesejado = "Não"; }
+                    }
+                    index = cboSimNaoBlink.FindStringExact(valorDesejado);
+                    cboSimNaoBlink.SelectedIndex = index;
+
+                    if (int.Parse(dt.Rows[0][3].ToString()) == 1)
+                    {
+                        valorDesejado = "Sim";
+                    }
+                    else
+                    {
+                        { valorDesejado = "Não"; }
+                    }
+                    index = cboSimNaoNSPD.FindStringExact(valorDesejado);
+                    cboSimNaoNSPD.SelectedIndex = index;
+                    if (int.Parse(dt.Rows[0][4].ToString()) == 1)
+                    {
+                        valorDesejado = "Sim";
+                    }
+                    else
+                    {
+                        { valorDesejado = "Não"; }
+                    }
+                    index = cboSimNaoRBC.FindStringExact(valorDesejado);
+                    cboSimNaoRBC.SelectedIndex = index;
+                    if (int.Parse(dt.Rows[0][5].ToString()) == 1)
+                    {
+                        valorDesejado = "Sim";
+                    }
+                    else
+                    {
+                        { valorDesejado = "Não"; }
+                    }
+                    index = cboSimNaoReflexo.FindStringExact(valorDesejado);
+                    cboSimNaoReflexo.SelectedIndex = index;
+
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao carregar testes especiais!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

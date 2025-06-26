@@ -2,11 +2,13 @@
 using System;
 using System.Data;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
     public class cTestesEspeciais
     {
+        public Int32 IdTestesEspeciais { get; set; }
         public Int32 IdFolha { get; set; }
         public int blinkreflex { get; set; }
         public int rbc { get; set; }
@@ -84,5 +86,90 @@ namespace WEDLC.Banco
             }
         }
 
+        public bool atualizaTestesEspeciais()
+        {
+            // Validação de entrada
+            if (IdFolha <= 0)
+            {
+                MessageBox.Show("ID folha obrigatório.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            try
+            {
+                if (!conectaBanco())
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = conexao;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "pr_atualizatestesespeciais";
+
+                    command.Parameters.AddWithValue("pIdFolha", IdFolha);
+                    command.Parameters.AddWithValue("pBlinkReflex", blinkreflex);
+                    command.Parameters.AddWithValue("pRbc", rbc);
+                    command.Parameters.AddWithValue("pReflexOh", reflexoh);
+                    command.Parameters.AddWithValue("pNspd", nspd);
+
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+                    conexao.Close();
+                    return sucesso;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao atualizar: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexao?.Close();
+                return false;
+            }
+        }
+
+        public DataTable carregaTestesEspeciais(Int32 pIdFolha)
+
+        {
+            try
+            {
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
+                using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscatestesespeciais", conexao))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", IdFolha);
+
+                    DataTable dt = new DataTable();
+                    sqlDa.Fill(dt);
+
+                    //Fecha a conexão
+                    conexao.Close();
+
+                    // Retorna o DataTable
+                    return dt;
+
+                }
+
+            }
+            catch (Exception)
+            {
+                // Fecha a conexão  
+                conexao.Close();
+                return null;
+            }
+        }
     }
 }

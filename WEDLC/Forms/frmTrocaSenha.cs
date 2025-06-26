@@ -15,7 +15,6 @@ namespace WEDLC.Forms
             this.objCllogin = objCllogin;
         }
 
-
         private void btnSair_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Atenção. O processo de troca de senha não foi efetuado. Redirecionado o sistema para a tela de login.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -24,7 +23,6 @@ namespace WEDLC.Forms
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-
             try
             {
                 bool bRet = false;
@@ -36,24 +34,23 @@ namespace WEDLC.Forms
                 }
                 if (bRet == true)
                 {
-
                     DataTable dtAux = new DataTable();
 
                     string pCripto = "";
                     byte[] pCifrado;
 
                     pCripto = objCllogin.critptografiaSenha(txtSenha.Text.ToString(), objCllogin.Nome, out pCifrado);
-
                     objCllogin.Senha = pCripto;
+
                     var retorno = objCllogin.incluiLogin();
 
                     MessageBox.Show("A troca da senha foi efetuada com sucesso. Voltando para a tela de login.    ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // GRAVA LOG
                     clLog objclLog = new clLog();
-                    objclLog.Idlogdescricao = 2; // descrição LOGIN na tabela LOGDESCRICAO
-                    objclLog.Idusuario = Int32.Parse(objCllogin.idusuario.ToString());
-                    objclLog.Descerrovs = "";
+                    objclLog.IdLogDescricao = 2; // descrição LOGIN na tabela LOGDESCRICAO
+                    objclLog.IdUsuario = objCllogin.Idusuario;
+                    objclLog.DescErro = "";
 
                     if (objclLog.incluiLogin() == false)
                     {
@@ -69,9 +66,9 @@ namespace WEDLC.Forms
 
                 // GRAVA LOG
                 clLog objclLog = new clLog();
-                objclLog.Idlogdescricao = 3; // descrição GENÉRICO na tabela LOGDESCRICAO
-                objclLog.Idusuario = 9999;
-                objclLog.Descerrovs = ex.Message.ToString();
+                objclLog.IdLogDescricao = 3; // descrição GENÉRICO na tabela LOGDESCRICAO
+                objclLog.IdUsuario = 9999;
+                objclLog.DescErro = ex.Message.ToString();
 
                 if (objclLog.incluiLogin() == false)
                 {

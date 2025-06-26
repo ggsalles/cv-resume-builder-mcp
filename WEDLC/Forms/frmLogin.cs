@@ -49,7 +49,7 @@ namespace WEDLC.Forms
 
                     MessageBox.Show("Você será redirecionado para o formulário de troca de senha.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    objclLogin.idusuario = Int16.Parse(dtAux.Rows[0]["id"].ToString());
+                    objclLogin.Idusuario = Int16.Parse(dtAux.Rows[0]["idusuario"].ToString());
                     objclLogin.Nome = txtUsuario.Text.ToString();
                     objclLogin.Senha = txtSenha.Text.ToString();
 
@@ -84,9 +84,9 @@ namespace WEDLC.Forms
                     MessageBox.Show("Usuário " + txtUsuario.Text.ToString().ToUpper() + " conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // GRAVA LOG
-                    objclLog.Idlogdescricao = 1; // descrição LOGIN na tabela LOGDESCRICAO
-                    objclLog.Idusuario = Int32.Parse(dtAux.Rows[0]["idusuario"].ToString());
-                    objclLog.Descerrovs = "";
+                    objclLog.IdLogDescricao = 1; // descrição LOGIN na tabela LOGDESCRICAO
+                    objclLog.IdUsuario = Int32.Parse(dtAux.Rows[0]["idusuario"].ToString());
+                    objclLog.DescErro = "";
 
                     if (objclLog.incluiLogin() == false)
                     {
@@ -117,9 +117,9 @@ namespace WEDLC.Forms
 
                 // GRAVA LOG
                 clLog objclLog = new clLog();
-                objclLog.Idlogdescricao = 3; // descrição GENÉRICO na tabela LOGDESCRICAO
-                objclLog.Idusuario = 9999;
-                objclLog.Descerrovs = ex.Message.ToString();
+                objclLog.IdLogDescricao = 3; // descrição GENÉRICO na tabela LOGDESCRICAO
+                objclLog.IdUsuario = 9999;
+                objclLog.DescErro = ex.Message.ToString();
 
                 if (objclLog.incluiLogin() == false)
                 {

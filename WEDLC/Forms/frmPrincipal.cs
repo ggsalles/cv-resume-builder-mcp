@@ -13,7 +13,8 @@ namespace WEDLC.Forms
 
         {
             InitializeComponent();
-                 
+
+            this.DoubleBuffered = true;
             string ip = ObterIPExterno();
             string mac = ObterMACAddress();
             GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();

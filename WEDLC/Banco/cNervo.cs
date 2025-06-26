@@ -8,48 +8,13 @@ namespace WEDLC.Banco
 {
     public class cNervo
     {
-        private int _idnervo;
-        private string _nome;
-        private string _sigla;
-        private string _normlmd;
-        private string _normncm;
-        private string _normncs;
-
-        public int IdNervo   // property
-        {
-            get { return _idnervo; }   // get method
-            set { _idnervo = value; }  // set method
-        }
-
-        public string Nome   // property
-        {
-            get { return _nome; }   // get method
-            set { _nome = value; }  // set method
-        }
-
-        public string Sigla   // property
-        {
-            get { return _sigla; }   // get method
-            set { _sigla = value; }  // set method
-        }
-
-        public string NormLmd   // property
-        {
-            get { return _normlmd; }   // get method
-            set { _normlmd = value; }  // set method
-        }
-
-        public string NormNcm   // property
-        {
-            get { return _normncm; }   // get method
-            set { _normncm = value; }  // set method
-        }
-
-        public string NormNcs   // property
-        {
-            get { return _normncs; }   // get method
-            set { _normncs = value; }  // set method
-        }
+        public int TipoPesquisa { get; set; }
+        public int IdNervo { get; set; }
+        public string Nome { get; set; }
+        public string Sigla { get; set; }
+        public string NormLmd { get; set; }
+        public string NormNcm { get; set; }
+        public string NormNcs { get; set; }
 
         // Construtor
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
@@ -69,13 +34,13 @@ namespace WEDLC.Banco
             }
         }
 
-        public DataTable buscaNervo(int pTipopesquisa, int pIdNervo, string pSigla, string pNome)
+        public DataTable buscaNervo()
         {
             // Validação básica dos parâmetros
-            if (pTipopesquisa < 0)
+            if (TipoPesquisa < 0)
                 return null;
 
-            if (pTipopesquisa == 1 && pIdNervo <= 0)
+            if (TipoPesquisa == 1 && IdNervo <= 0)
                 return null;
 
             if (!conectaBanco())
@@ -88,10 +53,10 @@ namespace WEDLC.Banco
                 using (var sqlDa = new MySqlDataAdapter("pr_buscanervo", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdNervo", pIdNervo);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla ?? string.Empty);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome ?? string.Empty);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", TipoPesquisa);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdNervo", IdNervo);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", Sigla ?? string.Empty);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pNome", Nome ?? string.Empty);
 
                     sqlDa.Fill(dt);
                     return dt;
@@ -118,7 +83,7 @@ namespace WEDLC.Banco
         public bool incluiNervo()
         {
             // Validação básica dos dados
-            if (string.IsNullOrWhiteSpace(_sigla) || string.IsNullOrWhiteSpace(_nome))
+            if (string.IsNullOrWhiteSpace(Sigla) || string.IsNullOrWhiteSpace(Nome))
                 return false;
 
             if (!conectaBanco())
@@ -132,11 +97,11 @@ namespace WEDLC.Banco
 
                     command.Parameters.AddRange(new MySqlParameter[]
                     {
-                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = _sigla ?? string.Empty },
-                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = _nome ?? string.Empty },
-                new MySqlParameter("pNormLmd", MySqlDbType.VarChar) { Value = _normlmd ?? string.Empty },
-                new MySqlParameter("pNormNcs", MySqlDbType.VarChar) { Value = _normncs ?? string.Empty },
-                new MySqlParameter("pNormNcm", MySqlDbType.VarChar) { Value = _normncm ?? string.Empty }
+                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = Sigla ?? string.Empty },
+                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = Nome ?? string.Empty },
+                new MySqlParameter("pNormLmd", MySqlDbType.VarChar) { Value = NormLmd?? string.Empty },
+                new MySqlParameter("pNormNcs", MySqlDbType.VarChar) { Value = NormNcs ?? string.Empty },
+                new MySqlParameter("pNormNcm", MySqlDbType.VarChar) { Value = NormNcm ?? string.Empty }
                     });
 
                     int rowsAffected = command.ExecuteNonQuery();
@@ -163,7 +128,7 @@ namespace WEDLC.Banco
         public bool AtualizaNervo()
         {
             // Validação básica dos dados
-            if (_idnervo <= 0 || string.IsNullOrWhiteSpace(_sigla) || string.IsNullOrWhiteSpace(_nome))
+            if (IdNervo <= 0 || string.IsNullOrWhiteSpace(Sigla) || string.IsNullOrWhiteSpace(Nome))
                 return false;
 
             if (!conectaBanco())
@@ -177,12 +142,12 @@ namespace WEDLC.Banco
 
                     command.Parameters.AddRange(new MySqlParameter[]
                     {
-                new MySqlParameter("pIdNervo", MySqlDbType.Int32) { Value = _idnervo },
-                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = _sigla ?? string.Empty },
-                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = _nome ?? string.Empty },
-                new MySqlParameter("pNormLmd", MySqlDbType.VarChar) { Value = _normlmd ?? string.Empty },
-                new MySqlParameter("pNormNcm", MySqlDbType.VarChar) { Value = _normncm ?? string.Empty },
-                new MySqlParameter("pNormNcs", MySqlDbType.VarChar) { Value = _normncs ?? string.Empty }
+                new MySqlParameter("pIdNervo", MySqlDbType.Int32) { Value = IdNervo },
+                new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = Sigla ?? string.Empty },
+                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = Nome ?? string.Empty },
+                new MySqlParameter("pNormLmd", MySqlDbType.VarChar) { Value = NormLmd ?? string.Empty },
+                new MySqlParameter("pNormNcm", MySqlDbType.VarChar) { Value = NormNcm ?? string.Empty },
+                new MySqlParameter("pNormNcs", MySqlDbType.VarChar) { Value = NormNcs ?? string.Empty }
                     });
 
                     int rowsAffected = command.ExecuteNonQuery();
@@ -210,7 +175,7 @@ namespace WEDLC.Banco
         public bool ExcluiNervo()
         {
             // Validação básica
-            if (_idnervo <= 0)
+            if (IdNervo <= 0)
                 return false;
 
             if (!conectaBanco())
@@ -221,7 +186,7 @@ namespace WEDLC.Banco
                 using (var command = new MySqlCommand("pr_excluinervo", conexao))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pIdNervo", _idnervo);
+                    command.Parameters.AddWithValue("pIdNervo", IdNervo);
 
                     int rowsAffected = command.ExecuteNonQuery();
                     return rowsAffected > 0; // Considera sucesso se qualquer linha foi afetada
@@ -230,19 +195,19 @@ namespace WEDLC.Banco
             catch (MySqlException ex) when (ex.Number == 1451) // Código para FK violation
             {
                 // Log específico para registro com relacionamentos
-                Debug.WriteLine($"Não foi possível excluir: nervo possui relacionamentos. ID: {_idnervo}");
+                Debug.WriteLine($"Não foi possível excluir: nervo possui relacionamentos. ID: {IdNervo}");
                 return false;
             }
             catch (MySqlException ex)
             {
                 // Log para outros erros MySQL
-                Debug.WriteLine($"Erro MySQL ao excluir nervo ID {_idnervo}: {ex.Message}");
+                Debug.WriteLine($"Erro MySQL ao excluir nervo ID {IdNervo}: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
             {
                 // Log para erros inesperados
-                Debug.WriteLine($"Erro inesperado ao excluir nervo ID {_idnervo}: {ex.Message}");
+                Debug.WriteLine($"Erro inesperado ao excluir nervo ID {IdNervo}: {ex.Message}");
                 return false;
             }
             finally

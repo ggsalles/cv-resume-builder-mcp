@@ -7,27 +7,10 @@ namespace WEDLC.Banco
 {
     public class cEspecializacao
     {
-        private int _idespecializacao;
-        private string _nome;
-        private string _sigla;
-
-        public int IdEspecializacao   // property
-        {
-            get { return _idespecializacao; }   // get method
-            set { _idespecializacao = value; }  // set method
-        }
-
-        public string Nome   // property
-        {
-            get { return _nome; }   // get method
-            set { _nome = value; }  // set method
-        }
-
-        public string Sigla   // property
-        {
-            get { return _sigla; }   // get method
-            set { _sigla = value; }  // set method
-        }
+        public int TipoPesquisa { get; set; }
+        public int IdEspecializacao { get; set; }
+        public string Nome { get; set; }
+        public string Sigla { get; set; }
 
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
@@ -46,7 +29,7 @@ namespace WEDLC.Banco
             }
         }
 
-        public DataTable buscaEspecializacao(int pTipopesquisa, int pIdEspecializacao, string pSigla, string pNome)
+        public DataTable buscaEspecializacao()
 
         {
             try
@@ -69,10 +52,10 @@ namespace WEDLC.Banco
 )
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", pTipopesquisa);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdEspecializacao", pIdEspecializacao);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", pSigla);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", TipoPesquisa);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdEspecializacao", IdEspecializacao);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", Sigla);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pNome", Nome);
                     //sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
 
                     DataTable dt = new DataTable();
@@ -97,7 +80,7 @@ namespace WEDLC.Banco
         public bool incluiEspecialidade()
         {
             // Validação de entrada
-            if (string.IsNullOrEmpty(_nome) || string.IsNullOrEmpty(_sigla))
+            if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Sigla))
             {
                 MessageBox.Show("Nome e sigla são obrigatórios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -117,8 +100,8 @@ namespace WEDLC.Banco
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "pr_incluiespecializacao";
 
-                    command.Parameters.AddWithValue("pNome", _nome);
-                    command.Parameters.AddWithValue("pSigla", _sigla);
+                    command.Parameters.AddWithValue("pNome", Nome);
+                    command.Parameters.AddWithValue("pSigla", Sigla);
 
                     int rowsAffected = command.ExecuteNonQuery();
                     conexao.Close();
@@ -136,7 +119,7 @@ namespace WEDLC.Banco
         public bool atualizaEspecializacao()
         {
             // Validação de entrada
-            if (_idespecializacao <= 0 || string.IsNullOrEmpty(_sigla) || string.IsNullOrEmpty(_nome))
+            if (IdEspecializacao <= 0 || string.IsNullOrEmpty(Sigla) || string.IsNullOrEmpty(Nome))
             {
                 MessageBox.Show("ID, sigla e nome são obrigatórios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -156,9 +139,9 @@ namespace WEDLC.Banco
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "pr_atualizaespecializacao";
 
-                    command.Parameters.AddWithValue("pIdEspecializacao", _idespecializacao);
-                    command.Parameters.AddWithValue("pSigla", _sigla);
-                    command.Parameters.AddWithValue("pNome", _nome);
+                    command.Parameters.AddWithValue("pIdEspecializacao", IdEspecializacao);
+                    command.Parameters.AddWithValue("pSigla", Sigla);
+                    command.Parameters.AddWithValue("pNome", Nome);
 
                     bool sucesso = command.ExecuteNonQuery() > 0;
                     conexao.Close();
@@ -176,7 +159,7 @@ namespace WEDLC.Banco
         public bool excluiEspecializacao()
         {
             // Validação de entrada
-            if (_idespecializacao <= 0)
+            if (IdEspecializacao <= 0)
             {
                 MessageBox.Show("ID de especialização inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -196,7 +179,7 @@ namespace WEDLC.Banco
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "pr_excluiespecializacao";
 
-                    command.Parameters.AddWithValue("pIdEspecializacao", _idespecializacao);
+                    command.Parameters.AddWithValue("pIdEspecializacao", IdEspecializacao);
 
                     bool sucesso = command.ExecuteNonQuery() > 0;
                     conexao.Close();

@@ -7,41 +7,11 @@ namespace WEDLC.Banco
 {
     public class clLog
     {
-        private int _idlog; // field
-        private int _idlogdescricao; // field  
-        private string _datalog;
-        private int _idusuario;
-        private string _descerrovs;
-
-        public int IdLog   // property
-        {
-            get { return _idlog; }   // get method
-            set { _idlog = value; }  // set method
-        }
-
-        public int Idlogdescricao   // property
-        {
-            get { return _idlogdescricao; }   // get method
-            set { _idlogdescricao = value; }  // set method
-        }
-
-        public string Datalog   // property
-        {
-            get { return _datalog; }   // get method
-            set { _datalog = value; }  // set method
-        }
-
-        public int Idusuario   // property
-        {
-            get { return _idusuario; }   // get method
-            set { _idusuario = value; }  // set method
-        }
-
-        public string Descerrovs   // property
-        {
-            get { return _descerrovs; }   // get method
-            set { _descerrovs = value; }  // set method
-        }
+        public int IdLog { get; set; }
+        public int IdLogDescricao { get; set; }
+        public string DataLog { get; set; }
+        public int IdUsuario { get; set; }
+        public string DescErro { get; set; }
 
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
@@ -78,33 +48,20 @@ namespace WEDLC.Banco
 
             try
             {
-                MySqlParameter[] pParam = new MySqlParameter[3];
-                MySqlCommand command = new MySqlCommand();
-
-                pParam[0] = new MySqlParameter("pIdLogDescricao", MySqlDbType.Int16);
-                pParam[0].Value = _idlogdescricao;
-
-                pParam[1] = new MySqlParameter("pIdUsuario", MySqlDbType.Int16);
-                pParam[1].Value = _idusuario;
-
-                pParam[2] = new MySqlParameter("pDescerrovs", MySqlDbType.VarChar);
-                pParam[2].Value = _descerrovs;
-
-                command.Connection = conexao;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "pr_log";
-                command.Parameters.AddRange(pParam);
-
-                if (command.ExecuteNonQuery() == 1)
-
+                using (var command = new MySqlCommand("pr_log", conexao))
                 {
-                    conexao.Close();
-                    return true;
-                }
-                else
-                {
-                    conexao.Close();
-                    return false;
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddRange(new[]
+                    {
+                        new MySqlParameter("pIdLogDescricao", MySqlDbType.Int32) { Value = IdLogDescricao },
+                        new MySqlParameter("pIdUsuario", MySqlDbType.Int32) { Value = IdUsuario },
+                        new MySqlParameter("pDescErro", MySqlDbType.VarChar) { Value = DescErro },
+                        new MySqlParameter("pDataLog", MySqlDbType.DateTime) { Value = DataLog }
+                    });
+
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows > 0;
                 }
             }
             catch (Exception)
