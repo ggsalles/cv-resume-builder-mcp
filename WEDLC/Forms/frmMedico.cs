@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -154,7 +153,6 @@ namespace WEDLC.Forms
                 e.Handled = true;
             }
         }
-
         private async void txtCepConsultorio_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try

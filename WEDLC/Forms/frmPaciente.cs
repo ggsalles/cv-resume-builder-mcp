@@ -11,9 +11,19 @@ namespace WEDLC.Forms
     {
         DataTable dadosXML = new DataTable();
 
+        // Create a ToolTip component
+        ToolTip toolTip1 = new ToolTip();
+
         public frmPaciente()
         {
             InitializeComponent();
+
+            // Configurações do ToolTip
+            toolTip1.AutoPopDelay = 5000; // Tempo que o ToolTip permanece visível
+            toolTip1.InitialDelay = 500; // Tempo antes do ToolTip aparecer
+            toolTip1.ReshowDelay = 500; // Tempo entre as aparições do ToolTip
+            toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
+            toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
         }
 
         private void frmPaciente_Load(object sender, EventArgs e)
