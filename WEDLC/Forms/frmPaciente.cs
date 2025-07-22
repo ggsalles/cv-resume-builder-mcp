@@ -26,19 +26,28 @@ namespace WEDLC.Forms
         {
             try
             {
-                string xmlUrl = "https://viacep.com.br/ws/" + txtCep.Text + "/xml/";
-                dadosXML = await GetXmlToDataTable(xmlUrl);
-                if (dadosXML.Rows.Count > 0)
+                if (txtCep.Text.ToString().Trim().Length > 0 && txtCep.Text.ToString().Trim().Length == 8)
                 {
-                    txtLogradouro.Text = dadosXML.Rows[1][0].ToString();
-                    txtComplemento.Text = dadosXML.Rows[2][0].ToString();
-                    txtBairro.Text = dadosXML.Rows[4][0].ToString();
-                    txtLocalidade.Text = dadosXML.Rows[5][0].ToString();
-                    txtUf.Text = dadosXML.Rows[6][0].ToString();
-                }
-                else
-                {
-                    MessageBox.Show("CEP não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    string xmlUrl = "https://viacep.com.br/ws/" + txtCep.Text + "/xml/";
+                    dadosXML = await GetXmlToDataTable(xmlUrl);
+                    if (dadosXML.Rows.Count > 1)
+                    {
+                        txtLogradouro.Text = dadosXML.Rows[1][0].ToString();
+                        txtComplemento.Text = dadosXML.Rows[2][0].ToString();
+                        txtBairro.Text = dadosXML.Rows[4][0].ToString();
+                        txtLocalidade.Text = dadosXML.Rows[5][0].ToString();
+                        txtUf.Text = dadosXML.Rows[6][0].ToString();
+                    }
+                    else
+                    {
+                        txtLogradouro.Text = string.Empty;
+                        txtComplemento.Text = string.Empty;
+                        txtBairro.Text = string.Empty;
+                        txtLocalidade.Text = string.Empty;
+                        txtUf.Text = string.Empty;
+
+                        MessageBox.Show("CEP não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             catch (Exception ex)

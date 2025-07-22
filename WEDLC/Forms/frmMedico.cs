@@ -12,10 +12,22 @@ namespace WEDLC.Forms
     public partial class frmMedico : Form
     {
         DataTable dadosXML = new DataTable();
+        // Create a ToolTip component
+        ToolTip toolTip1 = new ToolTip();
 
         public frmMedico()
         {
             InitializeComponent();
+
+            // Configurações do ToolTip
+            toolTip1.AutoPopDelay = 5000; // Tempo que o ToolTip permanece visível
+            toolTip1.InitialDelay = 500; // Tempo antes do ToolTip aparecer
+            toolTip1.ReshowDelay = 500; // Tempo entre as aparições do ToolTip
+            toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
+            toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
+            toolTip1.SetToolTip(txtCepConsultorio, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
+            toolTip1.SetToolTip(txtMediaConsultorio, "Digite o valor médio da consulta. Exemplo: 150,00");
+
         }
 
         private void frmPaciente_Load(object sender, EventArgs e)
@@ -28,19 +40,28 @@ namespace WEDLC.Forms
         {
             try
             {
-                string xmlUrl = "https://viacep.com.br/ws/" + txtCep.Text + "/xml/";
-                dadosXML = await GetXmlToDataTable(xmlUrl);
-                if (dadosXML.Rows.Count > 0)
+                if (txtCep.Text.ToString().Trim().Length > 0 && txtCep.Text.ToString().Trim().Length == 8)
                 {
-                    txtLogradouro.Text = dadosXML.Rows[1][0].ToString();
-                    txtComplemento.Text = dadosXML.Rows[2][0].ToString();
-                    txtBairro.Text = dadosXML.Rows[4][0].ToString();
-                    txtLocalidade.Text = dadosXML.Rows[5][0].ToString();
-                    txtUf.Text = dadosXML.Rows[6][0].ToString();
-                }
-                else
-                {
-                    MessageBox.Show("CEP não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    string xmlUrl = "https://viacep.com.br/ws/" + txtCep.Text + "/xml/";
+                    dadosXML = await GetXmlToDataTable(xmlUrl);
+                    if (dadosXML.Rows.Count > 1)
+                    {
+                        txtLogradouro.Text = dadosXML.Rows[1][0].ToString();
+                        txtComplemento.Text = dadosXML.Rows[2][0].ToString();
+                        txtBairro.Text = dadosXML.Rows[4][0].ToString();
+                        txtLocalidade.Text = dadosXML.Rows[5][0].ToString();
+                        txtUf.Text = dadosXML.Rows[6][0].ToString();
+                    }
+                    else
+                    {
+                        txtLogradouro.Text = string.Empty;
+                        txtComplemento.Text = string.Empty;
+                        txtBairro.Text = string.Empty;
+                        txtLocalidade.Text = string.Empty;
+                        txtUf.Text = string.Empty;
+
+                        MessageBox.Show("CEP não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             catch (Exception ex)
@@ -97,9 +118,9 @@ namespace WEDLC.Forms
 
         private void txtValor_Leave(object sender, EventArgs e)
         {
-            if (decimal.TryParse(txtValor.Text, out decimal valor))
+            if (decimal.TryParse(txtMediaConsultorio.Text, out decimal valor))
             {
-                txtValor.Text = valor.ToString("N2");
+                txtMediaConsultorio.Text = valor.ToString("N2");
             }
 
         }
@@ -132,6 +153,57 @@ namespace WEDLC.Forms
             {
                 e.Handled = true;
             }
+        }
+
+        private async void txtCepConsultorio_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                if (txtCepConsultorio.Text.ToString().Trim().Length > 0 && txtCepConsultorio.Text.ToString().Trim().Length == 8)
+                {
+                    string xmlUrl = "https://viacep.com.br/ws/" + txtCepConsultorio.Text + "/xml/";
+                    dadosXML = await GetXmlToDataTable(xmlUrl);
+                    if (dadosXML.Rows.Count > 1)
+                    {
+                        txtLogradouroConsultorio.Text = dadosXML.Rows[1][0].ToString();
+                        txtComplementoConsultorio.Text = dadosXML.Rows[2][0].ToString();
+                        txtBairroConsultorio.Text = dadosXML.Rows[4][0].ToString();
+                        txtLocalidadeConsultorio.Text = dadosXML.Rows[5][0].ToString();
+                        txtUfConsultorio.Text = dadosXML.Rows[6][0].ToString();
+                    }
+                    else
+                    {
+                        txtLogradouroConsultorio.Text = string.Empty;
+                        txtComplementoConsultorio.Text = string.Empty;
+                        txtBairroConsultorio.Text = string.Empty;
+                        txtLocalidadeConsultorio.Text = string.Empty;
+                        txtUfConsultorio.Text = string.Empty;
+
+                        MessageBox.Show("CEP não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtCep_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) &&
+                e.KeyChar != (char)Keys.Back &&
+                e.KeyChar != (char)Keys.Delete)
+            {
+                e.Handled = true; // Rejeita o caractere
+            }
+
+            // Não permite ponto
+            if (e.KeyChar == '.')
+            {
+                e.Handled = true;
+            }
+
         }
     }
 }
