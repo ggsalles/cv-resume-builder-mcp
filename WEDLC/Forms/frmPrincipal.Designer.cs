@@ -31,6 +31,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.arquivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.médicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manutençãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabelasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comentárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,9 +41,6 @@
             this.folhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.músculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nervoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.operaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.médicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,6 +71,29 @@
             this.sairToolStripMenuItem.Text = "Sair";
             this.sairToolStripMenuItem.Click += new System.EventHandler(this.sairToolStripMenuItem_Click);
             // 
+            // operaçãoToolStripMenuItem
+            // 
+            this.operaçãoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pacientesToolStripMenuItem,
+            this.médicosToolStripMenuItem});
+            this.operaçãoToolStripMenuItem.Name = "operaçãoToolStripMenuItem";
+            this.operaçãoToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.operaçãoToolStripMenuItem.Text = "Operação";
+            // 
+            // pacientesToolStripMenuItem
+            // 
+            this.pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
+            this.pacientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pacientesToolStripMenuItem.Text = "Pacientes";
+            this.pacientesToolStripMenuItem.Click += new System.EventHandler(this.pacientesToolStripMenuItem_Click);
+            // 
+            // médicosToolStripMenuItem
+            // 
+            this.médicosToolStripMenuItem.Name = "médicosToolStripMenuItem";
+            this.médicosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.médicosToolStripMenuItem.Text = "Médicos";
+            this.médicosToolStripMenuItem.Click += new System.EventHandler(this.médicosToolStripMenuItem_Click);
+            // 
             // manutençãoToolStripMenuItem
             // 
             this.manutençãoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -88,7 +111,7 @@
             this.músculoToolStripMenuItem,
             this.nervoToolStripMenuItem});
             this.tabelasToolStripMenuItem.Name = "tabelasToolStripMenuItem";
-            this.tabelasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tabelasToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.tabelasToolStripMenuItem.Text = "Tabelas";
             // 
             // comentárioToolStripMenuItem
@@ -125,28 +148,6 @@
             this.nervoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.nervoToolStripMenuItem.Text = "Nervo";
             this.nervoToolStripMenuItem.Click += new System.EventHandler(this.nervoToolStripMenuItem_Click);
-            // 
-            // operaçãoToolStripMenuItem
-            // 
-            this.operaçãoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pacientesToolStripMenuItem,
-            this.médicosToolStripMenuItem});
-            this.operaçãoToolStripMenuItem.Name = "operaçãoToolStripMenuItem";
-            this.operaçãoToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.operaçãoToolStripMenuItem.Text = "Operação";
-            // 
-            // pacientesToolStripMenuItem
-            // 
-            this.pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
-            this.pacientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pacientesToolStripMenuItem.Text = "Pacientes";
-            this.pacientesToolStripMenuItem.Click += new System.EventHandler(this.pacientesToolStripMenuItem_Click);
-            // 
-            // médicosToolStripMenuItem
-            // 
-            this.médicosToolStripMenuItem.Name = "médicosToolStripMenuItem";
-            this.médicosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.médicosToolStripMenuItem.Text = "Médicos";
             // 
             // frmPrincipal
             // 

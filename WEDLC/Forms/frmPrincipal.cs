@@ -120,5 +120,15 @@ namespace WEDLC.Forms
             //Abre o form de especialização não modal
             objPaciente.Show();
         }
+
+        private void médicosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Cria um objeto para o form de troca de senhas abrir
+            frmMedico objMedico = new frmMedico();
+            // Define o form pai como o form principal
+            objMedico.MdiParent = this;
+            //Abre o form de especialização não modal
+            objMedico.Show();
+        }
     }
 }
