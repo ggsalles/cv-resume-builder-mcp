@@ -123,6 +123,7 @@
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
     <Compile Include="Banco\cComentario.cs" />
     <Compile Include="Banco\cEstudoPotencialEvocado.cs" />
+    <Compile Include="Banco\cMedico.cs" />
     <Compile Include="Banco\cNeuroConducaoMotora.cs" />
     <Compile Include="Banco\cNeuroConducaoSensorial.cs" />
     <Compile Include="Banco\cTestesEspeciais.cs" />

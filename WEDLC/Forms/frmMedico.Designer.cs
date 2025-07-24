@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             this.grpPaciente = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.grdDadosPessoais = new System.Windows.Forms.DataGridView();
+            this.txtPais = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.mskTelefone = new System.Windows.Forms.MaskedTextBox();
             this.txtLocalidade = new System.Windows.Forms.TextBox();
@@ -47,7 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.lblNome = new System.Windows.Forms.Label();
-            this.txtCodigoProntuario = new System.Windows.Forms.TextBox();
+            this.txtCodigoMedico = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.grpBotoes = new System.Windows.Forms.GroupBox();
             this.btnCancelar = new System.Windows.Forms.Button();
@@ -82,6 +83,7 @@
             this.txtConsultorio = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.grpPaciente.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdDadosPessoais)).BeginInit();
             this.grpBotoes.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdEspecialidade)).BeginInit();
@@ -89,7 +91,8 @@
             // 
             // grpPaciente
             // 
-            this.grpPaciente.Controls.Add(this.textBox1);
+            this.grpPaciente.Controls.Add(this.grdDadosPessoais);
+            this.grpPaciente.Controls.Add(this.txtPais);
             this.grpPaciente.Controls.Add(this.label2);
             this.grpPaciente.Controls.Add(this.mskTelefone);
             this.grpPaciente.Controls.Add(this.txtLocalidade);
@@ -107,22 +110,32 @@
             this.grpPaciente.Controls.Add(this.label1);
             this.grpPaciente.Controls.Add(this.txtNome);
             this.grpPaciente.Controls.Add(this.lblNome);
-            this.grpPaciente.Controls.Add(this.txtCodigoProntuario);
+            this.grpPaciente.Controls.Add(this.txtCodigoMedico);
             this.grpPaciente.Controls.Add(this.lblCodigo);
             this.grpPaciente.Location = new System.Drawing.Point(12, 12);
             this.grpPaciente.Name = "grpPaciente";
-            this.grpPaciente.Size = new System.Drawing.Size(1161, 115);
+            this.grpPaciente.Size = new System.Drawing.Size(1161, 277);
             this.grpPaciente.TabIndex = 0;
             this.grpPaciente.TabStop = false;
             this.grpPaciente.Text = "Dados Pessoais";
             // 
-            // textBox1
+            // grdDadosPessoais
             // 
-            this.textBox1.Location = new System.Drawing.Point(458, 79);
-            this.textBox1.MaxLength = 8;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(103, 20);
-            this.textBox1.TabIndex = 9;
+            this.grdDadosPessoais.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdDadosPessoais.Location = new System.Drawing.Point(6, 109);
+            this.grdDadosPessoais.Name = "grdDadosPessoais";
+            this.grdDadosPessoais.Size = new System.Drawing.Size(1147, 168);
+            this.grdDadosPessoais.TabIndex = 34;
+            this.grdDadosPessoais.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDadosPessoais_CellClick);
+            // 
+            // txtPais
+            // 
+            this.txtPais.Enabled = false;
+            this.txtPais.Location = new System.Drawing.Point(458, 79);
+            this.txtPais.MaxLength = 8;
+            this.txtPais.Name = "txtPais";
+            this.txtPais.Size = new System.Drawing.Size(300, 20);
+            this.txtPais.TabIndex = 9;
             // 
             // label2
             // 
@@ -135,7 +148,8 @@
             // 
             // mskTelefone
             // 
-            this.mskTelefone.Location = new System.Drawing.Point(567, 79);
+            this.mskTelefone.Enabled = false;
+            this.mskTelefone.Location = new System.Drawing.Point(764, 79);
             this.mskTelefone.Mask = "(99) 00000-0000";
             this.mskTelefone.Name = "mskTelefone";
             this.mskTelefone.Size = new System.Drawing.Size(103, 20);
@@ -143,6 +157,7 @@
             // 
             // txtLocalidade
             // 
+            this.txtLocalidade.Enabled = false;
             this.txtLocalidade.Location = new System.Drawing.Point(153, 79);
             this.txtLocalidade.MaxLength = 8;
             this.txtLocalidade.Name = "txtLocalidade";
@@ -161,7 +176,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(564, 62);
+            this.label9.Location = new System.Drawing.Point(761, 62);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 13);
             this.label9.TabIndex = 17;
@@ -169,8 +184,9 @@
             // 
             // txtUf
             // 
+            this.txtUf.Enabled = false;
             this.txtUf.Location = new System.Drawing.Point(375, 79);
-            this.txtUf.MaxLength = 8;
+            this.txtUf.MaxLength = 2;
             this.txtUf.Name = "txtUf";
             this.txtUf.Size = new System.Drawing.Size(77, 20);
             this.txtUf.TabIndex = 8;
@@ -186,6 +202,7 @@
             // 
             // txtBairro
             // 
+            this.txtBairro.Enabled = false;
             this.txtBairro.Location = new System.Drawing.Point(6, 79);
             this.txtBairro.MaxLength = 8;
             this.txtBairro.Name = "txtBairro";
@@ -203,6 +220,7 @@
             // 
             // txtComplemento
             // 
+            this.txtComplemento.Enabled = false;
             this.txtComplemento.Location = new System.Drawing.Point(873, 35);
             this.txtComplemento.MaxLength = 8;
             this.txtComplemento.Name = "txtComplemento";
@@ -220,6 +238,7 @@
             // 
             // txtLogradouro
             // 
+            this.txtLogradouro.Enabled = false;
             this.txtLogradouro.Location = new System.Drawing.Point(567, 35);
             this.txtLogradouro.MaxLength = 8;
             this.txtLogradouro.Name = "txtLogradouro";
@@ -237,6 +256,7 @@
             // 
             // txtCep
             // 
+            this.txtCep.Enabled = false;
             this.txtCep.Location = new System.Drawing.Point(458, 35);
             this.txtCep.MaxLength = 8;
             this.txtCep.Name = "txtCep";
@@ -261,6 +281,7 @@
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(337, 20);
             this.txtNome.TabIndex = 2;
+            this.txtNome.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNome_KeyUp);
             // 
             // lblNome
             // 
@@ -271,14 +292,16 @@
             this.lblNome.TabIndex = 2;
             this.lblNome.Text = "Nome";
             // 
-            // txtCodigoProntuario
+            // txtCodigoMedico
             // 
-            this.txtCodigoProntuario.ForeColor = System.Drawing.Color.Blue;
-            this.txtCodigoProntuario.Location = new System.Drawing.Point(6, 35);
-            this.txtCodigoProntuario.MaxLength = 10;
-            this.txtCodigoProntuario.Name = "txtCodigoProntuario";
-            this.txtCodigoProntuario.Size = new System.Drawing.Size(103, 20);
-            this.txtCodigoProntuario.TabIndex = 1;
+            this.txtCodigoMedico.ForeColor = System.Drawing.Color.Blue;
+            this.txtCodigoMedico.Location = new System.Drawing.Point(6, 35);
+            this.txtCodigoMedico.MaxLength = 10;
+            this.txtCodigoMedico.Name = "txtCodigoMedico";
+            this.txtCodigoMedico.Size = new System.Drawing.Size(103, 20);
+            this.txtCodigoMedico.TabIndex = 1;
+            this.txtCodigoMedico.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoMedico_KeyPress);
+            this.txtCodigoMedico.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCodigoMedico_KeyUp);
             // 
             // lblCodigo
             // 
@@ -296,7 +319,7 @@
             this.grpBotoes.Controls.Add(this.btnGravar);
             this.grpBotoes.Controls.Add(this.btnSair);
             this.grpBotoes.Controls.Add(this.btnNovo);
-            this.grpBotoes.Location = new System.Drawing.Point(12, 424);
+            this.grpBotoes.Location = new System.Drawing.Point(12, 586);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(1162, 46);
             this.grpBotoes.TabIndex = 1;
@@ -313,6 +336,7 @@
             this.btnCancelar.TabIndex = 27;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnExcluir
             // 
@@ -388,7 +412,7 @@
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.txtConsultorio);
             this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Location = new System.Drawing.Point(12, 133);
+            this.groupBox1.Location = new System.Drawing.Point(12, 295);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1161, 285);
             this.groupBox1.TabIndex = 21;
@@ -397,6 +421,7 @@
             // 
             // txtMediaConsultorio
             // 
+            this.txtMediaConsultorio.Enabled = false;
             this.txtMediaConsultorio.ForeColor = System.Drawing.Color.Red;
             this.txtMediaConsultorio.Location = new System.Drawing.Point(619, 80);
             this.txtMediaConsultorio.MaxLength = 10;
@@ -426,6 +451,7 @@
             // 
             // cboClasseConsultorio
             // 
+            this.cboClasseConsultorio.Enabled = false;
             this.cboClasseConsultorio.FormattingEnabled = true;
             this.cboClasseConsultorio.Location = new System.Drawing.Point(567, 79);
             this.cboClasseConsultorio.Name = "cboClasseConsultorio";
@@ -435,6 +461,7 @@
             // grdEspecialidade
             // 
             this.grdEspecialidade.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdEspecialidade.Enabled = false;
             this.grdEspecialidade.Location = new System.Drawing.Point(6, 150);
             this.grdEspecialidade.Name = "grdEspecialidade";
             this.grdEspecialidade.Size = new System.Drawing.Size(1149, 123);
@@ -451,6 +478,7 @@
             // 
             // btnIncluiEspecialidade
             // 
+            this.btnIncluiEspecialidade.Enabled = false;
             this.btnIncluiEspecialidade.Image = global::WEDLC.Properties.Resources.down;
             this.btnIncluiEspecialidade.Location = new System.Drawing.Point(501, 121);
             this.btnIncluiEspecialidade.Name = "btnIncluiEspecialidade";
@@ -460,6 +488,7 @@
             // 
             // btnExcluiEspecialidade
             // 
+            this.btnExcluiEspecialidade.Enabled = false;
             this.btnExcluiEspecialidade.Image = global::WEDLC.Properties.Resources.up;
             this.btnExcluiEspecialidade.Location = new System.Drawing.Point(534, 121);
             this.btnExcluiEspecialidade.Name = "btnExcluiEspecialidade";
@@ -469,6 +498,7 @@
             // 
             // cboEspecialConsultorio
             // 
+            this.cboEspecialConsultorio.Enabled = false;
             this.cboEspecialConsultorio.FormattingEnabled = true;
             this.cboEspecialConsultorio.Location = new System.Drawing.Point(6, 123);
             this.cboEspecialConsultorio.Name = "cboEspecialConsultorio";
@@ -477,6 +507,7 @@
             // 
             // mskTelefoneConsultorio
             // 
+            this.mskTelefoneConsultorio.Enabled = false;
             this.mskTelefoneConsultorio.Location = new System.Drawing.Point(458, 79);
             this.mskTelefoneConsultorio.Mask = "(99) 00000-0000";
             this.mskTelefoneConsultorio.Name = "mskTelefoneConsultorio";
@@ -485,6 +516,7 @@
             // 
             // txtLocalidadeConsultorio
             // 
+            this.txtLocalidadeConsultorio.Enabled = false;
             this.txtLocalidadeConsultorio.Location = new System.Drawing.Point(153, 79);
             this.txtLocalidadeConsultorio.MaxLength = 8;
             this.txtLocalidadeConsultorio.Name = "txtLocalidadeConsultorio";
@@ -511,6 +543,7 @@
             // 
             // txtUfConsultorio
             // 
+            this.txtUfConsultorio.Enabled = false;
             this.txtUfConsultorio.Location = new System.Drawing.Point(375, 79);
             this.txtUfConsultorio.MaxLength = 8;
             this.txtUfConsultorio.Name = "txtUfConsultorio";
@@ -528,6 +561,7 @@
             // 
             // txtBairroConsultorio
             // 
+            this.txtBairroConsultorio.Enabled = false;
             this.txtBairroConsultorio.Location = new System.Drawing.Point(6, 79);
             this.txtBairroConsultorio.MaxLength = 8;
             this.txtBairroConsultorio.Name = "txtBairroConsultorio";
@@ -545,6 +579,7 @@
             // 
             // txtComplementoConsultorio
             // 
+            this.txtComplementoConsultorio.Enabled = false;
             this.txtComplementoConsultorio.Location = new System.Drawing.Point(873, 35);
             this.txtComplementoConsultorio.MaxLength = 8;
             this.txtComplementoConsultorio.Name = "txtComplementoConsultorio";
@@ -562,6 +597,7 @@
             // 
             // txtLogradouroConsultorio
             // 
+            this.txtLogradouroConsultorio.Enabled = false;
             this.txtLogradouroConsultorio.Location = new System.Drawing.Point(567, 35);
             this.txtLogradouroConsultorio.MaxLength = 8;
             this.txtLogradouroConsultorio.Name = "txtLogradouroConsultorio";
@@ -579,6 +615,7 @@
             // 
             // txtCepConsultorio
             // 
+            this.txtCepConsultorio.Enabled = false;
             this.txtCepConsultorio.Location = new System.Drawing.Point(458, 35);
             this.txtCepConsultorio.MaxLength = 8;
             this.txtCepConsultorio.Name = "txtCepConsultorio";
@@ -597,6 +634,7 @@
             // 
             // txtConsultorio
             // 
+            this.txtConsultorio.Enabled = false;
             this.txtConsultorio.Location = new System.Drawing.Point(6, 35);
             this.txtConsultorio.MaxLength = 50;
             this.txtConsultorio.Name = "txtConsultorio";
@@ -616,7 +654,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1185, 480);
+            this.ClientSize = new System.Drawing.Size(1185, 640);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grpBotoes);
@@ -631,6 +669,7 @@
             this.Load += new System.EventHandler(this.frmPaciente_Load);
             this.grpPaciente.ResumeLayout(false);
             this.grpPaciente.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdDadosPessoais)).EndInit();
             this.grpBotoes.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -645,7 +684,7 @@
         private System.Windows.Forms.GroupBox grpBotoes;
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.Label lblNome;
-        private System.Windows.Forms.TextBox txtCodigoProntuario;
+        private System.Windows.Forms.TextBox txtCodigoMedico;
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Button btnNovo;
         private System.Windows.Forms.Button btnGravar;
@@ -666,7 +705,7 @@
         private System.Windows.Forms.TextBox txtLocalidade;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.MaskedTextBox mskTelefone;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtPais;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView grdEspecialidade;
@@ -694,5 +733,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cboClasseConsultorio;
         private System.Windows.Forms.TextBox txtMediaConsultorio;
+        private System.Windows.Forms.DataGridView grdDadosPessoais;
     }
 }
