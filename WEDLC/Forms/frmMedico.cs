@@ -49,6 +49,7 @@ namespace WEDLC.Forms
         {
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
+            this.CarregaComboClasse();
         }
 
         private async void txtCep_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -243,7 +244,7 @@ namespace WEDLC.Forms
                     nome = "!@#$%"; // Se não houver nome, define tipopesquisa como 0 para retornar não retornar ninguém
                 }
 
-                this.populaGrid(tipopesquisa, 0, nome);
+                this.populaGridDados(tipopesquisa, 0, nome);
             }
         }
 
@@ -279,7 +280,7 @@ namespace WEDLC.Forms
                     tipopesquisa = 1;
                     idmedico = 0; // Se não houver código, define tipopesquisa como 0 para retornar não retornar ninguém
                 }
-                this.populaGrid(tipopesquisa, idmedico, null);
+                this.populaGridDados(tipopesquisa, idmedico, null);
             }
         }
 
@@ -293,7 +294,7 @@ namespace WEDLC.Forms
             }
         }
 
-        private void populaGrid(int tipopesquisa, int idmedico, string nome)
+        private void populaGridDados(int tipopesquisa, int idmedico, string nome)
         {
             try
             {
@@ -396,7 +397,7 @@ namespace WEDLC.Forms
             grdDadosPessoais.CurrentCell = null; // Desmarca a célula atual
         }
 
-          private void controlaBotao()
+        private void controlaBotao()
         {
             //Se clicou em novo
             if (cAcao == Acao.INSERT)
@@ -405,6 +406,9 @@ namespace WEDLC.Forms
                 btnGravar.Enabled = true;
                 btnCancelar.Enabled = true;
                 btnExcluir.Enabled = false;
+                btnIncluiEspecialidade.Enabled = true;
+                btnExcluiEspecialidade.Enabled = true;
+
             }
 
             //Se clicou no grid
@@ -414,6 +418,8 @@ namespace WEDLC.Forms
                 btnGravar.Enabled = true;
                 btnCancelar.Enabled = true;
                 btnExcluir.Enabled = false;
+                btnIncluiEspecialidade.Enabled = true;
+                btnExcluiEspecialidade.Enabled = true;
             }
 
             //Se clicou no grid
@@ -423,6 +429,9 @@ namespace WEDLC.Forms
                 btnGravar.Enabled = false;
                 btnCancelar.Enabled = false;
                 btnExcluir.Enabled = false;
+                btnIncluiEspecialidade.Enabled = false;
+                btnExcluiEspecialidade.Enabled = false;
+
             }
 
         }
@@ -441,7 +450,7 @@ namespace WEDLC.Forms
             txtPais.Text = string.Empty;
             mskTelefone.Text = string.Empty;
 
-            //Habilita os campos
+            //Habilita os campos dados
             txtNome.Enabled = Ativa; //Habilita o campo nome
             txtCep.Enabled = Ativa; //Habilita o campo cep
             txtLogradouro.Enabled = Ativa; //Habilita o campo logradouro
@@ -452,6 +461,22 @@ namespace WEDLC.Forms
             txtPais.Enabled = Ativa; //Habilita o campo pais
             mskTelefone.Enabled = Ativa; //Habilita o campo telefone
 
+            //Habilita os campos consultório
+            txtConsultorio.Enabled = Ativa; //Habilita o campo consultório
+            txtCepConsultorio.Enabled = Ativa; //Habilita o campo cep consultório
+            txtLogradouroConsultorio.Enabled = Ativa; //Habilita o campo logradouro consultório
+            txtComplementoConsultorio.Enabled = Ativa; //Habilita o campo complemento consultório
+            txtBairroConsultorio.Enabled = Ativa; //Habilita o campo bairro consultório
+            txtLocalidadeConsultorio.Enabled = Ativa; //Habilita o campo localidade consultório
+            txtUfConsultorio.Enabled = Ativa; //Habilita o campo uf consultório
+            mskTelefoneConsultorio.Enabled = Ativa; //Habilita o campo telefone consultório
+            cboClasseConsultorio.Enabled = Ativa; //Habilita o campo classe consultório
+            txtMediaConsultorio.Enabled = Ativa; //Habilita o campo média consultório
+
+            //Habilita Especialização
+            cboEspecialConsultorio.Enabled = Ativa; //Habilita o campo especialização consultório
+            grdEspecialidade.Enabled = Ativa; //Habilita o grid de especialização consultório
+
         }
 
         private void grdDadosPessoais_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -460,6 +485,10 @@ namespace WEDLC.Forms
             {
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                 {
+
+                    // Otimização: Acessa a linha apenas uma vez
+                    DataGridViewRow row = grdDadosPessoais.Rows[e.RowIndex];
+
                     //Determina a acao
                     cAcao = Acao.UPDATE;
 
@@ -469,16 +498,39 @@ namespace WEDLC.Forms
                     txtCodigoMedico.Enabled = false; //Desabilita o campo código
                     grdDadosPessoais.Enabled = false; //Desabilita o grid de dados
 
-                    txtCodigoMedico.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[0].Value.ToString();
-                    txtNome.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[1].Value.ToString();
-                    txtCep.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[2].Value.ToString();
-                    txtLogradouro.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[3].Value.ToString();
-                    txtComplemento.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[4].Value.ToString();
-                    txtBairro.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[5].Value.ToString();
-                    txtLocalidade.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[6].Value.ToString();
-                    txtUf.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[7].Value.ToString();
-                    txtPais.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[8].Value.ToString();
-                    mskTelefone.Text = grdDadosPessoais.Rows[e.RowIndex].Cells[9].Value.ToString();
+                    SuspendLayout();
+
+                    //Preenche os campos com os dados da linha selecionada
+                    txtCodigoMedico.Text = row.Cells[0].Value.ToString();
+                    txtNome.Text = row.Cells[1].Value.ToString();
+                    txtCep.Text = row.Cells[2].Value.ToString();
+                    txtLogradouro.Text = row.Cells[3].Value.ToString();
+                    txtComplemento.Text = row.Cells[4].Value.ToString();
+                    txtBairro.Text = row.Cells[5].Value.ToString();
+                    txtLocalidade.Text = row.Cells[6].Value.ToString();
+                    txtUf.Text = row.Cells[7].Value.ToString();
+                    txtPais.Text = row.Cells[8].Value.ToString();
+                    mskTelefone.Text = row.Cells[9].Value.ToString();
+
+                    // Preenche os campos do consultório
+                    txtConsultorio.Text = row.Cells[10].Value.ToString();
+                    txtCepConsultorio.Text = row.Cells[11].Value.ToString();
+                    txtLogradouroConsultorio.Text = row.Cells[12].Value.ToString();
+                    txtComplementoConsultorio.Text = row.Cells[13].Value.ToString();
+                    txtBairroConsultorio.Text = row.Cells[14].Value.ToString();
+                    txtLocalidadeConsultorio.Text = row.Cells[15].Value.ToString();
+                    txtUfConsultorio.Text = row.Cells[16].Value.ToString();
+                    mskTelefoneConsultorio.Text = row.Cells[17].Value.ToString();
+                    cboClasseConsultorio.SelectedValue = row.Cells[18].Value.ToString();
+                    txtMediaConsultorio.Text = row.Cells[19].Value.ToString();
+
+                    // Popular grid de especializações
+                    this.populaGridMedicoEspecialidade(int.Parse(txtCodigoMedico.Text));
+
+                    CarregaComboEspecialidadeMedico();
+
+                    //Determina a acao
+                    cAcao = Acao.UPDATE;
 
                 }
             }
@@ -505,6 +557,116 @@ namespace WEDLC.Forms
             //Desmarca a seleção do grid
             grdDadosPessoais.CurrentCell = null;
 
+        }
+
+        private void CarregaComboClasse()
+        {
+            //Carrega o combo de classe
+            DataTable dtClasse = new cMedico().carregaComboClasse();
+            DataRow newRow = dtClasse.NewRow();
+            newRow["idclasse"] = 0; // Defina o valor desejado para a primeira linha
+            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            dtClasse.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+
+            //Carrega o combo de tipo de folha
+            cboClasseConsultorio.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
+            cboClasseConsultorio.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+            cboClasseConsultorio.ValueMember = "idclasse";
+            cboClasseConsultorio.DisplayMember = "descricao";
+            cboClasseConsultorio.DataSource = dtClasse;
+        }
+
+        private void populaGridMedicoEspecialidade(Int32 IdMedico)
+        {
+            try
+            {
+                DataTable dt = new cMedico().buscaEspecializacaoMedico(IdMedico);
+                grdEspecialidade.DataSource = null;
+
+                //Renomeia as colunas do datatable
+                dt.Columns["idmedico"].ColumnName = "Código";
+                dt.Columns["idfolha"].ColumnName = "idfolh";
+                dt.Columns["sigla"].ColumnName = "Sigla";
+                dt.Columns["nome"].ColumnName = "Nome";
+
+                grdEspecialidade.SuspendLayout();
+                grdEspecialidade.DataSource = dt;
+                configuraGridEspecial();
+                grdEspecialidade.ResumeLayout();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar popularGridEspecialidades!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void configuraGridEspecial()
+        {
+            grdEspecialidade.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            // Desabilita a edição da coluna
+            grdEspecialidade.Columns[0].ReadOnly = true; // Código do médico IdMedico
+            grdEspecialidade.Columns[1].ReadOnly = true; // Código da especialização IdEspecializacao
+            grdEspecialidade.Columns[2].ReadOnly = true; // Sigla da especialização Sigla
+            grdEspecialidade.Columns[3].ReadOnly = true; // Nome da especialização Nome
+
+            //Oculta colunas que não são necessárias
+            grdEspecialidade.Columns[0].Visible = false;
+            grdEspecialidade.Columns[1].Visible = false;
+
+            // Configurando outras propriedades
+            grdEspecialidade.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
+            grdEspecialidade.MultiSelect = false; // Impede seleção múltipla
+            grdEspecialidade.AllowUserToAddRows = false; // Impede adição de novas linhas
+            grdEspecialidade.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
+            grdEspecialidade.CurrentCell = null; // Desmarca a célula atual
+        }
+
+        private void CarregaComboEspecialidadeMedico()
+        {
+            //Carrega o combo de classe
+            DataTable dtMedico = new cMedico().carregaComboEspecialidadeMedico();
+            DataRow newRow = dtMedico.NewRow();
+            newRow["idfolha"] = 0; // Defina o valor desejado para a primeira linha
+            newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
+            dtMedico.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+
+            //Carrega o combo de tipo de folha
+            cboEspecialConsultorio.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
+            cboEspecialConsultorio.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
+            cboEspecialConsultorio.ValueMember = "idfolha";
+            cboEspecialConsultorio.DisplayMember = "descricao";
+            cboEspecialConsultorio.DataSource = dtMedico;
+        }
+
+        private void cboEspecialConsultorio_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //Determina a acao e valida se vai efetuar a pesquisa
+            if (cAcao == Acao.UPDATE || cAcao == Acao.INSERT)
+            {
+                bool retorno = FiltrarComboEspecialidade(cboEspecialConsultorio.Text.ToString().ToUpper());
+            }
+        }
+
+        private bool FiltrarComboEspecialidade(string texto)
+        {
+            //Se infomrou alguma coisa e for diferente de selecione...
+            if (texto.Length > 0 && texto !="SELECIONE...")
+            {
+                DataTable dt = (DataTable)cboEspecialConsultorio.DataSource;
+                bool existe = dt.AsEnumerable().Any(row => row.Field<string>("descricao") == texto);
+                if (existe == false)
+                {
+                    MessageBox.Show("Selecione um item válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cboEspecialConsultorio.Focus();
+                    cboEspecialConsultorio.Text = string.Empty;
+                    return false; // Retorna falso se o item não existir
+                }
+            }
+
+            return true; // Retorna verdadeiro se o item existir
         }
     }
 }

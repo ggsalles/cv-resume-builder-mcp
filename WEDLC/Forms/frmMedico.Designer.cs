@@ -423,10 +423,10 @@
             // 
             this.txtMediaConsultorio.Enabled = false;
             this.txtMediaConsultorio.ForeColor = System.Drawing.Color.Red;
-            this.txtMediaConsultorio.Location = new System.Drawing.Point(619, 80);
+            this.txtMediaConsultorio.Location = new System.Drawing.Point(701, 80);
             this.txtMediaConsultorio.MaxLength = 10;
             this.txtMediaConsultorio.Name = "txtMediaConsultorio";
-            this.txtMediaConsultorio.Size = new System.Drawing.Size(90, 20);
+            this.txtMediaConsultorio.Size = new System.Drawing.Size(166, 20);
             this.txtMediaConsultorio.TabIndex = 20;
             this.txtMediaConsultorio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtValor_KeyPress);
             this.txtMediaConsultorio.Leave += new System.EventHandler(this.txtValor_Leave);
@@ -434,7 +434,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(616, 63);
+            this.label20.Location = new System.Drawing.Point(698, 63);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(36, 13);
             this.label20.TabIndex = 35;
@@ -455,7 +455,7 @@
             this.cboClasseConsultorio.FormattingEnabled = true;
             this.cboClasseConsultorio.Location = new System.Drawing.Point(567, 79);
             this.cboClasseConsultorio.Name = "cboClasseConsultorio";
-            this.cboClasseConsultorio.Size = new System.Drawing.Size(46, 21);
+            this.cboClasseConsultorio.Size = new System.Drawing.Size(128, 21);
             this.cboClasseConsultorio.TabIndex = 19;
             // 
             // grdEspecialidade
@@ -504,6 +504,7 @@
             this.cboEspecialConsultorio.Name = "cboEspecialConsultorio";
             this.cboEspecialConsultorio.Size = new System.Drawing.Size(489, 21);
             this.cboEspecialConsultorio.TabIndex = 21;
+            this.cboEspecialConsultorio.Validating += new System.ComponentModel.CancelEventHandler(this.cboEspecialConsultorio_Validating);
             // 
             // mskTelefoneConsultorio
             // 

@@ -99,5 +99,134 @@ namespace WEDLC.Banco
             }
         }
 
+        public DataTable carregaComboClasse()
+
+        {
+            try
+            {
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
+                using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_carregacomboclasse", conexao)
+)
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+     
+                    DataTable dt = new DataTable();
+                    sqlDa.Fill(dt);
+
+                    //Fecha a conexão
+                    conexao.Close();
+
+                    // Retorna o DataTable
+                    return dt;
+                }
+
+            }
+            catch (System.Exception)
+            {
+                // Fecha a conexão  
+                conexao.Close();
+                return null;
+            }
+        }
+
+        public DataTable buscaEspecializacaoMedico(Int32 idMedico)
+
+        {
+            try
+            {
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
+                using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscaespecializacaomedico", conexao)
+)
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdMedico", idMedico);
+
+                    DataTable dt = new DataTable();
+                    sqlDa.Fill(dt);
+
+                    //Fecha a conexão
+                    conexao.Close();
+
+                    // Retorna o DataTable
+                    return dt;
+                }
+
+            }
+            catch (System.Exception)
+            {
+                // Fecha a conexão  
+                conexao.Close();
+                return null;
+            }
+        }
+
+        public DataTable carregaComboEspecialidadeMedico()
+
+        {
+            try
+            {
+                if (conectaBanco() == false)
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null; // Fix: Return null instead of a boolean to match the DataTable return type  
+            }
+
+            try
+            {
+                using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_carregacomboespecialidademedico", conexao)
+)
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                    DataTable dt = new DataTable();
+                    sqlDa.Fill(dt);
+
+                    //Fecha a conexão
+                    conexao.Close();
+
+                    // Retorna o DataTable
+                    return dt;
+                }
+
+            }
+            catch (System.Exception)
+            {
+                // Fecha a conexão  
+                conexao.Close();
+                return null;
+            }
+        }
     }
 }
