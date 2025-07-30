@@ -485,6 +485,7 @@
             this.btnIncluiEspecialidade.Size = new System.Drawing.Size(27, 24);
             this.btnIncluiEspecialidade.TabIndex = 22;
             this.btnIncluiEspecialidade.UseVisualStyleBackColor = true;
+            this.btnIncluiEspecialidade.Click += new System.EventHandler(this.btnIncluiEspecialidade_Click);
             // 
             // btnExcluiEspecialidade
             // 

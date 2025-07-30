@@ -23,13 +23,11 @@ namespace WEDLC.Forms
 
         // Variável para armazenar a ação atual do formulário
         public Acao cAcao = Acao.CANCELAR;
-
-        // Datatable para armazenar os dados do XML
-        DataTable dadosXML = new DataTable();
-
-        // Create a ToolTip component
-        ToolTip toolTip1 = new ToolTip();
-
+        public DataTable dtGrdEspecialidade;
+        public DataTable dtComboEspecialidade;
+        public bool ValidaEspecialidade = false;
+        public ToolTip toolTip1 = new ToolTip(); // Create a ToolTip component
+        public DataTable dadosXML = new DataTable(); // Datatable para armazenar os dados do XML
 
         public frmMedico()
         {
@@ -478,7 +476,6 @@ namespace WEDLC.Forms
             grdEspecialidade.Enabled = Ativa; //Habilita o grid de especialização consultório
 
         }
-
         private void grdDadosPessoais_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -580,20 +577,21 @@ namespace WEDLC.Forms
         {
             try
             {
-                DataTable dt = new cMedico().buscaEspecializacaoMedico(IdMedico);
+                dtGrdEspecialidade = new DataTable();
+                dtGrdEspecialidade = new cMedico().buscaEspecializacaoMedico(IdMedico);
+
                 grdEspecialidade.DataSource = null;
 
                 //Renomeia as colunas do datatable
-                dt.Columns["idmedico"].ColumnName = "Código";
-                dt.Columns["idfolha"].ColumnName = "idfolh";
-                dt.Columns["sigla"].ColumnName = "Sigla";
-                dt.Columns["nome"].ColumnName = "Nome";
+                dtGrdEspecialidade.Columns["idmedico"].ColumnName = "idmedico";
+                dtGrdEspecialidade.Columns["idespecializacao"].ColumnName = "idespecializacao";
+                dtGrdEspecialidade.Columns["sigla"].ColumnName = "Sigla";
+                dtGrdEspecialidade.Columns["nome"].ColumnName = "Nome";
 
                 grdEspecialidade.SuspendLayout();
-                grdEspecialidade.DataSource = dt;
+                grdEspecialidade.DataSource = dtGrdEspecialidade;
                 configuraGridEspecial();
                 grdEspecialidade.ResumeLayout();
-
             }
             catch (Exception)
             {
@@ -608,7 +606,7 @@ namespace WEDLC.Forms
 
             // Desabilita a edição da coluna
             grdEspecialidade.Columns[0].ReadOnly = true; // Código do médico IdMedico
-            grdEspecialidade.Columns[1].ReadOnly = true; // Código da especialização IdEspecializacao
+            grdEspecialidade.Columns[1].ReadOnly = true; // Código da especialização IdFolha
             grdEspecialidade.Columns[2].ReadOnly = true; // Sigla da especialização Sigla
             grdEspecialidade.Columns[3].ReadOnly = true; // Nome da especialização Nome
 
@@ -627,18 +625,19 @@ namespace WEDLC.Forms
         private void CarregaComboEspecialidadeMedico()
         {
             //Carrega o combo de classe
-            DataTable dtMedico = new cMedico().carregaComboEspecialidadeMedico();
-            DataRow newRow = dtMedico.NewRow();
-            newRow["idfolha"] = 0; // Defina o valor desejado para a primeira linha
+            dtComboEspecialidade = new DataTable();
+            dtComboEspecialidade = new cMedico().carregaComboEspecialidadeMedico();
+            DataRow newRow = dtComboEspecialidade.NewRow();
+            newRow["idespecializacao"] = 0; // Defina o valor desejado para a primeira linha
             newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
-            dtMedico.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
+            dtComboEspecialidade.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
 
             //Carrega o combo de tipo de folha
             cboEspecialConsultorio.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboEspecialConsultorio.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
-            cboEspecialConsultorio.ValueMember = "idfolha";
+            cboEspecialConsultorio.ValueMember = "idespecializacao";
             cboEspecialConsultorio.DisplayMember = "descricao";
-            cboEspecialConsultorio.DataSource = dtMedico;
+            cboEspecialConsultorio.DataSource = dtComboEspecialidade;
         }
 
         private void cboEspecialConsultorio_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -656,8 +655,8 @@ namespace WEDLC.Forms
             if (texto.Length > 0 && texto !="SELECIONE...")
             {
                 DataTable dt = (DataTable)cboEspecialConsultorio.DataSource;
-                bool existe = dt.AsEnumerable().Any(row => row.Field<string>("descricao") == texto);
-                if (existe == false)
+                ValidaEspecialidade = dt.AsEnumerable().Any(row => row.Field<string>("descricao") == texto);
+                if (ValidaEspecialidade == false)
                 {
                     MessageBox.Show("Selecione um item válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     cboEspecialConsultorio.Focus();
@@ -667,6 +666,39 @@ namespace WEDLC.Forms
             }
 
             return true; // Retorna verdadeiro se o item existir
+        }
+
+        private void btnIncluiEspecialidade_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Valida dados a ser inserido
+
+                if (ValidaEspecialidade == true)
+                {
+                    // Adicionando uma nova linha
+                    DataRow novaLinha = dtGrdEspecialidade.NewRow();
+                    novaLinha["idmedico"] = txtCodigoMedico.Text;
+                    novaLinha["idespecializacao"] = cboEspecialConsultorio.SelectedValue.ToString();
+                    novaLinha["Sigla"] = dtComboEspecialidade.Rows[cboEspecialConsultorio.SelectedIndex][2].ToString();
+                    novaLinha["Nome"] = dtComboEspecialidade.Rows[cboEspecialConsultorio.SelectedIndex][3].ToString();
+
+                    dtGrdEspecialidade.Rows.Add(novaLinha);
+                    grdEspecialidade.DataSource = dtGrdEspecialidade;
+                }
+
+                else
+                {
+                    MessageBox.Show("Selecione um item válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar inserir especialização!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
     }
 }
