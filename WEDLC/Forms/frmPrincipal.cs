@@ -130,5 +130,11 @@ namespace WEDLC.Forms
             //Abre o form de especialização não modal
             objMedico.Show();
         }
+
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+            frmLogin objLogin = new frmLogin();
+            objLogin.Close();
+        }
     }
 }

@@ -652,7 +652,7 @@ namespace WEDLC.Forms
         private bool FiltrarComboEspecialidade(string texto)
         {
             //Se infomrou alguma coisa e for diferente de selecione...
-            if (texto.Length > 0 && texto !="SELECIONE...")
+            if (texto.Length > 0 && texto != "SELECIONE...")
             {
                 DataTable dt = (DataTable)cboEspecialConsultorio.DataSource;
                 ValidaEspecialidade = dt.AsEnumerable().Any(row => row.Field<string>("descricao") == texto);
@@ -700,5 +700,184 @@ namespace WEDLC.Forms
                 return;
             }
         }
+
+        private void btnGravar_Click(object sender, EventArgs e)
+        {
+
+            if (cAcao == Acao.INSERT)
+            {
+
+
+            }
+
+            else
+            {
+                if (cAcao == Acao.UPDATE)
+                {
+                    if (ValidaCampos() == true)
+                    {
+                        cMedico objMedico = new cMedico();
+                        objMedico.IdMedico = int.Parse(txtCodigoMedico.Text);
+                        objMedico.Nome = txtNome.Text;
+                        objMedico.Cep = txtCep.Text;
+                        objMedico.Logradouro = txtLogradouro.Text;
+                        objMedico.Complemento = txtComplemento.Text;
+                        objMedico.Bairro = txtBairro.Text;
+                        objMedico.Localidade = txtLocalidade.Text;
+                        objMedico.Uf = txtUf.Text;
+                        objMedico.Pais = txtPais.Text;
+                        objMedico.Telefone = mskTelefone.Text;
+                        objMedico.NomeConsultorio = txtConsultorio.Text;
+                        objMedico.CepConsultorio = txtCepConsultorio.Text;
+                        objMedico.LogradouroConsultorio = txtLogradouroConsultorio.Text;
+                        objMedico.ComplementoConsultorio = txtComplementoConsultorio.Text;
+                        objMedico.BairroConsultorio = txtBairroConsultorio.Text;
+                        objMedico.LocalidadeConsultorio = txtLocalidadeConsultorio.Text;
+                        objMedico.UfConsultorio = txtUfConsultorio.Text;
+                        objMedico.TelefoneConsultorio = mskTelefoneConsultorio.Text;
+                        objMedico.IdClasseConsultorio = int.Parse(cboClasseConsultorio.SelectedValue.ToString());
+                        objMedico.MediaConsultorio = decimal.Parse(txtMediaConsultorio.Text);
+
+                        // limpa o contador
+                        int contador = 0;
+
+                        foreach (DataRow row in dtGrdEspecialidade.Rows)
+                        {
+
+                            // Acessar os valores das colunas
+                            objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
+
+                            if (contador == 0)
+                            {
+                                objMedico.Apaga = true;
+                            }
+                            else
+                            {
+                                objMedico.Apaga = false;
+                            }
+                            // Atualiza a especialização do médico
+                            if (objMedico.atualizamedico() == true)
+                            {
+                                //incrementa contador
+                                contador++;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualizar especialização!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+                        }
+
+                        MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Preencha os campos obrigatórios!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+            }
+        }
+
+        private bool ValidaCampos()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtNome.Text))
+                {
+                    MessageBox.Show("O campo Nome é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtNome.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtCep.Text) || txtCep.Text.Length < 8)
+                {
+                    MessageBox.Show("O campo CEP é obrigatório e deve conter 8 dígitos.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCep.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtLogradouro.Text))
+                {
+                    MessageBox.Show("O campo Logradouro é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtLogradouro.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtBairro.Text))
+                {
+                    MessageBox.Show("O campo Bairro é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtBairro.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtLocalidade.Text))
+                {
+                    MessageBox.Show("O campo Localidade é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtLocalidade.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtUf.Text))
+                {
+                    MessageBox.Show("O campo UF é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtUf.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtConsultorio.Text))
+                {
+                    MessageBox.Show("O campo Consultório é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtConsultorio.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtCepConsultorio.Text) || txtCepConsultorio.Text.Length < 8)
+                {
+                    MessageBox.Show("O campo CEP Consultório é obrigatório e deve conter 8 dígitos.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCepConsultorio.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtLogradouroConsultorio.Text))
+                {
+                    MessageBox.Show("O campo Logradouro Consultório é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtLogradouroConsultorio.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtBairroConsultorio.Text))
+                {
+                    MessageBox.Show("O campo Bairro Consultório é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtBairroConsultorio.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtLocalidadeConsultorio.Text))
+                {
+                    MessageBox.Show("O campo Localidade Consultório é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtLocalidadeConsultorio.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtUfConsultorio.Text))
+                {
+                    MessageBox.Show("O campo UF Consultório é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtUfConsultorio.Focus();
+                    return false;
+                }
+                if (cboClasseConsultorio.SelectedIndex <= 0)
+                {
+                    MessageBox.Show("Selecione uma Classe Consultório válida.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cboClasseConsultorio.Focus();
+                    return false;
+                }
+                if (string.IsNullOrWhiteSpace(txtMediaConsultorio.Text))
+                {
+                    MessageBox.Show("O campo Média Consultório é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtMediaConsultorio.Focus();
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao validar os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
     }
 }

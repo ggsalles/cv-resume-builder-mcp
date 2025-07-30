@@ -12,17 +12,19 @@ namespace WEDLC.Banco
 {
     public class cMedico
     {
+        public bool Apaga { get; set; }
         public int TipoPesquisa { get; set; }
         public Int32 IdMedico { get; set; }
         public string Nome { get; set; }
         public string Cep { get; set; }
         public string Logradouro { get; set; }
+        public string Complemento { get; set; }
         public string Bairro { get; set; }
-        public string Cidade { get; set; }
+        public string Localidade { get; set; }
         public string Uf { get; set; }
         public string Pais { get; set; }
         public string Telefone { get; set; }
-        public string Consultorio { get; set; }
+        public string NomeConsultorio { get; set; }
         public string CepConsultorio { get; set; }
         public string LogradouroConsultorio { get; set; }
         public string ComplementoConsultorio { get; set; }
@@ -30,8 +32,8 @@ namespace WEDLC.Banco
         public string LocalidadeConsultorio { get; set; }
         public string UfConsultorio { get; set; }
         public string TelefoneConsultorio { get; set; }
-        public int Classe { get; set; }
-        public double Media { get; set; }
+        public int IdClasseConsultorio { get; set; }
+        public decimal MediaConsultorio { get; set; }
         public int IdEspecializacao { get; set; }
 
 
@@ -122,7 +124,7 @@ namespace WEDLC.Banco
 )
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-     
+
                     DataTable dt = new DataTable();
                     sqlDa.Fill(dt);
 
@@ -226,6 +228,68 @@ namespace WEDLC.Banco
                 // Fecha a conexão  
                 conexao.Close();
                 return null;
+            }
+        }
+        public bool atualizamedico()
+        {
+            // Validação básica dos dados
+            if (IdMedico <= 0)
+            {
+                // Id inválido
+                return false;
+            }
+
+            if (!conectaBanco())
+            {
+                return false;
+            }
+
+            try
+            {
+                using (var command = new MySqlCommand("pr_atualizamedico", conexao))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddRange(new MySqlParameter[]
+                    {
+                new MySqlParameter("pApaga", MySqlDbType.Byte) { Value = Apaga },
+                new MySqlParameter("pIdMedico", MySqlDbType.Int32) { Value = IdMedico},
+                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = Nome },
+                new MySqlParameter("pCep", MySqlDbType.VarChar) { Value = Cep },
+                new MySqlParameter("pLogradouro", MySqlDbType.VarChar) { Value = Logradouro },
+                new MySqlParameter("pComplemento", MySqlDbType.VarChar) { Value = Complemento },
+                new MySqlParameter("pBairro", MySqlDbType.VarChar) { Value = Bairro },
+                new MySqlParameter("pLocalidade", MySqlDbType.VarChar) { Value = Localidade },
+                new MySqlParameter("pUf", MySqlDbType.VarChar) { Value = Uf },
+                new MySqlParameter("pPais", MySqlDbType.VarChar) { Value = Pais },
+                new MySqlParameter("pTelefone", MySqlDbType.VarChar) { Value = Telefone },
+                new MySqlParameter("pNomeConsultorio", MySqlDbType.VarChar) { Value = NomeConsultorio },
+                new MySqlParameter("pCepConsultorio", MySqlDbType.VarChar) { Value = CepConsultorio },
+                new MySqlParameter("pLogradouroConsultorio", MySqlDbType.VarChar) { Value = LogradouroConsultorio },
+                new MySqlParameter("pComplementoConsultorio", MySqlDbType.VarChar) { Value = ComplementoConsultorio },
+                new MySqlParameter("pBairroConsultorio", MySqlDbType.VarChar) { Value = BairroConsultorio },
+                new MySqlParameter("pLocalidadeConsultorio", MySqlDbType.VarChar) { Value = LocalidadeConsultorio },
+                new MySqlParameter("pUfConsultorio", MySqlDbType.VarChar) { Value = UfConsultorio },
+                new MySqlParameter("pTelefoneConsultorio", MySqlDbType.VarChar) { Value = TelefoneConsultorio },
+                new MySqlParameter("pIdClasseConsultorio", MySqlDbType.Int32) { Value = IdClasseConsultorio },
+                new MySqlParameter("pMediaConsultorio", MySqlDbType.Decimal) { Value = MediaConsultorio },
+                new MySqlParameter("pIdEspecializacao", MySqlDbType.Int32) { Value = IdEspecializacao }
+                    });
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0; // Considera sucesso se qualquer linha foi afetada
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Logar o erro (ex.Message, ex.StackTrace) para diagnóstico
+                MessageBox.Show($"Erro ao atualizar médico: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                if (conexao?.State == ConnectionState.Open)
+                    conexao.Close();
             }
         }
     }

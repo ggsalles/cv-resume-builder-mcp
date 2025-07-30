@@ -132,7 +132,7 @@
             // 
             this.txtPais.Enabled = false;
             this.txtPais.Location = new System.Drawing.Point(458, 79);
-            this.txtPais.MaxLength = 8;
+            this.txtPais.MaxLength = 20;
             this.txtPais.Name = "txtPais";
             this.txtPais.Size = new System.Drawing.Size(300, 20);
             this.txtPais.TabIndex = 9;
@@ -159,7 +159,7 @@
             // 
             this.txtLocalidade.Enabled = false;
             this.txtLocalidade.Location = new System.Drawing.Point(153, 79);
-            this.txtLocalidade.MaxLength = 8;
+            this.txtLocalidade.MaxLength = 20;
             this.txtLocalidade.Name = "txtLocalidade";
             this.txtLocalidade.Size = new System.Drawing.Size(216, 20);
             this.txtLocalidade.TabIndex = 7;
@@ -204,7 +204,7 @@
             // 
             this.txtBairro.Enabled = false;
             this.txtBairro.Location = new System.Drawing.Point(6, 79);
-            this.txtBairro.MaxLength = 8;
+            this.txtBairro.MaxLength = 20;
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(141, 20);
             this.txtBairro.TabIndex = 6;
@@ -222,7 +222,7 @@
             // 
             this.txtComplemento.Enabled = false;
             this.txtComplemento.Location = new System.Drawing.Point(873, 35);
-            this.txtComplemento.MaxLength = 8;
+            this.txtComplemento.MaxLength = 50;
             this.txtComplemento.Name = "txtComplemento";
             this.txtComplemento.Size = new System.Drawing.Size(282, 20);
             this.txtComplemento.TabIndex = 5;
@@ -240,7 +240,7 @@
             // 
             this.txtLogradouro.Enabled = false;
             this.txtLogradouro.Location = new System.Drawing.Point(567, 35);
-            this.txtLogradouro.MaxLength = 8;
+            this.txtLogradouro.MaxLength = 50;
             this.txtLogradouro.Name = "txtLogradouro";
             this.txtLogradouro.Size = new System.Drawing.Size(300, 20);
             this.txtLogradouro.TabIndex = 4;
@@ -361,6 +361,7 @@
             this.btnGravar.TabIndex = 26;
             this.btnGravar.Text = "Gravar";
             this.btnGravar.UseVisualStyleBackColor = true;
+            this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
             // 
             // btnSair
             // 
@@ -520,7 +521,7 @@
             // 
             this.txtLocalidadeConsultorio.Enabled = false;
             this.txtLocalidadeConsultorio.Location = new System.Drawing.Point(153, 79);
-            this.txtLocalidadeConsultorio.MaxLength = 8;
+            this.txtLocalidadeConsultorio.MaxLength = 20;
             this.txtLocalidadeConsultorio.Name = "txtLocalidadeConsultorio";
             this.txtLocalidadeConsultorio.Size = new System.Drawing.Size(216, 20);
             this.txtLocalidadeConsultorio.TabIndex = 16;
@@ -547,7 +548,7 @@
             // 
             this.txtUfConsultorio.Enabled = false;
             this.txtUfConsultorio.Location = new System.Drawing.Point(375, 79);
-            this.txtUfConsultorio.MaxLength = 8;
+            this.txtUfConsultorio.MaxLength = 2;
             this.txtUfConsultorio.Name = "txtUfConsultorio";
             this.txtUfConsultorio.Size = new System.Drawing.Size(77, 20);
             this.txtUfConsultorio.TabIndex = 17;
@@ -565,7 +566,7 @@
             // 
             this.txtBairroConsultorio.Enabled = false;
             this.txtBairroConsultorio.Location = new System.Drawing.Point(6, 79);
-            this.txtBairroConsultorio.MaxLength = 8;
+            this.txtBairroConsultorio.MaxLength = 20;
             this.txtBairroConsultorio.Name = "txtBairroConsultorio";
             this.txtBairroConsultorio.Size = new System.Drawing.Size(141, 20);
             this.txtBairroConsultorio.TabIndex = 15;
@@ -583,7 +584,7 @@
             // 
             this.txtComplementoConsultorio.Enabled = false;
             this.txtComplementoConsultorio.Location = new System.Drawing.Point(873, 35);
-            this.txtComplementoConsultorio.MaxLength = 8;
+            this.txtComplementoConsultorio.MaxLength = 50;
             this.txtComplementoConsultorio.Name = "txtComplementoConsultorio";
             this.txtComplementoConsultorio.Size = new System.Drawing.Size(282, 20);
             this.txtComplementoConsultorio.TabIndex = 14;
@@ -601,7 +602,7 @@
             // 
             this.txtLogradouroConsultorio.Enabled = false;
             this.txtLogradouroConsultorio.Location = new System.Drawing.Point(567, 35);
-            this.txtLogradouroConsultorio.MaxLength = 8;
+            this.txtLogradouroConsultorio.MaxLength = 50;
             this.txtLogradouroConsultorio.Name = "txtLogradouroConsultorio";
             this.txtLogradouroConsultorio.Size = new System.Drawing.Size(300, 20);
             this.txtLogradouroConsultorio.TabIndex = 13;
