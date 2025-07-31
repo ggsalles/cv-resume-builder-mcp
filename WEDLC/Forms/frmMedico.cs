@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Google.Protobuf.WellKnownTypes;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -28,6 +31,7 @@ namespace WEDLC.Forms
         public bool ValidaEspecialidade = false;
         public ToolTip toolTip1 = new ToolTip(); // Create a ToolTip component
         public DataTable dadosXML = new DataTable(); // Datatable para armazenar os dados do XML
+        public int NumeroLinha = -1; // Variável para controlar a linha do grid
 
         public frmMedico()
         {
@@ -447,33 +451,45 @@ namespace WEDLC.Forms
             txtUf.Text = string.Empty;
             txtPais.Text = string.Empty;
             mskTelefone.Text = string.Empty;
+            txtConsultorio.Text = string.Empty;
+            txtCepConsultorio.Text = string.Empty;
+            txtLogradouroConsultorio.Text = string.Empty;
+            txtComplementoConsultorio.Text = string.Empty;
+            txtBairroConsultorio.Text = string.Empty;
+            txtLocalidadeConsultorio.Text = string.Empty;
+            txtUfConsultorio.Text = string.Empty;
+            mskTelefoneConsultorio.Text = string.Empty;
+            cboClasseConsultorio.SelectedIndex = 0; // Reseta o combo de classe consultório
+            txtMediaConsultorio.Text = string.Empty;
 
-            //Habilita os campos dados
-            txtNome.Enabled = Ativa; //Habilita o campo nome
-            txtCep.Enabled = Ativa; //Habilita o campo cep
-            txtLogradouro.Enabled = Ativa; //Habilita o campo logradouro
-            txtComplemento.Enabled = Ativa; //Habilita o campo complemento
-            txtBairro.Enabled = Ativa; //Habilita o campo bairro
-            txtLocalidade.Enabled = Ativa; //Habilita o campo localidade
-            txtUf.Enabled = Ativa; //Habilita o campo uf
-            txtPais.Enabled = Ativa; //Habilita o campo pais
-            mskTelefone.Enabled = Ativa; //Habilita o campo telefone
+            //Habilita - Desabilita os campos dados
+            txtNome.Enabled = Ativa; //Habilita - Desabilita o campo nome
+            txtCep.Enabled = Ativa; //Habilita - Desabilita o campo cep
+            txtLogradouro.Enabled = Ativa; //Habilita - Desabilita o campo logradouro
+            txtComplemento.Enabled = Ativa; //Habilita - Desabilita o campo complemento
+            txtBairro.Enabled = Ativa; //Habilita - Desabilita o campo bairro
+            txtLocalidade.Enabled = Ativa; //Habilita - Desabilita o campo localidade
+            txtUf.Enabled = Ativa; //Habilita - Desabilita o campo uf
+            txtPais.Enabled = Ativa; //Habilita - Desabilita o campo pais
+            mskTelefone.Enabled = Ativa; //Habilita - Desabilita o campo telefone
 
-            //Habilita os campos consultório
-            txtConsultorio.Enabled = Ativa; //Habilita o campo consultório
-            txtCepConsultorio.Enabled = Ativa; //Habilita o campo cep consultório
-            txtLogradouroConsultorio.Enabled = Ativa; //Habilita o campo logradouro consultório
-            txtComplementoConsultorio.Enabled = Ativa; //Habilita o campo complemento consultório
-            txtBairroConsultorio.Enabled = Ativa; //Habilita o campo bairro consultório
-            txtLocalidadeConsultorio.Enabled = Ativa; //Habilita o campo localidade consultório
-            txtUfConsultorio.Enabled = Ativa; //Habilita o campo uf consultório
-            mskTelefoneConsultorio.Enabled = Ativa; //Habilita o campo telefone consultório
-            cboClasseConsultorio.Enabled = Ativa; //Habilita o campo classe consultório
-            txtMediaConsultorio.Enabled = Ativa; //Habilita o campo média consultório
+            //Habilita - Desabilita os campos consultório
+            txtConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo consultório
+            txtCepConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo cep consultório
+            txtLogradouroConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo logradouro consultório
+            txtComplementoConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo complemento consultório
+            txtBairroConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo bairro consultório
+            txtLocalidadeConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo localidade consultório
+            txtUfConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo uf consultório
+            mskTelefoneConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo telefone consultório
+            cboClasseConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo classe consultório
+            txtMediaConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo média consultório
 
-            //Habilita Especialização
-            cboEspecialConsultorio.Enabled = Ativa; //Habilita o campo especialização consultório
-            grdEspecialidade.Enabled = Ativa; //Habilita o grid de especialização consultório
+            //Habilita - Desabilita Especialização
+            cboEspecialConsultorio.Enabled = Ativa; //Habilita - Desabilita o campo especialização consultório
+            cboEspecialConsultorio.SelectedIndex = -1; // Reseta o combo de especialização consultório
+            grdEspecialidade.Enabled = Ativa; //Habilita - Desabilita o grid de especialização consultório
+            grdEspecialidade.DataSource = null; //Limpa o grid de especialização consultório
 
         }
         private void grdDadosPessoais_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -519,7 +535,8 @@ namespace WEDLC.Forms
                     txtUfConsultorio.Text = row.Cells[16].Value.ToString();
                     mskTelefoneConsultorio.Text = row.Cells[17].Value.ToString();
                     cboClasseConsultorio.SelectedValue = row.Cells[18].Value.ToString();
-                    txtMediaConsultorio.Text = row.Cells[19].Value.ToString();
+                    decimal valor = decimal.Parse(row.Cells[19].Value.ToString());
+                    txtMediaConsultorio.Text = valor.ToString("N2", CultureInfo.GetCultureInfo("pt-BR"));
 
                     // Popular grid de especializações
                     this.populaGridMedicoEspecialidade(int.Parse(txtCodigoMedico.Text));
@@ -548,11 +565,12 @@ namespace WEDLC.Forms
 
             txtCodigoMedico.Enabled = true; //Habilita o campo código
             txtNome.Enabled = true; // Habilita o campo nome
+
             grdDadosPessoais.Enabled = true; //Habilita o grid de dados
             grdDadosPessoais.DataSource = null; //Limpa o grid de dados
+            grdDadosPessoais.CurrentCell = null; //Desmarca a seleção do grid
 
-            //Desmarca a seleção do grid
-            grdDadosPessoais.CurrentCell = null;
+            txtCodigoMedico.Focus(); //Foca no campo código
 
         }
 
@@ -665,6 +683,12 @@ namespace WEDLC.Forms
                 }
             }
 
+            else
+            {
+                ValidaEspecialidade = false; // Se não informou nada, não valida
+                cboEspecialConsultorio.SelectedValue = 0; // Reseta o valor selecionado para 0 (Selecione...)
+            }
+
             return true; // Retorna verdadeiro se o item existir
         }
 
@@ -676,6 +700,15 @@ namespace WEDLC.Forms
 
                 if (ValidaEspecialidade == true)
                 {
+                    // Verifica se já existe a especialização no grid
+                    bool duplicado = ValidaDuplicidadeEspecialidade(cboEspecialConsultorio.SelectedValue.ToString());
+
+                    // Verifica se a especialização já foi adicionada'
+                    if (duplicado)
+                    {
+                        MessageBox.Show("Especialização já foi adicionada!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     // Adicionando uma nova linha
                     DataRow novaLinha = dtGrdEspecialidade.NewRow();
                     novaLinha["idmedico"] = txtCodigoMedico.Text;
@@ -716,67 +749,59 @@ namespace WEDLC.Forms
                 {
                     if (ValidaCampos() == true)
                     {
-                        cMedico objMedico = new cMedico();
-                        objMedico.IdMedico = int.Parse(txtCodigoMedico.Text);
-                        objMedico.Nome = txtNome.Text;
-                        objMedico.Cep = txtCep.Text;
-                        objMedico.Logradouro = txtLogradouro.Text;
-                        objMedico.Complemento = txtComplemento.Text;
-                        objMedico.Bairro = txtBairro.Text;
-                        objMedico.Localidade = txtLocalidade.Text;
-                        objMedico.Uf = txtUf.Text;
-                        objMedico.Pais = txtPais.Text;
-                        objMedico.Telefone = mskTelefone.Text;
-                        objMedico.NomeConsultorio = txtConsultorio.Text;
-                        objMedico.CepConsultorio = txtCepConsultorio.Text;
-                        objMedico.LogradouroConsultorio = txtLogradouroConsultorio.Text;
-                        objMedico.ComplementoConsultorio = txtComplementoConsultorio.Text;
-                        objMedico.BairroConsultorio = txtBairroConsultorio.Text;
-                        objMedico.LocalidadeConsultorio = txtLocalidadeConsultorio.Text;
-                        objMedico.UfConsultorio = txtUfConsultorio.Text;
-                        objMedico.TelefoneConsultorio = mskTelefoneConsultorio.Text;
-                        objMedico.IdClasseConsultorio = int.Parse(cboClasseConsultorio.SelectedValue.ToString());
-                        objMedico.MediaConsultorio = decimal.Parse(txtMediaConsultorio.Text);
-
+                        // Verifica se os campos estão preenchidos corretamente
+                        if (PopularCampos(out cMedico objMedico) == false)
+                        {
+                            MessageBox.Show("Erro ao tentar popular os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                         // limpa o contador
                         int contador = 0;
 
-                        foreach (DataRow row in dtGrdEspecialidade.Rows)
+                        if (dtGrdEspecialidade.Rows.Count == 0)
                         {
-
-                            // Acessar os valores das colunas
-                            objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
-
-                            if (contador == 0)
-                            {
-                                objMedico.Apaga = true;
-                            }
-                            else
-                            {
-                                objMedico.Apaga = false;
-                            }
-                            // Atualiza a especialização do médico
+                            objMedico.Apaga = true;
+                            objMedico.IdEspecializacao = 1;
                             if (objMedico.atualizamedico() == true)
                             {
-                                //incrementa contador
-                                contador++;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Erro ao tentar atualizar especialização!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
                                 return;
                             }
-
                         }
+                        else
+                        {
+                            foreach (DataRow row in dtGrdEspecialidade.Rows)
+                            {
 
-                        MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                        return;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Preencha os campos obrigatórios!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
+                                // Acessar os valores das colunas
+                                objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
+
+                                if (contador == 0)
+                                {
+                                    objMedico.Apaga = true;
+                                }
+                                else
+                                {
+                                    objMedico.Apaga = false;
+                                }
+                                // Atualiza a especialização do médico
+                                if (objMedico.atualizamedico() == true)
+                                {
+                                    //incrementa contador
+                                    contador++;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Erro ao tentar atualizar especialização!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+
+                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                            return;
+                        }
                     }
                 }
             }
@@ -870,6 +895,12 @@ namespace WEDLC.Forms
                     txtMediaConsultorio.Focus();
                     return false;
                 }
+                if (grdEspecialidade.Rows.Count ==0)
+                {
+                    MessageBox.Show("Informe pelo menos uma especialidade.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cboEspecialConsultorio.Focus();
+                    return false;
+                }
                 return true;
             }
             catch (Exception)
@@ -878,6 +909,110 @@ namespace WEDLC.Forms
                 return false;
             }
         }
+        private bool ValidaDuplicidadeEspecialidade(string especialidade)
+        {
+            // Verifica se a especialidade já existe no DataTable
+            foreach (DataRow row in dtGrdEspecialidade.Rows)
+            {
+                if (row["idespecializacao"].ToString() == especialidade)
+                {
+                    return true; // A especialidade já existe
+                }
+            }
+            return false; // A especialidade não existe
+        }
 
+        private void grdEspecialidade_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                NumeroLinha = -1;
+
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    NumeroLinha = e.RowIndex; // Armazena o número da linha selecionada
+                }
+                else
+                {
+                    MessageBox.Show("Selecione uma especialização para excluir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao selecionar uma especialização para excluir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void btnExcluiEspecialidade_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dtGrdEspecialidade.Rows.Count == 1)
+                {
+                    MessageBox.Show("Não é permitido deixar a ficha médica sem pelo menos uma especialidade!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Verifica se uma linha foi selecionada
+                if (NumeroLinha >= 0)
+                {
+                    // Obter a linha que deseja remover (por exemplo, a linha selecionada em um DataGridView)
+                    DataRow rowToDelete = dtGrdEspecialidade.Rows[NumeroLinha]; // Remove a terceira linha
+                    dtGrdEspecialidade.Rows.Remove(rowToDelete);
+                    grdEspecialidade.DataSource = dtGrdEspecialidade;
+                }
+                else
+                {
+                    MessageBox.Show("Selecione uma especialização para excluir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar excluir especialização!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private bool PopularCampos(out cMedico obj)
+        {
+            try
+            {
+                cMedico objMedico = new cMedico();
+                objMedico.IdMedico = int.Parse(txtCodigoMedico.Text);
+                objMedico.Nome = txtNome.Text;
+                objMedico.Cep = txtCep.Text;
+                objMedico.Logradouro = txtLogradouro.Text;
+                objMedico.Complemento = txtComplemento.Text;
+                objMedico.Bairro = txtBairro.Text;
+                objMedico.Localidade = txtLocalidade.Text;
+                objMedico.Uf = txtUf.Text;
+                objMedico.Pais = txtPais.Text;
+                objMedico.Telefone = mskTelefone.Text;
+                objMedico.NomeConsultorio = txtConsultorio.Text;
+                objMedico.CepConsultorio = txtCepConsultorio.Text;
+                objMedico.LogradouroConsultorio = txtLogradouroConsultorio.Text;
+                objMedico.ComplementoConsultorio = txtComplementoConsultorio.Text;
+                objMedico.BairroConsultorio = txtBairroConsultorio.Text;
+                objMedico.LocalidadeConsultorio = txtLocalidadeConsultorio.Text;
+                objMedico.UfConsultorio = txtUfConsultorio.Text;
+                objMedico.TelefoneConsultorio = mskTelefoneConsultorio.Text;
+                objMedico.IdClasseConsultorio = int.Parse(cboClasseConsultorio.SelectedValue.ToString());
+                objMedico.MediaConsultorio = decimal.Parse(txtMediaConsultorio.Text);
+
+                obj = objMedico; // Atribui o objeto criado ao parâmetro de saída
+
+                return true;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao popular os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                obj = null; // Retorna null se ocorrer um erro
+                return false; // Indica que a operação falhou
+            }
+        }
     }
 }

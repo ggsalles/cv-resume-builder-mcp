@@ -467,6 +467,7 @@
             this.grdEspecialidade.Name = "grdEspecialidade";
             this.grdEspecialidade.Size = new System.Drawing.Size(1149, 123);
             this.grdEspecialidade.TabIndex = 35;
+            this.grdEspecialidade.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdEspecialidade_CellClick);
             // 
             // label4
             // 
@@ -497,6 +498,7 @@
             this.btnExcluiEspecialidade.Size = new System.Drawing.Size(27, 24);
             this.btnExcluiEspecialidade.TabIndex = 23;
             this.btnExcluiEspecialidade.UseVisualStyleBackColor = true;
+            this.btnExcluiEspecialidade.Click += new System.EventHandler(this.btnExcluiEspecialidade_Click);
             // 
             // cboEspecialConsultorio
             // 
