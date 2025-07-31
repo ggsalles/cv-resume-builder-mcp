@@ -700,18 +700,32 @@ namespace WEDLC.Forms
 
                 if (ValidaEspecialidade == true)
                 {
-                    // Verifica se já existe a especialização no grid
-                    bool duplicado = ValidaDuplicidadeEspecialidade(cboEspecialConsultorio.SelectedValue.ToString());
-
-                    // Verifica se a especialização já foi adicionada'
-                    if (duplicado)
+                    //Se tiver pelo menos uma linha no grid especialidades...
+                    if (grdEspecialidade.Rows.Count > 0)
                     {
-                        MessageBox.Show("Especialização já foi adicionada!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
+                        // Verifica se já existe a especialização no grid
+                        bool duplicado = ValidaDuplicidadeEspecialidade(cboEspecialConsultorio.SelectedValue.ToString());
+
+                        // Verifica se a especialização já foi adicionada'
+                        if (duplicado)
+                        {
+                            MessageBox.Show("Especialização já foi adicionada!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                     }
+
                     // Adicionando uma nova linha
                     DataRow novaLinha = dtGrdEspecialidade.NewRow();
-                    novaLinha["idmedico"] = txtCodigoMedico.Text;
+
+                    //Como ainda não tem o ID...
+                    if (cAcao == Acao.INSERT)
+                    {
+                        novaLinha["idmedico"] = grdEspecialidade.Rows.Count + 1; // Atribui um ID temporário baseado na contagem de linhas
+                    }
+                    else
+                    {
+                        novaLinha["idmedico"] = txtCodigoMedico.Text;
+                    }
                     novaLinha["idespecializacao"] = cboEspecialConsultorio.SelectedValue.ToString();
                     novaLinha["Sigla"] = dtComboEspecialidade.Rows[cboEspecialConsultorio.SelectedIndex][2].ToString();
                     novaLinha["Nome"] = dtComboEspecialidade.Rows[cboEspecialConsultorio.SelectedIndex][3].ToString();
@@ -736,13 +750,48 @@ namespace WEDLC.Forms
 
         private void btnGravar_Click(object sender, EventArgs e)
         {
-
             if (cAcao == Acao.INSERT)
             {
+                if (ValidaCampos() == true)
+                {
+                    // Verifica se os campos estão preenchidos corretamente
+                    if (PopularCampos(out cMedico objMedico) == false)
+                    {
+                        MessageBox.Show("Erro ao tentar popular os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
+                    // sequence
+                    int sequence = 0;
 
+                    // Atualiza a especialização do médico
+                    if (objMedico.incluiMedico(objMedico, out sequence) == true)
+                    {
+                        foreach (DataRow row in dtGrdEspecialidade.Rows)
+                        {
+                            // Acessar os valores das colunas
+                            objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
+                            objMedico.IdMedico = sequence; // Atribui o ID do médico recém-criado
+
+                            // Atualiza a especialização do médico
+                            if (objMedico.incluiEspecialidadeMedico(objMedico) == false)
+                            {
+                                MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+
+                        MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
             }
-
             else
             {
                 if (cAcao == Acao.UPDATE)
@@ -758,50 +807,38 @@ namespace WEDLC.Forms
                         // limpa o contador
                         int contador = 0;
 
-                        if (dtGrdEspecialidade.Rows.Count == 0)
+                        foreach (DataRow row in dtGrdEspecialidade.Rows)
                         {
-                            objMedico.Apaga = true;
-                            objMedico.IdEspecializacao = 1;
-                            if (objMedico.atualizamedico() == true)
+
+                            // Acessar os valores das colunas
+                            objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
+
+                            //Se for a primeira linha do loop da especialidade, o sistema entende que é necesseário apagar a tabela de especializacao do medico
+                            if (contador == 0)
                             {
-                                MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                                objMedico.Apaga = true;
+                            }
+                            //Se não... apagar não é necessário
+                            else
+                            {
+                                objMedico.Apaga = false;
+                            }
+                            // Atualiza a especialização do médico
+                            if (objMedico.atualizaMedico() == true)
+                            {
+                                //incrementa contador
+                                contador++;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
                         }
-                        else
-                        {
-                            foreach (DataRow row in dtGrdEspecialidade.Rows)
-                            {
 
-                                // Acessar os valores das colunas
-                                objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
-
-                                if (contador == 0)
-                                {
-                                    objMedico.Apaga = true;
-                                }
-                                else
-                                {
-                                    objMedico.Apaga = false;
-                                }
-                                // Atualiza a especialização do médico
-                                if (objMedico.atualizamedico() == true)
-                                {
-                                    //incrementa contador
-                                    contador++;
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Erro ao tentar atualizar especialização!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }
-                            }
-
-                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                            return;
-                        }
+                        MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                        return;
                     }
                 }
             }
@@ -895,7 +932,7 @@ namespace WEDLC.Forms
                     txtMediaConsultorio.Focus();
                     return false;
                 }
-                if (grdEspecialidade.Rows.Count ==0)
+                if (grdEspecialidade.Rows.Count == 0)
                 {
                     MessageBox.Show("Informe pelo menos uma especialidade.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     cboEspecialConsultorio.Focus();
@@ -911,15 +948,23 @@ namespace WEDLC.Forms
         }
         private bool ValidaDuplicidadeEspecialidade(string especialidade)
         {
-            // Verifica se a especialidade já existe no DataTable
-            foreach (DataRow row in dtGrdEspecialidade.Rows)
+            if (dtGrdEspecialidade.Rows.Count > 0)
             {
-                if (row["idespecializacao"].ToString() == especialidade)
+                // Verifica se a especialidade já existe no DataTable
+                foreach (DataRow row in dtGrdEspecialidade.Rows)
                 {
-                    return true; // A especialidade já existe
+                    if (row["idespecializacao"].ToString() == especialidade)
+                    {
+                        return true; // A especialidade já existe
+                    }
                 }
             }
-            return false; // A especialidade não existe
+            else
+            {
+                return false;
+            }
+
+            return false;
         }
 
         private void grdEspecialidade_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -982,7 +1027,15 @@ namespace WEDLC.Forms
             try
             {
                 cMedico objMedico = new cMedico();
-                objMedico.IdMedico = int.Parse(txtCodigoMedico.Text);
+                if (cAcao == Acao.UPDATE)
+                {
+                    objMedico.IdMedico = int.Parse(txtCodigoMedico.Text);
+                }
+                else
+                {
+                    objMedico.IdMedico = 0; //Se for insert ainda não tem o id do médico
+                }
+
                 objMedico.Nome = txtNome.Text;
                 objMedico.Cep = txtCep.Text;
                 objMedico.Logradouro = txtLogradouro.Text;
@@ -1013,6 +1066,21 @@ namespace WEDLC.Forms
                 obj = null; // Retorna null se ocorrer um erro
                 return false; // Indica que a operação falhou
             }
+        }
+
+        private void btnNovo_Click(object sender, EventArgs e)
+        {
+            //Determina a acao
+            cAcao = Acao.INSERT;
+
+            controlaBotao(); //libera botões 
+            liberaCampos(true); //Libera os campos para edição
+            txtCodigoMedico.Enabled = false; //Desabilita o campo código
+            grdDadosPessoais.Enabled = false; //Desabilita o grid de dados
+            grdDadosPessoais.DataSource = null;
+            populaGridMedicoEspecialidade(0); // Cria a estrutura do grid de especialização consultório
+            CarregaComboEspecialidadeMedico(); //Carrega o combo de especialização consultório
+            txtNome.Focus(); //Foca no campo nome
         }
     }
 }

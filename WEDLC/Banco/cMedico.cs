@@ -230,7 +230,7 @@ namespace WEDLC.Banco
                 return null;
             }
         }
-        public bool atualizamedico()
+        public bool atualizaMedico()
         {
             // Validação básica dos dados
             if (IdMedico <= 0)
@@ -290,6 +290,102 @@ namespace WEDLC.Banco
             {
                 if (conexao?.State == ConnectionState.Open)
                     conexao.Close();
+            }
+        }
+
+        public bool incluiMedico(cMedico pMedico, out Int32 ultimoId)
+
+        {
+            ultimoId = -1;
+
+            if (!conectaBanco())
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            try
+            {
+                using (MySqlCommand command = new MySqlCommand("pr_incluimedico", conexao))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Parâmetros de entrada
+                    command.Parameters.AddWithValue("pNome", pMedico.Nome);
+                    command.Parameters.AddWithValue("pCep", pMedico.Cep);
+                    command.Parameters.AddWithValue("pLogradouro", pMedico.Logradouro);
+                    command.Parameters.AddWithValue("pComplemento", pMedico.Complemento);
+                    command.Parameters.AddWithValue("pBairro", pMedico.Bairro);
+                    command.Parameters.AddWithValue("pLocalidade", pMedico.Localidade);
+                    command.Parameters.AddWithValue("pUf", pMedico.Uf);
+                    command.Parameters.AddWithValue("pPais", pMedico.Pais);
+                    command.Parameters.AddWithValue("pTelefone", pMedico.Telefone);
+                    command.Parameters.AddWithValue("pNomeconsultorio", pMedico.NomeConsultorio);
+                    command.Parameters.AddWithValue("pCepconsultorio", pMedico.CepConsultorio);
+                    command.Parameters.AddWithValue("pLogradouroconsultorio", pMedico.LogradouroConsultorio);
+                    command.Parameters.AddWithValue("pComplementoconsultorio", pMedico.ComplementoConsultorio);
+                    command.Parameters.AddWithValue("pBairroconsultorio", pMedico.BairroConsultorio);
+                    command.Parameters.AddWithValue("pLocalidadeconsultorio", pMedico.LocalidadeConsultorio);
+                    command.Parameters.AddWithValue("pUfconsultorio", pMedico.UfConsultorio);
+                    command.Parameters.AddWithValue("pTelefoneconsultorio", pMedico.TelefoneConsultorio);
+                    command.Parameters.AddWithValue("pIdClasseConsultorio", pMedico.IdClasseConsultorio);
+                    command.Parameters.AddWithValue("pMediaConsultorio", pMedico.MediaConsultorio);
+                    command.Parameters.AddWithValue("pIdEspecializacao", pMedico.IdEspecializacao);
+
+                    // Parâmetro de saída
+                    MySqlParameter outputParam = new MySqlParameter("@p_sequence", MySqlDbType.Int32);
+                    outputParam.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(outputParam);
+
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+                    ultimoId = sucesso ? Convert.ToInt32(outputParam.Value) : -1;
+
+                    return sucesso;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao incluir medico: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
+        }
+
+        public bool incluiEspecialidadeMedico(cMedico pMedico)
+
+        {
+            if (!conectaBanco())
+            {
+                MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            try
+            {
+                using (MySqlCommand command = new MySqlCommand("pr_incluiespecialidademedico", conexao))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Parâmetros de entrada
+                    command.Parameters.AddWithValue("pIdMedico", pMedico.IdMedico);
+                    command.Parameters.AddWithValue("pIdEspecializacao", pMedico.IdEspecializacao);
+                    
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+
+                    return sucesso;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao incluir especialidade: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                conexao?.Close();
             }
         }
     }

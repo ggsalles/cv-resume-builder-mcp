@@ -125,7 +125,7 @@
             this.grdDadosPessoais.Location = new System.Drawing.Point(6, 109);
             this.grdDadosPessoais.Name = "grdDadosPessoais";
             this.grdDadosPessoais.Size = new System.Drawing.Size(1147, 168);
-            this.grdDadosPessoais.TabIndex = 34;
+            this.grdDadosPessoais.TabIndex = 11;
             this.grdDadosPessoais.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDadosPessoais_CellClick);
             // 
             // txtPais
@@ -322,7 +322,7 @@
             this.grpBotoes.Location = new System.Drawing.Point(12, 586);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(1162, 46);
-            this.grpBotoes.TabIndex = 1;
+            this.grpBotoes.TabIndex = 2;
             this.grpBotoes.TabStop = false;
             // 
             // btnCancelar
@@ -333,7 +333,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(282, 13);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(85, 27);
-            this.btnCancelar.TabIndex = 27;
+            this.btnCancelar.TabIndex = 29;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -346,7 +346,7 @@
             this.btnExcluir.Location = new System.Drawing.Point(100, 13);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(85, 27);
-            this.btnExcluir.TabIndex = 25;
+            this.btnExcluir.TabIndex = 27;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
             // 
@@ -358,7 +358,7 @@
             this.btnGravar.Location = new System.Drawing.Point(191, 13);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(85, 27);
-            this.btnGravar.TabIndex = 26;
+            this.btnGravar.TabIndex = 28;
             this.btnGravar.Text = "Gravar";
             this.btnGravar.UseVisualStyleBackColor = true;
             this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
@@ -370,7 +370,7 @@
             this.btnSair.Location = new System.Drawing.Point(1071, 13);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(85, 27);
-            this.btnSair.TabIndex = 28;
+            this.btnSair.TabIndex = 30;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
@@ -382,9 +382,10 @@
             this.btnNovo.Location = new System.Drawing.Point(9, 13);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(85, 27);
-            this.btnNovo.TabIndex = 24;
+            this.btnNovo.TabIndex = 26;
             this.btnNovo.Text = "Novo";
             this.btnNovo.UseVisualStyleBackColor = true;
+            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
             // groupBox1
             // 
@@ -416,7 +417,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 295);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1161, 285);
-            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dados do Consultório";
             // 
@@ -428,7 +429,7 @@
             this.txtMediaConsultorio.MaxLength = 10;
             this.txtMediaConsultorio.Name = "txtMediaConsultorio";
             this.txtMediaConsultorio.Size = new System.Drawing.Size(166, 20);
-            this.txtMediaConsultorio.TabIndex = 20;
+            this.txtMediaConsultorio.TabIndex = 21;
             this.txtMediaConsultorio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtValor_KeyPress);
             this.txtMediaConsultorio.Leave += new System.EventHandler(this.txtValor_Leave);
             // 
@@ -457,7 +458,7 @@
             this.cboClasseConsultorio.Location = new System.Drawing.Point(567, 79);
             this.cboClasseConsultorio.Name = "cboClasseConsultorio";
             this.cboClasseConsultorio.Size = new System.Drawing.Size(128, 21);
-            this.cboClasseConsultorio.TabIndex = 19;
+            this.cboClasseConsultorio.TabIndex = 20;
             // 
             // grdEspecialidade
             // 
@@ -466,7 +467,7 @@
             this.grdEspecialidade.Location = new System.Drawing.Point(6, 150);
             this.grdEspecialidade.Name = "grdEspecialidade";
             this.grdEspecialidade.Size = new System.Drawing.Size(1149, 123);
-            this.grdEspecialidade.TabIndex = 35;
+            this.grdEspecialidade.TabIndex = 25;
             this.grdEspecialidade.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdEspecialidade_CellClick);
             // 
             // label4
@@ -485,7 +486,7 @@
             this.btnIncluiEspecialidade.Location = new System.Drawing.Point(501, 121);
             this.btnIncluiEspecialidade.Name = "btnIncluiEspecialidade";
             this.btnIncluiEspecialidade.Size = new System.Drawing.Size(27, 24);
-            this.btnIncluiEspecialidade.TabIndex = 22;
+            this.btnIncluiEspecialidade.TabIndex = 23;
             this.btnIncluiEspecialidade.UseVisualStyleBackColor = true;
             this.btnIncluiEspecialidade.Click += new System.EventHandler(this.btnIncluiEspecialidade_Click);
             // 
@@ -496,7 +497,7 @@
             this.btnExcluiEspecialidade.Location = new System.Drawing.Point(534, 121);
             this.btnExcluiEspecialidade.Name = "btnExcluiEspecialidade";
             this.btnExcluiEspecialidade.Size = new System.Drawing.Size(27, 24);
-            this.btnExcluiEspecialidade.TabIndex = 23;
+            this.btnExcluiEspecialidade.TabIndex = 24;
             this.btnExcluiEspecialidade.UseVisualStyleBackColor = true;
             this.btnExcluiEspecialidade.Click += new System.EventHandler(this.btnExcluiEspecialidade_Click);
             // 
@@ -507,7 +508,7 @@
             this.cboEspecialConsultorio.Location = new System.Drawing.Point(6, 123);
             this.cboEspecialConsultorio.Name = "cboEspecialConsultorio";
             this.cboEspecialConsultorio.Size = new System.Drawing.Size(489, 21);
-            this.cboEspecialConsultorio.TabIndex = 21;
+            this.cboEspecialConsultorio.TabIndex = 22;
             this.cboEspecialConsultorio.Validating += new System.ComponentModel.CancelEventHandler(this.cboEspecialConsultorio_Validating);
             // 
             // mskTelefoneConsultorio
@@ -517,7 +518,7 @@
             this.mskTelefoneConsultorio.Mask = "(99) 00000-0000";
             this.mskTelefoneConsultorio.Name = "mskTelefoneConsultorio";
             this.mskTelefoneConsultorio.Size = new System.Drawing.Size(103, 20);
-            this.mskTelefoneConsultorio.TabIndex = 18;
+            this.mskTelefoneConsultorio.TabIndex = 19;
             // 
             // txtLocalidadeConsultorio
             // 
@@ -526,7 +527,7 @@
             this.txtLocalidadeConsultorio.MaxLength = 20;
             this.txtLocalidadeConsultorio.Name = "txtLocalidadeConsultorio";
             this.txtLocalidadeConsultorio.Size = new System.Drawing.Size(216, 20);
-            this.txtLocalidadeConsultorio.TabIndex = 16;
+            this.txtLocalidadeConsultorio.TabIndex = 17;
             // 
             // label10
             // 
@@ -553,7 +554,7 @@
             this.txtUfConsultorio.MaxLength = 2;
             this.txtUfConsultorio.Name = "txtUfConsultorio";
             this.txtUfConsultorio.Size = new System.Drawing.Size(77, 20);
-            this.txtUfConsultorio.TabIndex = 17;
+            this.txtUfConsultorio.TabIndex = 18;
             // 
             // label12
             // 
@@ -571,7 +572,7 @@
             this.txtBairroConsultorio.MaxLength = 20;
             this.txtBairroConsultorio.Name = "txtBairroConsultorio";
             this.txtBairroConsultorio.Size = new System.Drawing.Size(141, 20);
-            this.txtBairroConsultorio.TabIndex = 15;
+            this.txtBairroConsultorio.TabIndex = 16;
             // 
             // label13
             // 
@@ -589,7 +590,7 @@
             this.txtComplementoConsultorio.MaxLength = 50;
             this.txtComplementoConsultorio.Name = "txtComplementoConsultorio";
             this.txtComplementoConsultorio.Size = new System.Drawing.Size(282, 20);
-            this.txtComplementoConsultorio.TabIndex = 14;
+            this.txtComplementoConsultorio.TabIndex = 15;
             // 
             // label14
             // 
@@ -607,7 +608,7 @@
             this.txtLogradouroConsultorio.MaxLength = 50;
             this.txtLogradouroConsultorio.Name = "txtLogradouroConsultorio";
             this.txtLogradouroConsultorio.Size = new System.Drawing.Size(300, 20);
-            this.txtLogradouroConsultorio.TabIndex = 13;
+            this.txtLogradouroConsultorio.TabIndex = 14;
             // 
             // label15
             // 
@@ -625,7 +626,7 @@
             this.txtCepConsultorio.MaxLength = 8;
             this.txtCepConsultorio.Name = "txtCepConsultorio";
             this.txtCepConsultorio.Size = new System.Drawing.Size(103, 20);
-            this.txtCepConsultorio.TabIndex = 12;
+            this.txtCepConsultorio.TabIndex = 13;
             this.txtCepConsultorio.Validating += new System.ComponentModel.CancelEventHandler(this.txtCepConsultorio_Validating);
             // 
             // label17
@@ -644,7 +645,7 @@
             this.txtConsultorio.MaxLength = 50;
             this.txtConsultorio.Name = "txtConsultorio";
             this.txtConsultorio.Size = new System.Drawing.Size(446, 20);
-            this.txtConsultorio.TabIndex = 11;
+            this.txtConsultorio.TabIndex = 12;
             // 
             // label18
             // 
