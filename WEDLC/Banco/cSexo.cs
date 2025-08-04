@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
-    public class cSimNao
+    public class cSexo
     {
-        public string IdSimNao { get; set; }
+        public string IdSexo { get; set; }
         public string Descricao { get; set; }
 
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
@@ -26,7 +26,7 @@ namespace WEDLC.Banco
                 return false;
             }
         }
-        public DataTable buscaSimNao()
+        public DataTable buscaSexo()
         {
             try
             {
@@ -44,7 +44,7 @@ namespace WEDLC.Banco
 
             try
             {
-                using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscasimnao", conexao))
+                using (MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_buscasexo", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     DataTable dt = new DataTable();

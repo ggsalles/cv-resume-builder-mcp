@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
+    <Compile Include="Banco\cExame.cs" />
     <Compile Include="Banco\cIndicacao.cs" />
     <Compile Include="Banco\cConvenio.cs" />
     <Compile Include="Banco\cComentario.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Banco\cMedico.cs" />
     <Compile Include="Banco\cNeuroConducaoMotora.cs" />
     <Compile Include="Banco\cNeuroConducaoSensorial.cs" />
+    <Compile Include="Banco\cSexo.cs" />
     <Compile Include="Banco\cTestesEspeciais.cs" />
     <Compile Include="Banco\GerenciadorConexaoMySQL.cs" />
     <Compile Include="Banco\cMusculo.cs" />
@@ -139,6 +141,12 @@
     <Compile Include="Banco\cFolha.cs" />
     <Compile Include="Banco\cSequence.cs" />
     <Compile Include="Banco\cSimNao.cs" />
+    <Compile Include="Forms\frmExame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmExame.Designer.cs">
+      <DependentUpon>frmExame.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmIndicacao.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +227,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\frmExame.resx">
+      <DependentUpon>frmExame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmIndicacao.resx">
       <DependentUpon>frmIndicacao.cs</DependentUpon>
     </EmbeddedResource>
