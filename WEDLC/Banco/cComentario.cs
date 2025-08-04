@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
@@ -113,6 +114,47 @@ namespace WEDLC.Banco
             finally
             {
                 conexao?.Close();
+            }
+        }
+
+        public bool atualizaComentario()
+        {
+            // Validação de entrada
+            if (IdComentario <= 0 || string.IsNullOrEmpty(Sigla) || string.IsNullOrEmpty(Nome))
+            {
+                MessageBox.Show("ID, sigla e nome são obrigatórios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            try
+            {
+                if (!conectaBanco())
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = conexao;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "pr_atuializacomentario";
+
+                    command.Parameters.AddWithValue("pIdComentario", IdComentario);
+                    command.Parameters.AddWithValue("pSigla", Sigla);
+                    command.Parameters.AddWithValue("pNome", Nome);
+                    command.Parameters.AddWithValue("pTexto", Texto);
+
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+                    conexao.Close();
+                    return sucesso;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao atualizar: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexao?.Close();
+                return false;
             }
         }
     }

@@ -136,5 +136,10 @@ namespace WEDLC.Forms
             frmLogin objLogin = new frmLogin();
             objLogin.Close();
         }
+
+        private void convênioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

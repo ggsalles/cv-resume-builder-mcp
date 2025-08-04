@@ -7,7 +7,7 @@ using WEDLC.Banco;
 
 namespace WEDLC.Forms
 {
-    public partial class frmComentarios : Form
+    public partial class frmConvenio : Form
     {
         public enum Acao
         {
@@ -23,7 +23,7 @@ namespace WEDLC.Forms
         //Código do módulo
         public const int codModulo = 1;
 
-        public frmComentarios()
+        public frmConvenio()
         {
             InitializeComponent();
         }
@@ -259,22 +259,22 @@ namespace WEDLC.Forms
                     else if (cAcao == Acao.UPDATE)
                     {
                         //Recebe o código do musculo transformado em inteiro
-                        objComentario.IdComentario = int.Parse(txtCodigo.Text);
+                        //objComentario.a = int.Parse(txtCodigo.Text);
 
                         //Solicita a confirmação do usuário para alteração
-                        if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                        {
-                            if (objComentario.atualizaComentario() == true)
-                            {
-                                MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else
-                            {
-                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
+                        //if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        //{
+                        //    if (objMusculo.atualizamusculo() == true)
+                        //    {
+                        //        MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //    }
+                        //    else
+                        //    {
+                        //        MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //        return;
+                        //    }
 
-                        }
+                        //}
                     }
                     else if (cAcao == Acao.DELETE)
                     {
