@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Serialization;
-using System;
-using System.Activities.Statements;
+﻿using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -21,19 +19,15 @@ namespace WEDLC.Forms
 
         public Acao cAcao = Acao.UPDATE;
 
-        //Código do módulo
-        public const int codModulo = 1;
-
+        public const int codModulo = 1; //Código do módulo
         public frmConvenio()
         {
             InitializeComponent();
         }
-
         private void frmMusculo_Load(object sender, EventArgs e)
         {
             carregaTela();
         }
-
         public void carregaTela()
         {
             try
@@ -57,7 +51,6 @@ namespace WEDLC.Forms
             }
 
         }
-
         private void controlaBotao()
         {
             //Se clicou em novo
@@ -120,7 +113,6 @@ namespace WEDLC.Forms
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;
         }
-
         private DataTable buscaConvenio(int tipopesquisa, int idconvenio, string sigla, string nome)
         {
             try
@@ -144,7 +136,6 @@ namespace WEDLC.Forms
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }
-
         private void populaGrid(int tipopesquisa, int idconvenio, string sigla, string nome)
 
         {
@@ -170,7 +161,6 @@ namespace WEDLC.Forms
             }
 
         }
-
         public bool validaCampos()
         {
 
@@ -328,12 +318,10 @@ namespace WEDLC.Forms
             ////Chama o gravra
             //btnGravar_Click(sender, e);
         }
-
         private void btnSair_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
@@ -449,7 +437,6 @@ namespace WEDLC.Forms
                 e.Handled = true;
             }
         }
-
         private void grdDados_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Verifica se a tecla pressionada é a barra de espaço
