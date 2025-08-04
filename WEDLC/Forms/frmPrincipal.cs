@@ -139,7 +139,12 @@ namespace WEDLC.Forms
 
         private void convênioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // Cria um objeto para o form de troca de senhas abrir
+            frmConvenio objConvenio = new frmConvenio();
+            // Define o form pai como o form principal
+            objConvenio.MdiParent = this;
+            //Abre o form de especialização não modal
+            objConvenio.Show(); 
         }
     }
 }

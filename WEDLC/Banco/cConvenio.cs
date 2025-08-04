@@ -5,13 +5,12 @@ using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
-    public class cComentario
+    public class cConvenio
     {
         public int TipoPesquisa { get; set; }
-        public Int32 IdComentario { get; set; }
+        public Int32 IdConvenio { get; set; }
         public string Nome { get; set; }
         public string Sigla { get; set; }
-        public string Texto { get; set; }
 
         // Construtor
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
@@ -31,13 +30,13 @@ namespace WEDLC.Banco
             }
         }
 
-        public DataTable buscaComentario()
+        public DataTable buscaConvenio()
         {
             // Validação básica dos parâmetros
             if (TipoPesquisa < 0)
                 return null;
 
-            if (TipoPesquisa == 1 && IdComentario <= 0)
+            if (TipoPesquisa == 1 && IdConvenio <= 0)
                 return null;
 
             if (!conectaBanco())
@@ -47,11 +46,11 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var sqlDa = new MySqlDataAdapter("pr_buscacomentario", conexao))
+                using (var sqlDa = new MySqlDataAdapter("pr_buscaconvenio", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", TipoPesquisa);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdComentario", IdComentario);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdConvenio", IdConvenio);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", Sigla ?? string.Empty);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pNome", Nome ?? string.Empty);
 
@@ -62,7 +61,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro na busca do comentário: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro na busca do convenio: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
@@ -77,14 +76,14 @@ namespace WEDLC.Banco
             }
         }
 
-        public bool incluiComentario()
+        public bool incluiConvenio()
         {
             if (!conectaBanco())
                 return false;
 
             try
             {
-                using (var command = new MySqlCommand("pr_incluicomentario", conexao))
+                using (var command = new MySqlCommand("pr_incluiconvenio", conexao))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -92,7 +91,6 @@ namespace WEDLC.Banco
                     {
                 new MySqlParameter("pSigla", MySqlDbType.VarChar) { Value = Sigla ?? string.Empty },
                 new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = Nome ?? string.Empty },
-                new MySqlParameter("pTexto", MySqlDbType.VarChar) { Value = Texto?? string.Empty },
                     });
 
                     int rowsAffected = command.ExecuteNonQuery();
@@ -102,7 +100,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro ao incluir comentário: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro ao incluir convenio: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
@@ -117,10 +115,10 @@ namespace WEDLC.Banco
             }
         }
 
-        public bool atualizaComentario()
+        public bool atualizaConvenio()
         {
             // Validação de entrada
-            if (IdComentario <= 0 || string.IsNullOrEmpty(Sigla) || string.IsNullOrEmpty(Nome))
+            if (IdConvenio <= 0 || string.IsNullOrEmpty(Sigla) || string.IsNullOrEmpty(Nome))
             {
                 MessageBox.Show("ID, sigla e nome são obrigatórios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -138,12 +136,11 @@ namespace WEDLC.Banco
                 {
                     command.Connection = conexao;
                     command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "pr_atuializacomentario";
+                    command.CommandText = "pr_atualizaconvenio";
 
-                    command.Parameters.AddWithValue("pIdComentario", IdComentario);
+                    command.Parameters.AddWithValue("pIdConvenio", IdConvenio);
                     command.Parameters.AddWithValue("pSigla", Sigla);
                     command.Parameters.AddWithValue("pNome", Nome);
-                    command.Parameters.AddWithValue("pTexto", Texto);
 
                     bool sucesso = command.ExecuteNonQuery() > 0;
                     conexao.Close();

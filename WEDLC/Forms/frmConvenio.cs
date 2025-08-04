@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using System;
 using System.Activities.Statements;
 using System.Data;
 using System.Drawing;
@@ -99,13 +100,11 @@ namespace WEDLC.Forms
             grdDados.Columns[0].Width = 80; //ID
             grdDados.Columns[1].Width = 80; //Sigla
             grdDados.Columns[2].Width = 250; //Nome
-            grdDados.Columns[3].Width = 250; //Texto
 
             // Desabilita a edição da coluna
             grdDados.Columns[0].ReadOnly = true;
             grdDados.Columns[1].ReadOnly = true;
             grdDados.Columns[2].ReadOnly = true;
-            grdDados.Columns[3].ReadOnly = true;
 
             // Configurando outras propriedades
             //grdDados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Preenche automaticamente
@@ -122,20 +121,20 @@ namespace WEDLC.Forms
             grdDados.CurrentCell = null;
         }
 
-        private DataTable buscaComentario(int tipopesquisa, int idmusculo, string sigla, string nome)
+        private DataTable buscaConvenio(int tipopesquisa, int idconvenio, string sigla, string nome)
         {
             try
             {
                 DataTable dtAux = new DataTable();
-                cComentario objComentario = new cComentario();
+                cConvenio objConvenio = new cConvenio();
 
                 //Configura os parâmetros de pesquisa
-                objComentario.TipoPesquisa = tipopesquisa;
-                objComentario.IdComentario = idmusculo;
-                objComentario.Sigla = sigla;
-                objComentario.Nome = nome;
+                objConvenio.TipoPesquisa = tipopesquisa;
+                objConvenio.IdConvenio = idconvenio;
+                objConvenio.Sigla = sigla;
+                objConvenio.Nome = nome;
 
-                dtAux = objComentario.buscaComentario();
+                dtAux = objConvenio.buscaConvenio();
 
                 return dtAux;
             }
@@ -146,21 +145,20 @@ namespace WEDLC.Forms
             }
         }
 
-        private void populaGrid(int tipopesquisa, int idcometario, string sigla, string nome)
+        private void populaGrid(int tipopesquisa, int idconvenio, string sigla, string nome)
 
         {
             try
             {
                 DataTable dt = new DataTable();
-                dt = this.buscaComentario(tipopesquisa, idcometario, sigla, nome);
+                dt = this.buscaConvenio(tipopesquisa, idconvenio, sigla, nome);
 
                 grdDados.DataSource = null;
 
                 //Renomeia as colunas do datatable
-                dt.Columns["idcomentario"].ColumnName = "Código";
+                dt.Columns["idconvenio"].ColumnName = "Código";
                 dt.Columns["sigla"].ColumnName = "Sigla";
                 dt.Columns["nome"].ColumnName = "Nome";
-                dt.Columns["texto"].ColumnName = "Texto";
 
                 grdDados.DataSource = dt;
                 this.configuraGrid();
@@ -197,14 +195,7 @@ namespace WEDLC.Forms
                 return false;
             }
 
-            if (txtTexto.Text.ToString().Trim().Length == 0)
-            {
-                MessageBox.Show("O campo texto não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtNome.Focus();
-                return false;
-            }
             return true;
-
         }
         private void btnNovo_Click(object sender, EventArgs e)
         {
@@ -218,7 +209,6 @@ namespace WEDLC.Forms
             txtCodigo.Text = string.Empty;
             txtSigla.Text = string.Empty;
             txtNome.Text = string.Empty;
-            txtTexto.Text = string.Empty;
 
             txtCodigo.Enabled = false; //Desabilita o campo código
 
@@ -233,18 +223,17 @@ namespace WEDLC.Forms
         {
             try
             {
-                cComentario objComentario = new cComentario();
+                cConvenio objConvenio = new cConvenio();
 
-                objComentario.Nome = txtNome.Text;
-                objComentario.Sigla = txtSigla.Text;
-                objComentario.Texto = txtTexto.Text;
+                objConvenio.Nome = txtNome.Text;
+                objConvenio.Sigla = txtSigla.Text;
 
                 //Valida campos
                 if (validaCampos() == true)
                 {
                     if (cAcao == Acao.INSERT)
                     {
-                        if (objComentario.incluiComentario() == true)
+                        if (objConvenio.incluiConvenio() == true)
                         {
                             MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -258,23 +247,23 @@ namespace WEDLC.Forms
                     }
                     else if (cAcao == Acao.UPDATE)
                     {
-                        //Recebe o código do musculo transformado em inteiro
-                        //objComentario.a = int.Parse(txtCodigo.Text);
+                        //Recebe o código do convenio transformado em inteiro
+                        objConvenio.IdConvenio = int.Parse(txtCodigo.Text);
 
                         //Solicita a confirmação do usuário para alteração
-                        //if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                        //{
-                        //    if (objMusculo.atualizamusculo() == true)
-                        //    {
-                        //        MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        //    }
-                        //    else
-                        //    {
-                        //        MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        //        return;
-                        //    }
+                        if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            if (objConvenio.atualizaConvenio() == true)
+                            {
+                                MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
 
-                        //}
+                        }
                     }
                     else if (cAcao == Acao.DELETE)
                     {
@@ -314,9 +303,6 @@ namespace WEDLC.Forms
 
             //Habilita o campo código
             txtCodigo.Enabled = true;
-
-            //Desabilita os campos normncs, normncm e normlmd
-            txtTexto.Enabled = false;
 
             //Limpa os campos
             limpaControles();
@@ -358,14 +344,12 @@ namespace WEDLC.Forms
                 txtCodigo.Text = grdDados.Rows[e.RowIndex].Cells[0].Value.ToString();
                 txtSigla.Text = grdDados.Rows[e.RowIndex].Cells[1].Value.ToString();
                 txtNome.Text = grdDados.Rows[e.RowIndex].Cells[2].Value.ToString();
-                txtTexto.Text = grdDados.Rows[e.RowIndex].Cells[3].Value.ToString();
 
                 //libera os controles 
                 controlaBotao();
 
                 //Desabilita o campo código
                 txtCodigo.Enabled = false;
-                txtTexto.Enabled = true;
 
                 txtSigla.Focus();
             }
@@ -374,7 +358,6 @@ namespace WEDLC.Forms
             grdDados.Columns[0].ReadOnly = true;
             grdDados.Columns[1].ReadOnly = true;
             grdDados.Columns[2].ReadOnly = true;
-            grdDados.Columns[3].ReadOnly = true;
         }
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
@@ -387,7 +370,6 @@ namespace WEDLC.Forms
                 //Limpa campos
                 txtSigla.Text = string.Empty;
                 txtNome.Text = string.Empty;
-                txtTexto.Text = string.Empty;
 
                 // Verifica a quantidade de caracteres
                 if (txtCodigo.Text.Length == 0)
@@ -416,7 +398,6 @@ namespace WEDLC.Forms
                 //Limpa campos
                 txtCodigo.Text = string.Empty;
                 txtNome.Text = string.Empty;
-                txtTexto.Text = string.Empty;
 
                 if (txtSigla.Text.Length == 0)
                 {
@@ -444,7 +425,6 @@ namespace WEDLC.Forms
                 //Limpa campos
                 txtCodigo.Text = string.Empty;
                 txtSigla.Text = string.Empty;
-                txtTexto.Text = string.Empty;
 
                 if (txtNome.Text.Length == 0)
                 {
@@ -484,7 +464,6 @@ namespace WEDLC.Forms
             txtCodigo.Text = string.Empty;
             txtSigla.Text = string.Empty;
             txtNome.Text = string.Empty;
-            txtTexto.Text = string.Empty;
 
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;

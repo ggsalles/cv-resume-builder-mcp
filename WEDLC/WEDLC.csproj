@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
+    <Compile Include="Banco\cConvenio.cs" />
     <Compile Include="Banco\cComentario.cs" />
     <Compile Include="Banco\cEstudoPotencialEvocado.cs" />
     <Compile Include="Banco\cMedico.cs" />
