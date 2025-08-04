@@ -146,5 +146,25 @@ namespace WEDLC.Forms
             //Abre o form de especialização não modal
             objConvenio.Show(); 
         }
+
+        private void indicaçãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Cria um objeto para o form de troca de senhas abrir
+            frmIndicacao objIndicacao = new frmIndicacao();
+            // Define o form pai como o form principal
+            objIndicacao.MdiParent = this;
+            //Abre o form de especialização não modal
+            objIndicacao.Show();    
+        }
+
+        private void exameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Cria um objeto para o form de troca de senhas abrir
+            frmExame objExame = new frmExame();
+            // Define o form pai como o form principal
+            objExame.MdiParent = this;
+            //Abre o form de especialização não modal
+            objExame.Show();    
+        }
     }
 }

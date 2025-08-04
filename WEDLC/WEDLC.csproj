@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
+    <Compile Include="Banco\cIndicacao.cs" />
     <Compile Include="Banco\cConvenio.cs" />
     <Compile Include="Banco\cComentario.cs" />
     <Compile Include="Banco\cEstudoPotencialEvocado.cs" />
@@ -138,6 +139,12 @@
     <Compile Include="Banco\cFolha.cs" />
     <Compile Include="Banco\cSequence.cs" />
     <Compile Include="Banco\cSimNao.cs" />
+    <Compile Include="Forms\frmIndicacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmIndicacao.Designer.cs">
+      <DependentUpon>frmIndicacao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmConvenio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,6 +219,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\frmIndicacao.resx">
+      <DependentUpon>frmIndicacao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmConvenio.resx">
       <DependentUpon>frmConvenio.cs</DependentUpon>
     </EmbeddedResource>

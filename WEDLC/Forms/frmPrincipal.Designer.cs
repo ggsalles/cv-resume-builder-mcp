@@ -37,11 +37,13 @@
             this.manutençãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabelasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comentárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convênioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.especializacaoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.indicaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.músculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nervoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convênioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,7 +111,9 @@
             this.comentárioToolStripMenuItem,
             this.convênioToolStripMenuItem,
             this.especializacaoToolStripMenuItem,
+            this.exameToolStripMenuItem,
             this.folhaToolStripMenuItem,
+            this.indicaçãoToolStripMenuItem,
             this.músculoToolStripMenuItem,
             this.nervoToolStripMenuItem});
             this.tabelasToolStripMenuItem.Name = "tabelasToolStripMenuItem";
@@ -122,6 +126,13 @@
             this.comentárioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.comentárioToolStripMenuItem.Text = "Comentário";
             this.comentárioToolStripMenuItem.Click += new System.EventHandler(this.comentárioToolStripMenuItem_Click);
+            // 
+            // convênioToolStripMenuItem
+            // 
+            this.convênioToolStripMenuItem.Name = "convênioToolStripMenuItem";
+            this.convênioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.convênioToolStripMenuItem.Text = "Convênio";
+            this.convênioToolStripMenuItem.Click += new System.EventHandler(this.convênioToolStripMenuItem_Click);
             // 
             // especializacaoToolStripMenuItem
             // 
@@ -137,6 +148,13 @@
             this.folhaToolStripMenuItem.Text = "Folha";
             this.folhaToolStripMenuItem.Click += new System.EventHandler(this.folhaToolStripMenuItem_Click);
             // 
+            // indicaçãoToolStripMenuItem
+            // 
+            this.indicaçãoToolStripMenuItem.Name = "indicaçãoToolStripMenuItem";
+            this.indicaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.indicaçãoToolStripMenuItem.Text = "Indicação";
+            this.indicaçãoToolStripMenuItem.Click += new System.EventHandler(this.indicaçãoToolStripMenuItem_Click);
+            // 
             // músculoToolStripMenuItem
             // 
             this.músculoToolStripMenuItem.Name = "músculoToolStripMenuItem";
@@ -151,12 +169,12 @@
             this.nervoToolStripMenuItem.Text = "Nervo";
             this.nervoToolStripMenuItem.Click += new System.EventHandler(this.nervoToolStripMenuItem_Click);
             // 
-            // convênioToolStripMenuItem
+            // exameToolStripMenuItem
             // 
-            this.convênioToolStripMenuItem.Name = "convênioToolStripMenuItem";
-            this.convênioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.convênioToolStripMenuItem.Text = "Convênio";
-            this.convênioToolStripMenuItem.Click += new System.EventHandler(this.convênioToolStripMenuItem_Click);
+            this.exameToolStripMenuItem.Name = "exameToolStripMenuItem";
+            this.exameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exameToolStripMenuItem.Text = "Exame";
+            this.exameToolStripMenuItem.Click += new System.EventHandler(this.exameToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 
@@ -195,5 +213,7 @@
         private System.Windows.Forms.ToolStripMenuItem pacientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem médicosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convênioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem indicaçãoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exameToolStripMenuItem;
     }
 }
