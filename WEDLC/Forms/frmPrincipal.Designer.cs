@@ -39,11 +39,11 @@
             this.comentárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convênioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.especializacaoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folhaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indicaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.músculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nervoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,8 +77,8 @@
             // operaçãoToolStripMenuItem
             // 
             this.operaçãoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pacientesToolStripMenuItem,
-            this.médicosToolStripMenuItem});
+            this.médicosToolStripMenuItem,
+            this.pacientesToolStripMenuItem});
             this.operaçãoToolStripMenuItem.Name = "operaçãoToolStripMenuItem";
             this.operaçãoToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             this.operaçãoToolStripMenuItem.Text = "Operação";
@@ -86,14 +86,14 @@
             // pacientesToolStripMenuItem
             // 
             this.pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
-            this.pacientesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.pacientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.pacientesToolStripMenuItem.Text = "Pacientes";
             this.pacientesToolStripMenuItem.Click += new System.EventHandler(this.pacientesToolStripMenuItem_Click);
             // 
             // médicosToolStripMenuItem
             // 
             this.médicosToolStripMenuItem.Name = "médicosToolStripMenuItem";
-            this.médicosToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.médicosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.médicosToolStripMenuItem.Text = "Médicos";
             this.médicosToolStripMenuItem.Click += new System.EventHandler(this.médicosToolStripMenuItem_Click);
             // 
@@ -117,64 +117,64 @@
             this.músculoToolStripMenuItem,
             this.nervoToolStripMenuItem});
             this.tabelasToolStripMenuItem.Name = "tabelasToolStripMenuItem";
-            this.tabelasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tabelasToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.tabelasToolStripMenuItem.Text = "Tabelas";
             // 
             // comentárioToolStripMenuItem
             // 
             this.comentárioToolStripMenuItem.Name = "comentárioToolStripMenuItem";
-            this.comentárioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.comentárioToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.comentárioToolStripMenuItem.Text = "Comentário";
             this.comentárioToolStripMenuItem.Click += new System.EventHandler(this.comentárioToolStripMenuItem_Click);
             // 
             // convênioToolStripMenuItem
             // 
             this.convênioToolStripMenuItem.Name = "convênioToolStripMenuItem";
-            this.convênioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.convênioToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.convênioToolStripMenuItem.Text = "Convênio";
             this.convênioToolStripMenuItem.Click += new System.EventHandler(this.convênioToolStripMenuItem_Click);
             // 
             // especializacaoToolStripMenuItem
             // 
             this.especializacaoToolStripMenuItem.Name = "especializacaoToolStripMenuItem";
-            this.especializacaoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.especializacaoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.especializacaoToolStripMenuItem.Text = "Especialização";
             this.especializacaoToolStripMenuItem.Click += new System.EventHandler(this.especializacaoToolStripMenuItem_Click);
+            // 
+            // exameToolStripMenuItem
+            // 
+            this.exameToolStripMenuItem.Name = "exameToolStripMenuItem";
+            this.exameToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.exameToolStripMenuItem.Text = "Exame";
+            this.exameToolStripMenuItem.Click += new System.EventHandler(this.exameToolStripMenuItem_Click);
             // 
             // folhaToolStripMenuItem
             // 
             this.folhaToolStripMenuItem.Name = "folhaToolStripMenuItem";
-            this.folhaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.folhaToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.folhaToolStripMenuItem.Text = "Folha";
             this.folhaToolStripMenuItem.Click += new System.EventHandler(this.folhaToolStripMenuItem_Click);
             // 
             // indicaçãoToolStripMenuItem
             // 
             this.indicaçãoToolStripMenuItem.Name = "indicaçãoToolStripMenuItem";
-            this.indicaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.indicaçãoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.indicaçãoToolStripMenuItem.Text = "Indicação";
             this.indicaçãoToolStripMenuItem.Click += new System.EventHandler(this.indicaçãoToolStripMenuItem_Click);
             // 
             // músculoToolStripMenuItem
             // 
             this.músculoToolStripMenuItem.Name = "músculoToolStripMenuItem";
-            this.músculoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.músculoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.músculoToolStripMenuItem.Text = "Músculo";
             this.músculoToolStripMenuItem.Click += new System.EventHandler(this.músculoToolStripMenuItem_Click);
             // 
             // nervoToolStripMenuItem
             // 
             this.nervoToolStripMenuItem.Name = "nervoToolStripMenuItem";
-            this.nervoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nervoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.nervoToolStripMenuItem.Text = "Nervo";
             this.nervoToolStripMenuItem.Click += new System.EventHandler(this.nervoToolStripMenuItem_Click);
-            // 
-            // exameToolStripMenuItem
-            // 
-            this.exameToolStripMenuItem.Name = "exameToolStripMenuItem";
-            this.exameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exameToolStripMenuItem.Text = "Exame";
-            this.exameToolStripMenuItem.Click += new System.EventHandler(this.exameToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 

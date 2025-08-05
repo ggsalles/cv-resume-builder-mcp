@@ -676,8 +676,8 @@ namespace WEDLC.Forms
         {
             objCombo.DisplayMember = "Descricao";
             objCombo.ValueMember = "Id";
-            objCombo.Items.Add(new cSimNao { Id = "1", Descricao = "Sim" });
-            objCombo.Items.Add(new cSimNao { Id = "2", Descricao = "Não" });
+            objCombo.Items.Add(new cSimNao { IdSimNao = "1", Descricao = "Sim" });
+            objCombo.Items.Add(new cSimNao { IdSimNao = "2", Descricao = "Não" });
             objCombo.DropDownStyle = ComboBoxStyle.DropDownList; // Define o estilo do ComboBox como DropDownList
             objCombo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
             objCombo.SelectedIndex = 1; // Define o índice padrão como Não;
