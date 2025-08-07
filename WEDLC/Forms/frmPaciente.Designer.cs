@@ -33,11 +33,11 @@
             this.mskTelefone = new System.Windows.Forms.MaskedTextBox();
             this.mskNascimento = new System.Windows.Forms.MaskedTextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.txtTexto = new System.Windows.Forms.TextBox();
+            this.txtObs = new System.Windows.Forms.TextBox();
             this.txtLocalidade = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.grdFolha = new System.Windows.Forms.DataGridView();
-            this.txtData = new System.Windows.Forms.TextBox();
+            this.txtDataCadastro = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.cboBeneficente = new System.Windows.Forms.ComboBox();
@@ -89,11 +89,11 @@
             this.grpPaciente.Controls.Add(this.mskTelefone);
             this.grpPaciente.Controls.Add(this.mskNascimento);
             this.grpPaciente.Controls.Add(this.label17);
-            this.grpPaciente.Controls.Add(this.txtTexto);
+            this.grpPaciente.Controls.Add(this.txtObs);
             this.grpPaciente.Controls.Add(this.txtLocalidade);
             this.grpPaciente.Controls.Add(this.label16);
             this.grpPaciente.Controls.Add(this.grdFolha);
-            this.grpPaciente.Controls.Add(this.txtData);
+            this.grpPaciente.Controls.Add(this.txtDataCadastro);
             this.grpPaciente.Controls.Add(this.label15);
             this.grpPaciente.Controls.Add(this.label14);
             this.grpPaciente.Controls.Add(this.cboBeneficente);
@@ -155,10 +155,10 @@
             // mskNascimento
             // 
             this.mskNascimento.Enabled = false;
-            this.mskNascimento.Location = new System.Drawing.Point(654, 232);
+            this.mskNascimento.Location = new System.Drawing.Point(673, 232);
             this.mskNascimento.Mask = "00/00/0000";
             this.mskNascimento.Name = "mskNascimento";
-            this.mskNascimento.Size = new System.Drawing.Size(100, 20);
+            this.mskNascimento.Size = new System.Drawing.Size(83, 20);
             this.mskNascimento.TabIndex = 11;
             this.mskNascimento.ValidatingType = typeof(System.DateTime);
             // 
@@ -171,17 +171,17 @@
             this.label17.TabIndex = 35;
             this.label17.Text = "Observação";
             // 
-            // txtTexto
+            // txtObs
             // 
-            this.txtTexto.AcceptsReturn = true;
-            this.txtTexto.Enabled = false;
-            this.txtTexto.Location = new System.Drawing.Point(6, 542);
-            this.txtTexto.MaxLength = 4000;
-            this.txtTexto.Multiline = true;
-            this.txtTexto.Name = "txtTexto";
-            this.txtTexto.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTexto.Size = new System.Drawing.Size(1149, 87);
-            this.txtTexto.TabIndex = 21;
+            this.txtObs.AcceptsReturn = true;
+            this.txtObs.Enabled = false;
+            this.txtObs.Location = new System.Drawing.Point(6, 542);
+            this.txtObs.MaxLength = 4000;
+            this.txtObs.Multiline = true;
+            this.txtObs.Name = "txtObs";
+            this.txtObs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtObs.Size = new System.Drawing.Size(1149, 87);
+            this.txtObs.TabIndex = 21;
             // 
             // txtLocalidade
             // 
@@ -210,23 +210,23 @@
             this.grdFolha.Size = new System.Drawing.Size(1149, 123);
             this.grdFolha.TabIndex = 10;
             // 
-            // txtData
+            // txtDataCadastro
             // 
-            this.txtData.Enabled = false;
-            this.txtData.Location = new System.Drawing.Point(657, 323);
-            this.txtData.MaxLength = 8;
-            this.txtData.Name = "txtData";
-            this.txtData.Size = new System.Drawing.Size(103, 20);
-            this.txtData.TabIndex = 17;
+            this.txtDataCadastro.Enabled = false;
+            this.txtDataCadastro.Location = new System.Drawing.Point(657, 323);
+            this.txtDataCadastro.MaxLength = 8;
+            this.txtDataCadastro.Name = "txtDataCadastro";
+            this.txtDataCadastro.Size = new System.Drawing.Size(103, 20);
+            this.txtDataCadastro.TabIndex = 17;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(657, 306);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(30, 13);
+            this.label15.Size = new System.Drawing.Size(75, 13);
             this.label15.TabIndex = 29;
-            this.label15.Text = "Data";
+            this.label15.Text = "Data Cadastro";
             // 
             // label14
             // 
@@ -239,7 +239,6 @@
             // 
             // cboBeneficente
             // 
-            this.cboBeneficente.Enabled = false;
             this.cboBeneficente.FormattingEnabled = true;
             this.cboBeneficente.Location = new System.Drawing.Point(567, 323);
             this.cboBeneficente.Name = "cboBeneficente";
@@ -248,7 +247,6 @@
             // 
             // cboFolha
             // 
-            this.cboFolha.Enabled = false;
             this.cboFolha.FormattingEnabled = true;
             this.cboFolha.Location = new System.Drawing.Point(6, 370);
             this.cboFolha.Name = "cboFolha";
@@ -276,7 +274,6 @@
             // 
             // cboMedico
             // 
-            this.cboMedico.Enabled = false;
             this.cboMedico.FormattingEnabled = true;
             this.cboMedico.Location = new System.Drawing.Point(6, 323);
             this.cboMedico.Name = "cboMedico";
@@ -305,7 +302,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(651, 214);
+            this.label12.Location = new System.Drawing.Point(670, 214);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(63, 13);
             this.label12.TabIndex = 23;
@@ -322,11 +319,10 @@
             // 
             // cboSexo
             // 
-            this.cboSexo.Enabled = false;
             this.cboSexo.FormattingEnabled = true;
             this.cboSexo.Location = new System.Drawing.Point(567, 231);
             this.cboSexo.Name = "cboSexo";
-            this.cboSexo.Size = new System.Drawing.Size(81, 21);
+            this.cboSexo.Size = new System.Drawing.Size(99, 21);
             this.cboSexo.TabIndex = 10;
             // 
             // label10
@@ -340,7 +336,6 @@
             // 
             // cboIndSec
             // 
-            this.cboIndSec.Enabled = false;
             this.cboIndSec.FormattingEnabled = true;
             this.cboIndSec.Location = new System.Drawing.Point(567, 277);
             this.cboIndSec.Name = "cboIndSec";
@@ -448,7 +443,6 @@
             // 
             // cboIndPrinc
             // 
-            this.cboIndPrinc.Enabled = false;
             this.cboIndPrinc.FormattingEnabled = true;
             this.cboIndPrinc.Location = new System.Drawing.Point(6, 277);
             this.cboIndPrinc.Name = "cboIndPrinc";
@@ -457,7 +451,6 @@
             // 
             // cboConvenio
             // 
-            this.cboConvenio.Enabled = false;
             this.cboConvenio.FormattingEnabled = true;
             this.cboConvenio.Location = new System.Drawing.Point(763, 231);
             this.cboConvenio.Name = "cboConvenio";
@@ -490,6 +483,7 @@
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(337, 20);
             this.txtNome.TabIndex = 2;
+            this.txtNome.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNome_KeyUp);
             // 
             // lblNome
             // 
@@ -502,12 +496,14 @@
             // 
             // txtCodigoProntuario
             // 
-            this.txtCodigoProntuario.ForeColor = System.Drawing.Color.Red;
+            this.txtCodigoProntuario.ForeColor = System.Drawing.Color.Blue;
             this.txtCodigoProntuario.Location = new System.Drawing.Point(6, 35);
             this.txtCodigoProntuario.MaxLength = 10;
             this.txtCodigoProntuario.Name = "txtCodigoProntuario";
             this.txtCodigoProntuario.Size = new System.Drawing.Size(103, 20);
             this.txtCodigoProntuario.TabIndex = 1;
+            this.txtCodigoProntuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoProntuario_KeyPress);
+            this.txtCodigoProntuario.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCodigoProntuario_KeyUp);
             // 
             // lblCodigo
             // 
@@ -657,14 +653,14 @@
         private System.Windows.Forms.ComboBox cboSexo;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cboMedico;
-        private System.Windows.Forms.TextBox txtData;
+        private System.Windows.Forms.TextBox txtDataCadastro;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cboBeneficente;
         private System.Windows.Forms.TextBox txtLocalidade;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtTexto;
+        private System.Windows.Forms.TextBox txtObs;
         private System.Windows.Forms.MaskedTextBox mskNascimento;
         private System.Windows.Forms.MaskedTextBox mskTelefone;
         private System.Windows.Forms.DataGridView grdDadosPessoais;

@@ -3,22 +3,30 @@ using System.Net;
 using System.Windows.Forms;
 using WEDLC.Banco;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 
 namespace WEDLC.Forms
 {
     public partial class frmPrincipal : Form
     {
+        // Step 2: Update the constructor to await ObterIPExterno and set ip
         public frmPrincipal(string pUsuario, string pSenha)
-
         {
             InitializeComponent();
 
             this.DoubleBuffered = true;
-            string ip = ObterIPExterno();
+            string ip = "";
             string mac = ObterMACAddress();
             GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
-            this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac;
+
+            // Use a local async function to await the IP and set the form text
+            async void SetFormTextAsync()
+            {
+                ip = await ObterIPExterno();
+                this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac;
+            }
+            SetFormTextAsync();
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -66,10 +74,26 @@ namespace WEDLC.Forms
             objMusculo.Show();
         }
 
-        public string ObterIPExterno()
+        // Step 1: Change ObterIPExterno to return Task<string> instead of void
+        private async Task<string> ObterIPExterno()
         {
-            string enderecoIP = new WebClient().DownloadString("http://icanhazip.com").Trim();
-            return enderecoIP;
+            try
+            {
+                try
+                {
+                    // Call the static method directly
+                    string publicIP = await cIp.GetPublicIPAsync();
+                    return publicIP;
+                }
+                catch (Exception ex)
+                {
+                    return $"Erro ao obter IP: {ex.Message}";
+                }
+            }
+            catch
+            {
+                return "IP não encontrado";
+            }
         }
 
         public string ObterMACAddress()

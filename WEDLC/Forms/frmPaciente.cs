@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -129,7 +130,20 @@ namespace WEDLC.Forms
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            //Determina a acao
+            cAcao = Acao.CANCELAR;
 
+            controlaBotao();
+
+            //Habilita o campo código
+            txtCodigoProntuario.Enabled = true;
+
+            grdDadosPessoais.Enabled = true; //Habilita o grid de dados
+            
+            this.liberaCampos(false); //Libera os campos para edição
+
+            //Carrega o grid
+            //carregaTela();
         }
 
         private void grdDadosPessoais_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -138,7 +152,6 @@ namespace WEDLC.Forms
             {
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                 {
-
                     // Otimização: Acessa a linha apenas uma vez
                     DataGridViewRow row = grdDadosPessoais.Rows[e.RowIndex];
 
@@ -162,29 +175,22 @@ namespace WEDLC.Forms
                     txtBairro.Text = row.Cells[5].Value.ToString();
                     txtLocalidade.Text = row.Cells[6].Value.ToString();
                     txtUf.Text = row.Cells[7].Value.ToString();
-                    mskTelefone.Text = row.Cells[9].Value.ToString();
-
-                    cboSexo.SelectedIndex = cboSexo.FindStringExact(row.Cells[8].Value.ToString());
-
-                    // Verifica se o campo "Data de Nascimento" não é nulo ou vazio antes de converter
-                    if (row.Cells[10].Value != null && !string.IsNullOrEmpty(row.Cells[10].Value.ToString()))
-                    {
-                        mskNascimento.Text = DateTime.ParseExact(row.Cells[10].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy");
-                    }
-                    //else
-                    //{
-                    //    mskNascimento.Text = DateTime.Now.ToString("dd/MM/yyyy"); // Define uma data padrão se estiver vazia
-                    //}
-
-                    // Carrega combo folha
-                    //CarregaComboEspecialidadeMedico();
+                    mskTelefone.Text = row.Cells[8].Value.ToString();
+                    cboSexo.SelectedValue = row.Cells[9].Value.ToString();
+                    mskNascimento.Text = row.Cells[10].Value != null ? DateTime.ParseExact(row.Cells[10].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy");
+                    cboConvenio.SelectedValue = row.Cells[11].Value.ToString();
+                    cboIndPrinc.SelectedValue = row.Cells[12].Value.ToString();
+                    cboIndSec.SelectedValue = row.Cells[13].Value.ToString();
+                    cboMedico.SelectedValue = row.Cells[14].Value.ToString();
+                    cboBeneficente.SelectedValue = row.Cells[15].Value.ToString();
+                    txtDataCadastro.Text = row.Cells[16].Value.ToString(); 
+                    txtObs.Text = row.Cells[17].Value != null ? row.Cells[17].Value.ToString() : string.Empty;
 
                     // Popular grid folha
                     //this.populaGridMedicoEspecialidade(int.Parse(txtCodigoMedico.Text));
 
                     //Determina a acao
                     cAcao = Acao.UPDATE;
-
                 }
             }
             catch (Exception)
@@ -246,6 +252,16 @@ namespace WEDLC.Forms
             txtLocalidade.Text = string.Empty;
             txtUf.Text = string.Empty;
             mskTelefone.Text = string.Empty;
+            cboSexo.SelectedIndex = -1; // Reseta o combo de sexo
+            mskNascimento.Text = DateTime.Now.ToString("dd/MM/yyyy"); // Reseta o campo data de nascimento para a data atual
+            cboConvenio.SelectedIndex = -1; // Reseta o combo de convênio
+            cboIndPrinc.SelectedIndex = -1; // Reseta o combo de indicação principal
+            cboIndSec.SelectedIndex = -1; // Reseta o combo de indicação secundária
+            cboMedico.SelectedIndex = -1; // Reseta o combo de médico
+            cboBeneficente.SelectedIndex = -1; // Reseta o combo de beneficiário
+            cboFolha.SelectedIndex = -1; // Reseta o combo de especialização consultório
+            txtObs.Text = string.Empty; // Limpa o campo de observação
+
 
             //Habilita - Desabilita os campos dados
             //txtNome.Enabled = Ativa; //Habilita - Desabilita o campo nome
@@ -256,6 +272,14 @@ namespace WEDLC.Forms
             txtLocalidade.Enabled = Ativa; //Habilita - Desabilita o campo localidade
             txtUf.Enabled = Ativa; //Habilita - Desabilita o campo uf
             mskTelefone.Enabled = Ativa; //Habilita - Desabilita o campo telefone
+            cboSexo.Enabled = Ativa; //Habilita - Desabilita o campo sexo
+            mskNascimento.Enabled = Ativa; //Habilita - Desabilita o campo data de nascimento
+            cboConvenio.Enabled = Ativa; //Habilita - Desabilita o campo convênio
+            cboIndPrinc.Enabled = Ativa; //Habilita - Desabilita o campo indicação principal
+            cboIndSec.Enabled = Ativa; //Habilita - Desabilita o campo indicação secundária
+            cboMedico.Enabled = Ativa; //Habilita - Desabilita o campo médico
+            cboBeneficente.Enabled = Ativa; //Habilita - Desabilita o campo beneficiário
+            txtObs.Enabled = Ativa; //Habilita - Desabilita o campo observação
 
             //Habilita - Desabilita Especialização
             cboFolha.Enabled = Ativa; //Habilita - Desabilita o campo especialização consultório
@@ -287,11 +311,14 @@ namespace WEDLC.Forms
             carregaInidcacao1();
             carregaInidcacao2();
             carregaMedico();
+            carregaSimNao();
             carregaFolha();
         }
 
         public void carregaSexo()
         {
+            cboSexo.BeginUpdate(); // Desabilita redesenho durante carregamento
+
             //Carrega o combo de tipo de folha
             cboSexo.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboSexo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
@@ -307,10 +334,14 @@ namespace WEDLC.Forms
             cboSexo.DataSource = dtSexo;
             cboSexo.ValueMember = "idsexo";
             cboSexo.DisplayMember = "descricao";
+
+            cboSexo.EndUpdate(); // Reabilita redesenho
         }
 
         public void carregaConvenio()
         {
+            cboConvenio.BeginUpdate(); // Desabilita redesenho durante carregamento
+
             //Carrega o combo de tipo de folha
             cboConvenio.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboConvenio.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
@@ -328,10 +359,14 @@ namespace WEDLC.Forms
             cboConvenio.DataSource = dtConvenio;
             cboConvenio.ValueMember = "idconvenio";
             cboConvenio.DisplayMember = "nome";
+
+            cboConvenio.EndUpdate(); // Reabilita redesenho
         }
 
         public void carregaInidcacao1()
         {
+            cboIndPrinc.BeginUpdate(); // Desabilita redesenho durante carregamento
+
             //Carrega o combo de tipo de folha
             cboIndPrinc.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboIndPrinc.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
@@ -351,10 +386,14 @@ namespace WEDLC.Forms
             cboIndPrinc.DataSource = dtIndicacao;
             cboIndPrinc.ValueMember = "idindicacao";
             cboIndPrinc.DisplayMember = "nome";
+
+            cboIndPrinc.EndUpdate(); // Reabilita redesenho
         }
 
         public void carregaInidcacao2()
         {
+            cboIndSec.BeginUpdate(); // Desabilita redesenho durante carregamento 
+
             //Carrega o combo de tipo de folha
             cboIndSec.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboIndSec.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
@@ -374,16 +413,21 @@ namespace WEDLC.Forms
             cboIndSec.DataSource = dtIndicacao;
             cboIndSec.ValueMember = "idindicacao";
             cboIndSec.DisplayMember = "nome";
+
+            cboIndSec.EndUpdate(); // Reabilita redesenho
         }
         public void carregaMedico()
         {
+
+            cboMedico.BeginUpdate(); // Desabilita redesenho durante carregamento
+
             //Carrega o combo de tipo de folha
             cboMedico.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboMedico.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
 
             cPaciente objcPaciente = new cPaciente();
             objcPaciente.Medico.TipoPesquisa = 3;  // Pesquisa o médico sem where
-            objcPaciente.Medico.IdMedico = 0; 
+            objcPaciente.Medico.IdMedico = 0;
             objcPaciente.Medico.Nome = string.Empty; // 
 
             DataTable dtMedico = objcPaciente.Medico.buscaMedico();
@@ -396,17 +440,18 @@ namespace WEDLC.Forms
             cboMedico.DataSource = dtMedico;
             cboMedico.ValueMember = "idmedico";
             cboMedico.DisplayMember = "nome";
+
+            cboMedico.EndUpdate(); // Reabilita redesenho
         }
         public void carregaSimNao()
         {
+            cboBeneficente.BeginUpdate(); // Desabilita redesenho durante carregamento
+
             //Carrega o combo de tipo de folha
             cboBeneficente.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboBeneficente.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
 
             cPaciente objcPaciente = new cPaciente();
-            objcPaciente.Medico.TipoPesquisa = 0;  // Pesquisa buscando sigla + nome concatenado
-            objcPaciente.Medico.IdMedico = 0; // ID 0 para buscar todos os convênios'
-            objcPaciente.Medico.Nome = string.Empty; // Nome vazio para buscar todos os convênios    
 
             DataTable dtSimNao = objcPaciente.SimNao.buscaSimNao();
             DataRow newRow = dtSimNao.NewRow();
@@ -416,12 +461,16 @@ namespace WEDLC.Forms
             dtSimNao.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
 
             cboBeneficente.DataSource = dtSimNao;
-            cboBeneficente.ValueMember = "idsimnao";          
+            cboBeneficente.ValueMember = "idsimnao";
             cboBeneficente.DisplayMember = "descricao";
+
+            cboBeneficente.EndUpdate(); // Reabilita redesenho
         }
 
         public void carregaFolha()
         {
+            cboFolha.BeginUpdate(); // Desabilita redesenho durante carregamento
+
             //Carrega o combo de tipo de folha
             cboFolha.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboFolha.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
@@ -437,6 +486,169 @@ namespace WEDLC.Forms
             cboFolha.DataSource = dtFolha;
             cboFolha.ValueMember = "idfolha";
             cboFolha.DisplayMember = "nome";
+
+            cboFolha.EndUpdate(); // Reabilita redesenho
+        }
+
+        private void txtCodigoProntuario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void txtCodigoProntuario_KeyUp(object sender, KeyEventArgs e)
+        {
+            //Determina a acao
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            {
+                int tipopesquisa = 0; //Pesquisa pelo código   
+                int idpaciente = 0; //Código do paciente
+
+                //Limpa campos
+                txtNome.Text = string.Empty;
+
+                // Verifica a quantidade de caracteres
+                if (txtCodigoProntuario.Text.Length > 0)
+                {
+                    tipopesquisa = 0;
+                    idpaciente = int.Parse(txtCodigoProntuario.Text);
+
+                    this.populaGridDados(tipopesquisa, idpaciente, "");
+                    this.configuraGridDados();
+
+                }
+            }
+        }
+
+        private void populaGridDados(int tipopesquisa, Int32 idpaciente, string nome)
+        {
+            try
+            {
+                DataTable dt = this.buscaPaciente(tipopesquisa, idpaciente, nome);
+
+                grdDadosPessoais.DataSource = null;
+
+                //Renomeia as colunas do datatable
+                dt.Columns["idpaciente"].ColumnName = "Código";
+                dt.Columns["nome"].ColumnName = "Nome";
+                dt.Columns["cep"].ColumnName = "CEP";
+                dt.Columns["logradouro"].ColumnName = "Logradouro";
+                dt.Columns["complemento"].ColumnName = "Complemento";
+                dt.Columns["bairro"].ColumnName = "Bairro";
+                dt.Columns["localidade"].ColumnName = "Localidade";
+                dt.Columns["uf"].ColumnName = "UF";
+                dt.Columns["telefone"].ColumnName = "Telefone";
+                dt.Columns["idsexo"].ColumnName = "IdSexo";
+                dt.Columns["nascimento"].ColumnName = "Nascimento";
+                dt.Columns["idconvenio"].ColumnName = "IdConvenio";
+                dt.Columns["idindicacao1"].ColumnName = "IdIndicacao1";
+                dt.Columns["idindicacao2"].ColumnName = "IdIndicacao2";
+                dt.Columns["idmedico"].ColumnName = "IdMedico";
+                dt.Columns["idsimnao"].ColumnName = "IdSimNao";
+                dt.Columns["datacadastro"].ColumnName = "DataCadastro";
+                dt.Columns["observacao"].ColumnName = "Observacao";
+
+                grdDadosPessoais.SuspendLayout();
+                grdDadosPessoais.DataSource = dt;
+                grdDadosPessoais.ResumeLayout();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar populaGrid!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void configuraGridDados()
+        {
+            try
+            {
+                // Ajustando o tamanho das colunas e ocultando as que não são necessárias
+                grdDadosPessoais.Columns[0].Width = 80; //ID
+                grdDadosPessoais.Columns[1].Width = 350; //Nome
+                grdDadosPessoais.Columns[8].Width = 100; //Telefone
+
+                // Oculta ou exibe as colunas que não são necessárias
+                grdDadosPessoais.Columns[2].Visible = false; //Cep
+                grdDadosPessoais.Columns[3].Visible = false; //Logradouro
+                grdDadosPessoais.Columns[4].Visible = false; //Complemento
+                grdDadosPessoais.Columns[5].Visible = false; //Bairro
+                grdDadosPessoais.Columns[6].Visible = false; //Localidade
+                grdDadosPessoais.Columns[7].Visible = false; //Uf
+                grdDadosPessoais.Columns[8].Visible = true; //Telefone
+                grdDadosPessoais.Columns[9].Visible = false; //IdSexo
+                grdDadosPessoais.Columns[10].Visible = false; //Nascimento
+                grdDadosPessoais.Columns[11].Visible = false; //IdConvenio
+                grdDadosPessoais.Columns[12].Visible = false; //IdIndicacao1
+                grdDadosPessoais.Columns[13].Visible = false; //IdIndicacao2
+                grdDadosPessoais.Columns[14].Visible = false; //IdMedico
+                grdDadosPessoais.Columns[15].Visible = false; //IdSimNao
+                grdDadosPessoais.Columns[16].Visible = false; //DataCadastro
+                grdDadosPessoais.Columns[17].Visible = false; //Obs
+
+                // Desabilita a edição da coluna
+                grdDadosPessoais.Columns[0].ReadOnly = true;
+                grdDadosPessoais.Columns[1].ReadOnly = true;
+
+                // Configurando outras propriedades
+                grdDadosPessoais.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
+                grdDadosPessoais.MultiSelect = false; // Impede seleção múltipla
+                grdDadosPessoais.AllowUserToAddRows = false; // Impede adição de novas linhas
+                grdDadosPessoais.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
+                grdDadosPessoais.CurrentCell = null; // Desmarca a célula atual
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar configurar o grid de dados!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+        }
+
+        private DataTable buscaPaciente(int tipopesquisa, Int32 idpaciente, string nome)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cPaciente objcPaciente = new cPaciente();
+
+                objcPaciente.TipoPesquisa = tipopesquisa; //Tipo de pesquisa
+                objcPaciente.IdPaciente = idpaciente; //Código da especialização
+                objcPaciente.Nome = nome; //Nome da especialização
+
+                dtAux = objcPaciente.buscaPaciente();
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar buscar o paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private void txtNome_KeyUp(object sender, KeyEventArgs e)
+        {
+            int tipopesquisa = 1; //Código que pesquisa pelo nome
+            string nome = string.Empty; //Nome da especialização
+
+            //Determina a acao
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            {
+                //Limpa campos
+                txtCodigoProntuario.Text = string.Empty;
+                txtNome.Text = string.Empty;
+
+                nome = txtNome.Text;
+
+                this.populaGridDados(tipopesquisa, 0, nome);
+                this.configuraGridDados();
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ namespace WEDLC.Banco
             }
         }
 
-        public DataTable buscaIndicacao()
+        public DataTable buscaPaciente()
         {
             // Validação básica dos parâmetros
             if (TipoPesquisa < 0)
@@ -64,7 +64,7 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var sqlDa = new MySqlDataAdapter("pr_buscaindicacao", conexao))
+                using (var sqlDa = new MySqlDataAdapter("pr_buscapaciente", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", TipoPesquisa);
@@ -78,7 +78,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro na busca do indicacao: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro na busca do paciente: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
