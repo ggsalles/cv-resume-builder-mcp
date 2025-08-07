@@ -54,7 +54,7 @@ namespace WEDLC.Banco
             if (TipoPesquisa < 0)
                 return null;
 
-            if (TipoPesquisa == 1 && IdPaciente<= 0)
+            if (TipoPesquisa == 1 && IdPaciente< 0)
                 return null;
 
             if (!conectaBanco())
@@ -93,20 +93,21 @@ namespace WEDLC.Banco
             }
         }
 
-        public bool incluiIndicacao()
+        public bool incluiPacienteFolha()
         {
             if (!conectaBanco())
                 return false;
-
+             
             try
             {
-                using (var command = new MySqlCommand("pr_incluiindicacao", conexao))
+                using (var command = new MySqlCommand("pr_incluipacientefolha", conexao))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddRange(new MySqlParameter[]
                     {
-                new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = Nome ?? string.Empty },
+                new MySqlParameter("pNome", MySqlDbType.Int32) { Value = IdPaciente },
+                new MySqlParameter("pNome", MySqlDbType.Int32) { Value = Folha.IdFolha }
                     });
 
                     int rowsAffected = command.ExecuteNonQuery();
@@ -116,7 +117,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro ao incluir indicacao: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro ao incluir paciente folha: {ex.Message}");
                 return false;
             }
             catch (Exception ex)
@@ -167,6 +168,45 @@ namespace WEDLC.Banco
                 MessageBox.Show($"Erro ao atualizar: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 conexao?.Close();
                 return false;
+            }
+        }
+
+        public DataTable buscaPacienteFolha()
+        {
+            // Validação básica dos parâmetros
+            if (IdPaciente <= 0)
+                return null;
+
+            if (!conectaBanco())
+                return null;
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (var sqlDa = new MySqlDataAdapter("pr_buscapacientefolha", conexao))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
+                    sqlDa.Fill(dt);
+                    return dt;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Log específico para diagnóstico
+                System.Diagnostics.Debug.WriteLine($"Erro na busca do paciente: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                // Log para outros erros
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                conexao?.Close();
             }
         }
     }

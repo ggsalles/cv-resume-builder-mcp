@@ -209,6 +209,7 @@
             this.grdFolha.Name = "grdFolha";
             this.grdFolha.Size = new System.Drawing.Size(1149, 123);
             this.grdFolha.TabIndex = 10;
+            this.grdFolha.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdFolha_CellClick);
             // 
             // txtDataCadastro
             // 
@@ -216,7 +217,7 @@
             this.txtDataCadastro.Location = new System.Drawing.Point(657, 323);
             this.txtDataCadastro.MaxLength = 8;
             this.txtDataCadastro.Name = "txtDataCadastro";
-            this.txtDataCadastro.Size = new System.Drawing.Size(103, 20);
+            this.txtDataCadastro.Size = new System.Drawing.Size(155, 20);
             this.txtDataCadastro.TabIndex = 17;
             // 
             // label15
@@ -252,6 +253,7 @@
             this.cboFolha.Name = "cboFolha";
             this.cboFolha.Size = new System.Drawing.Size(489, 21);
             this.cboFolha.TabIndex = 18;
+            this.cboFolha.Validating += new System.ComponentModel.CancelEventHandler(this.cboFolha_Validating);
             // 
             // label13
             // 
@@ -271,6 +273,7 @@
             this.btnExcluiFolha.Size = new System.Drawing.Size(27, 24);
             this.btnExcluiFolha.TabIndex = 20;
             this.btnExcluiFolha.UseVisualStyleBackColor = true;
+            this.btnExcluiFolha.Click += new System.EventHandler(this.btnExcluiFolha_Click);
             // 
             // cboMedico
             // 
@@ -289,6 +292,7 @@
             this.btnIncluiFolha.Size = new System.Drawing.Size(27, 24);
             this.btnIncluiFolha.TabIndex = 19;
             this.btnIncluiFolha.UseVisualStyleBackColor = true;
+            this.btnIncluiFolha.Click += new System.EventHandler(this.btnIncluiFolha_Click);
             // 
             // label4
             // 
