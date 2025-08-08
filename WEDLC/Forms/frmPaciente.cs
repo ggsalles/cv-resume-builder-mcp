@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Globalization;
@@ -185,7 +186,7 @@ namespace WEDLC.Forms
                     txtUf.Text = row.Cells[7].Value.ToString();
                     mskTelefone.Text = row.Cells[8].Value.ToString();
                     cboSexo.SelectedValue = row.Cells[9].Value.ToString();
-                    mskNascimento.Text = row.Cells[10].Value != null ? DateTime.ParseExact(row.Cells[10].Value.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy");
+                    mskNascimento.Text = DateTime.Parse(row.Cells[10].Value.ToString()).ToString("dd/MM/yyyy");
                     cboConvenio.SelectedValue = row.Cells[11].Value.ToString();
                     cboIndPrinc.SelectedValue = row.Cells[12].Value.ToString();
                     cboIndSec.SelectedValue = row.Cells[13].Value.ToString();
@@ -195,10 +196,12 @@ namespace WEDLC.Forms
                     txtObs.Text = row.Cells[17].Value != null ? row.Cells[17].Value.ToString() : string.Empty;
                     cboFolha.SelectedIndex = 0; // Reseta o combo de especialização consultório
 
-                    if (buscaDadosPacienteFolha()==false)
+                    if (buscaDadosPacienteFolha() == false)
                     {
                         return;
                     }
+
+                    txtNome.Focus(); //Foca no campo nome
 
                     //Determina a acao
                     cAcao = Acao.UPDATE;
@@ -309,8 +312,11 @@ namespace WEDLC.Forms
             txtCodigoProntuario.Enabled = false; //Desabilita o campo código
             grdDadosPessoais.Enabled = false; //Desabilita o grid de dados
             grdDadosPessoais.DataSource = null;
-            //populaGridMedicoEspecialidade(0); // Cria a estrutura do grid de especialização consultório
-            //CarregaComboEspecialidadeMedico(); //Carrega o combo de especialização consultório
+
+            if (buscaDadosPacienteFolha() == false)
+            {
+                return;
+            }
             txtNome.Focus(); //Foca no campo nome
         }
 
@@ -696,8 +702,14 @@ namespace WEDLC.Forms
         {
             try
             {
-                //Busca os dados do paciente folha
-                int idpaciente = int.Parse(txtCodigoProntuario.Text);
+                int idpaciente = 0;
+            
+                if (txtCodigoProntuario.Text.ToString().Trim().Length > 0)
+                {
+                    //Busca os dados do paciente folha
+                    idpaciente = int.Parse(txtCodigoProntuario.Text);
+                }
+
                 dtGrdPacienteFolha = new DataTable();
                 dtGrdPacienteFolha = this.buscaPacienteFolha(idpaciente);
 
@@ -907,6 +919,178 @@ namespace WEDLC.Forms
                 MessageBox.Show("Erro ao selecionar uma folha para excluir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void btnGravar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Valida os campos
+                if (ValidaCampos() == false)
+                {
+                    return; // Se não for válido, sai do método
+                }
+                cPaciente objcPaciente = new cPaciente();
+                //Se for novo paciente
+                if (cAcao == Acao.INSERT)
+                {
+                    // sequence
+                    Int32 sequence = 0;
+
+                    //Preenche os dados do paciente
+                    if (PreencheDadosPaciente(objcPaciente) == false)
+                    {
+                        return; // Se não for possível preencher os dados, sai do método
+                    }
+
+                    //Grava o paciente
+                    if (objcPaciente.incluiPaciente(out sequence)    == true)
+                    {
+                        foreach (DataRow row in dtGrdPacienteFolha.Rows)
+                        {
+                            // Acessar os valores das colunas
+                            objcPaciente.IdPaciente = sequence;
+                            objcPaciente.Folha.IdFolha = Convert.ToInt32(row["idfolha"]);
+
+                            // Inclui a folha do paciente
+                            if (objcPaciente.incluiPacienteFolha() == false)
+                            {
+                                MessageBox.Show("Erro ao tentar incluir a folha do paciente!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+
+                        MessageBox.Show("Inclusão efetuada com sucesso!. Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                        return;
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                //Se for atualização de paciente
+                if (cAcao == Acao.UPDATE)
+                {
+
+                    //Preenche os dados do paciente
+                    if (PreencheDadosPaciente(objcPaciente) == false)
+                    {
+                        return; // Se não for possível preencher os dados, sai do método
+                    }
+
+                    // limpa o contador
+                    int contador = 0;
+
+                    foreach (DataRow row in dtGrdPacienteFolha.Rows)
+                    {
+
+                        // Acessar os valores das colunas
+                        objcPaciente.IdPaciente = int.Parse(row["idpaciente"].ToString());
+                        objcPaciente.IdFolha = int.Parse(row["idfolha"].ToString());
+
+                        //Se for a primeira linha do loop da folha, o sistema entende que é necesseário apagar a tabela de especializacao do medico
+                        if (contador == 0)
+                        {
+                            objcPaciente.Apaga = true;
+                        }
+                        //Se não... apagar não é necessário
+                        else
+                        {
+                            objcPaciente.Apaga = false;
+                        }
+                        // Atualiza a especialização do médico
+                        if (objcPaciente.atualizaPaciente() == true)
+                        {
+                            //incrementa contador
+                            contador++;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Erro ao tentar atualizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+
+                    MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao tentar gravar o paciente: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool ValidaCampos()
+        {
+            //Valida os campos obrigatórios
+            if (string.IsNullOrEmpty(txtNome.Text))
+            {
+                MessageBox.Show("O campo Nome é obrigatório!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNome.Focus();
+                return false;
+            }
+            if (cboSexo.SelectedIndex == 0)
+            {
+                MessageBox.Show("Selecione o Sexo do paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboSexo.Focus();
+                return false;
+            }
+            if (string.IsNullOrEmpty(mskNascimento.Text))
+            {
+                MessageBox.Show("O campo Nascimento é obrigatório!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCep.Focus();
+                return false;
+            }
+
+            //Se chegou aqui, todos os campos obrigatórios estão preenchidos
+            return true;
+        }
+
+        private bool PreencheDadosPaciente(cPaciente objcPaciente)
+        {
+            try
+            {
+                //Preenche os dados do paciente
+                if (string.IsNullOrWhiteSpace(txtCodigoProntuario.Text))
+                {
+                    objcPaciente.IdPaciente = 0;
+                }
+                else
+                {
+                    objcPaciente.IdPaciente = int.Parse(txtCodigoProntuario.Text);
+                }
+                objcPaciente.Nome = txtNome.Text.ToUpper();
+                objcPaciente.Cep = txtCep.Text.ToString();
+                objcPaciente.Logradouro = txtLogradouro.Text.ToUpper();
+                objcPaciente.Complemento = txtComplemento.Text.ToUpper();
+                objcPaciente.Bairro = txtBairro.Text.ToUpper();
+                objcPaciente.Localidade = txtLocalidade.Text.ToUpper();
+                objcPaciente.Uf = txtUf.Text.ToUpper();
+                objcPaciente.Telefone = mskTelefone.Text;
+                objcPaciente.IdSexo = int.Parse(cboSexo.SelectedValue.ToString());
+                objcPaciente.DataNascimento = mskNascimento.Text;
+                objcPaciente.IdConvenio = int.Parse(cboConvenio.SelectedValue.ToString());
+                objcPaciente.IdIndicacao1 = int.Parse(cboIndPrinc.SelectedValue.ToString());
+                objcPaciente.IdIndicacao2 = int.Parse(cboIndSec.SelectedValue.ToString());
+                objcPaciente.IdMedico = int.Parse(cboMedico.SelectedValue.ToString());
+                objcPaciente.IdSimNao = int.Parse(cboBeneficente.SelectedValue.ToString());
+                objcPaciente.Observacao = txtObs.Text.ToUpper();
+
+                return true; // Retorna verdadeiro se os dados foram preenchidos corretamente
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar preencher os dados do paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Retorna falso se houve erro ao preencher os dados
+            }
+
         }
     }
 }

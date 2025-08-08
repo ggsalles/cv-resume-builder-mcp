@@ -762,7 +762,7 @@ namespace WEDLC.Forms
                     }
 
                     // sequence
-                    int sequence = 0;
+                    Int32 sequence = 0;
 
                     // Atualiza a especialização do médico
                     if (objMedico.incluiMedico(objMedico, out sequence) == true)
