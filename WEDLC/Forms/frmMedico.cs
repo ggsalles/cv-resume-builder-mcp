@@ -246,7 +246,7 @@ namespace WEDLC.Forms
                     nome = "!@#$%"; // Se não houver nome, define tipopesquisa como 0 para retornar não retornar ninguém
                 }
 
-                this.populaGridDados(tipopesquisa, 0, nome);
+                this.populaGridDados(tipopesquisa, 0, null, nome);
             }
         }
 
@@ -282,7 +282,7 @@ namespace WEDLC.Forms
                     tipopesquisa = 1;
                     idmedico = 0; // Se não houver código, define tipopesquisa como 0 para retornar não retornar ninguém
                 }
-                this.populaGridDados(tipopesquisa, idmedico, null);
+                this.populaGridDados(tipopesquisa, idmedico, null, null);
             }
         }
 
@@ -296,17 +296,18 @@ namespace WEDLC.Forms
             }
         }
 
-        private void populaGridDados(int tipopesquisa, int idmedico, string nome)
+        private void populaGridDados(int tipopesquisa, int idmedico, string sigla, string nome)
         {
             try
             {
                 DataTable dt = new DataTable();
-                dt = this.buscaMedico(tipopesquisa, idmedico, nome);
+                dt = this.buscaMedico(tipopesquisa, idmedico, sigla, nome);
 
                 grdDadosPessoais.DataSource = null;
 
                 //Renomeia as colunas do datatable
                 dt.Columns["idmedico"].ColumnName = "Código";
+                dt.Columns["sigla"].ColumnName = "Sigla";
                 dt.Columns["nome"].ColumnName = "Nome";
                 dt.Columns["cep"].ColumnName = "CEP";
                 dt.Columns["logradouro"].ColumnName = "Logradouro";
@@ -330,13 +331,14 @@ namespace WEDLC.Forms
             }
         }
 
-        private DataTable buscaMedico(int tipopesquisa, int idmedico, string nome)
+        private DataTable buscaMedico(int tipopesquisa, int idmedico, string sigla, string nome)
         {
             try
             {
                 DataTable dtAux = new DataTable();
                 cMedico objMedico = new cMedico();
                 objMedico.IdMedico = idmedico;
+                objMedico.Sigla = sigla;
                 objMedico.Nome = nome;
                 objMedico.TipoPesquisa = tipopesquisa;
 
@@ -379,8 +381,8 @@ namespace WEDLC.Forms
             grdDadosPessoais.Columns[7].ReadOnly = true;
             grdDadosPessoais.Columns[8].ReadOnly = true;
             grdDadosPessoais.Columns[9].ReadOnly = true;
+            grdDadosPessoais.Columns[10].ReadOnly = true;
 
-            grdDadosPessoais.Columns[10].Visible = false;
             grdDadosPessoais.Columns[11].Visible = false;
             grdDadosPessoais.Columns[12].Visible = false;
             grdDadosPessoais.Columns[13].Visible = false;
@@ -389,6 +391,7 @@ namespace WEDLC.Forms
             grdDadosPessoais.Columns[16].Visible = false;
             grdDadosPessoais.Columns[17].Visible = false;
             grdDadosPessoais.Columns[18].Visible = false;
+            grdDadosPessoais.Columns[19].Visible = false;
             grdDadosPessoais.Columns[19].Visible = false;
 
             // Configurando outras propriedades
@@ -442,6 +445,7 @@ namespace WEDLC.Forms
         {
             //Limpa os campos
             txtCodigoMedico.Text = string.Empty;
+            txtSigla.Text = string.Empty;
             txtNome.Text = string.Empty;
             txtCep.Text = string.Empty;
             txtLogradouro.Text = string.Empty;
@@ -515,27 +519,28 @@ namespace WEDLC.Forms
 
                     //Preenche os campos com os dados da linha selecionada
                     txtCodigoMedico.Text = row.Cells[0].Value.ToString();
-                    txtNome.Text = row.Cells[1].Value.ToString();
-                    txtCep.Text = row.Cells[2].Value.ToString();
-                    txtLogradouro.Text = row.Cells[3].Value.ToString();
-                    txtComplemento.Text = row.Cells[4].Value.ToString();
-                    txtBairro.Text = row.Cells[5].Value.ToString();
-                    txtLocalidade.Text = row.Cells[6].Value.ToString();
-                    txtUf.Text = row.Cells[7].Value.ToString();
-                    txtPais.Text = row.Cells[8].Value.ToString();
-                    mskTelefone.Text = row.Cells[9].Value.ToString();
+                    txtSigla.Text = row.Cells[1].Value.ToString();  
+                    txtNome.Text = row.Cells[2].Value.ToString();
+                    txtCep.Text = row.Cells[3].Value.ToString();
+                    txtLogradouro.Text = row.Cells[4].Value.ToString();
+                    txtComplemento.Text = row.Cells[5].Value.ToString();
+                    txtBairro.Text = row.Cells[6].Value.ToString();
+                    txtLocalidade.Text = row.Cells[7].Value.ToString();
+                    txtUf.Text = row.Cells[8].Value.ToString();
+                    txtPais.Text = row.Cells[9].Value.ToString();
+                    mskTelefone.Text = row.Cells[10].Value.ToString();
 
                     // Preenche os campos do consultório
-                    txtConsultorio.Text = row.Cells[10].Value.ToString();
-                    txtCepConsultorio.Text = row.Cells[11].Value.ToString();
-                    txtLogradouroConsultorio.Text = row.Cells[12].Value.ToString();
-                    txtComplementoConsultorio.Text = row.Cells[13].Value.ToString();
-                    txtBairroConsultorio.Text = row.Cells[14].Value.ToString();
-                    txtLocalidadeConsultorio.Text = row.Cells[15].Value.ToString();
-                    txtUfConsultorio.Text = row.Cells[16].Value.ToString();
-                    mskTelefoneConsultorio.Text = row.Cells[17].Value.ToString();
-                    cboClasseConsultorio.SelectedValue = row.Cells[18].Value.ToString();
-                    decimal valor = decimal.Parse(row.Cells[19].Value.ToString());
+                    txtConsultorio.Text = row.Cells[11].Value.ToString();
+                    txtCepConsultorio.Text = row.Cells[12].Value.ToString();
+                    txtLogradouroConsultorio.Text = row.Cells[13].Value.ToString();
+                    txtComplementoConsultorio.Text = row.Cells[14].Value.ToString();
+                    txtBairroConsultorio.Text = row.Cells[15].Value.ToString();
+                    txtLocalidadeConsultorio.Text = row.Cells[16].Value.ToString();
+                    txtUfConsultorio.Text = row.Cells[17].Value.ToString();
+                    mskTelefoneConsultorio.Text = row.Cells[18].Value.ToString();
+                    cboClasseConsultorio.SelectedValue = row.Cells[19].Value.ToString();
+                    decimal valor = decimal.Parse(row.Cells[20].Value.ToString());
                     txtMediaConsultorio.Text = valor.ToString("N2", CultureInfo.GetCultureInfo("pt-BR"));
 
                     // Popular grid de especializações
@@ -848,6 +853,13 @@ namespace WEDLC.Forms
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(txtSigla.Text))
+                {
+                    MessageBox.Show("O campo Sigla é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSigla.Focus();
+                    return false;
+                }
+
                 if (string.IsNullOrWhiteSpace(txtNome.Text))
                 {
                     MessageBox.Show("O campo Nome é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1035,7 +1047,7 @@ namespace WEDLC.Forms
                 {
                     objMedico.IdMedico = 0; //Se for insert ainda não tem o id do médico
                 }
-
+                objMedico.Sigla = txtSigla.Text.ToUpper();
                 objMedico.Nome = txtNome.Text;
                 objMedico.Cep = txtCep.Text;
                 objMedico.Logradouro = txtLogradouro.Text;
@@ -1080,7 +1092,35 @@ namespace WEDLC.Forms
             grdDadosPessoais.DataSource = null;
             populaGridMedicoEspecialidade(0); // Cria a estrutura do grid de especialização consultório
             CarregaComboEspecialidadeMedico(); //Carrega o combo de especialização consultório
-            txtNome.Focus(); //Foca no campo nome
+            txtSigla.Focus(); //Foca no campo nome
+        }
+
+        private void txtSigla_KeyUp(object sender, KeyEventArgs e)
+        {
+            int tipopesquisa = 2; //Código que pesquisa pelo nome  
+            string sigla = string.Empty; //Código da especialização
+
+            //Determina a acao
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            {
+
+                //Limpa campo
+                txtCodigoMedico.Text = string.Empty;
+                txtNome.Text = string.Empty;
+
+                if (txtSigla.Text.Length > 0)
+                {
+                    tipopesquisa = 4;
+                    sigla = txtSigla.Text;
+                }
+                else
+                {
+                    tipopesquisa = 4;
+                    sigla = "!@#$%"; // Se não houver nome, define tipopesquisa como 0 para retornar não retornar ninguém
+                }
+
+                this.populaGridDados(tipopesquisa, 0, sigla, null);
+            }
         }
     }
 }

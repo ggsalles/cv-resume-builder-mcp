@@ -15,6 +15,7 @@ namespace WEDLC.Banco
         public bool Apaga { get; set; }
         public int TipoPesquisa { get; set; }
         public Int32 IdMedico { get; set; }
+        public string Sigla { get; set; }
         public string Nome { get; set; }
         public string Cep { get; set; }
         public string Logradouro { get; set; }
@@ -80,6 +81,7 @@ namespace WEDLC.Banco
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", TipoPesquisa);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdMedico", IdMedico);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", Sigla);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pNome", Nome);
 
                     DataTable dt = new DataTable();
@@ -254,6 +256,7 @@ namespace WEDLC.Banco
                     {
                 new MySqlParameter("pApaga", MySqlDbType.Byte) { Value = Apaga },
                 new MySqlParameter("pIdMedico", MySqlDbType.Int32) { Value = IdMedico},
+                new MySqlParameter("pIdSigla", MySqlDbType.VarChar) { Value = Sigla},
                 new MySqlParameter("pNome", MySqlDbType.VarChar) { Value = Nome },
                 new MySqlParameter("pCep", MySqlDbType.VarChar) { Value = Cep },
                 new MySqlParameter("pLogradouro", MySqlDbType.VarChar) { Value = Logradouro },
@@ -311,6 +314,7 @@ namespace WEDLC.Banco
                     command.CommandType = CommandType.StoredProcedure;
 
                     // Parâmetros de entrada
+                    command.Parameters.AddWithValue("pSigla", pMedico.Sigla);
                     command.Parameters.AddWithValue("pNome", pMedico.Nome);
                     command.Parameters.AddWithValue("pCep", pMedico.Cep);
                     command.Parameters.AddWithValue("pLogradouro", pMedico.Logradouro);

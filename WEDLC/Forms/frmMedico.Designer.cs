@@ -82,6 +82,8 @@
             this.label17 = new System.Windows.Forms.Label();
             this.txtConsultorio = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.txtSigla = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.grpPaciente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDadosPessoais)).BeginInit();
             this.grpBotoes.SuspendLayout();
@@ -91,6 +93,8 @@
             // 
             // grpPaciente
             // 
+            this.grpPaciente.Controls.Add(this.txtSigla);
+            this.grpPaciente.Controls.Add(this.label19);
             this.grpPaciente.Controls.Add(this.grdDadosPessoais);
             this.grpPaciente.Controls.Add(this.txtPais);
             this.grpPaciente.Controls.Add(this.label2);
@@ -131,7 +135,7 @@
             // txtPais
             // 
             this.txtPais.Enabled = false;
-            this.txtPais.Location = new System.Drawing.Point(458, 79);
+            this.txtPais.Location = new System.Drawing.Point(483, 79);
             this.txtPais.MaxLength = 20;
             this.txtPais.Name = "txtPais";
             this.txtPais.Size = new System.Drawing.Size(300, 20);
@@ -140,7 +144,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(458, 63);
+            this.label2.Location = new System.Drawing.Point(483, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 33;
@@ -149,7 +153,7 @@
             // mskTelefone
             // 
             this.mskTelefone.Enabled = false;
-            this.mskTelefone.Location = new System.Drawing.Point(764, 79);
+            this.mskTelefone.Location = new System.Drawing.Point(789, 79);
             this.mskTelefone.Mask = "(99) 00000-0000";
             this.mskTelefone.Name = "mskTelefone";
             this.mskTelefone.Size = new System.Drawing.Size(103, 20);
@@ -158,7 +162,7 @@
             // txtLocalidade
             // 
             this.txtLocalidade.Enabled = false;
-            this.txtLocalidade.Location = new System.Drawing.Point(153, 79);
+            this.txtLocalidade.Location = new System.Drawing.Point(178, 79);
             this.txtLocalidade.MaxLength = 20;
             this.txtLocalidade.Name = "txtLocalidade";
             this.txtLocalidade.Size = new System.Drawing.Size(216, 20);
@@ -167,7 +171,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(150, 63);
+            this.label16.Location = new System.Drawing.Point(175, 63);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 13);
             this.label16.TabIndex = 31;
@@ -176,7 +180,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(761, 62);
+            this.label9.Location = new System.Drawing.Point(786, 62);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 13);
             this.label9.TabIndex = 17;
@@ -185,7 +189,7 @@
             // txtUf
             // 
             this.txtUf.Enabled = false;
-            this.txtUf.Location = new System.Drawing.Point(375, 79);
+            this.txtUf.Location = new System.Drawing.Point(400, 79);
             this.txtUf.MaxLength = 2;
             this.txtUf.Name = "txtUf";
             this.txtUf.Size = new System.Drawing.Size(77, 20);
@@ -194,7 +198,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(375, 63);
+            this.label8.Location = new System.Drawing.Point(400, 63);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(21, 13);
             this.label8.TabIndex = 15;
@@ -206,7 +210,7 @@
             this.txtBairro.Location = new System.Drawing.Point(6, 79);
             this.txtBairro.MaxLength = 20;
             this.txtBairro.Name = "txtBairro";
-            this.txtBairro.Size = new System.Drawing.Size(141, 20);
+            this.txtBairro.Size = new System.Drawing.Size(165, 20);
             this.txtBairro.TabIndex = 6;
             // 
             // label7
@@ -257,10 +261,10 @@
             // txtCep
             // 
             this.txtCep.Enabled = false;
-            this.txtCep.Location = new System.Drawing.Point(458, 35);
+            this.txtCep.Location = new System.Drawing.Point(483, 35);
             this.txtCep.MaxLength = 8;
             this.txtCep.Name = "txtCep";
-            this.txtCep.Size = new System.Drawing.Size(103, 20);
+            this.txtCep.Size = new System.Drawing.Size(78, 20);
             this.txtCep.TabIndex = 3;
             this.txtCep.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCep_KeyPress);
             this.txtCep.Validating += new System.ComponentModel.CancelEventHandler(this.txtCep_Validating);
@@ -268,7 +272,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(455, 19);
+            this.label1.Location = new System.Drawing.Point(480, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(28, 13);
             this.label1.TabIndex = 3;
@@ -276,17 +280,17 @@
             // 
             // txtNome
             // 
-            this.txtNome.Location = new System.Drawing.Point(115, 35);
+            this.txtNome.Location = new System.Drawing.Point(177, 35);
             this.txtNome.MaxLength = 50;
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(337, 20);
+            this.txtNome.Size = new System.Drawing.Size(300, 20);
             this.txtNome.TabIndex = 2;
             this.txtNome.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNome_KeyUp);
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(112, 19);
+            this.lblNome.Location = new System.Drawing.Point(174, 19);
             this.lblNome.Name = "lblNome";
             this.lblNome.Size = new System.Drawing.Size(35, 13);
             this.lblNome.TabIndex = 2;
@@ -298,7 +302,7 @@
             this.txtCodigoMedico.Location = new System.Drawing.Point(6, 35);
             this.txtCodigoMedico.MaxLength = 10;
             this.txtCodigoMedico.Name = "txtCodigoMedico";
-            this.txtCodigoMedico.Size = new System.Drawing.Size(103, 20);
+            this.txtCodigoMedico.Size = new System.Drawing.Size(81, 20);
             this.txtCodigoMedico.TabIndex = 1;
             this.txtCodigoMedico.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoMedico_KeyPress);
             this.txtCodigoMedico.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCodigoMedico_KeyUp);
@@ -656,6 +660,24 @@
             this.label18.TabIndex = 2;
             this.label18.Text = "Consultório";
             // 
+            // txtSigla
+            // 
+            this.txtSigla.Location = new System.Drawing.Point(93, 35);
+            this.txtSigla.MaxLength = 8;
+            this.txtSigla.Name = "txtSigla";
+            this.txtSigla.Size = new System.Drawing.Size(78, 20);
+            this.txtSigla.TabIndex = 2;
+            this.txtSigla.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSigla_KeyUp);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(90, 19);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(30, 13);
+            this.label19.TabIndex = 35;
+            this.label19.Text = "Sigla";
+            // 
             // frmMedico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -740,5 +762,7 @@
         private System.Windows.Forms.ComboBox cboClasseConsultorio;
         private System.Windows.Forms.TextBox txtMediaConsultorio;
         private System.Windows.Forms.DataGridView grdDadosPessoais;
+        private System.Windows.Forms.TextBox txtSigla;
+        private System.Windows.Forms.Label label19;
     }
 }

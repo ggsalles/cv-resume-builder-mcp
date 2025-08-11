@@ -426,7 +426,7 @@ namespace WEDLC.Forms
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
             //Determina a acao
-            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT && cAcao != Acao.COMPLEMENTO)   
             {
                 int tipopesquisa = 0; //Código que retorna todo select   
                 int idespecializacao = 0; //Código da especialização
@@ -457,7 +457,7 @@ namespace WEDLC.Forms
             string sigla = string.Empty; //Código da especialização
 
             //Determina a acao
-            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT && cAcao != Acao.COMPLEMENTO)
             {
 
                 //Limpa campos
@@ -484,7 +484,7 @@ namespace WEDLC.Forms
             string nome = string.Empty; //Código da especialização
 
             //Determina a acao
-            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT && cAcao != Acao.COMPLEMENTO)
             {
 
                 //Limpa campos
@@ -1199,7 +1199,7 @@ namespace WEDLC.Forms
 
         private void habilitaDesabilitaComplementos()
         {
-            btnComplemento.Enabled = true; // Habilita o botão de complemento
+            btnComplemento.Enabled = false; // Desabilita o botão de complemento
             grpTestesEspeciais.Enabled = false; // Desabilita o grupo de testes especiais
 
             if (cboTipo.SelectedIndex == 1) //ENMG
@@ -1225,7 +1225,7 @@ namespace WEDLC.Forms
                 grpNeuroCondMotora.Enabled = false; // Habilita o grupo de neuro condução motora
                 grpNeuroCondSensorial.Enabled = false; // Habilita o grupo de neuro condução sensorial
                 grpEstudoPotenEvocado.Enabled = true; // Habilita o grupo de estudo potencial
-                btnComplemento.Enabled = false; // Desabilita o botão de complemento, pois não há complementos para este tipo
+                //btnComplemento.Enabled = false; // Desabilita o botão de complemento, pois não há complementos para este tipo
             }
 
         }
