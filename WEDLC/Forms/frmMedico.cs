@@ -69,6 +69,7 @@ namespace WEDLC.Forms
                         txtBairro.Text = dadosXML.Rows[4][0].ToString();
                         txtLocalidade.Text = dadosXML.Rows[5][0].ToString();
                         txtUf.Text = dadosXML.Rows[6][0].ToString();
+                        txtPais.Text = "Brasil"; // Define o país como Brasil
                     }
                     else
                     {
@@ -77,6 +78,7 @@ namespace WEDLC.Forms
                         txtBairro.Text = string.Empty;
                         txtLocalidade.Text = string.Empty;
                         txtUf.Text = string.Empty;
+                        txtPais.Text = string.Empty;
 
                         MessageBox.Show("CEP não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }

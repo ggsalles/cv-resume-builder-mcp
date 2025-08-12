@@ -81,6 +81,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.grdEstudoPotencial = new System.Windows.Forms.DataGridView();
             this.btnComplemento = new System.Windows.Forms.Button();
+            this.txtAguarde = new System.Windows.Forms.TextBox();
             this.grpBoxDados.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDados)).BeginInit();
             this.grpBotoes.SuspendLayout();
@@ -655,12 +656,30 @@
             this.btnComplemento.UseVisualStyleBackColor = true;
             this.btnComplemento.Click += new System.EventHandler(this.btnComplemento_Click);
             // 
+            // txtAguarde
+            // 
+            this.txtAguarde.AcceptsReturn = true;
+            this.txtAguarde.BackColor = System.Drawing.Color.Silver;
+            this.txtAguarde.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtAguarde.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAguarde.ForeColor = System.Drawing.Color.Blue;
+            this.txtAguarde.Location = new System.Drawing.Point(436, 312);
+            this.txtAguarde.MaxLength = 4000;
+            this.txtAguarde.Multiline = true;
+            this.txtAguarde.Name = "txtAguarde";
+            this.txtAguarde.Size = new System.Drawing.Size(318, 24);
+            this.txtAguarde.TabIndex = 25;
+            this.txtAguarde.Text = "Processando...";
+            this.txtAguarde.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtAguarde.Visible = false;
+            // 
             // frmFolha
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1191, 661);
             this.ControlBox = false;
+            this.Controls.Add(this.txtAguarde);
             this.Controls.Add(this.btnComplemento);
             this.Controls.Add(this.grpBotoes);
             this.Controls.Add(this.grpBoxDados);
@@ -696,6 +715,7 @@
             this.grpEstudoPotenEvocado.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdEstudoPotencial)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -754,5 +774,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView grdEstudoPotencial;
         private System.Windows.Forms.Button btnComplemento;
+        private System.Windows.Forms.TextBox txtAguarde;
     }
 }

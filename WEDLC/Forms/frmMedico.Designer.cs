@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.grpPaciente = new System.Windows.Forms.GroupBox();
+            this.txtSigla = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.grdDadosPessoais = new System.Windows.Forms.DataGridView();
             this.txtPais = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -82,8 +84,6 @@
             this.label17 = new System.Windows.Forms.Label();
             this.txtConsultorio = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.txtSigla = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
             this.grpPaciente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDadosPessoais)).BeginInit();
             this.grpBotoes.SuspendLayout();
@@ -123,6 +123,24 @@
             this.grpPaciente.TabStop = false;
             this.grpPaciente.Text = "Dados Pessoais";
             // 
+            // txtSigla
+            // 
+            this.txtSigla.Location = new System.Drawing.Point(93, 35);
+            this.txtSigla.MaxLength = 8;
+            this.txtSigla.Name = "txtSigla";
+            this.txtSigla.Size = new System.Drawing.Size(78, 20);
+            this.txtSigla.TabIndex = 2;
+            this.txtSigla.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSigla_KeyUp);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(90, 19);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(30, 13);
+            this.label19.TabIndex = 35;
+            this.label19.Text = "Sigla";
+            // 
             // grdDadosPessoais
             // 
             this.grdDadosPessoais.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -138,7 +156,7 @@
             this.txtPais.Location = new System.Drawing.Point(483, 79);
             this.txtPais.MaxLength = 20;
             this.txtPais.Name = "txtPais";
-            this.txtPais.Size = new System.Drawing.Size(300, 20);
+            this.txtPais.Size = new System.Drawing.Size(275, 20);
             this.txtPais.TabIndex = 9;
             // 
             // label2
@@ -153,7 +171,7 @@
             // mskTelefone
             // 
             this.mskTelefone.Enabled = false;
-            this.mskTelefone.Location = new System.Drawing.Point(789, 79);
+            this.mskTelefone.Location = new System.Drawing.Point(764, 79);
             this.mskTelefone.Mask = "(99) 00000-0000";
             this.mskTelefone.Name = "mskTelefone";
             this.mskTelefone.Size = new System.Drawing.Size(103, 20);
@@ -180,7 +198,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(786, 62);
+            this.label9.Location = new System.Drawing.Point(761, 62);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 13);
             this.label9.TabIndex = 17;
@@ -659,24 +677,6 @@
             this.label18.Size = new System.Drawing.Size(59, 13);
             this.label18.TabIndex = 2;
             this.label18.Text = "Consultório";
-            // 
-            // txtSigla
-            // 
-            this.txtSigla.Location = new System.Drawing.Point(93, 35);
-            this.txtSigla.MaxLength = 8;
-            this.txtSigla.Name = "txtSigla";
-            this.txtSigla.Size = new System.Drawing.Size(78, 20);
-            this.txtSigla.TabIndex = 2;
-            this.txtSigla.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSigla_KeyUp);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(90, 19);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(30, 13);
-            this.label19.TabIndex = 35;
-            this.label19.Text = "Sigla";
             // 
             // frmMedico
             // 

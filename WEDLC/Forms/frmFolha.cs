@@ -686,6 +686,10 @@ namespace WEDLC.Forms
             {
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                 {
+                    txtAguarde.Visible = true; // Exibe o botão de aguarde
+                    txtAguarde.Text = "Processando...";
+                    txtAguarde.Refresh();
+
                     //Determina a acao
                     cAcao = Acao.UPDATE;
 
@@ -728,10 +732,14 @@ namespace WEDLC.Forms
                 grdDados.Columns[0].ReadOnly = true;
                 grdDados.Columns[1].ReadOnly = true;
                 grdDados.Columns[2].ReadOnly = true;
+
+                txtAguarde.Visible = false; // Oculta o botão de aguarde
+
             }
             catch (Exception)
             {
                 MessageBox.Show("Erro ao selecionar um item na grid dados!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtAguarde.Visible = false; // Oculta o botão de aguarde
                 return;
             }
 
