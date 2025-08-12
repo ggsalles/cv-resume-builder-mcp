@@ -32,8 +32,8 @@
             this.arquivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.operaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.médicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manutençãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabelasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comentárioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +44,7 @@
             this.indicaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.músculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nervoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resultadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,17 +79,11 @@
             // 
             this.operaçãoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.médicosToolStripMenuItem,
-            this.pacientesToolStripMenuItem});
+            this.pacientesToolStripMenuItem,
+            this.resultadosToolStripMenuItem});
             this.operaçãoToolStripMenuItem.Name = "operaçãoToolStripMenuItem";
             this.operaçãoToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             this.operaçãoToolStripMenuItem.Text = "Operação";
-            // 
-            // pacientesToolStripMenuItem
-            // 
-            this.pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
-            this.pacientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pacientesToolStripMenuItem.Text = "Pacientes";
-            this.pacientesToolStripMenuItem.Click += new System.EventHandler(this.pacientesToolStripMenuItem_Click);
             // 
             // médicosToolStripMenuItem
             // 
@@ -96,6 +91,13 @@
             this.médicosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.médicosToolStripMenuItem.Text = "Médicos";
             this.médicosToolStripMenuItem.Click += new System.EventHandler(this.médicosToolStripMenuItem_Click);
+            // 
+            // pacientesToolStripMenuItem
+            // 
+            this.pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
+            this.pacientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pacientesToolStripMenuItem.Text = "Pacientes";
+            this.pacientesToolStripMenuItem.Click += new System.EventHandler(this.pacientesToolStripMenuItem_Click);
             // 
             // manutençãoToolStripMenuItem
             // 
@@ -176,6 +178,13 @@
             this.nervoToolStripMenuItem.Text = "Nervo";
             this.nervoToolStripMenuItem.Click += new System.EventHandler(this.nervoToolStripMenuItem_Click);
             // 
+            // resultadosToolStripMenuItem
+            // 
+            this.resultadosToolStripMenuItem.Name = "resultadosToolStripMenuItem";
+            this.resultadosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resultadosToolStripMenuItem.Text = "Resultados";
+            this.resultadosToolStripMenuItem.Click += new System.EventHandler(this.resultadosToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -215,5 +224,6 @@
         private System.Windows.Forms.ToolStripMenuItem convênioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem indicaçãoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resultadosToolStripMenuItem;
     }
 }
