@@ -32,7 +32,7 @@
             this.grdDadosPessoais = new System.Windows.Forms.DataGridView();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.lblNome = new System.Windows.Forms.Label();
-            this.txtCodigoResultado = new System.Windows.Forms.TextBox();
+            this.txtCodigoProntuario = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.grpBotoes = new System.Windows.Forms.GroupBox();
             this.btnCancelar = new System.Windows.Forms.Button();
@@ -83,7 +83,7 @@
             this.grpPaciente.Controls.Add(this.grdDadosPessoais);
             this.grpPaciente.Controls.Add(this.txtNome);
             this.grpPaciente.Controls.Add(this.lblNome);
-            this.grpPaciente.Controls.Add(this.txtCodigoResultado);
+            this.grpPaciente.Controls.Add(this.txtCodigoProntuario);
             this.grpPaciente.Controls.Add(this.lblCodigo);
             this.grpPaciente.Location = new System.Drawing.Point(12, 12);
             this.grpPaciente.Name = "grpPaciente";
@@ -119,16 +119,16 @@
             this.lblNome.TabIndex = 2;
             this.lblNome.Text = "Nome";
             // 
-            // txtCodigoResultado
+            // txtCodigoProntuario
             // 
-            this.txtCodigoResultado.ForeColor = System.Drawing.Color.Blue;
-            this.txtCodigoResultado.Location = new System.Drawing.Point(6, 35);
-            this.txtCodigoResultado.MaxLength = 10;
-            this.txtCodigoResultado.Name = "txtCodigoResultado";
-            this.txtCodigoResultado.Size = new System.Drawing.Size(103, 20);
-            this.txtCodigoResultado.TabIndex = 1;
-            this.txtCodigoResultado.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoProntuario_KeyPress);
-            this.txtCodigoResultado.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCodigoProntuario_KeyUp);
+            this.txtCodigoProntuario.ForeColor = System.Drawing.Color.Blue;
+            this.txtCodigoProntuario.Location = new System.Drawing.Point(6, 35);
+            this.txtCodigoProntuario.MaxLength = 10;
+            this.txtCodigoProntuario.Name = "txtCodigoProntuario";
+            this.txtCodigoProntuario.Size = new System.Drawing.Size(103, 20);
+            this.txtCodigoProntuario.TabIndex = 1;
+            this.txtCodigoProntuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoProntuario_KeyPress);
+            this.txtCodigoProntuario.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCodigoProntuario_KeyUp);
             // 
             // lblCodigo
             // 
@@ -214,7 +214,6 @@
             this.btnNovo.Text = "Novo";
             this.btnNovo.UseVisualStyleBackColor = true;
             this.btnNovo.Visible = false;
-            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
             // grpfolha
             // 
@@ -476,7 +475,7 @@
         private System.Windows.Forms.GroupBox grpBotoes;
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.Label lblNome;
-        private System.Windows.Forms.TextBox txtCodigoResultado;
+        private System.Windows.Forms.TextBox txtCodigoProntuario;
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Button btnNovo;
         private System.Windows.Forms.Button btnGravar;

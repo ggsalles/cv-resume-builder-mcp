@@ -21,7 +21,7 @@ namespace WEDLC.Forms
         ToolTip toolTip1 = new ToolTip();
 
         public Acao cAcao = Acao.CANCELAR;
-        public DataTable dtGrdPacienteFolha;
+        public DataTable dtGrdFolhaPaciente;
         public bool ValidaFolha = false;
         public DataTable dtComboFolha;
         public int NumeroLinha = -1; // Variável para controlar a linha do grid da folha
@@ -51,7 +51,6 @@ namespace WEDLC.Forms
         {
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
-            carregaCombo(); // Carrega os combos 
             btnCancelar_Click(sender, e); //Simula o clique no botão cancelar   
 
         }
@@ -68,17 +67,16 @@ namespace WEDLC.Forms
             controlaBotao();
 
             //Habilita o campo código
-            txtCodigoResultado.Enabled = true;
+            txtCodigoProntuario.Enabled = true;
 
             //Reseta grid Dados Pessoais
             grdDadosPessoais.Enabled = true; //Habilita o grid de dados
             grdDadosPessoais.DataSource = null; //Limpa o grid de dados
 
             this.liberaCampos(false); //Libera os campos para edição
-            txtCodigoResultado.Focus(); //Foca no campo código prontuário
+            txtCodigoProntuario.Focus(); //Foca no campo código prontuário
 
         }
-
         private void grdDadosPessoais_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -91,25 +89,23 @@ namespace WEDLC.Forms
                     //Determina a acao
                     cAcao = Acao.UPDATE;
 
-                    controlaBotao(); //libera botões 
-                    liberaCampos(true); //Libera os campos para edição
+                    //controlaBotao(); //libera botões 
+                    //liberaCampos(true); //Libera os campos para edição
 
-                    txtCodigoResultado.Enabled = false; //Desabilita o campo código
+                    txtCodigoProntuario.Enabled = false; //Desabilita o campo código
                     grdDadosPessoais.Enabled = false; //Desabilita o grid de dados
 
                     SuspendLayout();
 
                     //Preenche os campos com os dados da linha selecionada
-                    txtCodigoResultado.Text = row.Cells[0].Value.ToString();
+                    txtCodigoProntuario.Text = row.Cells[0].Value.ToString();
                     txtNome.Text = row.Cells[1].Value.ToString();
 
-
-                    if (buscaDadosPacienteFolha() == false)
+                    //Busca a folha do paciente
+                    if (buscaResultadoFolha() == false)
                     {
                         return;
                     }
-
-                    txtNome.Focus(); //Foca no campo nome
 
                     //Determina a acao
                     cAcao = Acao.UPDATE;
@@ -159,62 +155,14 @@ namespace WEDLC.Forms
         private void liberaCampos(bool Ativa)
         {
             //Limpa os campos
-            txtCodigoResultado.Text = string.Empty;
+            txtCodigoProntuario.Text = string.Empty;
             txtNome.Text = string.Empty;
           
             //Habilita - Desabilita os campos dados
             //txtCep.Enabled = Ativa; //Habilita - Desabilita o campo cep
             //txtLogradouro.Enabled = Ativa; //Habilita - Desabilita o campo logradouro
         }
-
-        private void btnNovo_Click(object sender, EventArgs e)
-        {
-            //Determina a acao
-            cAcao = Acao.INSERT;
-
-            controlaBotao(); //libera botões 
-            liberaCampos(true); //Libera os campos para edição
-            txtCodigoResultado.Enabled = false; //Desabilita o campo código
-            grdDadosPessoais.Enabled = false; //Desabilita o grid de dados
-            grdDadosPessoais.DataSource = null;
-
-            if (buscaDadosPacienteFolha() == false)
-            {
-                return;
-            }
-            txtNome.Focus(); //Foca no campo nome
-        }
-
-        public void carregaCombo()
-        {
-            carregaFolha();
-        }
       
-        public void carregaFolha()
-        {
-            //cboFolha.BeginUpdate(); // Desabilita redesenho durante carregamento
-
-            ////Carrega o combo de tipo de folha
-            //cboFolha.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
-            //cboFolha.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
-
-            //// Corrigido: obtém DataTable corretamente
-            //dtComboFolha = new cPaciente().Folha.buscaFolha(4, 0, "", ""); // Busca todas as folhas
-
-            //DataRow newRow = dtComboFolha.NewRow();
-
-            //newRow["idfolha"] = 0; // Defina o valor desejado para a primeira linha
-            //newRow["siglanome"] = "Selecione..."; // Defina o valor desejado para a primeira linha
-            //dtComboFolha.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
-
-            //cboFolha.DataSource = dtComboFolha;
-            //cboFolha.ValueMember = "idfolha";
-            //cboFolha.DisplayMember = "siglanome";
-            //cboFolha.SelectedIndex = 0; // Seleciona a primeira linha (opção "Selecione...")
-
-            //cboFolha.EndUpdate(); // Reabilita redesenho
-        }
-
         private void txtCodigoProntuario_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
@@ -237,14 +185,14 @@ namespace WEDLC.Forms
                 txtNome.Text = string.Empty;
 
                 // Verifica a quantidade de caracteres
-                if (txtCodigoResultado.Text.Length > 0)
+                if (txtCodigoProntuario.Text.Length > 0)
                 {
-                    tipopesquisa = 0;
-                    idpaciente = int.Parse(txtCodigoResultado.Text);
+                    tipopesquisa = 1;
+                    idpaciente = int.Parse(txtCodigoProntuario.Text);
                 }
                 else
                 {
-                    tipopesquisa = 0;
+                    tipopesquisa = 1;
                     idpaciente = 0;
                 }
 
@@ -257,29 +205,17 @@ namespace WEDLC.Forms
         {
             try
             {
-                DataTable dt = this.buscaPaciente(tipopesquisa, idpaciente, nome);
+                DataTable dt = this.buscaResultadoPaciente(tipopesquisa, idpaciente, nome);
 
                 grdDadosPessoais.DataSource = null;
 
                 //Renomeia as colunas do datatable
                 dt.Columns["idpaciente"].ColumnName = "Código";
                 dt.Columns["nome"].ColumnName = "Nome";
-                dt.Columns["cep"].ColumnName = "CEP";
-                dt.Columns["logradouro"].ColumnName = "Logradouro";
-                dt.Columns["complemento"].ColumnName = "Complemento";
-                dt.Columns["bairro"].ColumnName = "Bairro";
-                dt.Columns["localidade"].ColumnName = "Localidade";
-                dt.Columns["uf"].ColumnName = "UF";
-                dt.Columns["telefone"].ColumnName = "Telefone";
-                dt.Columns["idsexo"].ColumnName = "IdSexo";
+                dt.Columns["sexo"].ColumnName = "Sexo";
                 dt.Columns["nascimento"].ColumnName = "Nascimento";
-                dt.Columns["idconvenio"].ColumnName = "IdConvenio";
-                dt.Columns["idindicacao1"].ColumnName = "IdIndicacao1";
-                dt.Columns["idindicacao2"].ColumnName = "IdIndicacao2";
-                dt.Columns["idmedico"].ColumnName = "IdMedico";
-                dt.Columns["idsimnao"].ColumnName = "IdSimNao";
-                dt.Columns["datacadastro"].ColumnName = "DataCadastro";
-                dt.Columns["observacao"].ColumnName = "Observacao";
+                dt.Columns["telefone"].ColumnName = "Telefone";
+                dt.Columns["convenio"].ColumnName = "Convênio";
 
                 grdDadosPessoais.SuspendLayout();
                 grdDadosPessoais.DataSource = dt;
@@ -296,32 +232,24 @@ namespace WEDLC.Forms
         {
             try
             {
-                // Ajustando o tamanho das colunas e ocultando as que não são necessárias
-                grdDadosPessoais.Columns[0].Width = 80; //ID
-                grdDadosPessoais.Columns[1].Width = 350; //Nome
-                grdDadosPessoais.Columns[8].Width = 100; //Telefone
+                //// Ajustando o tamanho das colunas e ocultando as que não são necessárias
+                //grdDadosPessoais.Columns[0].Width = 80; //ID
+                //grdDadosPessoais.Columns[1].Width = 350; //Nome
+                //grdDadosPessoais.Columns[2].Width = 100; //Sexo
+                //grdDadosPessoais.Columns[3].Width = 80; //nascimento
+                //grdDadosPessoais.Columns[4].Width = 80; //Telefone
+                //grdDadosPessoais.Columns[5].Width = 80; //Convenio
 
-                // Oculta ou exibe as colunas que não são necessárias
-                grdDadosPessoais.Columns[2].Visible = false; //Cep
-                grdDadosPessoais.Columns[3].Visible = false; //Logradouro
-                grdDadosPessoais.Columns[4].Visible = false; //Complemento
-                grdDadosPessoais.Columns[5].Visible = false; //Bairro
-                grdDadosPessoais.Columns[6].Visible = false; //Localidade
-                grdDadosPessoais.Columns[7].Visible = false; //Uf
-                grdDadosPessoais.Columns[8].Visible = true; //Telefone
-                grdDadosPessoais.Columns[9].Visible = false; //IdSexo
-                grdDadosPessoais.Columns[10].Visible = false; //Nascimento
-                grdDadosPessoais.Columns[11].Visible = false; //IdConvenio
-                grdDadosPessoais.Columns[12].Visible = false; //IdIndicacao1
-                grdDadosPessoais.Columns[13].Visible = false; //IdIndicacao2
-                grdDadosPessoais.Columns[14].Visible = false; //IdMedico
-                grdDadosPessoais.Columns[15].Visible = false; //IdSimNao
-                grdDadosPessoais.Columns[16].Visible = false; //DataCadastro
-                grdDadosPessoais.Columns[17].Visible = false; //Obs
+                grdDadosPessoais.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
                 // Desabilita a edição da coluna
                 grdDadosPessoais.Columns[0].ReadOnly = true;
                 grdDadosPessoais.Columns[1].ReadOnly = true;
+                grdDadosPessoais.Columns[2].ReadOnly = true;
+                grdDadosPessoais.Columns[2].ReadOnly = true;
+                grdDadosPessoais.Columns[3].ReadOnly = true;
+                grdDadosPessoais.Columns[4].ReadOnly = true;
+                grdDadosPessoais.Columns[5].ReadOnly = true;
 
                 // Configurando outras propriedades
                 grdDadosPessoais.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
@@ -338,18 +266,18 @@ namespace WEDLC.Forms
 
         }
 
-        private DataTable buscaPaciente(int tipopesquisa, Int32 idpaciente, string nome)
+        private DataTable buscaResultadoPaciente(int tipopesquisa, Int32 idpaciente, string nome)
         {
             try
             {
                 DataTable dtAux = new DataTable();
-                cPaciente objcPaciente = new cPaciente();
+                cResultado objcResultado = new cResultado();
 
-                objcPaciente.TipoPesquisa = tipopesquisa; //Tipo de pesquisa
-                objcPaciente.IdPaciente = idpaciente; //Código da especialização
-                objcPaciente.Nome = nome; //Nome da especialização
+                objcResultado.TipoPesquisa = tipopesquisa; //Tipo de pesquisa
+                objcResultado.Paciente.IdPaciente = idpaciente; //Código da especialização
+                objcResultado.Paciente.Nome = nome; //Nome da especialização
 
-                dtAux = objcPaciente.buscaPaciente();
+                dtAux = objcResultado.buscaResultadoPaciente();
 
                 return dtAux;
 
@@ -363,13 +291,13 @@ namespace WEDLC.Forms
 
         private void txtNome_KeyUp(object sender, KeyEventArgs e)
         {
-            int tipopesquisa = 1; //Código que pesquisa pelo nome
+            int tipopesquisa = 2; //Código que pesquisa pelo nome
             string nome = string.Empty; //Nome da especialização
 
             //Determina a acao
             if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
             {
-                txtCodigoResultado.Text = string.Empty; //Limpa o campo código prontuário
+                txtCodigoProntuario.Text = string.Empty; //Limpa o campo código resultado
 
                 if (txtNome.Text.Length > 0)
                 {
@@ -381,21 +309,21 @@ namespace WEDLC.Forms
                 }
 
                 //Limpa campos
-                txtCodigoResultado.Text = string.Empty;
+                txtCodigoProntuario.Text = string.Empty;
                 this.populaGridDados(tipopesquisa, 0, nome);
                 this.configuraGridDados();
             }
         }
 
-        private DataTable buscaPacienteFolha(Int32 idpaciente)
+        private DataTable buscaResultadoFolha(Int32 idpaciente)
         {
             try
             {
                 DataTable dtAux = new DataTable();
-                cPaciente objcPaciente = new cPaciente();
+                cResultado objcResultado = new cResultado();
 
-                objcPaciente.IdPaciente = idpaciente; //Código do paciente
-                dtAux = objcPaciente.buscaPacienteFolha();
+                objcResultado.Paciente.IdPaciente= idpaciente; //Código do paciente
+                dtAux = objcResultado.buscaResultadoFolha();
 
                 return dtAux;
 
@@ -407,61 +335,63 @@ namespace WEDLC.Forms
             }
         }
 
-        private bool buscaDadosPacienteFolha()
+        private bool buscaResultadoFolha()
         {
-            //try
-            //{
-            //    int idpaciente = 0;
-            
-            //    if (txtCodigoProntuario.Text.ToString().Trim().Length > 0)
-            //    {
-            //        //Busca os dados do paciente folha
-            //        idpaciente = int.Parse(txtCodigoProntuario.Text);
-            //    }
+            try
+            {
+                int idpaciente = 0;
 
-            //    dtGrdPacienteFolha = new DataTable();
-            //    dtGrdPacienteFolha = this.buscaPacienteFolha(idpaciente);
+                if (txtCodigoProntuario.Text.ToString().Trim().Length > 0)
+                {
+                    //Busca os dados do paciente folha
+                    idpaciente = int.Parse(txtCodigoProntuario.Text);
+                }
 
-            //    grdFolha.DataSource = null;
+                dtGrdFolhaPaciente = new DataTable();
+                dtGrdFolhaPaciente = this.buscaResultadoFolha(idpaciente);
 
-            //    //Renomeia as colunas do datatable
-            //    dtGrdPacienteFolha.Columns["idpacientefolha"].ColumnName = "IdPacienteFolha";
-            //    dtGrdPacienteFolha.Columns["idpaciente"].ColumnName = "IdPaciente";
-            //    dtGrdPacienteFolha.Columns["idfolha"].ColumnName = "IdFolha";
-            //    dtGrdPacienteFolha.Columns["sigla"].ColumnName = "Sigla";
-            //    dtGrdPacienteFolha.Columns["nome"].ColumnName = "Nome";
+                grdFolhaPaciente.DataSource = null;
 
-            //    grdFolha.SuspendLayout();
-            //    grdFolha.DataSource = dtGrdPacienteFolha;
-            //    grdFolha.ResumeLayout();
+                //Renomeia as colunas do datatable
+                dtGrdFolhaPaciente.Columns["idpaciente"].ColumnName = "IdPaciente";
+                dtGrdFolhaPaciente.Columns["idfolha"].ColumnName = "IdFolha";
+                dtGrdFolhaPaciente.Columns["sigla"].ColumnName = "Sigla";
+                dtGrdFolhaPaciente.Columns["nome"].ColumnName = "Nome";
 
-            //    // Ajustando o tamanho das colunas e ocultando as que não são necessárias
-            //    grdFolha.Columns[3].Width = 80; //ID
-            //    grdFolha.Columns[4].Width = 350; //Nome
+                grdFolhaPaciente.SuspendLayout();
+                grdFolhaPaciente.DataSource = dtGrdFolhaPaciente;
+                grdFolhaPaciente.ResumeLayout();
 
-            //    // Oculta ou exibe as colunas que não são necessárias
-            //    grdFolha.Columns[0].Visible = false; //IdPacienteFolha
-            //    grdFolha.Columns[1].Visible = false; //IdPaciente
-            //    grdFolha.Columns[2].Visible = false; //IdFolha
+                // Ajustando o tamanho das colunas e ocultando as que não são necessárias
+                //grdFolha.Columns[3].Width = 80; //ID
+                //grdFolha.Columns[4].Width = 350; //Nome
 
-            //    // Desabilita a edição da coluna
-            //    grdFolha.Columns[3].ReadOnly = true;
-            //    grdFolha.Columns[4].ReadOnly = true;
+                grdFolhaPaciente.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
-            //    // Configurando outras propriedades
-            //    grdFolha.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
-            //    grdFolha.MultiSelect = false; // Impede seleção múltipla
-            //    grdFolha.AllowUserToAddRows = false; // Impede adição de novas linhas
-            //    grdFolha.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
-            //    grdFolha.CurrentCell = null; // Desmarca a célula atual
+                // Oculta ou exibe as colunas que não são necessárias
+                grdFolhaPaciente.Columns[0].Visible = false; //IdPaciente
+                grdFolhaPaciente.Columns[1].Visible = false; //IdFolha
+
+                // Desabilita a edição da coluna
+                grdFolhaPaciente.Columns[0].ReadOnly = true;
+                grdFolhaPaciente.Columns[1].ReadOnly = true;
+                grdFolhaPaciente.Columns[2].ReadOnly = true;
+                grdFolhaPaciente.Columns[3].ReadOnly = true;
+
+                // Configurando outras propriedades
+                grdFolhaPaciente.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
+                grdFolhaPaciente.MultiSelect = false; // Impede seleção múltipla
+                grdFolhaPaciente.AllowUserToAddRows = false; // Impede adição de novas linhas
+                grdFolhaPaciente.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
+                grdFolhaPaciente.CurrentCell = null; // Desmarca a célula atual
 
                 return true;
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("Erro ao tentar popular a folha do paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return false;
-            //}
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar popular a folha paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         private void btnIncluiFolha_Click(object sender, EventArgs e)
@@ -519,39 +449,7 @@ namespace WEDLC.Forms
             //    return;
             //}
         }
-
-        private void btnExcluiFolha_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (dtComboFolha.Rows.Count == 1)
-                {
-                    MessageBox.Show("Não é permitido deixar a folha do paciente sem pelo menos uma folha!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Verifica se uma linha foi selecionada
-                if (NumeroLinha >= 0)
-                {
-                    // Obter a linha que deseja remover (por exemplo, a linha selecionada em um DataGridView)
-                    DataRow rowToDelete = dtGrdPacienteFolha.Rows[NumeroLinha]; // Remove a terceira linha
-                    dtGrdPacienteFolha.Rows.Remove(rowToDelete);
-                    //grdFolha.DataSource = dtGrdPacienteFolha;
-                }
-                else
-                {
-                    MessageBox.Show("Selecione uma especialização para excluir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao tentar excluir especialização!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-        }
-
+        
         private bool FiltrarComboFolha(string texto)
         {
             //Se infomrou alguma coisa e for diferente de selecione...
@@ -576,28 +474,7 @@ namespace WEDLC.Forms
 
             return true; // Retorna verdadeiro se o item existir
         }
-
-        private bool ValidaDuplicidadePacienteFolha(string pacientefolha)
-        {
-            if (dtGrdPacienteFolha.Rows.Count > 0)
-            {
-                // Verifica se a especialidade já existe no DataTable
-                foreach (DataRow row in dtGrdPacienteFolha.Rows)
-                {
-                    if (row["idfolha"].ToString() == pacientefolha)
-                    {
-                        return true; // A especialidade já existe
-                    }
-                }
-            }
-            else
-            {
-                return false;
-            }
-
-            return false;
-        }
-
+               
         private void cboFolha_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //Determina a acao e valida se vai efetuar a pesquisa
@@ -644,7 +521,7 @@ namespace WEDLC.Forms
                 if (cAcao == Acao.INSERT)
                 {
                     // sequence
-                    Int32 sequence = 0;
+                    //Int32 sequence = 0;
 
                     //Preenche os dados do paciente
                     if (PreencheDadosPaciente(objcPaciente) == false)
@@ -653,32 +530,32 @@ namespace WEDLC.Forms
                     }
 
                     //Grava o paciente
-                    if (objcPaciente.incluiPaciente(out sequence)    == true)
-                    {
-                        foreach (DataRow row in dtGrdPacienteFolha.Rows)
-                        {
-                            // Acessar os valores das colunas
-                            objcPaciente.IdPaciente = sequence;
-                            objcPaciente.Folha.IdFolha = Convert.ToInt32(row["idfolha"]);
+                    //if (objcPaciente.incluiPaciente(out sequence)    == true)
+                    //{
+                    //    foreach (DataRow row in dtGrdPacienteFolha.Rows)
+                    //    {
+                    //        // Acessar os valores das colunas
+                    //        objcPaciente.IdPaciente = sequence;
+                    //        objcPaciente.Folha.IdFolha = Convert.ToInt32(row["idfolha"]);
 
-                            // Inclui a folha do paciente
-                            if (objcPaciente.incluiPacienteFolha() == false)
-                            {
-                                MessageBox.Show("Erro ao tentar incluir a folha do paciente!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
+                    //        // Inclui a folha do paciente
+                    //        if (objcPaciente.incluiPacienteFolha() == false)
+                    //        {
+                    //            MessageBox.Show("Erro ao tentar incluir a folha do paciente!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //            return;
+                    //        }
+                    //    }
 
-                        MessageBox.Show("Inclusão efetuada com sucesso!. Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                        return;
-                    }
+                    //    MessageBox.Show("Inclusão efetuada com sucesso!. Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //    btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                    //    return;
+                    //}
 
-                    else
-                    {
-                        MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    //else
+                    //{
+                    //    MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //    return;
+                    //}
                 }
 
                 //Se for atualização de paciente
@@ -692,37 +569,37 @@ namespace WEDLC.Forms
                     }
 
                     // limpa o contador
-                    int contador = 0;
+                    //int contador = 0;
 
-                    foreach (DataRow row in dtGrdPacienteFolha.Rows)
-                    {
+                    //foreach (DataRow row in dtGrdPacienteFolha.Rows)
+                    //{
 
-                        // Acessar os valores das colunas
-                        objcPaciente.IdPaciente = int.Parse(row["idpaciente"].ToString());
-                        objcPaciente.IdFolha = int.Parse(row["idfolha"].ToString());
+                    //    // Acessar os valores das colunas
+                    //    objcPaciente.IdPaciente = int.Parse(row["idpaciente"].ToString());
+                    //    objcPaciente.IdFolha = int.Parse(row["idfolha"].ToString());
 
-                        //Se for a primeira linha do loop da folha, o sistema entende que é necesseário apagar a tabela de especializacao do medico
-                        if (contador == 0)
-                        {
-                            objcPaciente.Apaga = true;
-                        }
-                        //Se não... apagar não é necessário
-                        else
-                        {
-                            objcPaciente.Apaga = false;
-                        }
-                        // Atualiza a especialização do médico
-                        if (objcPaciente.atualizaPaciente() == true)
-                        {
-                            //incrementa contador
-                            contador++;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Erro ao tentar atualizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
+                    //    //Se for a primeira linha do loop da folha, o sistema entende que é necesseário apagar a tabela de especializacao do medico
+                    //    if (contador == 0)
+                    //    {
+                    //        objcPaciente.Apaga = true;
+                    //    }
+                    //    //Se não... apagar não é necessário
+                    //    else
+                    //    {
+                    //        objcPaciente.Apaga = false;
+                    //    }
+                    //    // Atualiza a especialização do médico
+                    //    if (objcPaciente.atualizaPaciente() == true)
+                    //    {
+                    //        //incrementa contador
+                    //        contador++;
+                    //    }
+                    //    else
+                    //    {
+                    //        MessageBox.Show("Erro ao tentar atualizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //        return;
+                    //    }
+                    //}
 
                     MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
@@ -735,7 +612,6 @@ namespace WEDLC.Forms
                 MessageBox.Show("Erro ao tentar gravar o paciente: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private bool ValidaCampos()
         {
             //Valida os campos obrigatórios
@@ -761,13 +637,13 @@ namespace WEDLC.Forms
             try
             {
                 //Preenche os dados do paciente
-                if (string.IsNullOrWhiteSpace(txtCodigoResultado.Text))
+                if (string.IsNullOrWhiteSpace(txtCodigoProntuario.Text))
                 {
                     objcPaciente.IdPaciente = 0;
                 }
                 else
                 {
-                    objcPaciente.IdPaciente = int.Parse(txtCodigoResultado.Text);
+                    objcPaciente.IdPaciente = int.Parse(txtCodigoProntuario.Text);
                 }
                 objcPaciente.Nome = txtNome.Text.ToUpper();
                 //objcPaciente.IdConvenio = int.Parse(cboConvenio.SelectedValue.ToString());
@@ -783,3 +659,4 @@ namespace WEDLC.Forms
         }
     }
 }
+

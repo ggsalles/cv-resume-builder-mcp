@@ -124,6 +124,7 @@
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
     <Compile Include="Banco\cExame.cs" />
     <Compile Include="Banco\cIP.cs" />
+    <Compile Include="Banco\cResultado.cs" />
     <Compile Include="Banco\cPaciente.cs" />
     <Compile Include="Banco\cIndicacao.cs" />
     <Compile Include="Banco\cConvenio.cs" />
