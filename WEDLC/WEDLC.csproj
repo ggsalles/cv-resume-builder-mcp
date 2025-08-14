@@ -122,6 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
+    <Compile Include="Banco\cAtividadeInsercao.cs" />
+    <Compile Include="Banco\cPotenciais.cs" />
     <Compile Include="Banco\cExame.cs" />
     <Compile Include="Banco\cIP.cs" />
     <Compile Include="Banco\cResultado.cs" />
