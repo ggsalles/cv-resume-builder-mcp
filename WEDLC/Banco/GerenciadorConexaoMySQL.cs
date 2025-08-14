@@ -17,7 +17,7 @@ namespace WEDLC.Banco
         private string _stringConexao;
         public readonly Ambiente _ambiente;
 
-        public GerenciadorConexaoMySQL(Ambiente ambiente = Ambiente.LOCAL)
+        public GerenciadorConexaoMySQL(Ambiente ambiente = Ambiente.REMOTO)
         {
             _ambiente = ambiente;
         }
