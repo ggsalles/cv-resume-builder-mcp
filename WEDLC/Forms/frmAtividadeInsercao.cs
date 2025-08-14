@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Activities.Statements;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -105,7 +104,10 @@ namespace WEDLC.Forms
             grdDados.Columns[0].ReadOnly = true;
             grdDados.Columns[1].ReadOnly = true;
             grdDados.Columns[2].ReadOnly = true;
-            grdDados.Columns[3].ReadOnly = true;
+            grdDados.Columns[3].ReadOnly = false;
+
+            //Deixa a coluna invisível
+            grdDados.Columns[3].Visible = false; //Texto
 
             // Configurando outras propriedades
             //grdDados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Preenche automaticamente
@@ -122,20 +124,20 @@ namespace WEDLC.Forms
             grdDados.CurrentCell = null;
         }
 
-        private DataTable buscaComentario(int tipopesquisa, int idmusculo, string sigla, string nome)
+        private DataTable buscaAtividadeinsercao(int tipopesquisa, Int32 idatividadeinsercao, string sigla, string nome)
         {
             try
             {
                 DataTable dtAux = new DataTable();
-                cComentario objComentario = new cComentario();
+                cAtividadeInsercao objAtividadeInsercao = new cAtividadeInsercao();
 
                 //Configura os parâmetros de pesquisa
-                objComentario.TipoPesquisa = tipopesquisa;
-                objComentario.IdComentario = idmusculo;
-                objComentario.Sigla = sigla;
-                objComentario.Nome = nome;
+                objAtividadeInsercao.TipoPesquisa = tipopesquisa;
+                objAtividadeInsercao.IdAatividadeInsercao= idatividadeinsercao;
+                objAtividadeInsercao.Sigla = sigla;
+                objAtividadeInsercao.Nome = nome;
 
-                dtAux = objComentario.buscaComentario();
+                dtAux = objAtividadeInsercao.buscaAtividadeinsercao();
 
                 return dtAux;
             }
@@ -146,18 +148,18 @@ namespace WEDLC.Forms
             }
         }
 
-        private void populaGrid(int tipopesquisa, int idcometario, string sigla, string nome)
+        private void populaGrid(int tipopesquisa, Int32 idatividadeinsercao, string sigla, string nome)
 
         {
             try
             {
                 DataTable dt = new DataTable();
-                dt = this.buscaComentario(tipopesquisa, idcometario, sigla, nome);
+                dt = this.buscaAtividadeinsercao(tipopesquisa, idatividadeinsercao, sigla, nome);
 
                 grdDados.DataSource = null;
 
                 //Renomeia as colunas do datatable
-                dt.Columns["idcomentario"].ColumnName = "Código";
+                dt.Columns["idatividadeinsercao"].ColumnName = "Código";
                 dt.Columns["sigla"].ColumnName = "Sigla";
                 dt.Columns["nome"].ColumnName = "Nome";
                 dt.Columns["texto"].ColumnName = "Texto";
@@ -233,18 +235,18 @@ namespace WEDLC.Forms
         {
             try
             {
-                cComentario objComentario = new cComentario();
+                cAtividadeInsercao objAtividadeInsercao = new cAtividadeInsercao();
 
-                objComentario.Nome = txtNome.Text;
-                objComentario.Sigla = txtSigla.Text;
-                objComentario.Texto = txtTexto.Text;
+                objAtividadeInsercao.Nome = txtNome.Text;
+                objAtividadeInsercao.Sigla = txtSigla.Text;
+                objAtividadeInsercao.Texto = txtTexto.Text;
 
                 //Valida campos
                 if (validaCampos() == true)
                 {
                     if (cAcao == Acao.INSERT)
                     {
-                        if (objComentario.incluiComentario() == true)
+                        if (objAtividadeInsercao.IncluiAtividaDeInsercao() == true)
                         {
                             MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -259,12 +261,12 @@ namespace WEDLC.Forms
                     else if (cAcao == Acao.UPDATE)
                     {
                         //Recebe o código do musculo transformado em inteiro
-                        objComentario.IdComentario = int.Parse(txtCodigo.Text);
+                        objAtividadeInsercao.IdAatividadeInsercao = int.Parse(txtCodigo.Text);
 
                         //Solicita a confirmação do usuário para alteração
                         if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            if (objComentario.atualizaComentario() == true)
+                            if (objAtividadeInsercao.atualizaAtividaDeInsercao() == true)
                             {
                                 MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
@@ -324,6 +326,9 @@ namespace WEDLC.Forms
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;
 
+            //Habilita o grid
+            grdDados.Enabled = true;
+
             //Carrega o grid
             carregaTela();
         }
@@ -367,6 +372,9 @@ namespace WEDLC.Forms
                 txtCodigo.Enabled = false;
                 txtTexto.Enabled = true;
 
+                //desabilita o grid
+                grdDados.Enabled = false;
+
                 txtSigla.Focus();
             }
 
@@ -382,7 +390,7 @@ namespace WEDLC.Forms
             if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
             {
                 int tipopesquisa = 0; //Código que retorna todo select   
-                int idespecializacao = 0; //Código da especialização
+                int idatividadeinsercao = 0; //Código da Atividade de Inserção
 
                 //Limpa campos
                 txtSigla.Text = string.Empty;
@@ -397,10 +405,10 @@ namespace WEDLC.Forms
                 else
                 {
                     tipopesquisa = 1;
-                    idespecializacao = int.Parse(txtCodigo.Text);
+                    idatividadeinsercao = int.Parse(txtCodigo.Text);
                 }
 
-                this.populaGrid(tipopesquisa, idespecializacao, "", "");
+                this.populaGrid(tipopesquisa, idatividadeinsercao, "", "");
             }
 
         }

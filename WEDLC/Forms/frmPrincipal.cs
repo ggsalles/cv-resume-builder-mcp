@@ -276,5 +276,42 @@ namespace WEDLC.Forms
             // Restaura o cursor normal
             Cursor.Current = Cursors.Default;
         }
+
+        private void atividadeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
+            // Cria um objeto para o form de troca de senhas abrir
+            frmAtividadeInsercao objAtividade = new frmAtividadeInsercao();
+
+            // Define o form pai como o form principal
+            objAtividade.MdiParent = this;
+
+            //Abre o form de especialização não modal
+            objAtividade.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
+
+        }
+
+        private void potenciaisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
+            // Cria um objeto para o form de potenciais abrir
+            frmPotenciais objPotenciais = new frmPotenciais();
+
+            // Define o form pai como o form principal
+            objPotenciais.MdiParent = this;
+
+            // Abre o form de potenciais não modal
+            objPotenciais.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
+        }
     }
 }

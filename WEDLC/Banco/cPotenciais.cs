@@ -51,7 +51,7 @@ namespace WEDLC.Banco
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", TipoPesquisa);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdComentario", IdPotenciaisUnidade);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdPotenciaisUnidade", IdPotenciaisUnidade);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", Sigla ?? string.Empty);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pNome", Nome ?? string.Empty);
 
@@ -140,7 +140,7 @@ namespace WEDLC.Banco
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "pr_atualizacomentario";
 
-                    command.Parameters.AddWithValue("pIdComentario", IdPotenciaisUnidade);
+                    command.Parameters.AddWithValue("pIdPotenciaisUnidade", IdPotenciaisUnidade);
                     command.Parameters.AddWithValue("pSigla", Sigla);
                     command.Parameters.AddWithValue("pNome", Nome);
                     command.Parameters.AddWithValue("pTexto", Texto);

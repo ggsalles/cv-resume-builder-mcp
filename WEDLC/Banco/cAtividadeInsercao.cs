@@ -50,8 +50,8 @@ namespace WEDLC.Banco
                 using (var sqlDa = new MySqlDataAdapter("pr_buscaatividadeinsercao", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdAtividadeInsercao", TipoPesquisa);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdComentario", IdAatividadeInsercao);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pTipoPesquisa", TipoPesquisa);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdAtividadeInsercao", IdAatividadeInsercao);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pSigla", Sigla ?? string.Empty);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pNome", Nome ?? string.Empty);
 
@@ -117,7 +117,7 @@ namespace WEDLC.Banco
             }
         }
 
-        public bool AatualizaAtividaDeInsercao()
+        public bool atualizaAtividaDeInsercao()
         {
             // Validação de entrada
             if (IdAatividadeInsercao <= 0 || string.IsNullOrEmpty(Sigla) || string.IsNullOrEmpty(Nome))
@@ -140,7 +140,7 @@ namespace WEDLC.Banco
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "pr_atualizaatividadeinsercao";
 
-                    command.Parameters.AddWithValue("pIdComentario", IdAatividadeInsercao);
+                    command.Parameters.AddWithValue("pIdAtividadeInsercao", IdAatividadeInsercao);
                     command.Parameters.AddWithValue("pSigla", Sigla);
                     command.Parameters.AddWithValue("pNome", Nome);
                     command.Parameters.AddWithValue("pTexto", Texto);

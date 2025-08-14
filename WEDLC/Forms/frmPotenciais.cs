@@ -107,6 +107,9 @@ namespace WEDLC.Forms
             grdDados.Columns[2].ReadOnly = true;
             grdDados.Columns[3].ReadOnly = true;
 
+            //Deixa a coluna invisível
+            grdDados.Columns[3].Visible = false; //Texto
+
             // Configurando outras propriedades
             //grdDados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Preenche automaticamente
             grdDados.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
@@ -122,42 +125,42 @@ namespace WEDLC.Forms
             grdDados.CurrentCell = null;
         }
 
-        private DataTable buscaComentario(int tipopesquisa, int idmusculo, string sigla, string nome)
+        private DataTable buscaPotenciaisUnidade(int tipopesquisa, int idpotenciaisunidade, string sigla, string nome)
         {
             try
             {
                 DataTable dtAux = new DataTable();
-                cComentario objComentario = new cComentario();
+                cPotenciais objPotenciais = new cPotenciais();
 
                 //Configura os parâmetros de pesquisa
-                objComentario.TipoPesquisa = tipopesquisa;
-                objComentario.IdComentario = idmusculo;
-                objComentario.Sigla = sigla;
-                objComentario.Nome = nome;
+                objPotenciais.TipoPesquisa = tipopesquisa;
+                objPotenciais.IdPotenciaisUnidade= idpotenciaisunidade;
+                objPotenciais.Sigla = sigla;
+                objPotenciais.Nome = nome;
 
-                dtAux = objComentario.buscaComentario();
+                dtAux = objPotenciais.BuscaPotenciaisUnidade();
 
                 return dtAux;
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro ao tentar buscar o comentário!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao tentar buscar o potencial de unidade motora!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }
 
-        private void populaGrid(int tipopesquisa, int idcometario, string sigla, string nome)
+        private void populaGrid(int tipopesquisa, int idpotenciaisunidade, string sigla, string nome)
 
         {
             try
             {
                 DataTable dt = new DataTable();
-                dt = this.buscaComentario(tipopesquisa, idcometario, sigla, nome);
+                dt = this.buscaPotenciaisUnidade (tipopesquisa, idpotenciaisunidade, sigla, nome);
 
                 grdDados.DataSource = null;
 
                 //Renomeia as colunas do datatable
-                dt.Columns["idcomentario"].ColumnName = "Código";
+                dt.Columns["idpotenciaisunidade"].ColumnName = "Código";
                 dt.Columns["sigla"].ColumnName = "Sigla";
                 dt.Columns["nome"].ColumnName = "Nome";
                 dt.Columns["texto"].ColumnName = "Texto";
@@ -221,6 +224,7 @@ namespace WEDLC.Forms
             txtTexto.Text = string.Empty;
 
             txtCodigo.Enabled = false; //Desabilita o campo código
+            txtTexto.Enabled = true; //Habilita o campo texto
 
             //Deixa o foco no nome
             txtSigla.Focus();
@@ -233,18 +237,18 @@ namespace WEDLC.Forms
         {
             try
             {
-                cComentario objComentario = new cComentario();
+                cPotenciais objPotenciais = new cPotenciais();
 
-                objComentario.Nome = txtNome.Text;
-                objComentario.Sigla = txtSigla.Text;
-                objComentario.Texto = txtTexto.Text;
+                objPotenciais.Nome = txtNome.Text;
+                objPotenciais.Sigla = txtSigla.Text;
+                objPotenciais.Texto = txtTexto.Text;
 
                 //Valida campos
                 if (validaCampos() == true)
                 {
                     if (cAcao == Acao.INSERT)
                     {
-                        if (objComentario.incluiComentario() == true)
+                        if (objPotenciais.IncluiPotenciaisUnidade() == true)
                         {
                             MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -259,12 +263,12 @@ namespace WEDLC.Forms
                     else if (cAcao == Acao.UPDATE)
                     {
                         //Recebe o código do musculo transformado em inteiro
-                        objComentario.IdComentario = int.Parse(txtCodigo.Text);
+                        objPotenciais.IdPotenciaisUnidade = int.Parse(txtCodigo.Text);
 
                         //Solicita a confirmação do usuário para alteração
                         if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            if (objComentario.atualizaComentario() == true)
+                            if (objPotenciais.AtualizaPotenciaisUnidademotora() == true)
                             {
                                 MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
@@ -321,6 +325,9 @@ namespace WEDLC.Forms
             //Limpa os campos
             limpaControles();
 
+            //Habilita o grid
+            grdDados.Enabled = true;
+
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;
 
@@ -367,6 +374,9 @@ namespace WEDLC.Forms
                 txtCodigo.Enabled = false;
                 txtTexto.Enabled = true;
 
+                //Desabilita o grid
+                grdDados.Enabled = false;
+
                 txtSigla.Focus();
             }
 
@@ -382,7 +392,7 @@ namespace WEDLC.Forms
             if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
             {
                 int tipopesquisa = 0; //Código que retorna todo select   
-                int idespecializacao = 0; //Código da especialização
+                int idpotenciaisunidade = 0; //Código da especialização
 
                 //Limpa campos
                 txtSigla.Text = string.Empty;
@@ -397,10 +407,10 @@ namespace WEDLC.Forms
                 else
                 {
                     tipopesquisa = 1;
-                    idespecializacao = int.Parse(txtCodigo.Text);
+                    idpotenciaisunidade = int.Parse(txtCodigo.Text);
                 }
 
-                this.populaGrid(tipopesquisa, idespecializacao, "", "");
+                this.populaGrid(tipopesquisa, idpotenciaisunidade, "", "");
             }
 
         }

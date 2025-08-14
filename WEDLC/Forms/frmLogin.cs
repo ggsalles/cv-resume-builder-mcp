@@ -16,8 +16,14 @@ namespace WEDLC.Forms
         {
             try
             {
+                // Altera o cursor para "espera"
+                Cursor.Current = Cursors.WaitCursor;
+
                 if (validaDados() == false)
                 {
+                    // Retorna o cursor para "padrão"
+                    Cursor.Current = Cursors.Default;
+
                     return;
                 }
 
@@ -38,14 +44,32 @@ namespace WEDLC.Forms
                 // Se não econtrou ninguém...
                 if (dtAux.Rows.Count == 0)
                 {
+                    // Retorna o cursor para "padrão"
+                    Cursor.Current = Cursors.Default;
+
+                    // Exibe mensagem de usuário não cadastrado
                     MessageBox.Show("Usuário não cadastrado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    // Limpa os campos
+                    txtUsuario.Text = "";
+
+                    // Limpa a senha
+                    txtSenha.Text = "";
+
+                    // Foca no campo usuário
+                    txtUsuario.Focus();
+
+                    // Fecha o DataTable
                     dtAux.Dispose();
+
                     return;
                 }
 
                 // Se encontrou e for troca de senha...
                 if (dtAux.Rows.Count == 1 && dtAux.Rows[0]["nome"].ToString() == txtUsuario.Text.ToString() && dtAux.Rows[0]["trocasenha"].ToString() == "1")
                 {
+                    // Retorna o cursor para "padrão"
+                    Cursor.Current = Cursors.Default;
 
                     MessageBox.Show("Você será redirecionado para o formulário de troca de senha.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -75,13 +99,30 @@ namespace WEDLC.Forms
                 // Se for diferente...
                 if (pCripto != dtAux.Rows[0]["password"].ToString())
                 {
+                    // Retorna o cursor para "padrão"
+                    Cursor.Current = Cursors.Default;
+
+                    // Exibe mensagem de senha inválida
                     MessageBox.Show("Senha Inválida!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    // Limpa a senha
                     txtSenha.Focus();
-                    dtAux.Dispose();
+
+                    // Limpa o campo senha
+                    txtSenha.Text = "";
+
+                    // Fecha o DataTable
+                    dtAux.Dispose(); 
+
+
                     return;
                 }
                 else
                 {
+                    // Retorna o cursor para "padrão"
+                    Cursor.Current = Cursors.Default;
+
+                    // Se chegou aqui, é porque o usuário e senha estão corretos
                     MessageBox.Show("Usuário " + txtUsuario.Text.ToString().ToUpper() + " conectado com sucesso", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // GRAVA LOG
@@ -91,12 +132,11 @@ namespace WEDLC.Forms
 
                     if (objclLog.incluiLogin() == false)
                     {
+                        // Se não conseguiu gravar o log, exibe mensagem de erro
                         MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                     else
                     {
-
                         //Fecha o form login
                         this.Hide();
 
@@ -114,6 +154,10 @@ namespace WEDLC.Forms
             }
             catch (Exception ex)
             {
+                // Retorna o cursor para "padrão"
+                Cursor.Current = Cursors.Default;
+
+                // Exibe a mensagem de erro
                 MessageBox.Show(ex.Message);
 
                 // GRAVA LOG

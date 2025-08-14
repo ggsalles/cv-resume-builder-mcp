@@ -107,6 +107,9 @@ namespace WEDLC.Forms
             grdDados.Columns[2].ReadOnly = true;
             grdDados.Columns[3].ReadOnly = true;
 
+            //Deixa a coluna invisível
+            grdDados.Columns[3].Visible = false; //Texto
+
             // Configurando outras propriedades
             //grdDados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Preenche automaticamente
             grdDados.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
@@ -122,7 +125,7 @@ namespace WEDLC.Forms
             grdDados.CurrentCell = null;
         }
 
-        private DataTable buscaComentario(int tipopesquisa, int idmusculo, string sigla, string nome)
+        private DataTable buscaComentario(int tipopesquisa, Int32 idcomentario, string sigla, string nome)
         {
             try
             {
@@ -131,7 +134,7 @@ namespace WEDLC.Forms
 
                 //Configura os parâmetros de pesquisa
                 objComentario.TipoPesquisa = tipopesquisa;
-                objComentario.IdComentario = idmusculo;
+                objComentario.IdComentario = idcomentario;
                 objComentario.Sigla = sigla;
                 objComentario.Nome = nome;
 
@@ -146,7 +149,7 @@ namespace WEDLC.Forms
             }
         }
 
-        private void populaGrid(int tipopesquisa, int idcometario, string sigla, string nome)
+        private void populaGrid(int tipopesquisa, Int32 idcometario, string sigla, string nome)
 
         {
             try
@@ -321,6 +324,9 @@ namespace WEDLC.Forms
             //Limpa os campos
             limpaControles();
 
+            //Habilita o grid
+            grdDados.Enabled = true;
+
             //Desmarca a seleção do grid
             grdDados.CurrentCell = null;
 
@@ -367,6 +373,9 @@ namespace WEDLC.Forms
                 txtCodigo.Enabled = false;
                 txtTexto.Enabled = true;
 
+                //Desabilita o grid
+                grdDados.Enabled = false;
+
                 txtSigla.Focus();
             }
 
@@ -382,7 +391,7 @@ namespace WEDLC.Forms
             if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT)
             {
                 int tipopesquisa = 0; //Código que retorna todo select   
-                int idespecializacao = 0; //Código da especialização
+                int idcomentario = 0; //Código da especialização
 
                 //Limpa campos
                 txtSigla.Text = string.Empty;
@@ -397,10 +406,10 @@ namespace WEDLC.Forms
                 else
                 {
                     tipopesquisa = 1;
-                    idespecializacao = int.Parse(txtCodigo.Text);
+                    idcomentario = int.Parse(txtCodigo.Text);
                 }
 
-                this.populaGrid(tipopesquisa, idespecializacao, "", "");
+                this.populaGrid(tipopesquisa, idcomentario, "", "");
             }
 
         }
