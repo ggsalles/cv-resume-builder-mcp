@@ -42,9 +42,14 @@ namespace WEDLC.Forms
                     pCripto = objCllogin.critptografiaSenha(txtSenha.Text.ToString(), objCllogin.Nome, out pCifrado);
                     objCllogin.Senha = pCripto;
 
-                    var retorno = objCllogin.incluiLogin();
-
-                    MessageBox.Show("A troca da senha foi efetuada com sucesso. Voltando para a tela de login.    ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (objCllogin.incluiLogin() == true)
+                    {
+                        MessageBox.Show("A troca da senha foi efetuada com sucesso. Voltando para a tela de login.    ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erro ao tentar efetuar a troca da senha.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
 
                     // GRAVA LOG
                     clLog objclLog = new clLog();

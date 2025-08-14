@@ -39,6 +39,8 @@ namespace WEDLC.Forms
         }
         private void especializacaoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
 
             // Cria um objeto para o form de troca de senhas abrir
             frmEspecializacao objEspecializacao = new frmEspecializacao();
@@ -48,10 +50,17 @@ namespace WEDLC.Forms
 
             //Abre o form de especialização não modal
             objEspecializacao.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
+
         }
 
         private void nervoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmNervo objNervo = new frmNervo();
 
@@ -60,10 +69,16 @@ namespace WEDLC.Forms
 
             //Abre o form de especialização não modal
             objNervo.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         private void músculoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmMusculo objMusculo = new frmMusculo();
 
@@ -72,6 +87,9 @@ namespace WEDLC.Forms
 
             //Abre o form de especialização não modal
             objMusculo.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         // Step 1: Change ObterIPExterno to return Task<string> instead of void
@@ -111,6 +129,9 @@ namespace WEDLC.Forms
 
         private void folhaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmFolha objFolha = new frmFolha();
 
@@ -119,10 +140,16 @@ namespace WEDLC.Forms
 
             //Abre o form de especialização não modal
             objFolha.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         private void comentárioToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmComentarios objComentario = new frmComentarios();
 
@@ -131,10 +158,16 @@ namespace WEDLC.Forms
 
             //Abre o form de especialização não modal
             objComentario.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         private void pacientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmPaciente objPaciente= new frmPaciente();
 
@@ -143,16 +176,27 @@ namespace WEDLC.Forms
 
             //Abre o form de especialização não modal
             objPaciente.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         private void médicosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmMedico objMedico = new frmMedico();
+
             // Define o form pai como o form principal
             objMedico.MdiParent = this;
+
             //Abre o form de especialização não modal
             objMedico.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
@@ -163,42 +207,74 @@ namespace WEDLC.Forms
 
         private void convênioToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmConvenio objConvenio = new frmConvenio();
+
             // Define o form pai como o form principal
             objConvenio.MdiParent = this;
+
             //Abre o form de especialização não modal
-            objConvenio.Show(); 
+            objConvenio.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         private void indicaçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmIndicacao objIndicacao = new frmIndicacao();
+
             // Define o form pai como o form principal
             objIndicacao.MdiParent = this;
+
             //Abre o form de especialização não modal
-            objIndicacao.Show();    
+            objIndicacao.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         private void exameToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmExame objExame = new frmExame();
+
             // Define o form pai como o form principal
             objExame.MdiParent = this;
+
             //Abre o form de especialização não modal
-            objExame.Show();    
+            objExame.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
 
         private void resultadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
             // Cria um objeto para o form de troca de senhas abrir
             frmResultado objResultado = new frmResultado();
+
             // Define o form pai como o form principal
             objResultado.MdiParent = this;
+
             //Abre o form de especialização não modal
             objResultado.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
         }
     }
 }

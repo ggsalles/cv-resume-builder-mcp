@@ -66,6 +66,7 @@ namespace WEDLC.Forms
                     this.Visible = true;
 
                     txtSenha.Text = "";
+                    txtSenha.Focus();
 
                     return;
 

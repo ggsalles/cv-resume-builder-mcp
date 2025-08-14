@@ -187,6 +187,7 @@ namespace WEDLC.Forms
                     mskTelefone.Text = row.Cells[8].Value.ToString();
                     cboSexo.SelectedValue = row.Cells[9].Value.ToString();
                     mskNascimento.Text = DateTime.Parse(row.Cells[10].Value.ToString()).ToString("dd/MM/yyyy");
+                    txtIdade.Text = cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(DateTime.Parse(row.Cells[10].Value.ToString())).ToString();
                     cboConvenio.SelectedValue = row.Cells[11].Value.ToString();
                     cboIndPrinc.SelectedValue = row.Cells[12].Value.ToString();
                     cboIndSec.SelectedValue = row.Cells[13].Value.ToString();
@@ -268,6 +269,7 @@ namespace WEDLC.Forms
             mskTelefone.Text = string.Empty;
             cboSexo.SelectedIndex = 0; // Reseta o combo de sexo
             mskNascimento.Text = string.Empty; // Reseta o campo data de nascimento para a data atual
+            txtIdade.Text = string.Empty; // Limpa o campo de idade
             cboConvenio.SelectedIndex = 0; // Reseta o combo de convênio
             cboIndPrinc.SelectedIndex = 0; // Reseta o combo de indicação principal
             cboIndSec.SelectedIndex = 0; // Reseta o combo de indicação secundária
@@ -703,7 +705,7 @@ namespace WEDLC.Forms
             try
             {
                 int idpaciente = 0;
-            
+
                 if (txtCodigoProntuario.Text.ToString().Trim().Length > 0)
                 {
                     //Busca os dados do paciente folha
@@ -944,7 +946,7 @@ namespace WEDLC.Forms
                     }
 
                     //Grava o paciente
-                    if (objcPaciente.incluiPaciente(out sequence)    == true)
+                    if (objcPaciente.incluiPaciente(out sequence) == true)
                     {
                         foreach (DataRow row in dtGrdPacienteFolha.Rows)
                         {
@@ -1091,6 +1093,25 @@ namespace WEDLC.Forms
                 return false; // Retorna falso se houve erro ao preencher os dados
             }
 
+        }
+
+        private void mskNascimento_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string dataInput = mskNascimento.Text;
+            var (valido, mensagem) = WEDLC.Banco.cUtil.DataNascimentoValidator.ValidarDataNascimento(dataInput);
+
+            if (!valido)
+            {
+                MessageBox.Show(mensagem, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                mskNascimento.Focus();
+            }
+            else
+            {
+                // Se a data for válida, calcula a idade e exibe no campo correspondente
+                DateTime dataNascimento = DateTime.Parse(dataInput);
+                int idade = WEDLC.Banco.cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(dataNascimento);
+                txtIdade.Text = idade.ToString();
+            }
         }
     }
 }

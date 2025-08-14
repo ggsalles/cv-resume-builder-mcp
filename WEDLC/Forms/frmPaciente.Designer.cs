@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.grpPaciente = new System.Windows.Forms.GroupBox();
+            this.txtIdade = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.grdDadosPessoais = new System.Windows.Forms.DataGridView();
             this.mskTelefone = new System.Windows.Forms.MaskedTextBox();
             this.mskNascimento = new System.Windows.Forms.MaskedTextBox();
@@ -85,6 +87,8 @@
             // 
             // grpPaciente
             // 
+            this.grpPaciente.Controls.Add(this.txtIdade);
+            this.grpPaciente.Controls.Add(this.label18);
             this.grpPaciente.Controls.Add(this.grdDadosPessoais);
             this.grpPaciente.Controls.Add(this.mskTelefone);
             this.grpPaciente.Controls.Add(this.mskNascimento);
@@ -134,6 +138,25 @@
             this.grpPaciente.TabStop = false;
             this.grpPaciente.Text = "Paciente";
             // 
+            // txtIdade
+            // 
+            this.txtIdade.Enabled = false;
+            this.txtIdade.Location = new System.Drawing.Point(371, 232);
+            this.txtIdade.MaxLength = 8;
+            this.txtIdade.Name = "txtIdade";
+            this.txtIdade.ReadOnly = true;
+            this.txtIdade.Size = new System.Drawing.Size(44, 20);
+            this.txtIdade.TabIndex = 36;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(371, 214);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(34, 13);
+            this.label18.TabIndex = 37;
+            this.label18.Text = "Idade";
+            // 
             // grdDadosPessoais
             // 
             this.grdDadosPessoais.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -146,21 +169,22 @@
             // mskTelefone
             // 
             this.mskTelefone.Enabled = false;
-            this.mskTelefone.Location = new System.Drawing.Point(458, 232);
+            this.mskTelefone.Location = new System.Drawing.Point(48, 231);
             this.mskTelefone.Mask = "(99) 00000-0000";
             this.mskTelefone.Name = "mskTelefone";
-            this.mskTelefone.Size = new System.Drawing.Size(103, 20);
+            this.mskTelefone.Size = new System.Drawing.Size(87, 20);
             this.mskTelefone.TabIndex = 10;
             // 
             // mskNascimento
             // 
             this.mskNascimento.Enabled = false;
-            this.mskNascimento.Location = new System.Drawing.Point(673, 232);
+            this.mskNascimento.Location = new System.Drawing.Point(282, 232);
             this.mskNascimento.Mask = "00/00/0000";
             this.mskNascimento.Name = "mskNascimento";
             this.mskNascimento.Size = new System.Drawing.Size(83, 20);
             this.mskNascimento.TabIndex = 12;
             this.mskNascimento.ValidatingType = typeof(System.DateTime);
+            this.mskNascimento.Validating += new System.ComponentModel.CancelEventHandler(this.mskNascimento_Validating);
             // 
             // label17
             // 
@@ -186,16 +210,16 @@
             // txtLocalidade
             // 
             this.txtLocalidade.Enabled = false;
-            this.txtLocalidade.Location = new System.Drawing.Point(153, 231);
+            this.txtLocalidade.Location = new System.Drawing.Point(857, 186);
             this.txtLocalidade.MaxLength = 8;
             this.txtLocalidade.Name = "txtLocalidade";
-            this.txtLocalidade.Size = new System.Drawing.Size(216, 20);
+            this.txtLocalidade.Size = new System.Drawing.Size(298, 20);
             this.txtLocalidade.TabIndex = 8;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(150, 215);
+            this.label16.Location = new System.Drawing.Point(854, 170);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 13);
             this.label16.TabIndex = 31;
@@ -306,7 +330,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(670, 214);
+            this.label12.Location = new System.Drawing.Point(282, 214);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(63, 13);
             this.label12.TabIndex = 23;
@@ -315,7 +339,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(567, 215);
+            this.label11.Location = new System.Drawing.Point(141, 215);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(31, 13);
             this.label11.TabIndex = 21;
@@ -324,9 +348,9 @@
             // cboSexo
             // 
             this.cboSexo.FormattingEnabled = true;
-            this.cboSexo.Location = new System.Drawing.Point(567, 231);
+            this.cboSexo.Location = new System.Drawing.Point(141, 231);
             this.cboSexo.Name = "cboSexo";
-            this.cboSexo.Size = new System.Drawing.Size(99, 21);
+            this.cboSexo.Size = new System.Drawing.Size(134, 21);
             this.cboSexo.TabIndex = 11;
             // 
             // label10
@@ -349,7 +373,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(455, 215);
+            this.label9.Location = new System.Drawing.Point(48, 214);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 13);
             this.label9.TabIndex = 17;
@@ -358,16 +382,16 @@
             // txtUf
             // 
             this.txtUf.Enabled = false;
-            this.txtUf.Location = new System.Drawing.Point(375, 231);
+            this.txtUf.Location = new System.Drawing.Point(6, 230);
             this.txtUf.MaxLength = 8;
             this.txtUf.Name = "txtUf";
-            this.txtUf.Size = new System.Drawing.Size(77, 20);
+            this.txtUf.Size = new System.Drawing.Size(36, 20);
             this.txtUf.TabIndex = 9;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(375, 215);
+            this.label8.Location = new System.Drawing.Point(6, 215);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(21, 13);
             this.label8.TabIndex = 15;
@@ -376,7 +400,7 @@
             // txtBairro
             // 
             this.txtBairro.Enabled = false;
-            this.txtBairro.Location = new System.Drawing.Point(6, 231);
+            this.txtBairro.Location = new System.Drawing.Point(710, 186);
             this.txtBairro.MaxLength = 8;
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(141, 20);
@@ -385,7 +409,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 215);
+            this.label7.Location = new System.Drawing.Point(710, 170);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 13);
             this.label7.TabIndex = 13;
@@ -430,7 +454,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(760, 215);
+            this.label3.Location = new System.Drawing.Point(421, 215);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 7;
@@ -456,9 +480,9 @@
             // cboConvenio
             // 
             this.cboConvenio.FormattingEnabled = true;
-            this.cboConvenio.Location = new System.Drawing.Point(763, 231);
+            this.cboConvenio.Location = new System.Drawing.Point(421, 232);
             this.cboConvenio.Name = "cboConvenio";
-            this.cboConvenio.Size = new System.Drawing.Size(395, 21);
+            this.cboConvenio.Size = new System.Drawing.Size(734, 21);
             this.cboConvenio.TabIndex = 13;
             // 
             // txtCep
@@ -669,5 +693,7 @@
         private System.Windows.Forms.MaskedTextBox mskNascimento;
         private System.Windows.Forms.MaskedTextBox mskTelefone;
         private System.Windows.Forms.DataGridView grdDadosPessoais;
+        private System.Windows.Forms.TextBox txtIdade;
+        private System.Windows.Forms.Label label18;
     }
 }
