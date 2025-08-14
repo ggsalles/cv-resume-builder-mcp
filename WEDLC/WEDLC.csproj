@@ -144,6 +144,18 @@
     <Compile Include="Banco\cFolha.cs" />
     <Compile Include="Banco\cSequence.cs" />
     <Compile Include="Banco\cSimNao.cs" />
+    <Compile Include="Forms\frmAtividadeInsercao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAtividadeInsercao.Designer.cs">
+      <DependentUpon>frmAtividadeInsercao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmPotenciais.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmPotenciais.Designer.cs">
+      <DependentUpon>frmPotenciais.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmExame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -236,6 +248,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\frmAtividadeInsercao.resx">
+      <DependentUpon>frmAtividadeInsercao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmPotenciais.resx">
+      <DependentUpon>frmPotenciais.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmExame.resx">
       <DependentUpon>frmExame.cs</DependentUpon>
     </EmbeddedResource>
