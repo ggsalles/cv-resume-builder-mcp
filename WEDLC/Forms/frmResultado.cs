@@ -51,32 +51,14 @@ namespace WEDLC.Forms
         {
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
-            btnCancelar_Click(sender, e); //Simula o clique no botão cancelar   
+            btnNovo_Click(sender, e); //Simula o clique no botão cancelar   
 
         }
         private void btnSair_Click(object sender, EventArgs e)
         {
             Close();
         }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            //Determina a acao
-            cAcao = Acao.CANCELAR;
-
-            controlaBotao();
-
-            //Habilita o campo código
-            txtCodigoProntuario.Enabled = true;
-
-            //Reseta grid Dados Pessoais
-            grdDadosPessoais.Enabled = true; //Habilita o grid de dados
-            grdDadosPessoais.DataSource = null; //Limpa o grid de dados
-
-            this.liberaCampos(false); //Libera os campos para edição
-            txtCodigoProntuario.Focus(); //Foca no campo código prontuário
-
-        }
+               
         private void grdDadosPessoais_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -122,45 +104,14 @@ namespace WEDLC.Forms
             }
         }
 
-        private void controlaBotao()
-        {
-            //Se clicou em novo
-            if (cAcao == Acao.INSERT)
-            {
-                btnNovo.Enabled = false;
-                btnGravar.Enabled = true;
-                btnCancelar.Enabled = true;
-                btnExcluir.Enabled = false;
-            }
-
-            //Se clicou no grid
-            if (cAcao == Acao.UPDATE)
-            {
-                btnNovo.Enabled = false;
-                btnGravar.Enabled = true;
-                btnCancelar.Enabled = true;
-                btnExcluir.Enabled = false;
-            }
-
-            //Se clicou no grid
-            if (cAcao == Acao.CANCELAR)
-            {
-                btnNovo.Enabled = true;
-                btnGravar.Enabled = false;
-                btnCancelar.Enabled = false;
-                btnExcluir.Enabled = false;
-            }
-        }
-
-        private void liberaCampos(bool Ativa)
+        private void limpaFormulario()
         {
             //Limpa os campos
             txtCodigoProntuario.Text = string.Empty;
             txtNome.Text = string.Empty;
-          
-            //Habilita - Desabilita os campos dados
-            //txtCep.Enabled = Ativa; //Habilita - Desabilita o campo cep
-            //txtLogradouro.Enabled = Ativa; //Habilita - Desabilita o campo logradouro
+            grdDadosPessoais.DataSource = null;
+            grdFolhaPaciente.DataSource = null;
+
         }
       
         private void txtCodigoProntuario_KeyPress(object sender, KeyPressEventArgs e)
@@ -232,14 +183,6 @@ namespace WEDLC.Forms
         {
             try
             {
-                //// Ajustando o tamanho das colunas e ocultando as que não são necessárias
-                //grdDadosPessoais.Columns[0].Width = 80; //ID
-                //grdDadosPessoais.Columns[1].Width = 350; //Nome
-                //grdDadosPessoais.Columns[2].Width = 100; //Sexo
-                //grdDadosPessoais.Columns[3].Width = 80; //nascimento
-                //grdDadosPessoais.Columns[4].Width = 80; //Telefone
-                //grdDadosPessoais.Columns[5].Width = 80; //Convenio
-
                 grdDadosPessoais.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
                 // Desabilita a edição da coluna
@@ -265,7 +208,6 @@ namespace WEDLC.Forms
             }
 
         }
-
         private DataTable buscaResultadoPaciente(int tipopesquisa, Int32 idpaciente, string nome)
         {
             try
@@ -394,268 +336,48 @@ namespace WEDLC.Forms
             }
         }
 
-        private void btnIncluiFolha_Click(object sender, EventArgs e)
+        private void btnNovo_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    //Valida dados a ser inserido
-
-            //    if (ValidaFolha == true)
-            //    {
-            //        //Se tiver pelo menos uma linha no grid especialidades...
-            //        if (grdFolha.Rows.Count > 0)
-            //        {
-            //            // Verifica se já existe a especialização no grid
-            //            bool duplicado = ValidaDuplicidadePacienteFolha(cboFolha.SelectedValue.ToString());
-
-            //            // Verifica se a especialização já foi adicionada'
-            //            if (duplicado)
-            //            {
-            //                MessageBox.Show("Folha já foi adicionada!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //                return;
-            //            }
-            //        }
-
-            //        // Adicionando uma nova linha
-            //        DataRow novaLinha = dtGrdPacienteFolha.NewRow();
-
-            //        //Como ainda não tem o ID...
-            //        if (cAcao == Acao.INSERT)
-            //        {
-            //            novaLinha["idpaciente"] = grdFolha.Rows.Count + 1; // Atribui um ID temporário baseado na contagem de linhas
-            //        }
-            //        else
-            //        {
-            //            novaLinha["idpaciente"] = txtCodigoProntuario.Text;
-            //        }
-            //        novaLinha["idfolha"] = dtComboFolha.Rows[cboFolha.SelectedIndex][0]; //id folha
-            //        novaLinha["sigla"] = dtComboFolha.Rows[cboFolha.SelectedIndex][1]; //sigla
-            //        novaLinha["nome"] = dtComboFolha.Rows[cboFolha.SelectedIndex][2]; //nome
-
-            //        dtGrdPacienteFolha.Rows.Add(novaLinha);
-            //        grdFolha.DataSource = dtGrdPacienteFolha;
-            //    }
-
-            //    else
-            //    {
-            //        MessageBox.Show("Selecione um item válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    }
-
-
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("Erro ao tentar inserir especialização!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
-        }
-        
-        private bool FiltrarComboFolha(string texto)
-        {
-            //Se infomrou alguma coisa e for diferente de selecione...
-            if (texto.Length > 0 && texto != "SELECIONE...")
-            {
-                //DataTable dt = (DataTable)cboFolha.DataSource;
-                //ValidaFolha = dt.AsEnumerable().Any(row => row.Field<string>("siglanome") == texto);
-                if (ValidaFolha == false)
-                {
-                    MessageBox.Show("Selecione um item válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    //cboFolha.Focus();
-                    //cboFolha.Text = string.Empty;
-                    return false; // Retorna falso se o item não existir
-                }
-            }
-
-            else
-            {
-                ValidaFolha = false; // Se não informou nada, não valida
-                //cboFolha.SelectedValue = 0; // Reseta o valor selecionado para 0 (Selecione...)
-            }
-
-            return true; // Retorna verdadeiro se o item existir
-        }
-               
-        private void cboFolha_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //Determina a acao e valida se vai efetuar a pesquisa
-            if (cAcao == Acao.UPDATE || cAcao == Acao.INSERT)
-            {
-                //bool retorno = FiltrarComboFolha(cboFolha.Text.ToString().ToUpper());
-            }
+            this.limpaFormulario();
         }
 
-        private void grdFolha_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void grdFolhaPaciente_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                NumeroLinha = -1;
-
+                // Verifica se a célula clicada é válida
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                 {
-                    NumeroLinha = e.RowIndex; // Armazena o número da linha selecionada
-                }
-                else
-                {
-                    MessageBox.Show("Selecione uma folha para excluir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                    // Obtém a linha selecionada
+                    DataGridViewRow row = grdFolhaPaciente.Rows[e.RowIndex];
+                    // Verifica se a linha contém dados
+                    if (row.Cells[0].Value != null && row.Cells[1].Value != null)
+                    {
+                        // Obtém o ID do paciente e o ID da folha
+                        int idpaciente = Convert.ToInt32(row.Cells[0].Value);
+                        int idfolha = Convert.ToInt32(row.Cells[1].Value);
+                        string sigla = row.Cells[2].Value.ToString();
+                        string nome = row.Cells[3].Value.ToString();
 
+                        // Cria um objeto para o form de troca de senhas abrir
+                        frmResultadoMusculoNeuro objResultadoMusculoNeuro = new frmResultadoMusculoNeuro();
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular = new cResultadoAvaliacaoMuscular();
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdResultado = Int32.Parse(row.Cells[1].Value.ToString());
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdFolha = idfolha; //Passa o id do paciente
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla; //Passa a sigla do paciente
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome; //Passa o nome do paciente
+
+                        //Abre o form de senha modal
+                        objResultadoMusculoNeuro.ShowDialog();
+
+                    }
+                }
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro ao selecionar uma folha para excluir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao tentar selecionar a folha do paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-        }
-
-        private void btnGravar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                //Valida os campos
-                if (ValidaCampos() == false)
-                {
-                    return; // Se não for válido, sai do método
-                }
-                cPaciente objcPaciente = new cPaciente();
-                //Se for novo paciente
-                if (cAcao == Acao.INSERT)
-                {
-                    // sequence
-                    //Int32 sequence = 0;
-
-                    //Preenche os dados do paciente
-                    if (PreencheDadosPaciente(objcPaciente) == false)
-                    {
-                        return; // Se não for possível preencher os dados, sai do método
-                    }
-
-                    //Grava o paciente
-                    //if (objcPaciente.incluiPaciente(out sequence)    == true)
-                    //{
-                    //    foreach (DataRow row in dtGrdPacienteFolha.Rows)
-                    //    {
-                    //        // Acessar os valores das colunas
-                    //        objcPaciente.IdPaciente = sequence;
-                    //        objcPaciente.Folha.IdFolha = Convert.ToInt32(row["idfolha"]);
-
-                    //        // Inclui a folha do paciente
-                    //        if (objcPaciente.incluiPacienteFolha() == false)
-                    //        {
-                    //            MessageBox.Show("Erro ao tentar incluir a folha do paciente!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //            return;
-                    //        }
-                    //    }
-
-                    //    MessageBox.Show("Inclusão efetuada com sucesso!. Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                    //    return;
-                    //}
-
-                    //else
-                    //{
-                    //    MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //    return;
-                    //}
-                }
-
-                //Se for atualização de paciente
-                if (cAcao == Acao.UPDATE)
-                {
-
-                    //Preenche os dados do paciente
-                    if (PreencheDadosPaciente(objcPaciente) == false)
-                    {
-                        return; // Se não for possível preencher os dados, sai do método
-                    }
-
-                    // limpa o contador
-                    //int contador = 0;
-
-                    //foreach (DataRow row in dtGrdPacienteFolha.Rows)
-                    //{
-
-                    //    // Acessar os valores das colunas
-                    //    objcPaciente.IdPaciente = int.Parse(row["idpaciente"].ToString());
-                    //    objcPaciente.IdFolha = int.Parse(row["idfolha"].ToString());
-
-                    //    //Se for a primeira linha do loop da folha, o sistema entende que é necesseário apagar a tabela de especializacao do medico
-                    //    if (contador == 0)
-                    //    {
-                    //        objcPaciente.Apaga = true;
-                    //    }
-                    //    //Se não... apagar não é necessário
-                    //    else
-                    //    {
-                    //        objcPaciente.Apaga = false;
-                    //    }
-                    //    // Atualiza a especialização do médico
-                    //    if (objcPaciente.atualizaPaciente() == true)
-                    //    {
-                    //        //incrementa contador
-                    //        contador++;
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show("Erro ao tentar atualizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //        return;
-                    //    }
-                    //}
-
-                    MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                    return;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao tentar gravar o paciente: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private bool ValidaCampos()
-        {
-            //Valida os campos obrigatórios
-            if (string.IsNullOrEmpty(txtNome.Text))
-            {
-                MessageBox.Show("O campo Nome é obrigatório!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtNome.Focus();
-                return false;
-            }
-            //if (cboSexo.SelectedIndex == 0)
-            //{
-            //    MessageBox.Show("Selecione o Sexo do paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    cboSexo.Focus();
-            //    return false;
-            //}
-
-            //Se chegou aqui, todos os campos obrigatórios estão preenchidos
-            return true;
-        }
-
-        private bool PreencheDadosPaciente(cPaciente objcPaciente)
-        {
-            try
-            {
-                //Preenche os dados do paciente
-                if (string.IsNullOrWhiteSpace(txtCodigoProntuario.Text))
-                {
-                    objcPaciente.IdPaciente = 0;
-                }
-                else
-                {
-                    objcPaciente.IdPaciente = int.Parse(txtCodigoProntuario.Text);
-                }
-                objcPaciente.Nome = txtNome.Text.ToUpper();
-                //objcPaciente.IdConvenio = int.Parse(cboConvenio.SelectedValue.ToString());
-
-                return true; // Retorna verdadeiro se os dados foram preenchidos corretamente
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao tentar preencher os dados do paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false; // Retorna falso se houve erro ao preencher os dados
-            }
-
         }
     }
 }

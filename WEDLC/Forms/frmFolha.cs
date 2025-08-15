@@ -1225,6 +1225,9 @@ namespace WEDLC.Forms
                 grpNeuroCondMotora.Enabled = false; // Habilita o grupo de neuro condução motora
                 grpNeuroCondSensorial.Enabled = false; // Habilita o grupo de neuro condução sensorial
                 grpEstudoPotenEvocado.Enabled = false; // Desabilita o grupo de estudo potencial
+                btnComplemento.Enabled = true;
+                MessageBox.Show("Para este tipo de folha, não existe complemento.","Aviso",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
 
             else if (cboTipo.SelectedIndex == 3) //RAIZ

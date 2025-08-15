@@ -123,6 +123,7 @@
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
     <Compile Include="Banco\cAtividadeInsercao.cs" />
+    <Compile Include="Banco\cResultadoAvaliacaoMuscular.cs" />
     <Compile Include="Banco\cPotenciais.cs" />
     <Compile Include="Banco\cExame.cs" />
     <Compile Include="Banco\cIP.cs" />
@@ -182,6 +183,12 @@
     </Compile>
     <Compile Include="Forms\frmMedico.Designer.cs">
       <DependentUpon>frmMedico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmResultadoMusculoNeuro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmResultadoMusculoNeuro.Designer.cs">
+      <DependentUpon>frmResultadoMusculoNeuro.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmResultado.cs">
       <SubType>Form</SubType>
@@ -268,6 +275,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmMedico.resx">
       <DependentUpon>frmMedico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmResultadoMusculoNeuro.resx">
+      <DependentUpon>frmResultadoMusculoNeuro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmResultado.resx">
       <DependentUpon>frmResultado.cs</DependentUpon>
