@@ -291,7 +291,6 @@ namespace WEDLC.Forms
 
                 dtGrdFolhaPaciente = new DataTable();
                 dtGrdFolhaPaciente = this.buscaResultadoFolha(idpaciente);
-
                 grdFolhaPaciente.DataSource = null;
 
                 //Renomeia as colunas do datatable
@@ -362,10 +361,10 @@ namespace WEDLC.Forms
                         // Cria um objeto para o form de troca de senhas abrir
                         frmResultadoMusculoNeuro objResultadoMusculoNeuro = new frmResultadoMusculoNeuro();
                         objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular = new cResultadoAvaliacaoMuscular();
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdResultado = Int32.Parse(row.Cells[1].Value.ToString());
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdFolha = idfolha; //Passa o id do paciente
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla; //Passa a sigla do paciente
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome; //Passa o nome do paciente
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdPaciente = idpaciente;
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdFolha = idfolha; 
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla; 
+                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome; 
 
                         //Abre o form de senha modal
                         objResultadoMusculoNeuro.ShowDialog();

@@ -242,7 +242,7 @@
             this.Name = "frmComentarios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Comentários";
-            this.Load += new System.EventHandler(this.frmMusculo_Load);
+            this.Load += new System.EventHandler(this.frmComentarios_Load);
             this.grpBoxDados.ResumeLayout(false);
             this.grpBoxDados.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDados)).EndInit();

@@ -23,14 +23,27 @@ namespace WEDLC.Forms
         //Código do módulo
         public const int codModulo = 1;
 
+        //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
+        public bool VemdeResultado { get; set; } = false;
+        public int IdAatividadeInsercao { get; set; }
+        public string Nome { get; set; }
+        public string Sigla { get; set; }
+        public string Texto { get; set; }
+
         public frmPotenciais()
         {
             InitializeComponent();
         }
 
-        private void frmMusculo_Load(object sender, EventArgs e)
+        private void frmPotenciais_Load(object sender, EventArgs e)
         {
             carregaTela();
+
+            // Se a chamada for do formulário de resultado, desabilita o botão novo
+            if (VemdeResultado == true)
+            {
+                btnNovo.Enabled = false;
+            }
         }
 
         public void carregaTela()
@@ -352,7 +365,28 @@ namespace WEDLC.Forms
 
         private void btnSair_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (VemdeResultado)
+            {
+                if (!string.IsNullOrWhiteSpace(txtCodigo.Text))
+                {
+                    // Preenche as propriedades públicas com os dados do formulário
+                    this.IdAatividadeInsercao = Int32.Parse(txtCodigo.Text);
+                    this.Sigla = txtSigla.Text;
+                    this.Nome = txtNome.Text;
+                    this.Texto = txtTexto.Text;
+
+                    // Define o resultado do diálogo como OK
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    this.DialogResult = DialogResult.Cancel;
+                }
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -378,6 +412,23 @@ namespace WEDLC.Forms
                 grdDados.Enabled = false;
 
                 txtSigla.Focus();
+
+                // Se a chamada for do formulário de resultado, desabilita...
+                if (VemdeResultado == true)
+                {
+                    //Desabilita botões
+                    btnNovo.Enabled = false;
+                    btnGravar.Enabled = false;
+                    btnCancelar.Enabled = false;
+                    btnExcluir.Enabled = false;
+                    //Desabilita os campos
+                    txtCodigo.Enabled = false;
+                    txtSigla.Enabled = false;
+                    txtNome.Enabled = false;
+                    txtTexto.Enabled = false;
+                    //Habilita o grid
+                    grdDados.Enabled = true;
+                }
             }
 
             // Desabilita a edição da coluna

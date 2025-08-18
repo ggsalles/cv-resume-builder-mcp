@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlTypes;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using WEDLC.Banco;
 
 namespace WEDLC.Forms
@@ -20,17 +13,9 @@ namespace WEDLC.Forms
         // Create a ToolTip component
         ToolTip toolTip1 = new ToolTip();
 
-        public Acao cAcao = Acao.CANCELAR;
         public cResultadoAvaliacaoMuscular objResultadoAvaliacaoMuscular;
-
-        public enum Acao
-        {
-            INSERT = 0,
-            UPDATE = 1,
-            DELETE = 2,
-            SAVE = 3,
-            CANCELAR = 4,
-        }
+        public cResultadoNeuroCondMotora objResultadoNeuroCondMotora;
+        public cAtividadeInsercao objAtividadeInsercao;
 
         public frmResultadoMusculoNeuro()
         {
@@ -43,14 +28,14 @@ namespace WEDLC.Forms
             toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
             //toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
         }
-
+              
         private void frmPaciente_Load(object sender, EventArgs e)
         {
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
             this.Text = "Folha: " + objResultadoAvaliacaoMuscular.Sigla.ToString() + " - " + objResultadoAvaliacaoMuscular.Nome.ToString();
-            
-            if (CarregaAvaliacaoMuscular()==false)
+
+            if (CarregaAvaliacaoMuscular() == false)
             {
                 return;
             }
@@ -60,207 +45,24 @@ namespace WEDLC.Forms
                 return;
             }
 
+            if (CarregaVelocidadeNeuroCondSensorial() == false)
+            {
+                return;
+            }
+
         }
         private void btnSair_Click(object sender, EventArgs e)
         {
             Close();
         }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            //Determina a acao
-            cAcao = Acao.CANCELAR;
-
-            controlaBotao();
-
-            this.liberaCampos(false); //Libera os campos para edição
-
-        }
-
-        private void controlaBotao()
-        {
-            //Se clicou em novo
-            if (cAcao == Acao.INSERT)
-            {
-                btnNovo.Enabled = false;
-                btnGravar.Enabled = true;
-                btnCancelar.Enabled = true;
-                btnExcluir.Enabled = false;
-            }
-
-            //Se clicou no grid
-            if (cAcao == Acao.UPDATE)
-            {
-                btnNovo.Enabled = false;
-                btnGravar.Enabled = true;
-                btnCancelar.Enabled = true;
-                btnExcluir.Enabled = false;
-            }
-
-            //Se clicou no grid
-            if (cAcao == Acao.CANCELAR)
-            {
-                btnNovo.Enabled = true;
-                btnGravar.Enabled = false;
-                btnCancelar.Enabled = false;
-                btnExcluir.Enabled = false;
-            }
-        }
-
-        private void liberaCampos(bool Ativa)
-        {
-            //Limpa os campos
-
-            //Habilita - Desabilita os campos dados
-            //txtCep.Enabled = Ativa; //Habilita - Desabilita o campo cep
-            //txtLogradouro.Enabled = Ativa; //Habilita - Desabilita o campo logradouro
-        }
-
-        private DataTable buscaResultadoPaciente(int tipopesquisa, Int32 idpaciente, string nome)
-        {
-            try
-            {
-                DataTable dtAux = new DataTable();
-                cResultado objcResultado = new cResultado();
-
-                objcResultado.TipoPesquisa = tipopesquisa; //Tipo de pesquisa
-                objcResultado.Paciente.IdPaciente = idpaciente; //Código da especialização
-                objcResultado.Paciente.Nome = nome; //Nome da especialização
-
-                dtAux = objcResultado.buscaResultadoPaciente();
-
-                return dtAux;
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao tentar buscar o paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return new DataTable(); // Return an empty DataTable to fix CS0126  
-            }
-        }
-
-
-        private DataTable buscaResultadoFolha(Int32 idpaciente)
-        {
-            try
-            {
-                DataTable dtAux = new DataTable();
-                cResultado objcResultado = new cResultado();
-
-                objcResultado.Paciente.IdPaciente = idpaciente; //Código do paciente
-                dtAux = objcResultado.buscaResultadoFolha();
-
-                return dtAux;
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao tentar buscar a folha do paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return new DataTable(); // Return an empty DataTable to fix CS0126  
-            }
-        }
-
-        private void btnGravar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                //Valida os campos
-
-                cPaciente objcPaciente = new cPaciente();
-                //Se for novo paciente
-                if (cAcao == Acao.INSERT)
-                {
-                    // sequence
-                    //Int32 sequence = 0;
-
-                    //Preenche os dados do paciente
-
-
-                    //Grava o paciente
-                    //if (objcPaciente.incluiPaciente(out sequence)    == true)
-                    //{
-                    //    foreach (DataRow row in dtGrdPacienteFolha.Rows)
-                    //    {
-                    //        // Acessar os valores das colunas
-                    //        objcPaciente.IdPaciente = sequence;
-                    //        objcPaciente.Folha.IdFolha = Convert.ToInt32(row["idfolha"]);
-
-                    //        // Inclui a folha do paciente
-                    //        if (objcPaciente.incluiPacienteFolha() == false)
-                    //        {
-                    //            MessageBox.Show("Erro ao tentar incluir a folha do paciente!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //            return;
-                    //        }
-                    //    }
-
-                    //    MessageBox.Show("Inclusão efetuada com sucesso!. Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                    //    return;
-                    //}
-
-                    //else
-                    //{
-                    //    MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //    return;
-                    //}
-                }
-
-                //Se for atualização de paciente
-                if (cAcao == Acao.UPDATE)
-                {
-
-                    // limpa o contador
-                    //int contador = 0;
-
-                    //foreach (DataRow row in dtGrdPacienteFolha.Rows)
-                    //{
-
-                    //    // Acessar os valores das colunas
-                    //    objcPaciente.IdPaciente = int.Parse(row["idpaciente"].ToString());
-                    //    objcPaciente.IdFolha = int.Parse(row["idfolha"].ToString());
-
-                    //    //Se for a primeira linha do loop da folha, o sistema entende que é necesseário apagar a tabela de especializacao do medico
-                    //    if (contador == 0)
-                    //    {
-                    //        objcPaciente.Apaga = true;
-                    //    }
-                    //    //Se não... apagar não é necessário
-                    //    else
-                    //    {
-                    //        objcPaciente.Apaga = false;
-                    //    }
-                    //    // Atualiza a especialização do médico
-                    //    if (objcPaciente.atualizaPaciente() == true)
-                    //    {
-                    //        //incrementa contador
-                    //        contador++;
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show("Erro ao tentar atualizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //        return;
-                    //    }
-                    //}
-
-                    MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                    return;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao tentar gravar o paciente: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+       
         public bool CarregaAvaliacaoMuscular()
         {
             try
             {
                 // Define o IdFolha e IdResultado com base no objeto atual
                 objResultadoAvaliacaoMuscular.IdFolha = this.objResultadoAvaliacaoMuscular.IdFolha;
-                objResultadoAvaliacaoMuscular.IdResultado = this.objResultadoAvaliacaoMuscular.IdResultado;
+                objResultadoAvaliacaoMuscular.IdPaciente = this.objResultadoAvaliacaoMuscular.IdPaciente;
                 // Busca os dados da avaliação muscular
                 DataTable dtGridAvaliacaoMuscular = objResultadoAvaliacaoMuscular.buscaResultadoAvaliacaoMuscular();
 
@@ -285,7 +87,6 @@ namespace WEDLC.Forms
             }
 
         }
-
         private void configuraGridAvaliacaoMuscular()
         {
             try
@@ -317,7 +118,6 @@ namespace WEDLC.Forms
             }
 
         }
-
         private void grdAvaliacaoMuscular_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             // Verifica se é a coluna/célula específica que você quer restringir
@@ -393,11 +193,15 @@ namespace WEDLC.Forms
         {
             try
             {
+                // Cria uma instância do objeto cResultadoNeuroCondMotora
+                cResultadoNeuroCondMotora objResultadoNeuroCondMotora = new cResultadoNeuroCondMotora();
+
                 // Define o IdFolha e IdResultado com base no objeto atual
-                objResultadoAvaliacaoMuscular.IdFolha = this.objResultadoAvaliacaoMuscular.IdFolha;
-                objResultadoAvaliacaoMuscular.IdResultado = this.objResultadoAvaliacaoMuscular.IdResultado;
+                objResultadoNeuroCondMotora.IdFolha = this.objResultadoAvaliacaoMuscular.IdFolha;
+                objResultadoNeuroCondMotora.IdPaciente = this.objResultadoAvaliacaoMuscular.IdPaciente;
+
                 // Busca os dados da avaliação muscular
-                DataTable dtGridNeuroCondMotora = objResultadoAvaliacaoMuscular.buscaResultadoNeuroCondMotora();
+                DataTable dtGridNeuroCondMotora = objResultadoNeuroCondMotora.buscaResultadoNeuroCondMotora();
 
                 grdNeuroConducaoMotora.DataSource = null;
 
@@ -423,7 +227,6 @@ namespace WEDLC.Forms
                 return false; // Falha ao carregar os dados
             }
         }
-
         private void configuraGridNeuroCondMotora()
         {
             try
@@ -458,7 +261,6 @@ namespace WEDLC.Forms
             }
 
         }
-
         private void grdNeuroConducaoMotora_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             // Verifica se é a coluna/célula específica que você quer restringir
@@ -479,7 +281,6 @@ namespace WEDLC.Forms
                 }
             }
         }
-
         private void tb_KeyPressDecimal(object sender, KeyPressEventArgs e)
         {
             TextBox tb = sender as TextBox;
@@ -505,7 +306,6 @@ namespace WEDLC.Forms
                 return;
             }
         }
-
         private void grdNeuroConducaoMotora_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (grdNeuroConducaoMotora.CurrentCell.ColumnIndex == grdNeuroConducaoMotora.Columns[4].Index ||
@@ -523,6 +323,203 @@ namespace WEDLC.Forms
                     cell.Value = valor.ToString("N2");
                 }
             }
+
+        }
+        public bool CarregaNeuroCondSensorial()
+        {
+            try
+            {
+                // Define o IdFolha e IdResultado com base no objeto atual
+                objResultadoNeuroCondMotora.IdFolha = this.objResultadoAvaliacaoMuscular.IdFolha;
+                objResultadoNeuroCondMotora.IdResultado = this.objResultadoAvaliacaoMuscular.IdResultado;
+                // Busca os dados da avaliação muscular
+                DataTable dtGridNeuroCondMotora = objResultadoNeuroCondMotora.buscaResultadoNeuroCondMotora();
+
+                grdNeuroConducaoMotora.DataSource = null;
+
+                //Renomeia as colunas do datatable
+                dtGridNeuroCondMotora.Columns["sigla"].ColumnName = "Sigla";
+                dtGridNeuroCondMotora.Columns["nome"].ColumnName = "Nome";
+                dtGridNeuroCondMotora.Columns["velocidadedireito"].ColumnName = "Vel.Direito";
+                dtGridNeuroCondMotora.Columns["velocidadeesquerdo"].ColumnName = "Vel.Esquerdo";
+                dtGridNeuroCondMotora.Columns["latenciadireito"].ColumnName = "Lat.Direito";
+                dtGridNeuroCondMotora.Columns["latenciaesquerdo"].ColumnName = "Lat.Esquerdo";
+
+                grdNeuroConducaoMotora.SuspendLayout();
+                grdNeuroConducaoMotora.DataSource = dtGridNeuroCondMotora;
+                configuraGridNeuroCondMotora(); // Configura o grid de dados
+                grdNeuroConducaoMotora.ResumeLayout();
+
+                return true; // Sucesso ao carregar os dados
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar avaliação muscular: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Falha ao carregar os dados
+            }
+        }
+
+        public bool CarregaVelocidadeNeuroCondSensorial()
+        {
+            try
+            {
+                // Cria uma instância do objeto cResultadoNeuroCondMotora
+                cResultadoNeuroCondSensorial objResultadoNeuroCondSensorial = new cResultadoNeuroCondSensorial();
+
+                // Define o IdFolha e IdResultado com base no objeto atual
+                objResultadoNeuroCondSensorial.IdFolha = this.objResultadoAvaliacaoMuscular.IdFolha;
+                objResultadoNeuroCondSensorial.IdPaciente = this.objResultadoAvaliacaoMuscular.IdPaciente;
+
+                // Busca os dados da avaliação muscular
+                DataTable dtGridNeuroCondSensorial = objResultadoNeuroCondSensorial.buscaResultadoNeuroCondSensorial();
+
+                grdNeuroConducaoSensorial.DataSource = null;
+
+                //Renomeia as colunas do datatable
+                dtGridNeuroCondSensorial.Columns["sigla"].ColumnName = "Sigla";
+                dtGridNeuroCondSensorial.Columns["nome"].ColumnName = "Nome";
+                dtGridNeuroCondSensorial.Columns["latenciadireito"].ColumnName = "Lat.Direito";
+                dtGridNeuroCondSensorial.Columns["latenciaesquerdo"].ColumnName = "Lat.Esquerdo";
+
+                grdNeuroConducaoSensorial.SuspendLayout();
+                grdNeuroConducaoSensorial.DataSource = dtGridNeuroCondSensorial;
+                configuraGridNeuroCondSensorial(); // Configura o grid de dados
+                grdNeuroConducaoSensorial.ResumeLayout();
+
+                return true; // Sucesso ao carregar os dados
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar avaliação muscular: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Falha ao carregar os dados
+            }
+        }
+
+        private void configuraGridNeuroCondSensorial()
+        {
+            try
+            {
+                grdNeuroConducaoSensorial.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                // Desabilita a edição da coluna
+                grdNeuroConducaoSensorial.Columns[0].ReadOnly = true;
+                grdNeuroConducaoSensorial.Columns[1].ReadOnly = true;
+                grdNeuroConducaoSensorial.Columns[2].ReadOnly = true;
+                grdNeuroConducaoSensorial.Columns[3].ReadOnly = true;
+                grdNeuroConducaoSensorial.Columns[4].ReadOnly = false;
+                grdNeuroConducaoSensorial.Columns[5].ReadOnly = false;
+
+                //Oculta colunas que não são necessárias
+                grdNeuroConducaoSensorial.Columns["idfolha"].Visible = false; // Oculta a coluna IdFolha
+                grdNeuroConducaoSensorial.Columns["idresultado"].Visible = false; // Oculta a coluna IdResultado
+
+                // Configurando outras propriedades
+                grdNeuroConducaoSensorial.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
+                grdNeuroConducaoSensorial.MultiSelect = false; // Impede seleção múltipla
+                grdNeuroConducaoSensorial.AllowUserToAddRows = false; // Impede adição de novas linhas
+                grdNeuroConducaoSensorial.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
+                grdNeuroConducaoSensorial.CurrentCell = null; // Desmarca a célula atual
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar configurar o grid de dados!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+        private void grdNeuroConducaoSensorial_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            // Verifica se é a coluna/célula específica que você quer restringir
+            if (grdNeuroConducaoSensorial.CurrentCell.ColumnIndex == grdNeuroConducaoSensorial.Columns[4].Index ||
+                grdNeuroConducaoSensorial.CurrentCell.ColumnIndex == grdNeuroConducaoSensorial.Columns[5].Index)
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    // Remove o handler anterior para evitar múltiplas atribuições
+                    tb.KeyPress -= new KeyPressEventHandler(tb_KeyPressDecimal);
+                    // Adiciona o novo handler
+                    tb.KeyPress += new KeyPressEventHandler(tb_KeyPressDecimal);
+                    // Define o tamanho máximo do texto como 1
+                    tb.MaxLength = 10;
+                }
+            }
+        }
+        private void grdNeuroConducaoSensorial_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (grdNeuroConducaoSensorial.CurrentCell.ColumnIndex == grdNeuroConducaoSensorial.Columns[4].Index ||
+                grdNeuroConducaoSensorial.CurrentCell.ColumnIndex == grdNeuroConducaoSensorial.Columns[5].Index)
+            {
+                var cell = grdNeuroConducaoSensorial.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (cell.Value == null || string.IsNullOrEmpty(cell.Value.ToString()))
+                {
+                    cell.Value = "0,00";
+                }
+                else if (decimal.TryParse(cell.Value.ToString(), out decimal valor))
+                {
+                    cell.Value = valor.ToString("N2");
+                }
+            }
+
+        }
+
+        private void btnAtividadeInsercao_Click(object sender, EventArgs e)
+        {
+            frmAtividadeInsercao objfrmAtividadeInsercao = new frmAtividadeInsercao();
+
+            // Passa o objeto cAtividadeInsercao para o formulário B
+            objfrmAtividadeInsercao.VemdeResultado = true;
+
+            // Mostra o diálogo e verifica se foi preenchido
+            if (objfrmAtividadeInsercao.ShowDialog() == DialogResult.OK)
+            {
+                // Acessa os dados diretamente do formulário B
+                txtCodAtividade.Text = objfrmAtividadeInsercao.IdAatividadeInsercao.ToString();
+                txtNomeAtividade.Text = objfrmAtividadeInsercao.Nome;
+                txtSiglaAtividade.Text = objfrmAtividadeInsercao.Sigla;
+                txtTextoAtividade.Text = objfrmAtividadeInsercao.Texto;
+            }
+        }
+
+        private void btnPotenciaisUnidade_Click(object sender, EventArgs e)
+        {
+            frmPotenciais objfrmPotenciais = new frmPotenciais();
+
+            // Passa o objeto cAtividadeInsercao para o formulário B
+            objfrmPotenciais.VemdeResultado = true;
+
+            // Mostra o diálogo e verifica se foi preenchido
+            if (objfrmPotenciais.ShowDialog() == DialogResult.OK)
+            {
+                // Acessa os dados diretamente do formulário B
+                txtCodigoPotencial.Text = objfrmPotenciais.IdAatividadeInsercao.ToString();
+                txtNomePotencial.Text = objfrmPotenciais.Nome;
+                txtSiglaPotencial.Text = objfrmPotenciais.Sigla;
+                txtTextoPotencial.Text = objfrmPotenciais.Texto;
+            }
+        }
+
+        private void btnComentario_Click(object sender, EventArgs e)
+        {
+            frmComentarios objfrmComentarios = new frmComentarios();
+
+            // Passa o objeto cAtividadeInsercao para o formulário B
+            objfrmComentarios.VemdeResultado = true;
+
+            // Mostra o diálogo e verifica se foi preenchido
+            if (objfrmComentarios.ShowDialog() == DialogResult.OK)
+            {
+                // Acessa os dados diretamente do formulário B
+                txtCodigoComentario.Text = objfrmComentarios.IdAatividadeInsercao.ToString();
+                txtNomeComentario.Text = objfrmComentarios.Nome;
+                txtSiglaComentario.Text = objfrmComentarios.Sigla;
+                txtTextoComentario.Text = objfrmComentarios.Texto;
+            }
+        }
+
+        private void btnGravar_Click(object sender, EventArgs e)
+        {
 
         }
     }

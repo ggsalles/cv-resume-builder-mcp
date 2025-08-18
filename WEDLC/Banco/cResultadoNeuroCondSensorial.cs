@@ -1,12 +1,10 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
-    public class cResultadoAvaliacaoMuscular
+    public class cResultadoNeuroCondSensorial
     {
         public Int32 IdPaciente { get; set; }
         public Int32 IdFolha { get; set; }
@@ -33,7 +31,7 @@ namespace WEDLC.Banco
             }
         }
 
-        public DataTable buscaResultadoAvaliacaoMuscular()
+        public DataTable buscaResultadoNeuroCondSensorial()
         {
             // Validação básica dos parâmetros
 
@@ -47,11 +45,11 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var sqlDa = new MySqlDataAdapter("pr_buscaresultadoavaliacaomuscular", conexao))
+                using (var sqlDa = new MySqlDataAdapter("pr_buscaresultadoneurocondsensorial", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", IdFolha);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente > 0 ? IdPaciente: (object)DBNull.Value);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
 
                     sqlDa.Fill(dt);
                     return dt;
@@ -60,7 +58,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro na busca do convenio: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro na busca da pr_buscaresultadoneurocondsensorial: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
