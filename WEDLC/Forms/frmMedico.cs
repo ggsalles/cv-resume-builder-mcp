@@ -402,6 +402,7 @@ namespace WEDLC.Forms
             grdDadosPessoais.AllowUserToAddRows = false; // Impede adição de novas linhas
             grdDadosPessoais.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
             grdDadosPessoais.CurrentCell = null; // Desmarca a célula atual
+            grdDadosPessoais.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
         }
 
         private void controlaBotao()
@@ -645,6 +646,7 @@ namespace WEDLC.Forms
             grdEspecialidade.AllowUserToAddRows = false; // Impede adição de novas linhas
             grdEspecialidade.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
             grdEspecialidade.CurrentCell = null; // Desmarca a célula atual
+            grdEspecialidade.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
         }
 
         private void CarregaComboEspecialidadeMedico()

@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
@@ -9,7 +10,7 @@ namespace WEDLC.Banco
         public Int32 IdPaciente { get; set; }
         public Int32 IdResultado { get; set; }
         public Int32 IdPotenciaisUnidade { get; set; }
-        public Int32 IdResultadoPotenciaisUnidade{ get; set; }
+        public Int32 IdResultadoPotenciaisUnidade { get; set; }
         public string Texto { get; set; }
 
         // Construtor
@@ -68,6 +69,43 @@ namespace WEDLC.Banco
             finally
             {
                 conexao?.Close();
+            }
+        }
+
+        public bool gravaResultadoPotencialUnidade()
+        {
+            if (!conectaBanco())
+            {
+                return false;
+            }
+
+            try
+            {
+                using (var command = new MySqlCommand("pr_incluiresultadopotencialunidade", conexao))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddRange(new MySqlParameter[]
+                    {
+                new MySqlParameter("pIdPotenciaisUnidade", MySqlDbType.Int32) { Value = IdPotenciaisUnidade },
+                new MySqlParameter("pIdResultado", MySqlDbType.Int32) { Value = IdResultado},
+                new MySqlParameter("pTexto", MySqlDbType.VarChar) { Value = Texto ?? string.Empty },
+                    });
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected >= 0; // Considera sucesso se qualquer linha foi afetada
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Logar o erro (ex.Message, ex.StackTrace) para diagnóstico
+                MessageBox.Show($"Erro ao incluir/atualizar pr_incluiresultadopotencialunidade: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                if (conexao?.State == ConnectionState.Open)
+                    conexao.Close();
             }
         }
     }

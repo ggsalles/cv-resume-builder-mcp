@@ -132,6 +132,7 @@ namespace WEDLC.Forms
                 grdAvaliacaoMuscular.AllowUserToAddRows = false; // Impede adição de novas linhas
                 grdAvaliacaoMuscular.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
                 grdAvaliacaoMuscular.CurrentCell = null; // Desmarca a célula atual
+                grdAvaliacaoMuscular.AllowUserToDeleteRows = false;
             }
             catch (Exception)
             {
@@ -278,6 +279,7 @@ namespace WEDLC.Forms
                 grdNeuroConducaoMotora.AllowUserToAddRows = false; // Impede adição de novas linhas
                 grdNeuroConducaoMotora.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
                 grdNeuroConducaoMotora.CurrentCell = null; // Desmarca a célula atual
+                grdAvaliacaoMuscular.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
             }
             catch (Exception)
             {
@@ -450,6 +452,7 @@ namespace WEDLC.Forms
                 grdNeuroConducaoSensorial.AllowUserToAddRows = false; // Impede adição de novas linhas
                 grdNeuroConducaoSensorial.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
                 grdNeuroConducaoSensorial.CurrentCell = null; // Desmarca a célula atual
+                grdNeuroConducaoSensorial.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
             }
             catch (Exception)
             {
@@ -560,6 +563,21 @@ namespace WEDLC.Forms
             }
 
             if (GravaNeuroConducaoSensorial() == false)
+            {
+                return;
+            }
+
+            if (GravaAtividadeInsercao() == false)
+            {
+                return;
+            }
+
+            if (GravaPotencialUnidade() == false)
+            {
+                return;
+            }
+
+            if (GravaComentario() == false)
             {
                 return;
             }
@@ -771,6 +789,96 @@ namespace WEDLC.Forms
             {
                 MessageBox.Show("Erro na CarregaComentario: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false; // Falha ao carregar os dados
+            }
+        }
+
+        private bool GravaAtividadeInsercao()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(txtCodAtividade.Text))
+                {
+                    // Cria uma instância do objeto cResultadoAvaliacaoMuscular
+                    cResultadoAtividadeInsercao objResultadoAtividadeInsercao = new cResultadoAtividadeInsercao();
+
+                    objResultadoAtividadeInsercao.IdAtividadeInsercao = txtCodAtividade.Text != string.Empty ? Int32.Parse(txtCodAtividade.Text) : 0;
+                    objResultadoAtividadeInsercao.IdResultado = IdResultado;
+                    objResultadoAtividadeInsercao.Texto = txtTextoAtividade.Text;
+
+                    // Chama o método para gravar os dados
+                    if (!objResultadoAtividadeInsercao.gravaResultadoAtividadeInsercao())
+                    {
+                        MessageBox.Show("Erro ao gravar gravaResultadoAtividadeInsercao.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false; // Falha ao gravar os dados
+                    }
+                }
+
+                return true; // Sucesso ao gravar os dados
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao gravar gravaResultadoAtividadeInsercao: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Falha ao gravar os dados
+            }
+        }
+
+        private bool GravaPotencialUnidade()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(txtCodigoPotencial.Text))
+                {
+                    // Cria uma instância do objeto cResultadoAvaliacaoMuscular
+                    cResultadoPotenciaisUnidadeMotora objResultadoPotenciaisUnidadeMotora = new cResultadoPotenciaisUnidadeMotora();
+
+                    objResultadoPotenciaisUnidadeMotora.IdPotenciaisUnidade = txtCodigoPotencial.Text != string.Empty ? Int32.Parse(txtCodigoPotencial.Text) : 0;
+                    objResultadoPotenciaisUnidadeMotora.IdResultado = IdResultado;
+                    objResultadoPotenciaisUnidadeMotora.Texto = txtTextoPotencial.Text;
+
+                    // Chama o método para gravar os dados
+                    if (!objResultadoPotenciaisUnidadeMotora.gravaResultadoPotencialUnidade())
+                    {
+                        MessageBox.Show("Erro ao gravar gravaResultadoPotencialUnidade.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false; // Falha ao gravar os dados
+                    }
+                }
+
+                return true; // Sucesso ao gravar os dados
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao gravar gravaResultadoPotencialUnidade: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Falha ao gravar os dados
+            }
+        }
+
+        private bool GravaComentario()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(txtCodigoComentario.Text))
+                {
+                    // Cria uma instância do objeto cResultadoAvaliacaoMuscular
+                    cResultadoComentario objResultadoComentario = new cResultadoComentario();
+
+                    objResultadoComentario.IdComentario = txtCodigoComentario.Text != string.Empty ? Int32.Parse(txtCodigoComentario.Text) : 0;
+                    objResultadoComentario.IdResultado = IdResultado;
+                    objResultadoComentario.Texto = txtTextoComentario.Text;
+
+                    // Chama o método para gravar os dados
+                    if (!objResultadoComentario.gravaResultadoComentario())
+                    {
+                        MessageBox.Show("Erro ao gravar GravaComentario.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false; // Falha ao gravar os dados
+                    }
+                }
+
+                return true; // Sucesso ao gravar os dados
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao gravar GravaComentario: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Falha ao gravar os dados
             }
         }
     }

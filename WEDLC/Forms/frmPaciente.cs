@@ -622,6 +622,7 @@ namespace WEDLC.Forms
                 grdDadosPessoais.AllowUserToAddRows = false; // Impede adição de novas linhas
                 grdDadosPessoais.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
                 grdDadosPessoais.CurrentCell = null; // Desmarca a célula atual
+                grdDadosPessoais.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
             }
             catch (Exception)
             {
@@ -747,6 +748,7 @@ namespace WEDLC.Forms
                 grdFolha.AllowUserToAddRows = false; // Impede adição de novas linhas
                 grdFolha.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
                 grdFolha.CurrentCell = null; // Desmarca a célula atual
+                grdFolha.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
 
                 return true;
             }

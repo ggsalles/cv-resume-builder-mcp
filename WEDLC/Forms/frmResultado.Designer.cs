@@ -36,7 +36,7 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.grpBotoes = new System.Windows.Forms.GroupBox();
             this.btnSair = new System.Windows.Forms.Button();
-            this.btnNovo = new System.Windows.Forms.Button();
+            this.btnLimpar = new System.Windows.Forms.Button();
             this.grpfolha = new System.Windows.Forms.GroupBox();
             this.grdFolhaPaciente = new System.Windows.Forms.DataGridView();
             this.grpPaciente.SuspendLayout();
@@ -110,7 +110,7 @@
             // grpBotoes
             // 
             this.grpBotoes.Controls.Add(this.btnSair);
-            this.grpBotoes.Controls.Add(this.btnNovo);
+            this.grpBotoes.Controls.Add(this.btnLimpar);
             this.grpBotoes.Location = new System.Drawing.Point(11, 340);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(717, 49);
@@ -129,18 +129,17 @@
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
-            // btnNovo
+            // btnLimpar
             // 
-            this.btnNovo.Image = global::WEDLC.Properties.Resources.add;
-            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNovo.Location = new System.Drawing.Point(7, 14);
-            this.btnNovo.Name = "btnNovo";
-            this.btnNovo.Size = new System.Drawing.Size(85, 27);
-            this.btnNovo.TabIndex = 25;
-            this.btnNovo.Text = "Novo";
-            this.btnNovo.UseVisualStyleBackColor = true;
-            this.btnNovo.Visible = false;
-            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+            this.btnLimpar.Image = global::WEDLC.Properties.Resources.trash;
+            this.btnLimpar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLimpar.Location = new System.Drawing.Point(7, 14);
+            this.btnLimpar.Name = "btnLimpar";
+            this.btnLimpar.Size = new System.Drawing.Size(85, 27);
+            this.btnLimpar.TabIndex = 25;
+            this.btnLimpar.Text = "Limpar";
+            this.btnLimpar.UseVisualStyleBackColor = true;
+            this.btnLimpar.Click += new System.EventHandler(this.btnLimpar_Click);
             // 
             // grpfolha
             // 
@@ -197,7 +196,7 @@
         private System.Windows.Forms.Label lblNome;
         private System.Windows.Forms.TextBox txtCodigoProntuario;
         private System.Windows.Forms.Label lblCodigo;
-        private System.Windows.Forms.Button btnNovo;
+        private System.Windows.Forms.Button btnLimpar;
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.DataGridView grdDadosPessoais;
         private System.Windows.Forms.GroupBox grpfolha;

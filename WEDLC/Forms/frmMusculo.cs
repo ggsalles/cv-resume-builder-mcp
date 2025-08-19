@@ -114,6 +114,7 @@ namespace WEDLC.Forms
             grdDados.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
             grdDados.MultiSelect = false; // Impede seleção múltipla
             grdDados.AllowUserToAddRows = false;
+            grdDados.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
 
             //Deixa o grid zebrado
             grdDados.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue;

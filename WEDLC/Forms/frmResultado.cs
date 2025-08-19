@@ -51,7 +51,7 @@ namespace WEDLC.Forms
         {
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
-            btnNovo_Click(sender, e); //Simula o clique no botão cancelar   
+            btnLimpar_Click(sender, e); //Simula o clique no botão cancelar   
 
         }
         private void btnSair_Click(object sender, EventArgs e)
@@ -89,8 +89,6 @@ namespace WEDLC.Forms
                         return;
                     }
 
-                    //Determina a acao
-                    cAcao = Acao.UPDATE;
                 }
             }
             catch (Exception)
@@ -112,8 +110,17 @@ namespace WEDLC.Forms
             grdDadosPessoais.DataSource = null;
             grdFolhaPaciente.DataSource = null;
 
+            //Libera os objetos
+            txtCodigoProntuario.Enabled = true; //Habilita o campo código
+            grdDadosPessoais.Enabled = true; //Habilita o grid de dados
+
+            //Deixa o foco no campo código prontuário
+            txtCodigoProntuario.Focus();
+
+            cAcao = Acao.CANCELAR;
+
         }
-      
+
         private void txtCodigoProntuario_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
@@ -200,6 +207,7 @@ namespace WEDLC.Forms
                 grdDadosPessoais.AllowUserToAddRows = false; // Impede adição de novas linhas
                 grdDadosPessoais.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
                 grdDadosPessoais.CurrentCell = null; // Desmarca a célula atual
+                grdDadosPessoais.AllowUserToDeleteRows = false;
             }
             catch (Exception)
             {
@@ -325,6 +333,7 @@ namespace WEDLC.Forms
                 grdFolhaPaciente.AllowUserToAddRows = false; // Impede adição de novas linhas
                 grdFolhaPaciente.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
                 grdFolhaPaciente.CurrentCell = null; // Desmarca a célula atual
+                grdFolhaPaciente.AllowUserToDeleteRows = false;
 
                 return true;
             }
@@ -334,12 +343,7 @@ namespace WEDLC.Forms
                 return false;
             }
         }
-
-        private void btnNovo_Click(object sender, EventArgs e)
-        {
-            this.limpaFormulario();
-        }
-
+        
         private void grdFolhaPaciente_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -377,6 +381,10 @@ namespace WEDLC.Forms
                 MessageBox.Show("Erro ao tentar selecionar a folha do paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+        private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            this.limpaFormulario();
         }
     }
 }

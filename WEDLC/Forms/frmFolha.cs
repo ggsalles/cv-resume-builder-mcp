@@ -121,6 +121,7 @@ namespace WEDLC.Forms
             grdDados.AllowUserToAddRows = false; // Impede adição de novas linhas
             grdDados.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
             grdDados.CurrentCell = null; // Desmarca a célula atual
+            grdDados.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
         }
         private DataTable buscaFolha(int tipopesquisa, Int32 idfolha, string sigla, string nome)
         {
@@ -763,6 +764,7 @@ namespace WEDLC.Forms
             objGrid.AllowUserToAddRows = false; // Impede adição de novas linhas
             objGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
             objGrid.CurrentCell = null; // Desmarca a célula atual
+            objGrid.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
         }
 
         private void populaGridAvaliacaoMuscular(Int32 idfolha)
