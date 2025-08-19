@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.grpBotoes = new System.Windows.Forms.GroupBox();
+            this.btnGravar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.grdAvaliacaoMuscular = new System.Windows.Forms.DataGridView();
@@ -63,7 +64,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtCodigoComentario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnGravar = new System.Windows.Forms.Button();
             this.grpBotoes.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdAvaliacaoMuscular)).BeginInit();
@@ -85,6 +85,18 @@
             this.grpBotoes.Size = new System.Drawing.Size(1289, 47);
             this.grpBotoes.TabIndex = 24;
             this.grpBotoes.TabStop = false;
+            // 
+            // btnGravar
+            // 
+            this.btnGravar.Image = global::WEDLC.Properties.Resources.save;
+            this.btnGravar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGravar.Location = new System.Drawing.Point(6, 13);
+            this.btnGravar.Name = "btnGravar";
+            this.btnGravar.Size = new System.Drawing.Size(85, 27);
+            this.btnGravar.TabIndex = 25;
+            this.btnGravar.Text = "Gravar";
+            this.btnGravar.UseVisualStyleBackColor = true;
+            this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
             // 
             // btnSair
             // 
@@ -444,19 +456,6 @@
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Código";
-            // 
-            // btnGravar
-            // 
-            this.btnGravar.Enabled = false;
-            this.btnGravar.Image = global::WEDLC.Properties.Resources.save;
-            this.btnGravar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGravar.Location = new System.Drawing.Point(6, 13);
-            this.btnGravar.Name = "btnGravar";
-            this.btnGravar.Size = new System.Drawing.Size(85, 27);
-            this.btnGravar.TabIndex = 25;
-            this.btnGravar.Text = "Gravar";
-            this.btnGravar.UseVisualStyleBackColor = true;
-            this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
             // 
             // frmResultadoMusculoNeuro
             // 

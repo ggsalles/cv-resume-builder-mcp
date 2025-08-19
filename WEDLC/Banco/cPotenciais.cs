@@ -138,7 +138,7 @@ namespace WEDLC.Banco
                 {
                     command.Connection = conexao;
                     command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "pr_atualizacomentario";
+                    command.CommandText = "pr_atualizapotenciaisunidademotora";
 
                     command.Parameters.AddWithValue("pIdPotenciaisUnidade", IdPotenciaisUnidade);
                     command.Parameters.AddWithValue("pSigla", Sigla);

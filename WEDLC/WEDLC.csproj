@@ -123,6 +123,8 @@
   <ItemGroup>
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
     <Compile Include="Banco\cAtividadeInsercao.cs" />
+    <Compile Include="Banco\cResultadoPotenciaisUnidadeMotora.cs" />
+    <Compile Include="Banco\cResultadoAtividadeInsercao.cs" />
     <Compile Include="Banco\cResultadoNeuroCondSensorial.cs" />
     <Compile Include="Banco\cResultadoNeuroCondMotora.cs" />
     <Compile Include="Banco\cResultadoAvaliacaoMuscular.cs" />
