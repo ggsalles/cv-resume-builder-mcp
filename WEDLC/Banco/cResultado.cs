@@ -1,7 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
@@ -68,7 +67,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro na busca resultado do paciente: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadopaciente: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
@@ -111,7 +110,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro na busca resultado do paciente: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadofolha: {ex.Message}");
                 return null;
             }
             catch (Exception ex)

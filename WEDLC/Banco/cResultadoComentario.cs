@@ -4,12 +4,12 @@ using System.Data;
 
 namespace WEDLC.Banco
 {
-    public class cResultadoPotenciaisUnidadeMotora
+    public class cResultadoComentario
     {
         public Int32 IdPaciente { get; set; }
         public Int32 IdResultado { get; set; }
-        public Int32 IdPotenciaisUnidade { get; set; }
-        public Int32 IdResultadoPotenciaisUnidade{ get; set; }
+        public Int32 IdComentario { get; set; }
+        public Int32 IdResultadoComentario { get; set; }
         public string Texto { get; set; }
 
         // Construtor
@@ -30,7 +30,7 @@ namespace WEDLC.Banco
             }
         }
 
-        public DataTable buscaResultadoUnidadePotencial()
+        public DataTable buscaResultadoComentario()
         {
             // Validação básica dos parâmetros
 
@@ -44,7 +44,7 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var sqlDa = new MySqlDataAdapter("pr_buscaresultadopotenciaisunidade", conexao))
+                using (var sqlDa = new MySqlDataAdapter("pr_buscaresultadocomentario", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdResultado", IdResultado);
@@ -56,13 +56,13 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadopotenciaisunidade: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadocomentario: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
             {
                 // Log para outros erros
-                System.Diagnostics.Debug.WriteLine($"Erro inesperado na pr_buscaresultadopotenciaisunidade: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado na pr_buscaresultadocomentario: {ex.Message}");
                 return null;
             }
             finally

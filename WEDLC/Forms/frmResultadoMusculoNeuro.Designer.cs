@@ -477,7 +477,7 @@
             this.Name = "frmResultadoMusculoNeuro";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inormações do Resultado";
-            this.Load += new System.EventHandler(this.frmPaciente_Load);
+            this.Load += new System.EventHandler(this.frmResultadoMusculoNeuro_Load);
             this.grpBotoes.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdAvaliacaoMuscular)).EndInit();

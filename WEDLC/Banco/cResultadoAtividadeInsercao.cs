@@ -1,9 +1,6 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using System.Numerics;
-using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
@@ -59,7 +56,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadoavaliacaomuscular: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadoatividadeinsercao: {ex.Message}");
                 return null;
             }
             catch (Exception ex)

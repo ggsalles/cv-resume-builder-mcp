@@ -1,8 +1,6 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using System.Numerics;
 using System.Windows.Forms;
 
 namespace WEDLC.Banco
@@ -62,7 +60,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Log específico para diagnóstico
-                System.Diagnostics.Debug.WriteLine($"Erro na busca do convenio: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadoavaliacaomuscular: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
@@ -103,7 +101,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Logar o erro (ex.Message, ex.StackTrace) para diagnóstico
-                MessageBox.Show($"Erro ao atualizar gravaResultadoAvaliacaoMuscular: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erro ao atualizar pr_atualizaresultadoavaliacaomuscular: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             finally

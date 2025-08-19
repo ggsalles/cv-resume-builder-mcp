@@ -104,7 +104,7 @@ namespace WEDLC.Banco
             catch (MySqlException ex)
             {
                 // Logar o erro (ex.Message, ex.StackTrace) para diagnóstico
-                MessageBox.Show($"Erro ao atualizar gravaResultadoNeuroConducaoSensorial: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erro ao atualizar pr_atualizaneuroconducaosensorial: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             finally

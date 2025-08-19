@@ -31,7 +31,7 @@ namespace WEDLC.Forms
             //toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
         }
 
-        private void frmPaciente_Load(object sender, EventArgs e)
+        private void frmResultadoMusculoNeuro_Load(object sender, EventArgs e)
         {
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
@@ -56,7 +56,12 @@ namespace WEDLC.Forms
                 return;
             }
 
-            if (CarregaPotenciaisUnidade() == true)
+            if (CarregaPotenciaisUnidade() == false)
+            {
+                return;
+            }
+
+            if (CarregaComentario() == true)
             {
                 return;
             }
@@ -730,6 +735,41 @@ namespace WEDLC.Forms
             catch (Exception ex)
             {
                 MessageBox.Show("Erro na CarregaPotenciaisUnidade: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Falha ao carregar os dados
+            }
+        }
+
+        public bool CarregaComentario()
+        {
+            try
+            {
+                cResultadoComentario objResultadoComentario = new cResultadoComentario();
+                objResultadoComentario.IdResultado = IdResultado;
+                DataTable dtComentario = objResultadoComentario.buscaResultadoComentario();
+
+                //Verifica se o DataTable retornou dados
+                if (dtComentario.Rows.Count > 0)
+                {
+                    //popula campos Atividade Inserção
+                    txtCodigoComentario.Text = dtComentario.Rows[0]["idresultadocomentario"].ToString();
+                    txtNomeComentario.Text = dtComentario.Rows[0]["nome"].ToString();
+                    txtSiglaComentario.Text = dtComentario.Rows[0]["sigla"].ToString();
+                    txtTextoComentario.Text = dtComentario.Rows[0]["texto"].ToString();
+                }
+                else
+                {
+                    // Se não houver dados, limpa os campos
+                    txtCodigoComentario.Text = string.Empty;
+                    txtNomeComentario.Text = string.Empty;
+                    txtSiglaComentario.Text = string.Empty;
+                    txtTextoComentario.Text = string.Empty;
+                }
+
+                return true; // Sucesso ao carregar os dados
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro na CarregaComentario: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false; // Falha ao carregar os dados
             }
         }
