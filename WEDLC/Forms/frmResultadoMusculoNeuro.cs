@@ -18,6 +18,7 @@ namespace WEDLC.Forms
         public cAtividadeInsercao objAtividadeInsercao;
         public cResultadoAtividadeInsercao objResultadoAtividadeInsercao;
         public Int32 IdResultado = 0;
+        public int grupoFolha = 0;
 
         public frmResultadoMusculoNeuro()
         {
@@ -36,6 +37,7 @@ namespace WEDLC.Forms
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
             this.Text = "Folha: " + objResultadoAvaliacaoMuscular.Sigla.ToString() + " - " + objResultadoAvaliacaoMuscular.Nome.ToString();
+            int var = grupoFolha; // Apenas para evitar o aviso de variável não utilizada
 
             if (CarregaAvaliacaoMuscular() == false)
             {

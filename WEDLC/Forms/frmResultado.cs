@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlTypes;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using WEDLC.Banco;
 
 namespace WEDLC.Forms
@@ -25,6 +18,7 @@ namespace WEDLC.Forms
         public bool ValidaFolha = false;
         public DataTable dtComboFolha;
         public int NumeroLinha = -1; // Variável para controlar a linha do grid da folha
+        public int CodGrupoFolha = 0; // Variável para controlar o código do grupo da folha
 
         public enum Acao
         {
@@ -32,7 +26,17 @@ namespace WEDLC.Forms
             UPDATE = 1,
             DELETE = 2,
             SAVE = 3,
-            CANCELAR = 4,
+            CANCELAR = 4
+        }
+
+        public enum GrupoFolha
+        {
+            ENG = 1,
+            PEV = 2,
+            PESS = 3,
+            PEA = 4,
+            PEGC = 5,
+            PESSMED = 6,
         }
 
         public frmResultado()
@@ -58,7 +62,7 @@ namespace WEDLC.Forms
         {
             Close();
         }
-               
+
         private void grdDadosPessoais_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -272,7 +276,7 @@ namespace WEDLC.Forms
                 DataTable dtAux = new DataTable();
                 cResultado objcResultado = new cResultado();
 
-                objcResultado.Paciente.IdPaciente= idpaciente; //Código do paciente
+                objcResultado.Paciente.IdPaciente = idpaciente; //Código do paciente
                 dtAux = objcResultado.buscaResultadoFolha();
 
                 return dtAux;
@@ -306,6 +310,7 @@ namespace WEDLC.Forms
                 dtGrdFolhaPaciente.Columns["idfolha"].ColumnName = "IdFolha";
                 dtGrdFolhaPaciente.Columns["sigla"].ColumnName = "Sigla";
                 dtGrdFolhaPaciente.Columns["nome"].ColumnName = "Nome";
+                dtGrdFolhaPaciente.Columns["idgrupofolha"].ColumnName = "Grupo";
 
                 grdFolhaPaciente.SuspendLayout();
                 grdFolhaPaciente.DataSource = dtGrdFolhaPaciente;
@@ -320,12 +325,14 @@ namespace WEDLC.Forms
                 // Oculta ou exibe as colunas que não são necessárias
                 grdFolhaPaciente.Columns[0].Visible = false; //IdPaciente
                 grdFolhaPaciente.Columns[1].Visible = false; //IdFolha
+                grdFolhaPaciente.Columns[4].Visible = false; //Grupo
 
                 // Desabilita a edição da coluna
                 grdFolhaPaciente.Columns[0].ReadOnly = true;
                 grdFolhaPaciente.Columns[1].ReadOnly = true;
                 grdFolhaPaciente.Columns[2].ReadOnly = true;
                 grdFolhaPaciente.Columns[3].ReadOnly = true;
+                grdFolhaPaciente.Columns[4].ReadOnly = true;
 
                 // Configurando outras propriedades
                 grdFolhaPaciente.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
@@ -343,7 +350,7 @@ namespace WEDLC.Forms
                 return false;
             }
         }
-        
+
         private void grdFolhaPaciente_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -356,23 +363,55 @@ namespace WEDLC.Forms
                     // Verifica se a linha contém dados
                     if (row.Cells[0].Value != null && row.Cells[1].Value != null)
                     {
+
                         // Obtém o ID do paciente e o ID da folha
                         int idpaciente = Convert.ToInt32(row.Cells[0].Value);
                         int idfolha = Convert.ToInt32(row.Cells[1].Value);
                         string sigla = row.Cells[2].Value.ToString();
                         string nome = row.Cells[3].Value.ToString();
 
-                        // Cria um objeto para o form de troca de senhas abrir
-                        frmResultadoMusculoNeuro objResultadoMusculoNeuro = new frmResultadoMusculoNeuro();
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular = new cResultadoAvaliacaoMuscular();
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdPaciente = idpaciente;
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdFolha = idfolha; 
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla; 
-                        objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome; 
+                        // Armazena o número da linha selecionada do Grupo da folha
+                        CodGrupoFolha = Convert.ToInt32(row.Cells[4].Value);
+                        {
+                            // Fix for CS0266: Add explicit cast to int for enum comparison in switch statement
+                            switch ((int)CodGrupoFolha)
+                            {
+                                case (int)GrupoFolha.ENG:
 
-                        //Abre o form de senha modal
-                        objResultadoMusculoNeuro.ShowDialog();
+                                    // Cria um objeto para o form de troca de senhas abrir
+                                    frmResultadoMusculoNeuro objResultadoMusculoNeuro = new frmResultadoMusculoNeuro();
+                                    objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular = new cResultadoAvaliacaoMuscular();
+                                    objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdPaciente = idpaciente;
+                                    objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdFolha = idfolha;
+                                    objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla;
+                                    objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome;
+                                    objResultadoMusculoNeuro.grupoFolha = CodGrupoFolha;
 
+                                    //Abre o form de senha modal
+                                    objResultadoMusculoNeuro.Show();
+                                    break;
+
+                                case (int)GrupoFolha.PEV:
+                                case (int)GrupoFolha.PEA:
+                                case (int)GrupoFolha.PESS:
+                                case (int)GrupoFolha.PEGC:
+                                case (int)GrupoFolha.PESSMED:
+
+
+                                    // Cria um objeto para o form de troca de senhas abrir
+                                    frmPotenciaisEvocados objPotenciaisEvocados = new frmPotenciaisEvocados();
+                                    //objPotenciaisEvocados.objPotenciaisEvocados = new cResultadoAvaliacaoMuscular();
+                                    //objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdPaciente = idpaciente;
+                                    //objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdFolha = idfolha;
+                                    //objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla;
+                                    //objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome;
+                                    objPotenciaisEvocados.codGrupoFolha = CodGrupoFolha;
+
+                                    //Abre o form de senha modal
+                                    objPotenciaisEvocados.Show();
+                                    break;
+                            }
+                        }
                     }
                 }
             }
