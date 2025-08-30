@@ -11,6 +11,7 @@ namespace WEDLC.Banco
         public int TipoPesquisa { get; set; }
         public Int32 IdPaciente { get; set; }
         public Int32 IdPacienteFolha { get; set; }
+        public Int32 IdExame { get; set; }
         public string Nome { get; set; }
         public string Cep { get; set; }
         public string Logradouro { get; set; }
@@ -306,5 +307,123 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
+
+        public DataTable buscaPacienteExame()
+        {
+            // Validação básica dos parâmetros
+            if (IdPaciente < 0)
+                return null;
+
+            if (!conectaBanco())
+                return null;
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (var sqlDa = new MySqlDataAdapter("pr_buscapacienteexame", conexao))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
+                    sqlDa.Fill(dt);
+                    return dt;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Log específico para diagnóstico
+                System.Diagnostics.Debug.WriteLine($"Erro na busca do paciente: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                // Log para outros erros
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
+        }
+
+        public bool incluiPacienteExame()
+        {
+            if (!conectaBanco())
+                return false;
+
+            try
+            {
+                using (var command = new MySqlCommand("pr_incluipacienteexame", conexao))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddRange(new MySqlParameter[]
+                    {
+                new MySqlParameter("pIdPaciente", MySqlDbType.Int32) { Value = IdPaciente },
+                new MySqlParameter("pIdExame", MySqlDbType.Int32) { Value = IdExame }
+                    });
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0; // Qualquer número positivo indica sucesso
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Log específico para diagnóstico
+                System.Diagnostics.Debug.WriteLine($"Erro ao incluir paciente exame: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Log para outros tipos de erro
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
+        }
+        public bool atualizaPacienteExame()
+        {
+            // Validação de entrada
+            if (IdPaciente <= 0 || IdExame <= 0)
+            {
+                MessageBox.Show("ID´s obrigatórios.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            try
+            {
+                if (!conectaBanco())
+                {
+                    MessageBox.Show("Erro ao conectar ao banco de dados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = conexao;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "pr_atualizapacienteexame"; // Atiualiza paciente exame
+
+                    command.Parameters.AddWithValue("pApaga", Apaga);
+                    command.Parameters.AddWithValue("pIdPaciente", IdPaciente);
+                    command.Parameters.AddWithValue("pIdExame", IdExame);
+
+                    bool sucesso = command.ExecuteNonQuery() > 0;
+                    conexao.Close();
+                    return sucesso;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao atualizar: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                conexao?.Close();
+                return false;
+            }
+        }
+
     }
 }

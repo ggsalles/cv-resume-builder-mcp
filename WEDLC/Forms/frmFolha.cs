@@ -57,6 +57,14 @@ namespace WEDLC.Forms
             cAcao = Acao.CANCELAR;
         }
 
+        private void ConfigureGridPerformance(DataGridView grid)
+        {
+            // Habilita double buffering para reduzir flickering
+            typeof(DataGridView).GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                ?.SetValue(grdEstudoPotencial, true, null);
+        }
+
         public void carregaCombo()
         {
 
@@ -122,6 +130,7 @@ namespace WEDLC.Forms
             grdDados.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
             grdDados.CurrentCell = null; // Desmarca a célula atual
             grdDados.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
+
         }
         private DataTable buscaFolha(int tipopesquisa, Int32 idfolha, string sigla, string nome)
         {
@@ -202,6 +211,7 @@ namespace WEDLC.Forms
                 DataTable dt = this.buscaFolha(tipopesquisa, idfolha, sigla, nome);
 
                 grdDados.DataSource = null;
+                ConfigureGridPerformance(grdDados); // Aplica otimizações de performance    
 
                 //Renomeia as colunas do datatable
                 dt.Columns["idfolha"].ColumnName = "Código";
@@ -551,6 +561,8 @@ namespace WEDLC.Forms
 
         public void carregaTipo()
         {
+            cboTipo.BeginUpdate(); // Reduz flickering
+
             //Carrega o combo de tipo de folha
             cboTipo.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboTipo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
@@ -564,7 +576,8 @@ namespace WEDLC.Forms
             cboTipo.DataSource = dtTipoFolha;
             cboTipo.ValueMember = "idtipofolha";
             cboTipo.DisplayMember = "descricao";
-            //cboTipo.Refresh();
+
+            cboTipo.EndUpdate();
         }
 
         public void carregaGrupo(int pTipoFolha)
@@ -576,12 +589,14 @@ namespace WEDLC.Forms
             newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
             dtGrupo.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
 
+            cboGrupo.BeginUpdate(); // Reduz flickering
             //Carrega o combo de tipo de folha
             cboGrupo.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboGrupo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
             cboGrupo.ValueMember = "idgrupofolha";
             cboGrupo.DisplayMember = "descricao";
             cboGrupo.DataSource = dtGrupo;
+            cboGrupo.EndUpdate();
 
         }
 
@@ -628,11 +643,13 @@ namespace WEDLC.Forms
             dtNeuroCondMotora.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
 
             //Carrega o combo conducao motora
+            cboNeuroConducaoMotora.BeginUpdate(); // Reduz flickering
             cboNeuroConducaoMotora.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboNeuroConducaoMotora.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
             cboNeuroConducaoMotora.DataSource = dtNeuroCondMotora;
             cboNeuroConducaoMotora.ValueMember = "idnervo";
             cboNeuroConducaoMotora.DisplayMember = "descricao";
+            cboNeuroConducaoMotora.EndUpdate();
 
         }
 
@@ -646,11 +663,13 @@ namespace WEDLC.Forms
             dtNeuroCondSenorial.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
 
             //Carrega o combo de tipo de folha
+            cboNeuroConducaoSensorial.BeginUpdate(); // Reduz flickering
             cboNeuroConducaoSensorial.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
             cboNeuroConducaoSensorial.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
             cboNeuroConducaoSensorial.DataSource = dtNeuroCondSenorial;
             cboNeuroConducaoSensorial.ValueMember = "idnervo";
             cboNeuroConducaoSensorial.DisplayMember = "descricao";
+            cboNeuroConducaoSensorial.EndUpdate();
 
         }
 
@@ -672,6 +691,7 @@ namespace WEDLC.Forms
 
         private void CarregaComboSimNao(System.Windows.Forms.ComboBox objCombo)
         {
+            objCombo.BeginUpdate(); // Reduz flickering
             objCombo.DisplayMember = "Descricao";
             objCombo.ValueMember = "Id";
             objCombo.Items.Add(new cSimNao { IdSimNao = "1", Descricao = "Sim" });
@@ -679,6 +699,7 @@ namespace WEDLC.Forms
             objCombo.DropDownStyle = ComboBoxStyle.DropDownList; // Define o estilo do ComboBox como DropDownList
             objCombo.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
             objCombo.SelectedIndex = 1; // Define o índice padrão como Não;
+            objCombo.EndUpdate();
         }
 
         private void grdDados_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -700,6 +721,8 @@ namespace WEDLC.Forms
                     cboTipo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[3].Value.ToString();
                     carregaGrupo(int.Parse(cboTipo.SelectedValue.ToString()));
                     cboGrupo.SelectedValue = grdDados.Rows[e.RowIndex].Cells[5].Value.ToString();
+                    grpBoxDados.Refresh();
+
 
                     //libera os controles 
                     controlaBotao();
@@ -720,6 +743,8 @@ namespace WEDLC.Forms
 
                     //Carrega grid estudo potencial
                     carregaGridEstudoPotencial();
+
+                    grpComplemento.Refresh();
 
                     if (cboTipo.SelectedIndex == 1) //se for do tipo ENMG
                     {
@@ -765,6 +790,7 @@ namespace WEDLC.Forms
             objGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
             objGrid.CurrentCell = null; // Desmarca a célula atual
             objGrid.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
+
         }
 
         private void populaGridAvaliacaoMuscular(Int32 idfolha)
@@ -774,6 +800,8 @@ namespace WEDLC.Forms
                 DataTable dt = this.buscaAvalicaoMuscular(idfolha);
 
                 grdAvaliacaoMuscular.DataSource = null;
+
+                ConfigureGridPerformance(grdAvaliacaoMuscular); // Aplica otimizações de performance
 
                 //Renomeia as colunas do datatable
                 dt.Columns["idavaliacaomuscular"].ColumnName = "IdAvaliacaoMuscular";
@@ -798,6 +826,7 @@ namespace WEDLC.Forms
                 DataTable dt = this.buscaNeuroConducaoMotora(idfolha);
 
                 grdNeuroCondMotora.DataSource = null;
+                ConfigureGridPerformance(grdNeuroCondMotora); // Aplica otimizações de performance
 
                 //Renomeia as colunas do datatable
                 dt.Columns["idneurocondmotora"].ColumnName = "IdNeuroCondMotora";
@@ -823,6 +852,7 @@ namespace WEDLC.Forms
                 DataTable dt = this.buscaNeuroConducaoSensorial(idfolha);
 
                 grdNeuroCondSensorial.DataSource = null;
+                ConfigureGridPerformance(grdNeuroCondSensorial); // Aplica otimizações de performance
 
                 //Renomeia as colunas do datatable
                 dt.Columns["idneurocondsensorial"].ColumnName = "IdNeuroCondSensorial";
@@ -832,7 +862,6 @@ namespace WEDLC.Forms
                 grdNeuroCondSensorial.SuspendLayout(); //otimiza a atualização do grid
                 grdNeuroCondSensorial.DataSource = dt;
                 grdNeuroCondSensorial.ResumeLayout(); //otimiza a atualização do grid
-
 
             }
             catch (Exception)
@@ -849,6 +878,7 @@ namespace WEDLC.Forms
                 DataTable dtEstudoPotencial = this.buscaEstudoPotenEvocado(idfolha);
 
                 grdEstudoPotencial.DataSource = null;
+                ConfigureGridPerformance(grdEstudoPotencial); // Aplica otimizações de performance
 
                 //Renomeia as colunas do datatable
                 dtEstudoPotencial.Columns["idestudopotenevocado"].ColumnName = "IdEstudoPotenEvocado";

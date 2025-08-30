@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.grpPaciente = new System.Windows.Forms.GroupBox();
+            this.grdExame = new System.Windows.Forms.DataGridView();
+            this.cboExame = new System.Windows.Forms.ComboBox();
+            this.btnExcluiExame = new System.Windows.Forms.Button();
+            this.btnIncluiExame = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
             this.txtIdade = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.grdDadosPessoais = new System.Windows.Forms.DataGridView();
@@ -80,6 +85,7 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
             this.grpPaciente.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdExame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdDadosPessoais)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdFolha)).BeginInit();
             this.grpBotoes.SuspendLayout();
@@ -87,6 +93,11 @@
             // 
             // grpPaciente
             // 
+            this.grpPaciente.Controls.Add(this.grdExame);
+            this.grpPaciente.Controls.Add(this.cboExame);
+            this.grpPaciente.Controls.Add(this.btnExcluiExame);
+            this.grpPaciente.Controls.Add(this.btnIncluiExame);
+            this.grpPaciente.Controls.Add(this.label19);
             this.grpPaciente.Controls.Add(this.txtIdade);
             this.grpPaciente.Controls.Add(this.label18);
             this.grpPaciente.Controls.Add(this.grdDadosPessoais);
@@ -133,10 +144,60 @@
             this.grpPaciente.Controls.Add(this.lblCodigo);
             this.grpPaciente.Location = new System.Drawing.Point(12, 12);
             this.grpPaciente.Name = "grpPaciente";
-            this.grpPaciente.Size = new System.Drawing.Size(1161, 643);
+            this.grpPaciente.Size = new System.Drawing.Size(1161, 811);
             this.grpPaciente.TabIndex = 0;
             this.grpPaciente.TabStop = false;
             this.grpPaciente.Text = "Paciente";
+            // 
+            // grdExame
+            // 
+            this.grdExame.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdExame.Enabled = false;
+            this.grdExame.Location = new System.Drawing.Point(6, 395);
+            this.grdExame.Name = "grdExame";
+            this.grdExame.Size = new System.Drawing.Size(1149, 123);
+            this.grdExame.TabIndex = 42;
+            this.grdExame.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdExame_CellClick);
+            // 
+            // cboExame
+            // 
+            this.cboExame.FormattingEnabled = true;
+            this.cboExame.Location = new System.Drawing.Point(6, 368);
+            this.cboExame.Name = "cboExame";
+            this.cboExame.Size = new System.Drawing.Size(489, 21);
+            this.cboExame.TabIndex = 39;
+            this.cboExame.Validating += new System.ComponentModel.CancelEventHandler(this.cboExame_Validating);
+            // 
+            // btnExcluiExame
+            // 
+            this.btnExcluiExame.Enabled = false;
+            this.btnExcluiExame.Image = global::WEDLC.Properties.Resources.up;
+            this.btnExcluiExame.Location = new System.Drawing.Point(534, 366);
+            this.btnExcluiExame.Name = "btnExcluiExame";
+            this.btnExcluiExame.Size = new System.Drawing.Size(27, 24);
+            this.btnExcluiExame.TabIndex = 41;
+            this.btnExcluiExame.UseVisualStyleBackColor = true;
+            this.btnExcluiExame.Click += new System.EventHandler(this.btnExcluiExame_Click);
+            // 
+            // btnIncluiExame
+            // 
+            this.btnIncluiExame.Enabled = false;
+            this.btnIncluiExame.Image = global::WEDLC.Properties.Resources.down;
+            this.btnIncluiExame.Location = new System.Drawing.Point(501, 366);
+            this.btnIncluiExame.Name = "btnIncluiExame";
+            this.btnIncluiExame.Size = new System.Drawing.Size(27, 24);
+            this.btnIncluiExame.TabIndex = 40;
+            this.btnIncluiExame.UseVisualStyleBackColor = true;
+            this.btnIncluiExame.Click += new System.EventHandler(this.btnIncluiExame_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(6, 354);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(39, 13);
+            this.label19.TabIndex = 38;
+            this.label19.Text = "Exame";
             // 
             // txtIdade
             // 
@@ -189,7 +250,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 526);
+            this.label17.Location = new System.Drawing.Point(6, 699);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(65, 13);
             this.label17.TabIndex = 35;
@@ -199,7 +260,7 @@
             // 
             this.txtObs.AcceptsReturn = true;
             this.txtObs.Enabled = false;
-            this.txtObs.Location = new System.Drawing.Point(6, 542);
+            this.txtObs.Location = new System.Drawing.Point(6, 715);
             this.txtObs.MaxLength = 4000;
             this.txtObs.Multiline = true;
             this.txtObs.Name = "txtObs";
@@ -229,7 +290,7 @@
             // 
             this.grdFolha.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdFolha.Enabled = false;
-            this.grdFolha.Location = new System.Drawing.Point(6, 397);
+            this.grdFolha.Location = new System.Drawing.Point(6, 570);
             this.grdFolha.Name = "grdFolha";
             this.grdFolha.Size = new System.Drawing.Size(1149, 123);
             this.grdFolha.TabIndex = 22;
@@ -273,7 +334,7 @@
             // cboFolha
             // 
             this.cboFolha.FormattingEnabled = true;
-            this.cboFolha.Location = new System.Drawing.Point(6, 370);
+            this.cboFolha.Location = new System.Drawing.Point(6, 543);
             this.cboFolha.Name = "cboFolha";
             this.cboFolha.Size = new System.Drawing.Size(489, 21);
             this.cboFolha.TabIndex = 19;
@@ -292,7 +353,7 @@
             // 
             this.btnExcluiFolha.Enabled = false;
             this.btnExcluiFolha.Image = global::WEDLC.Properties.Resources.up;
-            this.btnExcluiFolha.Location = new System.Drawing.Point(534, 368);
+            this.btnExcluiFolha.Location = new System.Drawing.Point(534, 541);
             this.btnExcluiFolha.Name = "btnExcluiFolha";
             this.btnExcluiFolha.Size = new System.Drawing.Size(27, 24);
             this.btnExcluiFolha.TabIndex = 21;
@@ -311,7 +372,7 @@
             // 
             this.btnIncluiFolha.Enabled = false;
             this.btnIncluiFolha.Image = global::WEDLC.Properties.Resources.down;
-            this.btnIncluiFolha.Location = new System.Drawing.Point(501, 368);
+            this.btnIncluiFolha.Location = new System.Drawing.Point(501, 541);
             this.btnIncluiFolha.Name = "btnIncluiFolha";
             this.btnIncluiFolha.Size = new System.Drawing.Size(27, 24);
             this.btnIncluiFolha.TabIndex = 20;
@@ -321,7 +382,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 356);
+            this.label4.Location = new System.Drawing.Point(6, 529);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 7;
@@ -549,7 +610,7 @@
             this.grpBotoes.Controls.Add(this.btnGravar);
             this.grpBotoes.Controls.Add(this.btnSair);
             this.grpBotoes.Controls.Add(this.btnNovo);
-            this.grpBotoes.Location = new System.Drawing.Point(11, 658);
+            this.grpBotoes.Location = new System.Drawing.Point(11, 827);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(1162, 47);
             this.grpBotoes.TabIndex = 24;
@@ -621,7 +682,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1185, 714);
+            this.ClientSize = new System.Drawing.Size(1185, 885);
             this.ControlBox = false;
             this.Controls.Add(this.grpBotoes);
             this.Controls.Add(this.grpPaciente);
@@ -635,6 +696,7 @@
             this.Load += new System.EventHandler(this.frmPaciente_Load);
             this.grpPaciente.ResumeLayout(false);
             this.grpPaciente.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdExame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdDadosPessoais)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdFolha)).EndInit();
             this.grpBotoes.ResumeLayout(false);
@@ -695,5 +757,10 @@
         private System.Windows.Forms.DataGridView grdDadosPessoais;
         private System.Windows.Forms.TextBox txtIdade;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.DataGridView grdExame;
+        private System.Windows.Forms.ComboBox cboExame;
+        private System.Windows.Forms.Button btnExcluiExame;
+        private System.Windows.Forms.Button btnIncluiExame;
+        private System.Windows.Forms.Label label19;
     }
 }
