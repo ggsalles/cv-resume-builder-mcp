@@ -142,9 +142,9 @@
             this.grpPaciente.Controls.Add(this.lblNome);
             this.grpPaciente.Controls.Add(this.txtCodigoProntuario);
             this.grpPaciente.Controls.Add(this.lblCodigo);
-            this.grpPaciente.Location = new System.Drawing.Point(12, 12);
+            this.grpPaciente.Location = new System.Drawing.Point(12, 4);
             this.grpPaciente.Name = "grpPaciente";
-            this.grpPaciente.Size = new System.Drawing.Size(1161, 811);
+            this.grpPaciente.Size = new System.Drawing.Size(1161, 741);
             this.grpPaciente.TabIndex = 0;
             this.grpPaciente.TabStop = false;
             this.grpPaciente.Text = "Paciente";
@@ -153,29 +153,29 @@
             // 
             this.grdExame.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdExame.Enabled = false;
-            this.grdExame.Location = new System.Drawing.Point(6, 395);
+            this.grdExame.Location = new System.Drawing.Point(6, 389);
             this.grdExame.Name = "grdExame";
-            this.grdExame.Size = new System.Drawing.Size(1149, 123);
-            this.grdExame.TabIndex = 42;
+            this.grdExame.Size = new System.Drawing.Size(1149, 94);
+            this.grdExame.TabIndex = 22;
             this.grdExame.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdExame_CellClick);
             // 
             // cboExame
             // 
             this.cboExame.FormattingEnabled = true;
-            this.cboExame.Location = new System.Drawing.Point(6, 368);
+            this.cboExame.Location = new System.Drawing.Point(6, 362);
             this.cboExame.Name = "cboExame";
             this.cboExame.Size = new System.Drawing.Size(489, 21);
-            this.cboExame.TabIndex = 39;
+            this.cboExame.TabIndex = 19;
             this.cboExame.Validating += new System.ComponentModel.CancelEventHandler(this.cboExame_Validating);
             // 
             // btnExcluiExame
             // 
             this.btnExcluiExame.Enabled = false;
             this.btnExcluiExame.Image = global::WEDLC.Properties.Resources.up;
-            this.btnExcluiExame.Location = new System.Drawing.Point(534, 366);
+            this.btnExcluiExame.Location = new System.Drawing.Point(534, 360);
             this.btnExcluiExame.Name = "btnExcluiExame";
             this.btnExcluiExame.Size = new System.Drawing.Size(27, 24);
-            this.btnExcluiExame.TabIndex = 41;
+            this.btnExcluiExame.TabIndex = 21;
             this.btnExcluiExame.UseVisualStyleBackColor = true;
             this.btnExcluiExame.Click += new System.EventHandler(this.btnExcluiExame_Click);
             // 
@@ -183,17 +183,17 @@
             // 
             this.btnIncluiExame.Enabled = false;
             this.btnIncluiExame.Image = global::WEDLC.Properties.Resources.down;
-            this.btnIncluiExame.Location = new System.Drawing.Point(501, 366);
+            this.btnIncluiExame.Location = new System.Drawing.Point(501, 360);
             this.btnIncluiExame.Name = "btnIncluiExame";
             this.btnIncluiExame.Size = new System.Drawing.Size(27, 24);
-            this.btnIncluiExame.TabIndex = 40;
+            this.btnIncluiExame.TabIndex = 20;
             this.btnIncluiExame.UseVisualStyleBackColor = true;
             this.btnIncluiExame.Click += new System.EventHandler(this.btnIncluiExame_Click);
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 354);
+            this.label19.Location = new System.Drawing.Point(6, 348);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(39, 13);
             this.label19.TabIndex = 38;
@@ -202,7 +202,7 @@
             // txtIdade
             // 
             this.txtIdade.Enabled = false;
-            this.txtIdade.Location = new System.Drawing.Point(371, 232);
+            this.txtIdade.Location = new System.Drawing.Point(371, 226);
             this.txtIdade.MaxLength = 8;
             this.txtIdade.Name = "txtIdade";
             this.txtIdade.ReadOnly = true;
@@ -212,7 +212,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(371, 214);
+            this.label18.Location = new System.Drawing.Point(371, 208);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(34, 13);
             this.label18.TabIndex = 37;
@@ -223,14 +223,14 @@
             this.grdDadosPessoais.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdDadosPessoais.Location = new System.Drawing.Point(6, 61);
             this.grdDadosPessoais.Name = "grdDadosPessoais";
-            this.grdDadosPessoais.Size = new System.Drawing.Size(1149, 103);
+            this.grdDadosPessoais.Size = new System.Drawing.Size(1149, 94);
             this.grdDadosPessoais.TabIndex = 3;
             this.grdDadosPessoais.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDadosPessoais_CellClick);
             // 
             // mskTelefone
             // 
             this.mskTelefone.Enabled = false;
-            this.mskTelefone.Location = new System.Drawing.Point(48, 231);
+            this.mskTelefone.Location = new System.Drawing.Point(48, 225);
             this.mskTelefone.Mask = "(99) 00000-0000";
             this.mskTelefone.Name = "mskTelefone";
             this.mskTelefone.Size = new System.Drawing.Size(87, 20);
@@ -239,7 +239,7 @@
             // mskNascimento
             // 
             this.mskNascimento.Enabled = false;
-            this.mskNascimento.Location = new System.Drawing.Point(282, 232);
+            this.mskNascimento.Location = new System.Drawing.Point(282, 226);
             this.mskNascimento.Mask = "00/00/0000";
             this.mskNascimento.Name = "mskNascimento";
             this.mskNascimento.Size = new System.Drawing.Size(83, 20);
@@ -250,7 +250,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 699);
+            this.label17.Location = new System.Drawing.Point(6, 640);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(65, 13);
             this.label17.TabIndex = 35;
@@ -260,18 +260,18 @@
             // 
             this.txtObs.AcceptsReturn = true;
             this.txtObs.Enabled = false;
-            this.txtObs.Location = new System.Drawing.Point(6, 715);
+            this.txtObs.Location = new System.Drawing.Point(6, 656);
             this.txtObs.MaxLength = 4000;
             this.txtObs.Multiline = true;
             this.txtObs.Name = "txtObs";
             this.txtObs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtObs.Size = new System.Drawing.Size(1149, 87);
-            this.txtObs.TabIndex = 23;
+            this.txtObs.Size = new System.Drawing.Size(1149, 77);
+            this.txtObs.TabIndex = 26;
             // 
             // txtLocalidade
             // 
             this.txtLocalidade.Enabled = false;
-            this.txtLocalidade.Location = new System.Drawing.Point(857, 186);
+            this.txtLocalidade.Location = new System.Drawing.Point(857, 180);
             this.txtLocalidade.MaxLength = 8;
             this.txtLocalidade.Name = "txtLocalidade";
             this.txtLocalidade.Size = new System.Drawing.Size(298, 20);
@@ -280,7 +280,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(854, 170);
+            this.label16.Location = new System.Drawing.Point(854, 164);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 13);
             this.label16.TabIndex = 31;
@@ -290,16 +290,16 @@
             // 
             this.grdFolha.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdFolha.Enabled = false;
-            this.grdFolha.Location = new System.Drawing.Point(6, 570);
+            this.grdFolha.Location = new System.Drawing.Point(6, 536);
             this.grdFolha.Name = "grdFolha";
-            this.grdFolha.Size = new System.Drawing.Size(1149, 123);
+            this.grdFolha.Size = new System.Drawing.Size(1149, 94);
             this.grdFolha.TabIndex = 22;
             this.grdFolha.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdFolha_CellClick);
             // 
             // txtDataCadastro
             // 
             this.txtDataCadastro.Enabled = false;
-            this.txtDataCadastro.Location = new System.Drawing.Point(657, 323);
+            this.txtDataCadastro.Location = new System.Drawing.Point(657, 317);
             this.txtDataCadastro.MaxLength = 8;
             this.txtDataCadastro.Name = "txtDataCadastro";
             this.txtDataCadastro.Size = new System.Drawing.Size(155, 20);
@@ -308,7 +308,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(657, 306);
+            this.label15.Location = new System.Drawing.Point(657, 300);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(75, 13);
             this.label15.TabIndex = 29;
@@ -317,7 +317,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(567, 307);
+            this.label14.Location = new System.Drawing.Point(567, 301);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(64, 13);
             this.label14.TabIndex = 27;
@@ -326,7 +326,7 @@
             // cboBeneficente
             // 
             this.cboBeneficente.FormattingEnabled = true;
-            this.cboBeneficente.Location = new System.Drawing.Point(567, 323);
+            this.cboBeneficente.Location = new System.Drawing.Point(567, 317);
             this.cboBeneficente.Name = "cboBeneficente";
             this.cboBeneficente.Size = new System.Drawing.Size(81, 21);
             this.cboBeneficente.TabIndex = 17;
@@ -334,16 +334,16 @@
             // cboFolha
             // 
             this.cboFolha.FormattingEnabled = true;
-            this.cboFolha.Location = new System.Drawing.Point(6, 543);
+            this.cboFolha.Location = new System.Drawing.Point(6, 509);
             this.cboFolha.Name = "cboFolha";
             this.cboFolha.Size = new System.Drawing.Size(489, 21);
-            this.cboFolha.TabIndex = 19;
+            this.cboFolha.TabIndex = 23;
             this.cboFolha.Validating += new System.ComponentModel.CancelEventHandler(this.cboFolha_Validating);
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 307);
+            this.label13.Location = new System.Drawing.Point(6, 301);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(42, 13);
             this.label13.TabIndex = 25;
@@ -353,17 +353,17 @@
             // 
             this.btnExcluiFolha.Enabled = false;
             this.btnExcluiFolha.Image = global::WEDLC.Properties.Resources.up;
-            this.btnExcluiFolha.Location = new System.Drawing.Point(534, 541);
+            this.btnExcluiFolha.Location = new System.Drawing.Point(534, 507);
             this.btnExcluiFolha.Name = "btnExcluiFolha";
             this.btnExcluiFolha.Size = new System.Drawing.Size(27, 24);
-            this.btnExcluiFolha.TabIndex = 21;
+            this.btnExcluiFolha.TabIndex = 25;
             this.btnExcluiFolha.UseVisualStyleBackColor = true;
             this.btnExcluiFolha.Click += new System.EventHandler(this.btnExcluiFolha_Click);
             // 
             // cboMedico
             // 
             this.cboMedico.FormattingEnabled = true;
-            this.cboMedico.Location = new System.Drawing.Point(6, 323);
+            this.cboMedico.Location = new System.Drawing.Point(6, 317);
             this.cboMedico.Name = "cboMedico";
             this.cboMedico.Size = new System.Drawing.Size(555, 21);
             this.cboMedico.TabIndex = 16;
@@ -372,17 +372,17 @@
             // 
             this.btnIncluiFolha.Enabled = false;
             this.btnIncluiFolha.Image = global::WEDLC.Properties.Resources.down;
-            this.btnIncluiFolha.Location = new System.Drawing.Point(501, 541);
+            this.btnIncluiFolha.Location = new System.Drawing.Point(501, 507);
             this.btnIncluiFolha.Name = "btnIncluiFolha";
             this.btnIncluiFolha.Size = new System.Drawing.Size(27, 24);
-            this.btnIncluiFolha.TabIndex = 20;
+            this.btnIncluiFolha.TabIndex = 24;
             this.btnIncluiFolha.UseVisualStyleBackColor = true;
             this.btnIncluiFolha.Click += new System.EventHandler(this.btnIncluiFolha_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 529);
+            this.label4.Location = new System.Drawing.Point(6, 495);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 7;
@@ -391,7 +391,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(282, 214);
+            this.label12.Location = new System.Drawing.Point(282, 208);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(63, 13);
             this.label12.TabIndex = 23;
@@ -400,7 +400,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(141, 215);
+            this.label11.Location = new System.Drawing.Point(141, 209);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(31, 13);
             this.label11.TabIndex = 21;
@@ -409,7 +409,7 @@
             // cboSexo
             // 
             this.cboSexo.FormattingEnabled = true;
-            this.cboSexo.Location = new System.Drawing.Point(141, 231);
+            this.cboSexo.Location = new System.Drawing.Point(141, 225);
             this.cboSexo.Name = "cboSexo";
             this.cboSexo.Size = new System.Drawing.Size(134, 21);
             this.cboSexo.TabIndex = 11;
@@ -417,7 +417,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(567, 261);
+            this.label10.Location = new System.Drawing.Point(567, 255);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(44, 13);
             this.label10.TabIndex = 19;
@@ -426,7 +426,7 @@
             // cboIndSec
             // 
             this.cboIndSec.FormattingEnabled = true;
-            this.cboIndSec.Location = new System.Drawing.Point(567, 277);
+            this.cboIndSec.Location = new System.Drawing.Point(567, 271);
             this.cboIndSec.Name = "cboIndSec";
             this.cboIndSec.Size = new System.Drawing.Size(588, 21);
             this.cboIndSec.TabIndex = 15;
@@ -434,7 +434,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(48, 214);
+            this.label9.Location = new System.Drawing.Point(48, 208);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 13);
             this.label9.TabIndex = 17;
@@ -443,7 +443,7 @@
             // txtUf
             // 
             this.txtUf.Enabled = false;
-            this.txtUf.Location = new System.Drawing.Point(6, 230);
+            this.txtUf.Location = new System.Drawing.Point(6, 224);
             this.txtUf.MaxLength = 8;
             this.txtUf.Name = "txtUf";
             this.txtUf.Size = new System.Drawing.Size(36, 20);
@@ -452,7 +452,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 215);
+            this.label8.Location = new System.Drawing.Point(6, 209);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(21, 13);
             this.label8.TabIndex = 15;
@@ -461,7 +461,7 @@
             // txtBairro
             // 
             this.txtBairro.Enabled = false;
-            this.txtBairro.Location = new System.Drawing.Point(710, 186);
+            this.txtBairro.Location = new System.Drawing.Point(710, 180);
             this.txtBairro.MaxLength = 8;
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(141, 20);
@@ -470,7 +470,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(710, 170);
+            this.label7.Location = new System.Drawing.Point(710, 164);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 13);
             this.label7.TabIndex = 13;
@@ -479,7 +479,7 @@
             // txtComplemento
             // 
             this.txtComplemento.Enabled = false;
-            this.txtComplemento.Location = new System.Drawing.Point(421, 186);
+            this.txtComplemento.Location = new System.Drawing.Point(421, 180);
             this.txtComplemento.MaxLength = 8;
             this.txtComplemento.Name = "txtComplemento";
             this.txtComplemento.Size = new System.Drawing.Size(282, 20);
@@ -488,7 +488,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(421, 170);
+            this.label6.Location = new System.Drawing.Point(421, 164);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(71, 13);
             this.label6.TabIndex = 11;
@@ -497,7 +497,7 @@
             // txtLogradouro
             // 
             this.txtLogradouro.Enabled = false;
-            this.txtLogradouro.Location = new System.Drawing.Point(115, 186);
+            this.txtLogradouro.Location = new System.Drawing.Point(115, 180);
             this.txtLogradouro.MaxLength = 8;
             this.txtLogradouro.Name = "txtLogradouro";
             this.txtLogradouro.Size = new System.Drawing.Size(300, 20);
@@ -506,7 +506,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(118, 170);
+            this.label5.Location = new System.Drawing.Point(118, 164);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 9;
@@ -515,7 +515,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(421, 215);
+            this.label3.Location = new System.Drawing.Point(421, 209);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 7;
@@ -524,7 +524,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 261);
+            this.label2.Location = new System.Drawing.Point(6, 255);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 13);
             this.label2.TabIndex = 6;
@@ -533,7 +533,7 @@
             // cboIndPrinc
             // 
             this.cboIndPrinc.FormattingEnabled = true;
-            this.cboIndPrinc.Location = new System.Drawing.Point(6, 277);
+            this.cboIndPrinc.Location = new System.Drawing.Point(6, 271);
             this.cboIndPrinc.Name = "cboIndPrinc";
             this.cboIndPrinc.Size = new System.Drawing.Size(555, 21);
             this.cboIndPrinc.TabIndex = 14;
@@ -541,7 +541,7 @@
             // cboConvenio
             // 
             this.cboConvenio.FormattingEnabled = true;
-            this.cboConvenio.Location = new System.Drawing.Point(421, 232);
+            this.cboConvenio.Location = new System.Drawing.Point(421, 226);
             this.cboConvenio.Name = "cboConvenio";
             this.cboConvenio.Size = new System.Drawing.Size(734, 21);
             this.cboConvenio.TabIndex = 13;
@@ -549,7 +549,7 @@
             // txtCep
             // 
             this.txtCep.Enabled = false;
-            this.txtCep.Location = new System.Drawing.Point(6, 186);
+            this.txtCep.Location = new System.Drawing.Point(6, 180);
             this.txtCep.MaxLength = 8;
             this.txtCep.Name = "txtCep";
             this.txtCep.Size = new System.Drawing.Size(103, 20);
@@ -559,7 +559,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 170);
+            this.label1.Location = new System.Drawing.Point(6, 164);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(28, 13);
             this.label1.TabIndex = 3;
@@ -610,10 +610,10 @@
             this.grpBotoes.Controls.Add(this.btnGravar);
             this.grpBotoes.Controls.Add(this.btnSair);
             this.grpBotoes.Controls.Add(this.btnNovo);
-            this.grpBotoes.Location = new System.Drawing.Point(11, 827);
+            this.grpBotoes.Location = new System.Drawing.Point(11, 747);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(1162, 47);
-            this.grpBotoes.TabIndex = 24;
+            this.grpBotoes.TabIndex = 27;
             this.grpBotoes.TabStop = false;
             // 
             // btnCancelar
@@ -624,7 +624,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(282, 13);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(85, 27);
-            this.btnCancelar.TabIndex = 28;
+            this.btnCancelar.TabIndex = 31;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -637,7 +637,7 @@
             this.btnExcluir.Location = new System.Drawing.Point(100, 13);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(85, 27);
-            this.btnExcluir.TabIndex = 26;
+            this.btnExcluir.TabIndex = 29;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
             // 
@@ -649,7 +649,7 @@
             this.btnGravar.Location = new System.Drawing.Point(191, 13);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(85, 27);
-            this.btnGravar.TabIndex = 27;
+            this.btnGravar.TabIndex = 30;
             this.btnGravar.Text = "Gravar";
             this.btnGravar.UseVisualStyleBackColor = true;
             this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
@@ -661,7 +661,7 @@
             this.btnSair.Location = new System.Drawing.Point(1071, 13);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(85, 27);
-            this.btnSair.TabIndex = 29;
+            this.btnSair.TabIndex = 32;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
@@ -673,7 +673,7 @@
             this.btnNovo.Location = new System.Drawing.Point(9, 13);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(85, 27);
-            this.btnNovo.TabIndex = 25;
+            this.btnNovo.TabIndex = 28;
             this.btnNovo.Text = "Novo";
             this.btnNovo.UseVisualStyleBackColor = true;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
@@ -682,7 +682,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1185, 885);
+            this.ClientSize = new System.Drawing.Size(1185, 803);
             this.ControlBox = false;
             this.Controls.Add(this.grpBotoes);
             this.Controls.Add(this.grpPaciente);

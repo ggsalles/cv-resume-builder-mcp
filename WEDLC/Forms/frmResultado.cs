@@ -373,7 +373,6 @@ namespace WEDLC.Forms
                         // Armazena o número da linha selecionada do Grupo da folha
                         CodGrupoFolha = Convert.ToInt32(row.Cells[4].Value);
                         {
-                            // Fix for CS0266: Add explicit cast to int for enum comparison in switch statement
                             switch ((int)CodGrupoFolha)
                             {
                                 case (int)GrupoFolha.ENG:
@@ -400,12 +399,11 @@ namespace WEDLC.Forms
 
                                     // Cria um objeto para o form de troca de senhas abrir
                                     frmPotenciaisEvocados objPotenciaisEvocados = new frmPotenciaisEvocados();
-                                    //objPotenciaisEvocados.objPotenciaisEvocados = new cResultadoAvaliacaoMuscular();
-                                    //objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdPaciente = idpaciente;
-                                    //objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdFolha = idfolha;
-                                    //objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla;
-                                    //objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome;
+    
                                     objPotenciaisEvocados.codGrupoFolha = CodGrupoFolha;
+                                    objPotenciaisEvocados.IdFolha = idfolha;
+                                    objPotenciaisEvocados.IdPaciente = idpaciente;
+                                    objPotenciaisEvocados.IdResultado = 0; //Sempre inicia com zero
 
                                     //Abre o form de senha modal
                                     objPotenciaisEvocados.Show();

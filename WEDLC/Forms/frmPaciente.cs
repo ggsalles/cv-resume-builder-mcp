@@ -26,6 +26,7 @@ namespace WEDLC.Forms
         public DataTable dtComboFolha;
         public DataTable dtComboExame;
         public int NumeroLinha = -1; // Variável para controlar a linha do grid da folha
+        public Int32 sequence = 0;
 
         public enum Acao
         {
@@ -186,14 +187,14 @@ namespace WEDLC.Forms
                     txtLocalidade.Text = row.Cells[6].Value.ToString();
                     txtUf.Text = row.Cells[7].Value.ToString();
                     mskTelefone.Text = row.Cells[8].Value.ToString();
-                    cboSexo.SelectedValue = row.Cells[9].Value.ToString();
+                    cboSexo.SelectedValue = int.TryParse(row.Cells[9].Value?.ToString(), out int resultsexo) ? resultsexo : 0;
                     mskNascimento.Text = DateTime.Parse(row.Cells[10].Value.ToString()).ToString("dd/MM/yyyy");
                     txtIdade.Text = cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(DateTime.Parse(row.Cells[10].Value.ToString())).ToString();
-                    cboConvenio.SelectedValue = row.Cells[11].Value.ToString();
-                    cboIndPrinc.SelectedValue = row.Cells[12].Value.ToString();
-                    cboIndSec.SelectedValue = row.Cells[13].Value.ToString();
-                    cboMedico.SelectedValue = row.Cells[14].Value.ToString();
-                    cboBeneficente.SelectedValue = row.Cells[15].Value.ToString();
+                    cboConvenio.SelectedValue = row.Cells[11].Value.ToString() ?? "0";
+                    cboIndPrinc.SelectedValue = int.TryParse(row.Cells[12].Value?.ToString(), out int resultprinc) ? resultprinc : 0;
+                    cboIndSec.SelectedValue = int.TryParse(row.Cells[13].Value?.ToString(), out int resultindsec) ? resultindsec : 0;
+                    cboMedico.SelectedValue = int.TryParse(row.Cells[14].Value?.ToString(), out int resultmed) ? resultmed : 0;
+                    cboBeneficente.SelectedValue = int.TryParse(row.Cells[15].Value?.ToString(), out int resultbenef) ? resultbenef : 0;
                     txtDataCadastro.Text = row.Cells[16].Value.ToString();
                     txtObs.Text = row.Cells[17].Value != null ? row.Cells[17].Value.ToString() : string.Empty;
                     cboFolha.SelectedIndex = 0; // Reseta o combo de especialização consultório
@@ -866,6 +867,7 @@ namespace WEDLC.Forms
 
                     dtGrdPacienteFolha.Rows.Add(novaLinha);
                     grdFolha.DataSource = dtGrdPacienteFolha;
+                    cboFolha.SelectedIndex = 0; // Reseta o combo de especialização consultório
                 }
 
                 else
@@ -899,6 +901,7 @@ namespace WEDLC.Forms
                     DataRow rowToDelete = dtGrdPacienteFolha.Rows[NumeroLinha]; // Remove a terceira linha
                     dtGrdPacienteFolha.Rows.Remove(rowToDelete);
                     grdFolha.DataSource = dtGrdPacienteFolha;
+                    cboFolha.SelectedIndex = 0; // Reseta o combo de especialização consultório
                 }
                 else
                 {
@@ -1020,8 +1023,8 @@ namespace WEDLC.Forms
                         // Commit apenas se tudo der certo
                         transactionScope.Complete();
 
-                        MessageBox.Show($"Operação {(cAcao == Acao.INSERT ? "inclusão" : "atualização")} " +
-                                       "efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"{(cAcao == Acao.INSERT ? "Inclusão" : "Atualização")} " +
+                                       "efetuada com sucesso!" + " Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         btnCancelar_Click(sender, e);
                     }
                     catch (Exception ex)
@@ -1083,7 +1086,13 @@ namespace WEDLC.Forms
 
         private void ProcessarInsert(cPaciente objcPaciente)
         {
-            Int32 sequence = 0;
+            sequence = 0;
+
+            //Preenche os dados do paciente
+            if (PreencheDadosPaciente(objcPaciente) == false)
+            {
+                throw new Exception("Erro ao preencher dados do paciente!");
+            }
 
             if (objcPaciente.incluiPaciente(out sequence) == true)
             {
@@ -1208,7 +1217,7 @@ namespace WEDLC.Forms
             {
                 int idpaciente = 0;
 
-                if (txtCodigoProntuario.Text.ToString().Trim().Length > 0)
+                if (!string.IsNullOrEmpty(txtCodigoProntuario.Text))
                 {
                     //Busca os dados do paciente folha
                     idpaciente = int.Parse(txtCodigoProntuario.Text);
@@ -1312,6 +1321,12 @@ namespace WEDLC.Forms
                             MessageBox.Show("Exame já adicionado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
+                    }
+                    else
+                    {
+                        //Se chegou aqui, é pq não existem dados no datatable
+                        //Então pesquisa-se com id 0 para criar o datatable
+                        buscaDadosPacienteExame();
                     }
 
                     // Adicionando uma nova linha

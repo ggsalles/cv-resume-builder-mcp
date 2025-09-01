@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Google.Protobuf.WellKnownTypes;
+using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -138,11 +139,11 @@ namespace WEDLC.Banco
                 new MySqlParameter("pTelefone", MySqlDbType.VarChar) { Value = Telefone ?? string.Empty },
                 new MySqlParameter("pIdSexo", MySqlDbType.Int32) { Value = IdSexo },
                 new MySqlParameter("pNascimento", MySqlDbType.Date) { Value =  DateTime.Parse(DataNascimento).ToString("yyyy/MM/dd") },
-                new MySqlParameter("pIdConvenio", MySqlDbType.Int32) { Value = IdConvenio },
-                new MySqlParameter("pIdIndicacao1", MySqlDbType.Int32) { Value = IdIndicacao1 },
-                new MySqlParameter("pIdIndicacao2", MySqlDbType.Int32) { Value = IdIndicacao2 },
-                new MySqlParameter("pIdMedico", MySqlDbType.Int32) { Value = IdMedico },
-                new MySqlParameter("pIdSimNao", MySqlDbType.Int32) { Value = IdSimNao },
+                new MySqlParameter("pIdConvenio", MySqlDbType.Int32) { Value = (IdConvenio == 0) ? DBNull.Value : (object)IdConvenio},
+                new MySqlParameter("pIdIndicacao1", MySqlDbType.Int32) { Value = (IdIndicacao1 == 0) ? DBNull.Value : (object)IdIndicacao1},
+                new MySqlParameter("pIdIndicacao2", MySqlDbType.Int32) { Value = (IdIndicacao2 == 0) ? DBNull.Value : (object)IdIndicacao2},
+                new MySqlParameter("pIdMedico", MySqlDbType.Int32) { Value = (IdMedico == 0) ? DBNull.Value : (object)IdMedico},
+                new MySqlParameter("pIdSimNao", MySqlDbType.Int32) { Value = (IdSimNao == 0) ? DBNull.Value : (object)IdSimNao},
                 new MySqlParameter("pObservacao", MySqlDbType.VarChar) { Value = Observacao ?? string.Empty }
 
                     });

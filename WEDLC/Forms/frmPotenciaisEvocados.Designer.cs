@@ -29,24 +29,24 @@
         private void InitializeComponent()
         {
             this.grpBoxDados = new System.Windows.Forms.GroupBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.txtItensidade = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtNEstimulo = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtFreqEstim = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tabPotenciais = new System.Windows.Forms.TabControl();
             this.tabPevi = new System.Windows.Forms.TabPage();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.textBox15 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.txtAmplitudeOlhoEsquerdo = new System.Windows.Forms.TextBox();
+            this.txtAmplitudeOlhoDireito = new System.Windows.Forms.TextBox();
+            this.txtN145OlhoEsquerdo = new System.Windows.Forms.TextBox();
+            this.txtN145OlhoDireito = new System.Windows.Forms.TextBox();
+            this.txtP100OlhoEsquerdo = new System.Windows.Forms.TextBox();
+            this.txtP100OlhoDireito = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.txtP100Diferenca = new System.Windows.Forms.TextBox();
+            this.txtN75OlhoEsquerdo = new System.Windows.Forms.TextBox();
+            this.txtN75OlhoDireito = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -153,15 +153,15 @@
             this.label56 = new System.Windows.Forms.Label();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtEstimulacao = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtFiltros = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtSensibilidade = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtSigla = new System.Windows.Forms.TextBox();
+            this.txtCaptacao = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtNome = new System.Windows.Forms.TextBox();
+            this.txtUvDivTempo = new System.Windows.Forms.TextBox();
             this.lblNome = new System.Windows.Forms.Label();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
@@ -191,22 +191,22 @@
             // 
             // grpBoxDados
             // 
-            this.grpBoxDados.Controls.Add(this.textBox6);
+            this.grpBoxDados.Controls.Add(this.txtItensidade);
             this.grpBoxDados.Controls.Add(this.label9);
-            this.grpBoxDados.Controls.Add(this.textBox5);
+            this.grpBoxDados.Controls.Add(this.txtNEstimulo);
             this.grpBoxDados.Controls.Add(this.label8);
-            this.grpBoxDados.Controls.Add(this.textBox4);
+            this.grpBoxDados.Controls.Add(this.txtFreqEstim);
             this.grpBoxDados.Controls.Add(this.label6);
             this.grpBoxDados.Controls.Add(this.tabPotenciais);
-            this.grpBoxDados.Controls.Add(this.textBox3);
+            this.grpBoxDados.Controls.Add(this.txtEstimulacao);
             this.grpBoxDados.Controls.Add(this.label5);
-            this.grpBoxDados.Controls.Add(this.textBox2);
+            this.grpBoxDados.Controls.Add(this.txtFiltros);
             this.grpBoxDados.Controls.Add(this.label4);
-            this.grpBoxDados.Controls.Add(this.textBox1);
+            this.grpBoxDados.Controls.Add(this.txtSensibilidade);
             this.grpBoxDados.Controls.Add(this.label2);
-            this.grpBoxDados.Controls.Add(this.txtSigla);
+            this.grpBoxDados.Controls.Add(this.txtCaptacao);
             this.grpBoxDados.Controls.Add(this.label1);
-            this.grpBoxDados.Controls.Add(this.txtNome);
+            this.grpBoxDados.Controls.Add(this.txtUvDivTempo);
             this.grpBoxDados.Controls.Add(this.lblNome);
             this.grpBoxDados.Controls.Add(this.txtCodigo);
             this.grpBoxDados.Controls.Add(this.lblCodigo);
@@ -217,13 +217,13 @@
             this.grpBoxDados.TabStop = false;
             this.grpBoxDados.Text = "Técnica";
             // 
-            // textBox6
+            // txtItensidade
             // 
-            this.textBox6.Location = new System.Drawing.Point(333, 128);
-            this.textBox6.MaxLength = 10;
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(213, 20);
-            this.textBox6.TabIndex = 20;
+            this.txtItensidade.Location = new System.Drawing.Point(333, 128);
+            this.txtItensidade.MaxLength = 10;
+            this.txtItensidade.Name = "txtItensidade";
+            this.txtItensidade.Size = new System.Drawing.Size(213, 20);
+            this.txtItensidade.TabIndex = 20;
             // 
             // label9
             // 
@@ -234,14 +234,14 @@
             this.label9.TabIndex = 19;
             this.label9.Text = "Intensidade (dBs)";
             // 
-            // textBox5
+            // txtNEstimulo
             // 
-            this.textBox5.Location = new System.Drawing.Point(219, 128);
-            this.textBox5.MaxLength = 4;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(108, 20);
-            this.textBox5.TabIndex = 18;
-            this.textBox5.Text = "000";
+            this.txtNEstimulo.Location = new System.Drawing.Point(219, 128);
+            this.txtNEstimulo.MaxLength = 4;
+            this.txtNEstimulo.Name = "txtNEstimulo";
+            this.txtNEstimulo.Size = new System.Drawing.Size(108, 20);
+            this.txtNEstimulo.TabIndex = 18;
+            this.txtNEstimulo.Text = "000";
             // 
             // label8
             // 
@@ -252,14 +252,14 @@
             this.label8.TabIndex = 17;
             this.label8.Text = "Nº de Estímulos";
             // 
-            // textBox4
+            // txtFreqEstim
             // 
-            this.textBox4.Location = new System.Drawing.Point(6, 128);
-            this.textBox4.MaxLength = 2;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(207, 20);
-            this.textBox4.TabIndex = 15;
-            this.textBox4.Text = "000";
+            this.txtFreqEstim.Location = new System.Drawing.Point(6, 128);
+            this.txtFreqEstim.MaxLength = 2;
+            this.txtFreqEstim.Name = "txtFreqEstim";
+            this.txtFreqEstim.Size = new System.Drawing.Size(207, 20);
+            this.txtFreqEstim.TabIndex = 15;
+            this.txtFreqEstim.Text = "000";
             // 
             // label6
             // 
@@ -285,16 +285,16 @@
             // 
             // tabPevi
             // 
-            this.tabPevi.Controls.Add(this.textBox10);
-            this.tabPevi.Controls.Add(this.textBox16);
-            this.tabPevi.Controls.Add(this.textBox14);
-            this.tabPevi.Controls.Add(this.textBox15);
-            this.tabPevi.Controls.Add(this.textBox11);
-            this.tabPevi.Controls.Add(this.textBox12);
+            this.tabPevi.Controls.Add(this.txtAmplitudeOlhoEsquerdo);
+            this.tabPevi.Controls.Add(this.txtAmplitudeOlhoDireito);
+            this.tabPevi.Controls.Add(this.txtN145OlhoEsquerdo);
+            this.tabPevi.Controls.Add(this.txtN145OlhoDireito);
+            this.tabPevi.Controls.Add(this.txtP100OlhoEsquerdo);
+            this.tabPevi.Controls.Add(this.txtP100OlhoDireito);
             this.tabPevi.Controls.Add(this.label16);
-            this.tabPevi.Controls.Add(this.textBox9);
-            this.tabPevi.Controls.Add(this.textBox8);
-            this.tabPevi.Controls.Add(this.textBox7);
+            this.tabPevi.Controls.Add(this.txtP100Diferenca);
+            this.tabPevi.Controls.Add(this.txtN75OlhoEsquerdo);
+            this.tabPevi.Controls.Add(this.txtN75OlhoDireito);
             this.tabPevi.Controls.Add(this.label15);
             this.tabPevi.Controls.Add(this.label14);
             this.tabPevi.Controls.Add(this.label13);
@@ -311,59 +311,59 @@
             this.tabPevi.Text = "PEV";
             this.tabPevi.UseVisualStyleBackColor = true;
             // 
-            // textBox10
+            // txtAmplitudeOlhoEsquerdo
             // 
-            this.textBox10.Location = new System.Drawing.Point(309, 120);
-            this.textBox10.MaxLength = 3;
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(81, 20);
-            this.textBox10.TabIndex = 20;
-            this.textBox10.Text = "0000,00";
+            this.txtAmplitudeOlhoEsquerdo.Location = new System.Drawing.Point(309, 120);
+            this.txtAmplitudeOlhoEsquerdo.MaxLength = 3;
+            this.txtAmplitudeOlhoEsquerdo.Name = "txtAmplitudeOlhoEsquerdo";
+            this.txtAmplitudeOlhoEsquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtAmplitudeOlhoEsquerdo.TabIndex = 20;
+            this.txtAmplitudeOlhoEsquerdo.Text = "0000,00";
             // 
-            // textBox16
+            // txtAmplitudeOlhoDireito
             // 
-            this.textBox16.Location = new System.Drawing.Point(186, 120);
-            this.textBox16.MaxLength = 3;
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(81, 20);
-            this.textBox16.TabIndex = 19;
-            this.textBox16.Text = "0000,00";
+            this.txtAmplitudeOlhoDireito.Location = new System.Drawing.Point(186, 120);
+            this.txtAmplitudeOlhoDireito.MaxLength = 3;
+            this.txtAmplitudeOlhoDireito.Name = "txtAmplitudeOlhoDireito";
+            this.txtAmplitudeOlhoDireito.Size = new System.Drawing.Size(81, 20);
+            this.txtAmplitudeOlhoDireito.TabIndex = 19;
+            this.txtAmplitudeOlhoDireito.Text = "0000,00";
             // 
-            // textBox14
+            // txtN145OlhoEsquerdo
             // 
-            this.textBox14.Location = new System.Drawing.Point(309, 96);
-            this.textBox14.MaxLength = 3;
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(81, 20);
-            this.textBox14.TabIndex = 17;
-            this.textBox14.Text = "0000,00";
+            this.txtN145OlhoEsquerdo.Location = new System.Drawing.Point(309, 96);
+            this.txtN145OlhoEsquerdo.MaxLength = 3;
+            this.txtN145OlhoEsquerdo.Name = "txtN145OlhoEsquerdo";
+            this.txtN145OlhoEsquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtN145OlhoEsquerdo.TabIndex = 17;
+            this.txtN145OlhoEsquerdo.Text = "0000,00";
             // 
-            // textBox15
+            // txtN145OlhoDireito
             // 
-            this.textBox15.Location = new System.Drawing.Point(186, 96);
-            this.textBox15.MaxLength = 3;
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(81, 20);
-            this.textBox15.TabIndex = 16;
-            this.textBox15.Text = "0000,00";
+            this.txtN145OlhoDireito.Location = new System.Drawing.Point(186, 96);
+            this.txtN145OlhoDireito.MaxLength = 3;
+            this.txtN145OlhoDireito.Name = "txtN145OlhoDireito";
+            this.txtN145OlhoDireito.Size = new System.Drawing.Size(81, 20);
+            this.txtN145OlhoDireito.TabIndex = 16;
+            this.txtN145OlhoDireito.Text = "0000,00";
             // 
-            // textBox11
+            // txtP100OlhoEsquerdo
             // 
-            this.textBox11.Location = new System.Drawing.Point(309, 72);
-            this.textBox11.MaxLength = 3;
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(81, 20);
-            this.textBox11.TabIndex = 14;
-            this.textBox11.Text = "0000,00";
+            this.txtP100OlhoEsquerdo.Location = new System.Drawing.Point(309, 72);
+            this.txtP100OlhoEsquerdo.MaxLength = 3;
+            this.txtP100OlhoEsquerdo.Name = "txtP100OlhoEsquerdo";
+            this.txtP100OlhoEsquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtP100OlhoEsquerdo.TabIndex = 14;
+            this.txtP100OlhoEsquerdo.Text = "0000,00";
             // 
-            // textBox12
+            // txtP100OlhoDireito
             // 
-            this.textBox12.Location = new System.Drawing.Point(186, 72);
-            this.textBox12.MaxLength = 3;
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(81, 20);
-            this.textBox12.TabIndex = 13;
-            this.textBox12.Text = "0000,00";
+            this.txtP100OlhoDireito.Location = new System.Drawing.Point(186, 72);
+            this.txtP100OlhoDireito.MaxLength = 3;
+            this.txtP100OlhoDireito.Name = "txtP100OlhoDireito";
+            this.txtP100OlhoDireito.Size = new System.Drawing.Size(81, 20);
+            this.txtP100OlhoDireito.TabIndex = 13;
+            this.txtP100OlhoDireito.Text = "0000,00";
             // 
             // label16
             // 
@@ -374,33 +374,33 @@
             this.label16.TabIndex = 12;
             this.label16.Text = "Amplitude da onda P 100 (μV)";
             // 
-            // textBox9
+            // txtP100Diferenca
             // 
-            this.textBox9.Location = new System.Drawing.Point(424, 72);
-            this.textBox9.MaxLength = 3;
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(81, 20);
-            this.textBox9.TabIndex = 11;
-            this.textBox9.Text = "0000,00";
+            this.txtP100Diferenca.Location = new System.Drawing.Point(424, 72);
+            this.txtP100Diferenca.MaxLength = 3;
+            this.txtP100Diferenca.Name = "txtP100Diferenca";
+            this.txtP100Diferenca.ReadOnly = true;
+            this.txtP100Diferenca.Size = new System.Drawing.Size(81, 20);
+            this.txtP100Diferenca.TabIndex = 11;
+            this.txtP100Diferenca.Text = "0000,00";
             // 
-            // textBox8
+            // txtN75OlhoEsquerdo
             // 
-            this.textBox8.Location = new System.Drawing.Point(309, 48);
-            this.textBox8.MaxLength = 3;
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(81, 20);
-            this.textBox8.TabIndex = 10;
-            this.textBox8.Text = "0000,00";
+            this.txtN75OlhoEsquerdo.Location = new System.Drawing.Point(309, 48);
+            this.txtN75OlhoEsquerdo.MaxLength = 3;
+            this.txtN75OlhoEsquerdo.Name = "txtN75OlhoEsquerdo";
+            this.txtN75OlhoEsquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtN75OlhoEsquerdo.TabIndex = 10;
+            this.txtN75OlhoEsquerdo.Text = "0000,00";
             // 
-            // textBox7
+            // txtN75OlhoDireito
             // 
-            this.textBox7.Location = new System.Drawing.Point(186, 48);
-            this.textBox7.MaxLength = 3;
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(81, 20);
-            this.textBox7.TabIndex = 9;
-            this.textBox7.Text = "0000,00";
+            this.txtN75OlhoDireito.Location = new System.Drawing.Point(186, 48);
+            this.txtN75OlhoDireito.MaxLength = 3;
+            this.txtN75OlhoDireito.Name = "txtN75OlhoDireito";
+            this.txtN75OlhoDireito.Size = new System.Drawing.Size(81, 20);
+            this.txtN75OlhoDireito.TabIndex = 9;
+            this.txtN75OlhoDireito.Text = "0000,00";
             // 
             // label15
             // 
@@ -1472,13 +1472,13 @@
             this.label58.TabIndex = 39;
             this.label58.Text = "Ondas";
             // 
-            // textBox3
+            // txtEstimulacao
             // 
-            this.textBox3.Location = new System.Drawing.Point(219, 83);
-            this.textBox3.MaxLength = 40;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(474, 20);
-            this.textBox3.TabIndex = 10;
+            this.txtEstimulacao.Location = new System.Drawing.Point(219, 83);
+            this.txtEstimulacao.MaxLength = 40;
+            this.txtEstimulacao.Name = "txtEstimulacao";
+            this.txtEstimulacao.Size = new System.Drawing.Size(474, 20);
+            this.txtEstimulacao.TabIndex = 10;
             // 
             // label5
             // 
@@ -1489,14 +1489,14 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Estimulação";
             // 
-            // textBox2
+            // txtFiltros
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 83);
-            this.textBox2.MaxLength = 20;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(207, 20);
-            this.textBox2.TabIndex = 8;
-            this.textBox2.Text = "2 KHz /20Hz";
+            this.txtFiltros.Location = new System.Drawing.Point(6, 83);
+            this.txtFiltros.MaxLength = 20;
+            this.txtFiltros.Name = "txtFiltros";
+            this.txtFiltros.Size = new System.Drawing.Size(207, 20);
+            this.txtFiltros.TabIndex = 8;
+            this.txtFiltros.Text = "2 KHz /20Hz";
             // 
             // label4
             // 
@@ -1507,13 +1507,13 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Filtros";
             // 
-            // textBox1
+            // txtSensibilidade
             // 
-            this.textBox1.Location = new System.Drawing.Point(333, 38);
-            this.textBox1.MaxLength = 10;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(213, 20);
-            this.textBox1.TabIndex = 4;
+            this.txtSensibilidade.Location = new System.Drawing.Point(333, 38);
+            this.txtSensibilidade.MaxLength = 10;
+            this.txtSensibilidade.Name = "txtSensibilidade";
+            this.txtSensibilidade.Size = new System.Drawing.Size(213, 20);
+            this.txtSensibilidade.TabIndex = 4;
             // 
             // label2
             // 
@@ -1524,14 +1524,13 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Sensibilidade";
             // 
-            // txtSigla
+            // txtCaptacao
             // 
-            this.txtSigla.Location = new System.Drawing.Point(115, 38);
-            this.txtSigla.MaxLength = 40;
-            this.txtSigla.Name = "txtSigla";
-            this.txtSigla.Size = new System.Drawing.Size(212, 20);
-            this.txtSigla.TabIndex = 2;
-            this.txtSigla.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSigla_KeyUp);
+            this.txtCaptacao.Location = new System.Drawing.Point(115, 38);
+            this.txtCaptacao.MaxLength = 40;
+            this.txtCaptacao.Name = "txtCaptacao";
+            this.txtCaptacao.Size = new System.Drawing.Size(212, 20);
+            this.txtCaptacao.TabIndex = 2;
             // 
             // label1
             // 
@@ -1542,15 +1541,14 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Captação";
             // 
-            // txtNome
+            // txtUvDivTempo
             // 
-            this.txtNome.Location = new System.Drawing.Point(552, 38);
-            this.txtNome.MaxLength = 3;
-            this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(141, 20);
-            this.txtNome.TabIndex = 2;
-            this.txtNome.Text = "0000,00";
-            this.txtNome.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNome_KeyUp);
+            this.txtUvDivTempo.Location = new System.Drawing.Point(552, 38);
+            this.txtUvDivTempo.MaxLength = 3;
+            this.txtUvDivTempo.Name = "txtUvDivTempo";
+            this.txtUvDivTempo.Size = new System.Drawing.Size(141, 20);
+            this.txtUvDivTempo.TabIndex = 2;
+            this.txtUvDivTempo.Text = "0000,00";
             // 
             // lblNome
             // 
@@ -1566,10 +1564,9 @@
             this.txtCodigo.Location = new System.Drawing.Point(6, 38);
             this.txtCodigo.MaxLength = 10;
             this.txtCodigo.Name = "txtCodigo";
+            this.txtCodigo.ReadOnly = true;
             this.txtCodigo.Size = new System.Drawing.Size(103, 20);
             this.txtCodigo.TabIndex = 1;
-            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigo_KeyPress);
-            this.txtCodigo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCodigo_KeyUp);
             // 
             // lblCodigo
             // 
@@ -1750,28 +1747,28 @@
 
         private System.Windows.Forms.GroupBox grpBoxDados;
         private System.Windows.Forms.GroupBox grpBotoes;
-        private System.Windows.Forms.TextBox txtNome;
+        private System.Windows.Forms.TextBox txtUvDivTempo;
         private System.Windows.Forms.Label lblNome;
         private System.Windows.Forms.TextBox txtCodigo;
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Button btnGravar;
         private System.Windows.Forms.Button btnSair;
-        private System.Windows.Forms.TextBox txtSigla;
+        private System.Windows.Forms.TextBox txtCaptacao;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSensibilidade;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtEstimulacao;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtFiltros;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TabControl tabPotenciais;
         private System.Windows.Forms.TabPage tabPevi;
         private System.Windows.Forms.TabPage tabPea;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtNEstimulo;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtFreqEstim;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox txtItensidade;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TabPage tabPess;
         private System.Windows.Forms.TabPage tabPegc;
@@ -1782,18 +1779,18 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.TextBox textBox15;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox txtN145OlhoEsquerdo;
+        private System.Windows.Forms.TextBox txtN145OlhoDireito;
+        private System.Windows.Forms.TextBox txtP100OlhoEsquerdo;
+        private System.Windows.Forms.TextBox txtP100OlhoDireito;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox txtP100Diferenca;
+        private System.Windows.Forms.TextBox txtN75OlhoEsquerdo;
+        private System.Windows.Forms.TextBox txtN75OlhoDireito;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBox16;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox txtAmplitudeOlhoDireito;
+        private System.Windows.Forms.TextBox txtAmplitudeOlhoEsquerdo;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button btnComentario;
         private System.Windows.Forms.TextBox txtTextoComentario;
