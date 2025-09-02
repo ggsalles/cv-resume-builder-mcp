@@ -1024,7 +1024,7 @@ namespace WEDLC.Forms
                         transactionScope.Complete();
 
                         MessageBox.Show($"{(cAcao == Acao.INSERT ? "Inclusão" : "Atualização")} " +
-                                       "efetuada com sucesso!" + " Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                       "efetuada com sucesso!" + $"{(cAcao == Acao.INSERT ? " Código gerado: " + sequence : "")} ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         btnCancelar_Click(sender, e);
                     }
                     catch (Exception ex)
