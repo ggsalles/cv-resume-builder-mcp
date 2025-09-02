@@ -9,30 +9,19 @@ namespace WEDLC.Forms
 {
     public partial class frmPotenciaisEvocados : Form
     {
-        public enum Acao
-        {
-            INSERT = 0,
-            UPDATE = 1,
-            DELETE = 2,
-            SAVE = 3,
-            CANCELAR = 4
-        }
-
-        public Acao cAcao = Acao.UPDATE;
-
         //Código do módulo
         public const int codModulo = 1;
 
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
-        public int IdAatividadeInsercao { get; set; }
         public int IdResultado { get; set; }
         public int IdFolha { get; set; }
         public int IdPaciente { get; set; }
-        public string Nome { get; set; }
-        public string Sigla { get; set; }
-        public string Texto { get; set; }
 
         public int codGrupoFolha; //Código do grupo de folha (PEV, PESS, PEA, PEGC, PESSMED)
+
+        public string sigla;
+
+        public string nome;
 
         public enum GrupoFolha
         {
@@ -51,20 +40,21 @@ namespace WEDLC.Forms
 
         private void frmPotenciaisEvocados_Load(object sender, EventArgs e)
         {
-            carregaTela();
+            // Configurações iniciais do formulário, se necessário
+            this.DoubleBuffered = true;
+            this.Text = "Folha: " + sigla + " - " + nome;
+            iniciaTela();
         }
 
-        public void carregaTela()
+        public void iniciaTela()
         {
             try
             {
                 //De acordo com o grupo de folha, formata a tela
-                formataTela();
+                formataCarregaTela();
 
                 // Ativa a visualização do click no form
                 this.KeyPreview = true;
-
-                cAcao = Acao.CANCELAR;
 
             }
             catch (Exception)
@@ -73,16 +63,21 @@ namespace WEDLC.Forms
             }
 
         }
-        public void formataTela()
+        public void formataCarregaTela()
         {
             // Primeiro, remove todas as abas
             tabPotenciais.TabPages.Clear();
 
-            // Adiciona apenas a aba correspondente ao grupo
             switch ((int)codGrupoFolha)
             {
                 case (int)GrupoFolha.PEV:
+
+                    // Adiciona apenas a aba correspondente ao grupo
                     tabPotenciais.TabPages.Add(tabPevi);
+
+                    // Redimensiona a tela para PEV
+                    RedimensionaTelaPEV();
+
                     if (CarregaDadosPev() == false)
                     {
                         break;
@@ -96,52 +91,57 @@ namespace WEDLC.Forms
                         break;
                     }
                     break;
+
                 case (int)GrupoFolha.PEA:
+
                     tabPotenciais.TabPages.Add(tabPea);
+
                     break;
+
                 case (int)GrupoFolha.PESS:
+
                     tabPotenciais.TabPages.Add(tabPess);
+
                     break;
+
                 case (int)GrupoFolha.PEGC:
+
                     tabPotenciais.TabPages.Add(tabPegc);
+
                     break;
+
                 case (int)GrupoFolha.PESSMED:
+
                     tabPotenciais.TabPages.Add(tabPessMed);
+
                     break;
             }
         }
         public bool validaCampos()
         {
-
-            if (txtCodigo.Text.ToString().Trim().Length == 0 && cAcao != Acao.INSERT)
-            {
-                MessageBox.Show("O campo código não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCodigo.Focus();
-                return false;
-            }
-
-            if (txtCaptacao.Text.ToString().Trim().Length == 0)
-            {
-                MessageBox.Show("O campo sigla não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCaptacao.Focus();
-                return false;
-            }
-
-            if (txtUvDivTempo.Text.ToString().Trim().Length == 0)
-            {
-                MessageBox.Show("O campo nome não está preenchido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtUvDivTempo.Focus();
-                return false;
-            }
-
             return true;
-
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
             try
             {
-
+                switch ((int)codGrupoFolha)
+                {
+                    case (int)GrupoFolha.PEV:
+                        break;
+                    case (int)GrupoFolha.PEA:
+                        tabPotenciais.TabPages.Add(tabPea);
+                        break;
+                    case (int)GrupoFolha.PESS:
+                        tabPotenciais.TabPages.Add(tabPess);
+                        break;
+                    case (int)GrupoFolha.PEGC:
+                        tabPotenciais.TabPages.Add(tabPegc);
+                        break;
+                    case (int)GrupoFolha.PESSMED:
+                        tabPotenciais.TabPages.Add(tabPessMed);
+                        break;
+                }
             }
             catch (Exception)
             {
@@ -211,7 +211,7 @@ namespace WEDLC.Forms
                 objcPotenciaisPEV.IdFolha = this.IdFolha;
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
 
-                    DataTable dt = objcPotenciaisPEV.BuscaResultadoPev();
+                DataTable dt = objcPotenciaisPEV.BuscaResultadoPev();
 
                 // Preenche os campos com os dados retornados
                 txtN75OlhoDireito.Text = dt.Rows[0]["N75OlhoDireito"].ToString();
@@ -245,7 +245,7 @@ namespace WEDLC.Forms
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoComentarioPev();
 
-                if (dt.Rows.Count > 0 )
+                if (dt.Rows.Count > 0)
                 {
                     // Preenche os campos com os dados retornados
                     txtCodigoComentario.Text = dt.Rows[0]["idcomentario"].ToString();
@@ -259,7 +259,7 @@ namespace WEDLC.Forms
                     // Preenche os campos com os dados retornados
                     txtCodigoComentario.Text = string.Empty;
                     txtSiglaComentario.Text = string.Empty;
-                    txtNomeComentario.Text = string.Empty;   
+                    txtNomeComentario.Text = string.Empty;
                     txtTextoComentario.Text = string.Empty;
                 }
 
@@ -269,6 +269,33 @@ namespace WEDLC.Forms
             {
                 MessageBox.Show("Erro ao carregar dados: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+        }
+
+        private void RedimensionaTelaPEV()
+        {
+            tabPotenciais.Size = new Size(684, 179);
+            grpBoxDados.Size = new Size(699, 344);
+            groupBox6.Location = new Point(12, 360);
+            grpBotoes.Location = new Point(12, 617);
+            this.Size = new Size(735, 715);
+        }
+
+        private void btnComentario_Click(object sender, EventArgs e)
+        {
+            frmComentarios objfrmComentarios = new frmComentarios();
+
+            // Passa o objeto cAtividadeInsercao para o formulário B
+            objfrmComentarios.VemdeResultado = true;
+
+            // Mostra o diálogo e verifica se foi preenchido
+            if (objfrmComentarios.ShowDialog() == DialogResult.OK)
+            {
+                // Acessa os dados diretamente do formulário B
+                txtCodigoComentario.Text = objfrmComentarios.IdComentario.ToString();
+                txtNomeComentario.Text = objfrmComentarios.Nome;
+                txtSiglaComentario.Text = objfrmComentarios.Sigla;
+                txtTextoComentario.Text = objfrmComentarios.Texto;
             }
         }
     }

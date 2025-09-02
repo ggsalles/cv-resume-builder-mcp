@@ -165,6 +165,12 @@ namespace WEDLC.Forms
 
         private void pacientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmPaciente>() == true)
+            {
+                MessageBox.Show("O formulário de Paciente já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -183,6 +189,12 @@ namespace WEDLC.Forms
 
         private void médicosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmMedico>() == true)
+            {
+                MessageBox.Show("O formulário de Médico já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -261,6 +273,12 @@ namespace WEDLC.Forms
 
         private void resultadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmResultado>() == true)
+            {
+                MessageBox.Show("O formulário de Resultados já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 

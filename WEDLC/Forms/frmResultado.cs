@@ -51,7 +51,7 @@ namespace WEDLC.Forms
             //toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
         }
 
-        private void frmPaciente_Load(object sender, EventArgs e)
+        private void frmResultado_Load(object sender, EventArgs e)
         {
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
@@ -396,17 +396,33 @@ namespace WEDLC.Forms
                                 case (int)GrupoFolha.PEGC:
                                 case (int)GrupoFolha.PESSMED:
 
+                                    if (cUtil.ValidaFormulario.FormularioEstaAberto<frmPotenciaisEvocados>() == true)
+                                    {
+                                        MessageBox.Show("O formulário de Potenciais Evocados já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        return;
+                                    }
 
                                     // Cria um objeto para o form de troca de senhas abrir
                                     frmPotenciaisEvocados objPotenciaisEvocados = new frmPotenciaisEvocados();
-    
+
                                     objPotenciaisEvocados.codGrupoFolha = CodGrupoFolha;
                                     objPotenciaisEvocados.IdFolha = idfolha;
                                     objPotenciaisEvocados.IdPaciente = idpaciente;
                                     objPotenciaisEvocados.IdResultado = 0; //Sempre inicia com zero
+                                    objPotenciaisEvocados.sigla = sigla;
+                                    objPotenciaisEvocados.nome = nome;
 
-                                    //Abre o form de senha modal
+                                    // Altera o cursor para "espera"
+                                    Cursor.Current = Cursors.WaitCursor;
+
+                                    // Define o form pai como o form principal
+                                    objPotenciaisEvocados.MdiParent = this.MdiParent;
+
+                                    //Abre o form de especialização não modal
                                     objPotenciaisEvocados.Show();
+
+                                    // Restaura o cursor normal
+                                    Cursor.Current = Cursors.Default;
                                     break;
                             }
                         }
@@ -423,6 +439,7 @@ namespace WEDLC.Forms
         {
             this.limpaFormulario();
         }
+
     }
 }
 

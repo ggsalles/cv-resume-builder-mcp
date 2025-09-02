@@ -527,7 +527,7 @@ namespace WEDLC.Forms
             if (objfrmPotenciais.ShowDialog() == DialogResult.OK)
             {
                 // Acessa os dados diretamente do formulário B
-                txtCodigoPotencial.Text = objfrmPotenciais.IdAatividadeInsercao.ToString();
+                txtCodigoPotencial.Text = objfrmPotenciais.IdPotencial.ToString();
                 txtNomePotencial.Text = objfrmPotenciais.Nome;
                 txtSiglaPotencial.Text = objfrmPotenciais.Sigla;
                 txtTextoPotencial.Text = objfrmPotenciais.Texto;
@@ -545,7 +545,7 @@ namespace WEDLC.Forms
             if (objfrmComentarios.ShowDialog() == DialogResult.OK)
             {
                 // Acessa os dados diretamente do formulário B
-                txtCodigoComentario.Text = objfrmComentarios.IdAatividadeInsercao.ToString();
+                txtCodigoComentario.Text = objfrmComentarios.IdComentario.ToString();
                 txtNomeComentario.Text = objfrmComentarios.Nome;
                 txtSiglaComentario.Text = objfrmComentarios.Sigla;
                 txtTextoComentario.Text = objfrmComentarios.Texto;

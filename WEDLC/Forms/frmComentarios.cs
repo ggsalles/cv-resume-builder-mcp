@@ -25,7 +25,7 @@ namespace WEDLC.Forms
 
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
         public bool VemdeResultado { get; set; } = false;
-        public int IdAatividadeInsercao { get; set; }
+        public int IdComentario { get; set; }
         public string Nome { get; set; }
         public string Sigla { get; set; }
         public string Texto { get; set; }
@@ -370,7 +370,7 @@ namespace WEDLC.Forms
                 if (!string.IsNullOrWhiteSpace(txtCodigo.Text))
                 {
                     // Preenche as propriedades públicas com os dados do formulário
-                    this.IdAatividadeInsercao = Int32.Parse(txtCodigo.Text);
+                    this.IdComentario = Int32.Parse(txtCodigo.Text);
                     this.Sigla = txtSigla.Text;
                     this.Nome = txtNome.Text;
                     this.Texto = txtTexto.Text;

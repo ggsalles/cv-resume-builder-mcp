@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
@@ -66,65 +64,80 @@ namespace WEDLC.Banco
                     return idade;
                 }
             }
+        }
 
-            public class CPFValidator
+        public class ValidaFormulario
+        {
+            public static bool FormularioEstaAberto<T>() where T : Form
             {
-                // Método para validar CPF
-                public static bool ValidarCPF(string cpf)
+                foreach (Form form in Application.OpenForms)
                 {
-                    // Remove caracteres não numéricos
-                    cpf = new string(cpf.Where(char.IsDigit).ToArray());
+                    if (form is T)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
 
-                    // Verifica se o tamanho é 11 ou se todos os dígitos são iguais
-                    if (cpf.Length != 11 || TodosDigitosIguais(cpf))
+        public class CPFValidator
+        {
+            // Método para validar CPF
+            public static bool ValidarCPF(string cpf)
+            {
+                // Remove caracteres não numéricos
+                cpf = new string(cpf.Where(char.IsDigit).ToArray());
+
+                // Verifica se o tamanho é 11 ou se todos os dígitos são iguais
+                if (cpf.Length != 11 || TodosDigitosIguais(cpf))
+                {
+                    return false;
+                }
+
+                // Calcula o primeiro dígito verificador
+                int soma = 0;
+                for (int i = 0; i < 9; i++)
+                {
+                    soma += int.Parse(cpf[i].ToString()) * (10 - i);
+                }
+                int resto = soma % 11;
+                int digito1 = resto < 2 ? 0 : 11 - resto;
+
+                // Calcula o segundo dígito verificador
+                soma = 0;
+                for (int i = 0; i < 10; i++)
+                {
+                    soma += int.Parse(cpf[i].ToString()) * (11 - i);
+                }
+                resto = soma % 11;
+                int digito2 = resto < 2 ? 0 : 11 - resto;
+
+                // Verifica se os dígitos calculados conferem com os informados
+                return int.Parse(cpf[9].ToString()) == digito1 &&
+                       int.Parse(cpf[10].ToString()) == digito2;
+            }
+
+            // Método auxiliar para verificar se todos os dígitos são iguais
+            private static bool TodosDigitosIguais(string cpf)
+            {
+                for (int i = 1; i < cpf.Length; i++)
+                {
+                    if (cpf[i] != cpf[0])
                     {
                         return false;
                     }
-
-                    // Calcula o primeiro dígito verificador
-                    int soma = 0;
-                    for (int i = 0; i < 9; i++)
-                    {
-                        soma += int.Parse(cpf[i].ToString()) * (10 - i);
-                    }
-                    int resto = soma % 11;
-                    int digito1 = resto < 2 ? 0 : 11 - resto;
-
-                    // Calcula o segundo dígito verificador
-                    soma = 0;
-                    for (int i = 0; i < 10; i++)
-                    {
-                        soma += int.Parse(cpf[i].ToString()) * (11 - i);
-                    }
-                    resto = soma % 11;
-                    int digito2 = resto < 2 ? 0 : 11 - resto;
-
-                    // Verifica se os dígitos calculados conferem com os informados
-                    return int.Parse(cpf[9].ToString()) == digito1 &&
-                           int.Parse(cpf[10].ToString()) == digito2;
                 }
+                return true;
+            }
 
-                // Método auxiliar para verificar se todos os dígitos são iguais
-                private static bool TodosDigitosIguais(string cpf)
-                {
-                    for (int i = 1; i < cpf.Length; i++)
-                    {
-                        if (cpf[i] != cpf[0])
-                        {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
+            // Método para formatar CPF (xxx.xxx.xxx-xx)
+            public static string FormatarCPF(string cpf)
+            {
+                cpf = new string(cpf.Where(char.IsDigit).ToArray());
+                if (cpf.Length != 11) return cpf;
 
-                // Método para formatar CPF (xxx.xxx.xxx-xx)
-                public static string FormatarCPF(string cpf)
-                {
-                    cpf = new string(cpf.Where(char.IsDigit).ToArray());
-                    if (cpf.Length != 11) return cpf;
-
-                    return $"{cpf.Substring(0, 3)}.{cpf.Substring(3, 3)}.{cpf.Substring(6, 3)}-{cpf.Substring(9, 2)}";
-                }
+                return $"{cpf.Substring(0, 3)}.{cpf.Substring(3, 3)}.{cpf.Substring(6, 3)}-{cpf.Substring(9, 2)}";
             }
         }
     }

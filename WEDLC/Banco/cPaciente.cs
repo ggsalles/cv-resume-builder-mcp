@@ -251,11 +251,11 @@ namespace WEDLC.Banco
                     command.Parameters.AddWithValue("pTelefone", Telefone ?? string.Empty);
                     command.Parameters.AddWithValue("pIdSexo", IdSexo);
                     command.Parameters.AddWithValue("pNascimento", DateTime.Parse(DataNascimento).ToString("yyyy/MM/dd"));
-                    command.Parameters.AddWithValue("pIdConvenio", IdConvenio);
-                    command.Parameters.AddWithValue("pIdIndicacao1", IdIndicacao1);
-                    command.Parameters.AddWithValue("pIdIndicacao2", IdIndicacao2);
-                    command.Parameters.AddWithValue("pIdMedico", IdMedico);
-                    command.Parameters.AddWithValue("pIdSimNao", IdSimNao);
+                    command.Parameters.AddWithValue("pIdConvenio", (IdConvenio == 0) ? DBNull.Value : (object)IdConvenio);
+                    command.Parameters.AddWithValue("pIdIndicacao1", (IdIndicacao1 == 0) ? DBNull.Value : (object)IdIndicacao1);
+                    command.Parameters.AddWithValue("pIdIndicacao2", (IdIndicacao2 == 0) ? DBNull.Value : (object)IdIndicacao2);
+                    command.Parameters.AddWithValue("pIdMedico", (IdMedico == 0) ? DBNull.Value : (object)IdMedico);
+                    command.Parameters.AddWithValue("pIdSimNao", (IdSimNao == 0) ? DBNull.Value : (object)IdSimNao);
                     command.Parameters.AddWithValue("pObservacao", Observacao ?? string.Empty);
 
                     bool sucesso = command.ExecuteNonQuery() > 0;

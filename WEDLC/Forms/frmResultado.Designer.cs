@@ -177,7 +177,7 @@
             this.Name = "frmResultado";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Resultados";
-            this.Load += new System.EventHandler(this.frmPaciente_Load);
+            this.Load += new System.EventHandler(this.frmResultado_Load);
             this.grpPaciente.ResumeLayout(false);
             this.grpPaciente.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdDadosPessoais)).EndInit();

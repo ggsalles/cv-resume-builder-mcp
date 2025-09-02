@@ -1589,7 +1589,6 @@
             // 
             // btnGravar
             // 
-            this.btnGravar.Enabled = false;
             this.btnGravar.Image = global::WEDLC.Properties.Resources.save;
             this.btnGravar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGravar.Location = new System.Drawing.Point(14, 13);
@@ -1637,6 +1636,7 @@
             this.btnComentario.Size = new System.Drawing.Size(27, 24);
             this.btnComentario.TabIndex = 34;
             this.btnComentario.UseVisualStyleBackColor = true;
+            this.btnComentario.Click += new System.EventHandler(this.btnComentario_Click);
             // 
             // txtTextoComentario
             // 
