@@ -213,7 +213,6 @@ namespace WEDLC.Forms
                 cPotenciaisPEV objcPotenciaisPEV = new cPotenciaisPEV();
 
                 objcPotenciaisPEV.IdResultado = this.IdResultado;
-                objcPotenciaisPEV.IdFolha = this.IdFolha;
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoPotEvocadoTecnica();
@@ -223,6 +222,7 @@ namespace WEDLC.Forms
                     // Preenche os campos com os dados retornados
                     txtCodigo.Text = dt.Rows[0]["idresultadopotevoctecnica"].ToString();
                     txtCaptacao.Text = dt.Rows[0]["captacao"].ToString();
+                    txtSensibilidade.Text = dt.Rows[0]["sensibilidade"].ToString();
                     txtUvDivTempo.Text = dt.Rows[0]["uvdivtempo"].ToString();
                     txtFiltros.Text = dt.Rows[0]["filtros"].ToString();
                     txtEstimulacao.Text = dt.Rows[0]["estimulacao"].ToString();
@@ -235,6 +235,7 @@ namespace WEDLC.Forms
                     // Preenche os campos com os dados retornados
                     txtCodigo.Text = string.Empty;
                     txtCaptacao.Text = string.Empty;
+                    txtSensibilidade.Text = string.Empty;
                     txtUvDivTempo.Text = string.Empty;
                     txtFiltros.Text = string.Empty;
                     txtEstimulacao.Text = string.Empty;
@@ -258,7 +259,6 @@ namespace WEDLC.Forms
             {
                 cPotenciaisPEV objcPotenciaisPEV = new cPotenciaisPEV();
 
-                objcPotenciaisPEV.IdFolha = this.IdFolha;
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoPev();
@@ -292,7 +292,7 @@ namespace WEDLC.Forms
                 cPotenciaisPEV objcPotenciaisPEV = new cPotenciaisPEV();
 
                 objcPotenciaisPEV.IdResultado = this.IdResultado;
-                objcPotenciaisPEV.IdFolha = this.IdFolha;
+                //objcPotenciaisPEV.IdFolha = this.IdFolha;
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoComentarioPev();
@@ -357,7 +357,6 @@ namespace WEDLC.Forms
             cPotenciaisPEV objcPotenciaisPEV = new cPotenciaisPEV();
             objcPotenciaisPEV.IdResultadoPev = this.IdResultadoPEV;
             objcPotenciaisPEV.IdResultado = this.IdResultado;
-            objcPotenciaisPEV.IdFolha = this.IdFolha;
             objcPotenciaisPEV.IdPaciente = this.IdPaciente;
             objcPotenciaisPEV.N75OlhoDireito = txtN75OlhoDireito.Text;
             objcPotenciaisPEV.N75OlhoEsquerdo = txtN75OlhoEsquerdo.Text;
@@ -381,7 +380,6 @@ namespace WEDLC.Forms
                 return true;
             }
         }
-
         private bool GravaGrupoFolhaPotEvocadoTecnica()
         {
             cPotenciaisEvocadosTecnica objPotenciaisEvocadosTecnica = new cPotenciaisEvocadosTecnica();
@@ -418,7 +416,7 @@ namespace WEDLC.Forms
             cResultadoComentario.IdResultadoComentario = this.IdResultadoComentarioPEV;
             cResultadoComentario.IdResultado = this.IdResultado;
             cResultadoComentario.IdPaciente = this.IdPaciente;
-            cResultadoComentario.IdFolha = this.IdFolha;
+            //cResultadoComentario.IdFolha = this.IdFolha;
             cResultadoComentario.IdComentario = Convert.ToInt32(txtCodigoComentario.Text);
             cResultadoComentario.Texto = txtTextoComentario.Text;
             if (cResultadoComentario.AtualizarResultadoComentarioPEV() == false)
@@ -430,7 +428,6 @@ namespace WEDLC.Forms
                 return true;
             }
         }
-
         private void txtN75OlhoDireito_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);

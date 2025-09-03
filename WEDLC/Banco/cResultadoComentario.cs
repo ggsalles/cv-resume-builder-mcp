@@ -11,7 +11,6 @@ namespace WEDLC.Banco
         public Int32 IdResultado { get; set; }
         public Int32 IdComentario { get; set; }
         public Int32 IdResultadoComentario { get; set; }
-        public Int32 IdFolha { get; set; }
         public string Texto { get; set; }
 
         // Construtor
@@ -123,7 +122,6 @@ namespace WEDLC.Banco
 
                     // Adicionando os parâmetros exatamente como na procedure
                     cmd.Parameters.AddWithValue("pIdresultadocomentariopev", IdResultadoComentario);
-                    cmd.Parameters.AddWithValue("pIdfolha", IdFolha);
                     cmd.Parameters.AddWithValue("pIdresultado", IdResultado);
                     cmd.Parameters.AddWithValue("pIdcomentario", (IdComentario == 0) ? DBNull.Value : (object)IdComentario);
                     cmd.Parameters.AddWithValue("pTexto", Texto ?? (object)DBNull.Value);

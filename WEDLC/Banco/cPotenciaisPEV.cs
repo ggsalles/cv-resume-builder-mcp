@@ -7,8 +7,6 @@ namespace WEDLC.Banco
 {
     public class cPotenciaisPEV
     {
-        [DisplayName("ID Folha")]
-        public Int32 IdFolha { get; set; }
 
         [DisplayName("ID Resultado")]
         public Int32 IdResultado { get; set; }
@@ -116,7 +114,6 @@ namespace WEDLC.Banco
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdResultado", IdResultado);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", IdFolha);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
 
                     sqlDa.Fill(dt);

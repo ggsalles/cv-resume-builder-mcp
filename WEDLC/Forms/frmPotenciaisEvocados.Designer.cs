@@ -56,28 +56,28 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPea = new System.Windows.Forms.TabPage();
-            this.textBox26 = new System.Windows.Forms.TextBox();
-            this.textBox27 = new System.Windows.Forms.TextBox();
-            this.textBox28 = new System.Windows.Forms.TextBox();
-            this.textBox29 = new System.Windows.Forms.TextBox();
-            this.textBox30 = new System.Windows.Forms.TextBox();
-            this.textBox31 = new System.Windows.Forms.TextBox();
+            this.txt1a4esquerdo = new System.Windows.Forms.TextBox();
+            this.txt1a4direito = new System.Windows.Forms.TextBox();
+            this.txt3a5esquerdo = new System.Windows.Forms.TextBox();
+            this.txt3a5direito = new System.Windows.Forms.TextBox();
+            this.txt1a3esquerdo = new System.Windows.Forms.TextBox();
+            this.txt1a3direito = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.textBox22 = new System.Windows.Forms.TextBox();
-            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.txtonda5esquerdo = new System.Windows.Forms.TextBox();
+            this.txtonda5direito = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
-            this.textBox20 = new System.Windows.Forms.TextBox();
-            this.textBox21 = new System.Windows.Forms.TextBox();
+            this.txtonda4esquerdo = new System.Windows.Forms.TextBox();
+            this.txtonda4direito = new System.Windows.Forms.TextBox();
+            this.txtonda3esquerdo = new System.Windows.Forms.TextBox();
+            this.txtonda3direito = new System.Windows.Forms.TextBox();
+            this.txtonda2esquerdo = new System.Windows.Forms.TextBox();
+            this.txtonda2direito = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.textBox23 = new System.Windows.Forms.TextBox();
-            this.textBox24 = new System.Windows.Forms.TextBox();
+            this.txtonda1esquerdo = new System.Windows.Forms.TextBox();
+            this.txtonda1direito = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -500,28 +500,28 @@
             // 
             // tabPea
             // 
-            this.tabPea.Controls.Add(this.textBox26);
-            this.tabPea.Controls.Add(this.textBox27);
-            this.tabPea.Controls.Add(this.textBox28);
-            this.tabPea.Controls.Add(this.textBox29);
-            this.tabPea.Controls.Add(this.textBox30);
-            this.tabPea.Controls.Add(this.textBox31);
+            this.tabPea.Controls.Add(this.txt1a4esquerdo);
+            this.tabPea.Controls.Add(this.txt1a4direito);
+            this.tabPea.Controls.Add(this.txt3a5esquerdo);
+            this.tabPea.Controls.Add(this.txt3a5direito);
+            this.tabPea.Controls.Add(this.txt1a3esquerdo);
+            this.tabPea.Controls.Add(this.txt1a3direito);
             this.tabPea.Controls.Add(this.label30);
             this.tabPea.Controls.Add(this.label31);
             this.tabPea.Controls.Add(this.label32);
             this.tabPea.Controls.Add(this.label29);
-            this.tabPea.Controls.Add(this.textBox22);
-            this.tabPea.Controls.Add(this.textBox25);
+            this.tabPea.Controls.Add(this.txtonda5esquerdo);
+            this.tabPea.Controls.Add(this.txtonda5direito);
             this.tabPea.Controls.Add(this.label21);
-            this.tabPea.Controls.Add(this.textBox13);
-            this.tabPea.Controls.Add(this.textBox17);
-            this.tabPea.Controls.Add(this.textBox18);
-            this.tabPea.Controls.Add(this.textBox19);
-            this.tabPea.Controls.Add(this.textBox20);
-            this.tabPea.Controls.Add(this.textBox21);
+            this.tabPea.Controls.Add(this.txtonda4esquerdo);
+            this.tabPea.Controls.Add(this.txtonda4direito);
+            this.tabPea.Controls.Add(this.txtonda3esquerdo);
+            this.tabPea.Controls.Add(this.txtonda3direito);
+            this.tabPea.Controls.Add(this.txtonda2esquerdo);
+            this.tabPea.Controls.Add(this.txtonda2direito);
             this.tabPea.Controls.Add(this.label20);
-            this.tabPea.Controls.Add(this.textBox23);
-            this.tabPea.Controls.Add(this.textBox24);
+            this.tabPea.Controls.Add(this.txtonda1esquerdo);
+            this.tabPea.Controls.Add(this.txtonda1direito);
             this.tabPea.Controls.Add(this.label22);
             this.tabPea.Controls.Add(this.label23);
             this.tabPea.Controls.Add(this.label24);
@@ -537,65 +537,65 @@
             this.tabPea.Text = "PEA";
             this.tabPea.UseVisualStyleBackColor = true;
             // 
-            // textBox26
+            // txt1a4esquerdo
             // 
-            this.textBox26.Location = new System.Drawing.Point(309, 263);
-            this.textBox26.MaxLength = 3;
-            this.textBox26.Name = "textBox26";
-            this.textBox26.ReadOnly = true;
-            this.textBox26.Size = new System.Drawing.Size(81, 20);
-            this.textBox26.TabIndex = 51;
-            this.textBox26.Text = "0000,00";
+            this.txt1a4esquerdo.Location = new System.Drawing.Point(309, 263);
+            this.txt1a4esquerdo.MaxLength = 3;
+            this.txt1a4esquerdo.Name = "txt1a4esquerdo";
+            this.txt1a4esquerdo.ReadOnly = true;
+            this.txt1a4esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txt1a4esquerdo.TabIndex = 51;
+            this.txt1a4esquerdo.Text = "00,00";
             // 
-            // textBox27
+            // txt1a4direito
             // 
-            this.textBox27.Location = new System.Drawing.Point(186, 263);
-            this.textBox27.MaxLength = 3;
-            this.textBox27.Name = "textBox27";
-            this.textBox27.ReadOnly = true;
-            this.textBox27.Size = new System.Drawing.Size(81, 20);
-            this.textBox27.TabIndex = 50;
-            this.textBox27.Text = "0000,00";
+            this.txt1a4direito.Location = new System.Drawing.Point(186, 263);
+            this.txt1a4direito.MaxLength = 3;
+            this.txt1a4direito.Name = "txt1a4direito";
+            this.txt1a4direito.ReadOnly = true;
+            this.txt1a4direito.Size = new System.Drawing.Size(81, 20);
+            this.txt1a4direito.TabIndex = 50;
+            this.txt1a4direito.Text = "00,00";
             // 
-            // textBox28
+            // txt3a5esquerdo
             // 
-            this.textBox28.Location = new System.Drawing.Point(309, 236);
-            this.textBox28.MaxLength = 3;
-            this.textBox28.Name = "textBox28";
-            this.textBox28.ReadOnly = true;
-            this.textBox28.Size = new System.Drawing.Size(81, 20);
-            this.textBox28.TabIndex = 49;
-            this.textBox28.Text = "0000,00";
+            this.txt3a5esquerdo.Location = new System.Drawing.Point(309, 236);
+            this.txt3a5esquerdo.MaxLength = 3;
+            this.txt3a5esquerdo.Name = "txt3a5esquerdo";
+            this.txt3a5esquerdo.ReadOnly = true;
+            this.txt3a5esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txt3a5esquerdo.TabIndex = 49;
+            this.txt3a5esquerdo.Text = "00,00";
             // 
-            // textBox29
+            // txt3a5direito
             // 
-            this.textBox29.Location = new System.Drawing.Point(186, 236);
-            this.textBox29.MaxLength = 3;
-            this.textBox29.Name = "textBox29";
-            this.textBox29.ReadOnly = true;
-            this.textBox29.Size = new System.Drawing.Size(81, 20);
-            this.textBox29.TabIndex = 48;
-            this.textBox29.Text = "0000,00";
+            this.txt3a5direito.Location = new System.Drawing.Point(186, 236);
+            this.txt3a5direito.MaxLength = 3;
+            this.txt3a5direito.Name = "txt3a5direito";
+            this.txt3a5direito.ReadOnly = true;
+            this.txt3a5direito.Size = new System.Drawing.Size(81, 20);
+            this.txt3a5direito.TabIndex = 48;
+            this.txt3a5direito.Text = "00,00";
             // 
-            // textBox30
+            // txt1a3esquerdo
             // 
-            this.textBox30.Location = new System.Drawing.Point(309, 209);
-            this.textBox30.MaxLength = 3;
-            this.textBox30.Name = "textBox30";
-            this.textBox30.ReadOnly = true;
-            this.textBox30.Size = new System.Drawing.Size(81, 20);
-            this.textBox30.TabIndex = 47;
-            this.textBox30.Text = "0000,00";
+            this.txt1a3esquerdo.Location = new System.Drawing.Point(309, 209);
+            this.txt1a3esquerdo.MaxLength = 3;
+            this.txt1a3esquerdo.Name = "txt1a3esquerdo";
+            this.txt1a3esquerdo.ReadOnly = true;
+            this.txt1a3esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txt1a3esquerdo.TabIndex = 47;
+            this.txt1a3esquerdo.Text = "00,00";
             // 
-            // textBox31
+            // txt1a3direito
             // 
-            this.textBox31.Location = new System.Drawing.Point(186, 209);
-            this.textBox31.MaxLength = 3;
-            this.textBox31.Name = "textBox31";
-            this.textBox31.ReadOnly = true;
-            this.textBox31.Size = new System.Drawing.Size(81, 20);
-            this.textBox31.TabIndex = 46;
-            this.textBox31.Text = "0000,00";
+            this.txt1a3direito.Location = new System.Drawing.Point(186, 209);
+            this.txt1a3direito.MaxLength = 3;
+            this.txt1a3direito.Name = "txt1a3direito";
+            this.txt1a3direito.ReadOnly = true;
+            this.txt1a3direito.Size = new System.Drawing.Size(81, 20);
+            this.txt1a3direito.TabIndex = 46;
+            this.txt1a3direito.Text = "00,00";
             // 
             // label30
             // 
@@ -633,86 +633,86 @@
             this.label29.TabIndex = 42;
             this.label29.Text = "Latências Interpicos (mseg)";
             // 
-            // textBox22
+            // txtonda5esquerdo
             // 
-            this.textBox22.Location = new System.Drawing.Point(309, 156);
-            this.textBox22.MaxLength = 3;
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(81, 20);
-            this.textBox22.TabIndex = 41;
-            this.textBox22.Text = "0000,00";
+            this.txtonda5esquerdo.Location = new System.Drawing.Point(309, 156);
+            this.txtonda5esquerdo.MaxLength = 5;
+            this.txtonda5esquerdo.Name = "txtonda5esquerdo";
+            this.txtonda5esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtonda5esquerdo.TabIndex = 41;
+            this.txtonda5esquerdo.Text = "00,00";
             // 
-            // textBox25
+            // txtonda5direito
             // 
-            this.textBox25.Location = new System.Drawing.Point(186, 156);
-            this.textBox25.MaxLength = 3;
-            this.textBox25.Name = "textBox25";
-            this.textBox25.Size = new System.Drawing.Size(81, 20);
-            this.textBox25.TabIndex = 40;
-            this.textBox25.Text = "0000,00";
+            this.txtonda5direito.Location = new System.Drawing.Point(186, 156);
+            this.txtonda5direito.MaxLength = 5;
+            this.txtonda5direito.Name = "txtonda5direito";
+            this.txtonda5direito.Size = new System.Drawing.Size(81, 20);
+            this.txtonda5direito.TabIndex = 40;
+            this.txtonda5direito.Text = "00,00";
             // 
             // label21
             // 
             this.label21.AutoSize = true;
             this.label21.Location = new System.Drawing.Point(6, 160);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(46, 13);
+            this.label21.Size = new System.Drawing.Size(43, 13);
             this.label21.TabIndex = 39;
-            this.label21.Text = "Onda IV";
+            this.label21.Text = "Onda V";
             // 
-            // textBox13
+            // txtonda4esquerdo
             // 
-            this.textBox13.Location = new System.Drawing.Point(309, 129);
-            this.textBox13.MaxLength = 3;
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(81, 20);
-            this.textBox13.TabIndex = 38;
-            this.textBox13.Text = "0000,00";
+            this.txtonda4esquerdo.Location = new System.Drawing.Point(309, 129);
+            this.txtonda4esquerdo.MaxLength = 5;
+            this.txtonda4esquerdo.Name = "txtonda4esquerdo";
+            this.txtonda4esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtonda4esquerdo.TabIndex = 38;
+            this.txtonda4esquerdo.Text = "00,00";
             // 
-            // textBox17
+            // txtonda4direito
             // 
-            this.textBox17.Location = new System.Drawing.Point(186, 129);
-            this.textBox17.MaxLength = 3;
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(81, 20);
-            this.textBox17.TabIndex = 37;
-            this.textBox17.Text = "0000,00";
+            this.txtonda4direito.Location = new System.Drawing.Point(186, 129);
+            this.txtonda4direito.MaxLength = 5;
+            this.txtonda4direito.Name = "txtonda4direito";
+            this.txtonda4direito.Size = new System.Drawing.Size(81, 20);
+            this.txtonda4direito.TabIndex = 37;
+            this.txtonda4direito.Text = "00,00";
             // 
-            // textBox18
+            // txtonda3esquerdo
             // 
-            this.textBox18.Location = new System.Drawing.Point(309, 102);
-            this.textBox18.MaxLength = 3;
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(81, 20);
-            this.textBox18.TabIndex = 36;
-            this.textBox18.Text = "0000,00";
+            this.txtonda3esquerdo.Location = new System.Drawing.Point(309, 102);
+            this.txtonda3esquerdo.MaxLength = 5;
+            this.txtonda3esquerdo.Name = "txtonda3esquerdo";
+            this.txtonda3esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtonda3esquerdo.TabIndex = 36;
+            this.txtonda3esquerdo.Text = "00,00";
             // 
-            // textBox19
+            // txtonda3direito
             // 
-            this.textBox19.Location = new System.Drawing.Point(186, 102);
-            this.textBox19.MaxLength = 3;
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(81, 20);
-            this.textBox19.TabIndex = 35;
-            this.textBox19.Text = "0000,00";
+            this.txtonda3direito.Location = new System.Drawing.Point(186, 102);
+            this.txtonda3direito.MaxLength = 5;
+            this.txtonda3direito.Name = "txtonda3direito";
+            this.txtonda3direito.Size = new System.Drawing.Size(81, 20);
+            this.txtonda3direito.TabIndex = 35;
+            this.txtonda3direito.Text = "00,00";
             // 
-            // textBox20
+            // txtonda2esquerdo
             // 
-            this.textBox20.Location = new System.Drawing.Point(309, 75);
-            this.textBox20.MaxLength = 3;
-            this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(81, 20);
-            this.textBox20.TabIndex = 34;
-            this.textBox20.Text = "0000,00";
+            this.txtonda2esquerdo.Location = new System.Drawing.Point(309, 75);
+            this.txtonda2esquerdo.MaxLength = 5;
+            this.txtonda2esquerdo.Name = "txtonda2esquerdo";
+            this.txtonda2esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtonda2esquerdo.TabIndex = 34;
+            this.txtonda2esquerdo.Text = "00,00";
             // 
-            // textBox21
+            // txtonda2direito
             // 
-            this.textBox21.Location = new System.Drawing.Point(186, 75);
-            this.textBox21.MaxLength = 3;
-            this.textBox21.Name = "textBox21";
-            this.textBox21.Size = new System.Drawing.Size(81, 20);
-            this.textBox21.TabIndex = 33;
-            this.textBox21.Text = "0000,00";
+            this.txtonda2direito.Location = new System.Drawing.Point(186, 75);
+            this.txtonda2direito.MaxLength = 5;
+            this.txtonda2direito.Name = "txtonda2direito";
+            this.txtonda2direito.Size = new System.Drawing.Size(81, 20);
+            this.txtonda2direito.TabIndex = 33;
+            this.txtonda2direito.Text = "00,00";
             // 
             // label20
             // 
@@ -723,23 +723,23 @@
             this.label20.TabIndex = 32;
             this.label20.Text = "Onda IV";
             // 
-            // textBox23
+            // txtonda1esquerdo
             // 
-            this.textBox23.Location = new System.Drawing.Point(309, 48);
-            this.textBox23.MaxLength = 3;
-            this.textBox23.Name = "textBox23";
-            this.textBox23.Size = new System.Drawing.Size(81, 20);
-            this.textBox23.TabIndex = 30;
-            this.textBox23.Text = "0000,00";
+            this.txtonda1esquerdo.Location = new System.Drawing.Point(309, 48);
+            this.txtonda1esquerdo.MaxLength = 5;
+            this.txtonda1esquerdo.Name = "txtonda1esquerdo";
+            this.txtonda1esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtonda1esquerdo.TabIndex = 30;
+            this.txtonda1esquerdo.Text = "00,00";
             // 
-            // textBox24
+            // txtonda1direito
             // 
-            this.textBox24.Location = new System.Drawing.Point(186, 48);
-            this.textBox24.MaxLength = 3;
-            this.textBox24.Name = "textBox24";
-            this.textBox24.Size = new System.Drawing.Size(81, 20);
-            this.textBox24.TabIndex = 29;
-            this.textBox24.Text = "0000,00";
+            this.txtonda1direito.Location = new System.Drawing.Point(186, 48);
+            this.txtonda1direito.MaxLength = 5;
+            this.txtonda1direito.Name = "txtonda1direito";
+            this.txtonda1direito.Size = new System.Drawing.Size(81, 20);
+            this.txtonda1direito.TabIndex = 1;
+            this.txtonda1direito.Text = "00,00";
             // 
             // label22
             // 
@@ -1825,15 +1825,15 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtCodigoComentario;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox textBox19;
-        private System.Windows.Forms.TextBox textBox20;
-        private System.Windows.Forms.TextBox textBox21;
+        private System.Windows.Forms.TextBox txtonda4esquerdo;
+        private System.Windows.Forms.TextBox txtonda4direito;
+        private System.Windows.Forms.TextBox txtonda3esquerdo;
+        private System.Windows.Forms.TextBox txtonda3direito;
+        private System.Windows.Forms.TextBox txtonda2esquerdo;
+        private System.Windows.Forms.TextBox txtonda2direito;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox textBox23;
-        private System.Windows.Forms.TextBox textBox24;
+        private System.Windows.Forms.TextBox txtonda1esquerdo;
+        private System.Windows.Forms.TextBox txtonda1direito;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
@@ -1841,16 +1841,16 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.TextBox textBox22;
-        private System.Windows.Forms.TextBox textBox25;
+        private System.Windows.Forms.TextBox txtonda5esquerdo;
+        private System.Windows.Forms.TextBox txtonda5direito;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox textBox26;
-        private System.Windows.Forms.TextBox textBox27;
-        private System.Windows.Forms.TextBox textBox28;
-        private System.Windows.Forms.TextBox textBox29;
-        private System.Windows.Forms.TextBox textBox30;
-        private System.Windows.Forms.TextBox textBox31;
+        private System.Windows.Forms.TextBox txt1a4esquerdo;
+        private System.Windows.Forms.TextBox txt1a4direito;
+        private System.Windows.Forms.TextBox txt3a5esquerdo;
+        private System.Windows.Forms.TextBox txt3a5direito;
+        private System.Windows.Forms.TextBox txt1a3esquerdo;
+        private System.Windows.Forms.TextBox txt1a3direito;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label32;
