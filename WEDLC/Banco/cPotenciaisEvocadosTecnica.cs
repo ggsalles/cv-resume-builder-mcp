@@ -50,7 +50,7 @@ namespace WEDLC.Banco
                 using (var sqlDa = new MySqlDataAdapter("pr_buscaresultadopotevocadotecninca", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdResultado", IdResultado);
 
                     sqlDa.Fill(dt);
                     return dt;

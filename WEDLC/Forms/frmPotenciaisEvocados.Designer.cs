@@ -242,6 +242,7 @@
             this.txtNEstimulo.Size = new System.Drawing.Size(108, 20);
             this.txtNEstimulo.TabIndex = 8;
             this.txtNEstimulo.Text = "000";
+            this.txtNEstimulo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNEstimulo_KeyPress);
             // 
             // label8
             // 
@@ -260,6 +261,7 @@
             this.txtFreqEstim.Size = new System.Drawing.Size(207, 20);
             this.txtFreqEstim.TabIndex = 7;
             this.txtFreqEstim.Text = "000";
+            this.txtFreqEstim.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFreqEstim_KeyPress);
             // 
             // label6
             // 
@@ -540,61 +542,61 @@
             // txt1a4esquerdo
             // 
             this.txt1a4esquerdo.Location = new System.Drawing.Point(309, 263);
-            this.txt1a4esquerdo.MaxLength = 3;
+            this.txt1a4esquerdo.MaxLength = 4;
             this.txt1a4esquerdo.Name = "txt1a4esquerdo";
             this.txt1a4esquerdo.ReadOnly = true;
             this.txt1a4esquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txt1a4esquerdo.TabIndex = 51;
+            this.txt1a4esquerdo.TabIndex = 26;
             this.txt1a4esquerdo.Text = "00,00";
             // 
             // txt1a4direito
             // 
             this.txt1a4direito.Location = new System.Drawing.Point(186, 263);
-            this.txt1a4direito.MaxLength = 3;
+            this.txt1a4direito.MaxLength = 4;
             this.txt1a4direito.Name = "txt1a4direito";
             this.txt1a4direito.ReadOnly = true;
             this.txt1a4direito.Size = new System.Drawing.Size(81, 20);
-            this.txt1a4direito.TabIndex = 50;
+            this.txt1a4direito.TabIndex = 25;
             this.txt1a4direito.Text = "00,00";
             // 
             // txt3a5esquerdo
             // 
             this.txt3a5esquerdo.Location = new System.Drawing.Point(309, 236);
-            this.txt3a5esquerdo.MaxLength = 3;
+            this.txt3a5esquerdo.MaxLength = 4;
             this.txt3a5esquerdo.Name = "txt3a5esquerdo";
             this.txt3a5esquerdo.ReadOnly = true;
             this.txt3a5esquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txt3a5esquerdo.TabIndex = 49;
+            this.txt3a5esquerdo.TabIndex = 24;
             this.txt3a5esquerdo.Text = "00,00";
             // 
             // txt3a5direito
             // 
             this.txt3a5direito.Location = new System.Drawing.Point(186, 236);
-            this.txt3a5direito.MaxLength = 3;
+            this.txt3a5direito.MaxLength = 4;
             this.txt3a5direito.Name = "txt3a5direito";
             this.txt3a5direito.ReadOnly = true;
             this.txt3a5direito.Size = new System.Drawing.Size(81, 20);
-            this.txt3a5direito.TabIndex = 48;
+            this.txt3a5direito.TabIndex = 23;
             this.txt3a5direito.Text = "00,00";
             // 
             // txt1a3esquerdo
             // 
             this.txt1a3esquerdo.Location = new System.Drawing.Point(309, 209);
-            this.txt1a3esquerdo.MaxLength = 3;
+            this.txt1a3esquerdo.MaxLength = 4;
             this.txt1a3esquerdo.Name = "txt1a3esquerdo";
             this.txt1a3esquerdo.ReadOnly = true;
             this.txt1a3esquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txt1a3esquerdo.TabIndex = 47;
+            this.txt1a3esquerdo.TabIndex = 22;
             this.txt1a3esquerdo.Text = "00,00";
             // 
             // txt1a3direito
             // 
             this.txt1a3direito.Location = new System.Drawing.Point(186, 209);
-            this.txt1a3direito.MaxLength = 3;
+            this.txt1a3direito.MaxLength = 4;
             this.txt1a3direito.Name = "txt1a3direito";
             this.txt1a3direito.ReadOnly = true;
             this.txt1a3direito.Size = new System.Drawing.Size(81, 20);
-            this.txt1a3direito.TabIndex = 46;
+            this.txt1a3direito.TabIndex = 21;
             this.txt1a3direito.Text = "00,00";
             // 
             // label30
@@ -636,20 +638,26 @@
             // txtonda5esquerdo
             // 
             this.txtonda5esquerdo.Location = new System.Drawing.Point(309, 156);
-            this.txtonda5esquerdo.MaxLength = 5;
+            this.txtonda5esquerdo.MaxLength = 4;
             this.txtonda5esquerdo.Name = "txtonda5esquerdo";
             this.txtonda5esquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txtonda5esquerdo.TabIndex = 41;
+            this.txtonda5esquerdo.TabIndex = 20;
             this.txtonda5esquerdo.Text = "00,00";
+            this.txtonda5esquerdo.Enter += new System.EventHandler(this.txtonda5esquerdo_Enter);
+            this.txtonda5esquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda5esquerdo_KeyPress);
+            this.txtonda5esquerdo.Leave += new System.EventHandler(this.txtonda5esquerdo_Leave);
             // 
             // txtonda5direito
             // 
             this.txtonda5direito.Location = new System.Drawing.Point(186, 156);
-            this.txtonda5direito.MaxLength = 5;
+            this.txtonda5direito.MaxLength = 4;
             this.txtonda5direito.Name = "txtonda5direito";
             this.txtonda5direito.Size = new System.Drawing.Size(81, 20);
-            this.txtonda5direito.TabIndex = 40;
+            this.txtonda5direito.TabIndex = 19;
             this.txtonda5direito.Text = "00,00";
+            this.txtonda5direito.Enter += new System.EventHandler(this.txtonda5direito_Enter);
+            this.txtonda5direito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda5direito_KeyPress);
+            this.txtonda5direito.Leave += new System.EventHandler(this.txtonda5direito_Leave);
             // 
             // label21
             // 
@@ -663,56 +671,74 @@
             // txtonda4esquerdo
             // 
             this.txtonda4esquerdo.Location = new System.Drawing.Point(309, 129);
-            this.txtonda4esquerdo.MaxLength = 5;
+            this.txtonda4esquerdo.MaxLength = 4;
             this.txtonda4esquerdo.Name = "txtonda4esquerdo";
             this.txtonda4esquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txtonda4esquerdo.TabIndex = 38;
+            this.txtonda4esquerdo.TabIndex = 18;
             this.txtonda4esquerdo.Text = "00,00";
+            this.txtonda4esquerdo.Enter += new System.EventHandler(this.txtonda4esquerdo_Enter);
+            this.txtonda4esquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda4esquerdo_KeyPress);
+            this.txtonda4esquerdo.Leave += new System.EventHandler(this.txtonda4esquerdo_Leave);
             // 
             // txtonda4direito
             // 
             this.txtonda4direito.Location = new System.Drawing.Point(186, 129);
-            this.txtonda4direito.MaxLength = 5;
+            this.txtonda4direito.MaxLength = 4;
             this.txtonda4direito.Name = "txtonda4direito";
             this.txtonda4direito.Size = new System.Drawing.Size(81, 20);
-            this.txtonda4direito.TabIndex = 37;
+            this.txtonda4direito.TabIndex = 17;
             this.txtonda4direito.Text = "00,00";
+            this.txtonda4direito.Enter += new System.EventHandler(this.txtonda4direito_Enter);
+            this.txtonda4direito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda4direito_KeyPress);
+            this.txtonda4direito.Leave += new System.EventHandler(this.txtonda4direito_Leave);
             // 
             // txtonda3esquerdo
             // 
             this.txtonda3esquerdo.Location = new System.Drawing.Point(309, 102);
-            this.txtonda3esquerdo.MaxLength = 5;
+            this.txtonda3esquerdo.MaxLength = 4;
             this.txtonda3esquerdo.Name = "txtonda3esquerdo";
             this.txtonda3esquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txtonda3esquerdo.TabIndex = 36;
+            this.txtonda3esquerdo.TabIndex = 16;
             this.txtonda3esquerdo.Text = "00,00";
+            this.txtonda3esquerdo.Enter += new System.EventHandler(this.txtonda3esquerdo_Enter);
+            this.txtonda3esquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda3esquerdo_KeyPress);
+            this.txtonda3esquerdo.Leave += new System.EventHandler(this.txtonda3esquerdo_Leave);
             // 
             // txtonda3direito
             // 
             this.txtonda3direito.Location = new System.Drawing.Point(186, 102);
-            this.txtonda3direito.MaxLength = 5;
+            this.txtonda3direito.MaxLength = 4;
             this.txtonda3direito.Name = "txtonda3direito";
             this.txtonda3direito.Size = new System.Drawing.Size(81, 20);
-            this.txtonda3direito.TabIndex = 35;
+            this.txtonda3direito.TabIndex = 15;
             this.txtonda3direito.Text = "00,00";
+            this.txtonda3direito.Enter += new System.EventHandler(this.txtonda3direito_Enter);
+            this.txtonda3direito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda3direito_KeyPress);
+            this.txtonda3direito.Leave += new System.EventHandler(this.txtonda3direito_Leave);
             // 
             // txtonda2esquerdo
             // 
             this.txtonda2esquerdo.Location = new System.Drawing.Point(309, 75);
-            this.txtonda2esquerdo.MaxLength = 5;
+            this.txtonda2esquerdo.MaxLength = 4;
             this.txtonda2esquerdo.Name = "txtonda2esquerdo";
             this.txtonda2esquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txtonda2esquerdo.TabIndex = 34;
+            this.txtonda2esquerdo.TabIndex = 14;
             this.txtonda2esquerdo.Text = "00,00";
+            this.txtonda2esquerdo.Enter += new System.EventHandler(this.txtonda2esquerdo_Enter);
+            this.txtonda2esquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda2esquerdo_KeyPress);
+            this.txtonda2esquerdo.Leave += new System.EventHandler(this.txtonda2esquerdo_Leave);
             // 
             // txtonda2direito
             // 
             this.txtonda2direito.Location = new System.Drawing.Point(186, 75);
-            this.txtonda2direito.MaxLength = 5;
+            this.txtonda2direito.MaxLength = 4;
             this.txtonda2direito.Name = "txtonda2direito";
             this.txtonda2direito.Size = new System.Drawing.Size(81, 20);
-            this.txtonda2direito.TabIndex = 33;
+            this.txtonda2direito.TabIndex = 13;
             this.txtonda2direito.Text = "00,00";
+            this.txtonda2direito.Enter += new System.EventHandler(this.txtonda2direito_Enter);
+            this.txtonda2direito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda2direito_KeyPress);
+            this.txtonda2direito.Leave += new System.EventHandler(this.txtonda2direito_Leave);
             // 
             // label20
             // 
@@ -726,20 +752,26 @@
             // txtonda1esquerdo
             // 
             this.txtonda1esquerdo.Location = new System.Drawing.Point(309, 48);
-            this.txtonda1esquerdo.MaxLength = 5;
+            this.txtonda1esquerdo.MaxLength = 4;
             this.txtonda1esquerdo.Name = "txtonda1esquerdo";
             this.txtonda1esquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txtonda1esquerdo.TabIndex = 30;
+            this.txtonda1esquerdo.TabIndex = 12;
             this.txtonda1esquerdo.Text = "00,00";
+            this.txtonda1esquerdo.Enter += new System.EventHandler(this.txtonda1esquerdo_Enter);
+            this.txtonda1esquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda1esquerdo_KeyPress);
+            this.txtonda1esquerdo.Leave += new System.EventHandler(this.txtonda1esquerdo_Leave);
             // 
             // txtonda1direito
             // 
             this.txtonda1direito.Location = new System.Drawing.Point(186, 48);
-            this.txtonda1direito.MaxLength = 5;
+            this.txtonda1direito.MaxLength = 4;
             this.txtonda1direito.Name = "txtonda1direito";
             this.txtonda1direito.Size = new System.Drawing.Size(81, 20);
-            this.txtonda1direito.TabIndex = 1;
+            this.txtonda1direito.TabIndex = 11;
             this.txtonda1direito.Text = "00,00";
+            this.txtonda1direito.Enter += new System.EventHandler(this.txtonda1direito_Enter);
+            this.txtonda1direito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtonda1direito_KeyPress);
+            this.txtonda1direito.Leave += new System.EventHandler(this.txtonda1direito_Leave);
             // 
             // label22
             // 
@@ -1573,6 +1605,7 @@
             this.txtUvDivTempo.Size = new System.Drawing.Size(141, 20);
             this.txtUvDivTempo.TabIndex = 4;
             this.txtUvDivTempo.Text = "0000,00";
+            this.txtUvDivTempo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUvDivTempo_KeyPress);
             // 
             // lblNome
             // 

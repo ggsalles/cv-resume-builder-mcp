@@ -77,6 +77,8 @@ namespace WEDLC.Banco
             try
             {
                 objTecnica.IdPaciente = this.IdPaciente;
+                objTecnica.IdResultado = this.IdResultado;
+
                 DataTable dt = objTecnica.BuscaResultadoPotEvocadoTecnica();
                 return dt;
             }
@@ -100,7 +102,7 @@ namespace WEDLC.Banco
 
         public DataTable BuscaResultadoPev()
         {
-            if (IdResultado < 0)
+            if (IdPaciente < 0)
                 return null;
 
             if (!conectaBanco())
@@ -113,7 +115,6 @@ namespace WEDLC.Banco
                 using (var sqlDa = new MySqlDataAdapter("pr_buscaresultadopev", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdResultado", IdResultado);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
 
                     sqlDa.Fill(dt);

@@ -16,6 +16,7 @@ namespace WEDLC.Forms
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
         public int IdResultado { get; set; }
         public int IdResultadoPEV { get; set; } // Usado para identificar o resultado PEV
+        public int IdResultadoPEA { get; set; } // Usado para identificar o resultado PEV
         public int IdResultadoComentarioPEV { get; set; } // Usado para identificar o resultado PEV
         public int IdFolha { get; set; }
         public int IdPaciente { get; set; }
@@ -49,6 +50,11 @@ namespace WEDLC.Forms
             iniciaTela();
         }
 
+        private void frmPotenciaisEvocados_Shown(object sender, EventArgs e)
+        {
+            txtCaptacao.Focus();
+            ValidacaoTextBox.SelecionaTextoTextBox((txtCaptacao), e);
+        }
         public void iniciaTela()
         {
             try
@@ -102,6 +108,21 @@ namespace WEDLC.Forms
 
                     tabPotenciais.TabPages.Add(tabPea);
 
+                    if (CarregaDadosPea() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosPea");
+                    }
+
+                    if (CarregaDadosPotEvocadoTecnica() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosPotEvocadoTecnica"); ;
+                    }
+
+                    if (CarregaDadosComentarioPev() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosComentarioPev"); ;
+                    }
+
                     break;
 
                 case (int)GrupoFolha.PESS:
@@ -149,6 +170,10 @@ namespace WEDLC.Forms
                                     throw new Exception("Falha ao gravar PEV");
                                 }
 
+                                if (ValidaComentarioPEV() == false)
+                                {
+                                    break;
+                                }
                                 if (GravaGrupoFolhaComentarioPev() == false)
                                 {
                                     throw new Exception("Falha ao gravar comentário PEV");
@@ -159,6 +184,8 @@ namespace WEDLC.Forms
 
                                 MessageBox.Show("Gravado com sucesso!", "Atenção",
                                               MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                this.Close();
                             }
                             catch (Exception ex)
                             {
@@ -172,7 +199,43 @@ namespace WEDLC.Forms
 
                     case (int)GrupoFolha.PEA:
 
-                        tabPotenciais.TabPages.Add(tabPea);
+                        using (var scope = new TransactionScope())
+                        {
+                            try
+                            {
+                                if (GravaGrupoFolhaPotEvocadoTecnica() == false)
+                                {
+                                    throw new Exception("Falha ao gravar técnica PEV");
+                                }
+
+                                if (GravaGrupoFolhaPea() == false)
+                                {
+                                    throw new Exception("Falha ao gravar PEA");
+                                }
+                                if (ValidaComentarioPEV() == false)
+                                {
+                                    break;
+                                }
+                                if (GravaGrupoFolhaComentarioPev() == false)
+                                {
+                                    throw new Exception("Falha ao gravar comentário PEV");
+                                }
+
+                                // Se tudo ok, commit na transação
+                                scope.Complete();
+
+                                MessageBox.Show("Gravado com sucesso!", "Atenção",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                this.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erro na gravação: {ex.Message}", "Erro",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                // O rollback é automático quando scope.Complete() não é chamado
+                            }
+                        }
 
                         break;
 
@@ -260,27 +323,46 @@ namespace WEDLC.Forms
                 cPotenciaisPEV objcPotenciaisPEV = new cPotenciaisPEV();
 
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
+                objcPotenciaisPEV.IdResultado = this.IdResultado;
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoPev();
 
-                // Preenche os campos com os dados retornados
-                this.IdResultado = Int32.Parse(dt.Rows[0]["idresultado"].ToString());
-                this.IdResultadoPEV = Int32.Parse(dt.Rows[0]["idresultadopev"].ToString());
-                txtN75OlhoDireito.Text = dt.Rows[0]["N75OlhoDireito"].ToString();
-                txtN75OlhoEsquerdo.Text = dt.Rows[0]["N75OlhoEsquerdo"].ToString();
-                txtP100OlhoDireito.Text = dt.Rows[0]["P100OlhoDireito"].ToString();
-                txtP100OlhoEsquerdo.Text = dt.Rows[0]["P100OlhoEsquerdo"].ToString();
-                txtP100Diferenca.Text = dt.Rows[0]["P100Diferenca"].ToString();
-                txtN145OlhoDireito.Text = dt.Rows[0]["N145OlhoDireito"].ToString();
-                txtN145OlhoEsquerdo.Text = dt.Rows[0]["N145OlhoEsquerdo"].ToString();
-                txtAmplitudeOlhoDireito.Text = dt.Rows[0]["AmplitudeOlhoDireito"].ToString();
-                txtAmplitudeOlhoEsquerdo.Text = dt.Rows[0]["AmplitudeOlhoEsquerdo"].ToString();
-                return true;
+                if (dt.Rows.Count > 0)
+                {
+                    // Preenche os campos com os dados retornados
+                    this.IdResultado = dt.Rows[0]["idresultado"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultado"].ToString()) : 0;
+                    this.IdResultadoPEV = Int32.Parse(dt.Rows[0]["idresultadopev"].ToString());
 
+                    txtN75OlhoDireito.Text = dt.Rows[0]["N75OlhoDireito"].ToString();
+                    txtN75OlhoEsquerdo.Text = dt.Rows[0]["N75OlhoEsquerdo"].ToString();
+                    txtP100OlhoDireito.Text = dt.Rows[0]["P100OlhoDireito"].ToString();
+                    txtP100OlhoEsquerdo.Text = dt.Rows[0]["P100OlhoEsquerdo"].ToString();
+                    txtP100Diferenca.Text = dt.Rows[0]["P100Diferenca"].ToString();
+                    txtN145OlhoDireito.Text = dt.Rows[0]["N145OlhoDireito"].ToString();
+                    txtN145OlhoEsquerdo.Text = dt.Rows[0]["N145OlhoEsquerdo"].ToString();
+                    txtAmplitudeOlhoDireito.Text = dt.Rows[0]["AmplitudeOlhoDireito"].ToString();
+                    txtAmplitudeOlhoEsquerdo.Text = dt.Rows[0]["AmplitudeOlhoEsquerdo"].ToString();
+
+                    return true;
+                }
+                else
+                {
+                    // Limpa os campos de texto
+                    txtN75OlhoDireito.Text = "";
+                    txtN75OlhoEsquerdo.Text = "";
+                    txtP100OlhoDireito.Text = "";
+                    txtP100OlhoEsquerdo.Text = "";
+                    txtP100Diferenca.Text = "";
+                    txtN145OlhoDireito.Text = "";
+                    txtN145OlhoEsquerdo.Text = "";
+                    txtAmplitudeOlhoDireito.Text = "";
+                    txtAmplitudeOlhoEsquerdo.Text = ""; ;
+                    return false;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao carregar dados: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao CarregaDadosPev: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -292,7 +374,6 @@ namespace WEDLC.Forms
                 cPotenciaisPEV objcPotenciaisPEV = new cPotenciaisPEV();
 
                 objcPotenciaisPEV.IdResultado = this.IdResultado;
-                //objcPotenciaisPEV.IdFolha = this.IdFolha;
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoComentarioPev();
@@ -300,7 +381,7 @@ namespace WEDLC.Forms
                 if (dt.Rows.Count > 0)
                 {
                     // Preenche os campos com os dados retornados
-                    this.IdResultadoComentarioPEV = Int32.Parse(dt.Rows[0]["idresultadocomentariopev"].ToString());
+                    this.IdResultadoComentarioPEV = dt.Rows[0]["idresultadocomentariopev"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultadocomentariopev"].ToString()) : 0;
                     txtCodigoComentario.Text = dt.Rows[0]["idcomentario"].ToString();
                     txtSiglaComentario.Text = dt.Rows[0]["sigla"].ToString();
                     txtNomeComentario.Text = dt.Rows[0]["nome"].ToString();
@@ -332,6 +413,92 @@ namespace WEDLC.Forms
             groupBox6.Location = new Point(12, 360);
             grpBotoes.Location = new Point(12, 617);
             this.Size = new Size(735, 715);
+        }
+
+        private bool CarregaDadosPea()
+        {
+            try
+            {
+                cPotenciaisPEA objcPotenciaisPEA = new cPotenciaisPEA();
+
+                objcPotenciaisPEA.IdResultado = this.IdResultado;
+                objcPotenciaisPEA.IdPaciente = this.IdPaciente;
+
+                DataTable dt = objcPotenciaisPEA.BuscaResultadoPea();
+
+                if (dt.Rows.Count > 0)
+                {
+                    // Preenche os campos com os dados retornados
+                    this.IdResultado = dt.Rows[0]["idresultado"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultado"].ToString()) : 0;
+                    this.IdResultadoPEA = Int32.Parse(dt.Rows[0]["idresultadopea"].ToString());
+
+                    // Preenche os campos das ondas
+                    txtonda1direito.Text = dt.Rows[0]["onda1ouvidodireito"] != DBNull.Value ?
+                        dt.Rows[0]["onda1ouvidodireito"].ToString() : "";
+                    txtonda1esquerdo.Text = dt.Rows[0]["onda1ouvidoesquerdo"] != DBNull.Value ?
+                        dt.Rows[0]["onda1ouvidoesquerdo"].ToString() : "";
+                    txtonda2direito.Text = dt.Rows[0]["onda2ouvidodireito"] != DBNull.Value ?
+                        dt.Rows[0]["onda2ouvidodireito"].ToString() : "";
+                    txtonda2esquerdo.Text = dt.Rows[0]["onda2ouvidoesquerdo"] != DBNull.Value ?
+                        dt.Rows[0]["onda2ouvidoesquerdo"].ToString() : "";
+                    txtonda3direito.Text = dt.Rows[0]["onda3ouvidodireito"] != DBNull.Value ?
+                        dt.Rows[0]["onda3ouvidodireito"].ToString() : "";
+                    txtonda3esquerdo.Text = dt.Rows[0]["onda3ouvidoesquerdo"] != DBNull.Value ?
+                        dt.Rows[0]["onda3ouvidoesquerdo"].ToString() : "";
+                    txtonda4direito.Text = dt.Rows[0]["onda4vouvidodireito"] != DBNull.Value ?
+                        dt.Rows[0]["onda4vouvidodireito"].ToString() : "";
+                    txtonda4esquerdo.Text = dt.Rows[0]["onda4ouvidoesquerdo"] != DBNull.Value ?
+                        dt.Rows[0]["onda4ouvidoesquerdo"].ToString() : "";
+                    txtonda5direito.Text = dt.Rows[0]["onda5ouvidodireito"] != DBNull.Value ?
+                        dt.Rows[0]["onda5ouvidodireito"].ToString() : "";
+                    txtonda5esquerdo.Text = dt.Rows[0]["onda5ouvidoesquerdo"] != DBNull.Value ?
+                        dt.Rows[0]["onda5ouvidoesquerdo"].ToString() : "";
+
+                    // Preenche os campos dos intervalos
+                    txt1a3direito.Text = dt.Rows[0]["1a3direito"] != DBNull.Value ?
+                        dt.Rows[0]["1a3direito"].ToString() : "";
+                    txt1a3esquerdo.Text = dt.Rows[0]["1a3esquerdo"] != DBNull.Value ?
+                        dt.Rows[0]["1a3esquerdo"].ToString() : "";
+                    txt3a5direito.Text = dt.Rows[0]["3a5direito"] != DBNull.Value ?
+                        dt.Rows[0]["3a5direito"].ToString() : "";
+                    txt3a5esquerdo.Text = dt.Rows[0]["3a5esquerdo"] != DBNull.Value ?
+                        dt.Rows[0]["3a5esquerdo"].ToString() : "";
+                    txt1a4direito.Text = dt.Rows[0]["1a4direito"] != DBNull.Value ?
+                        dt.Rows[0]["1a4direito"].ToString() : "";
+                    txt1a4esquerdo.Text = dt.Rows[0]["1a4esquerdo"] != DBNull.Value ?
+                        dt.Rows[0]["1a4esquerdo"].ToString() : "";
+                }
+
+                else
+                {
+                    // Limpa os campos das ondas
+                    txtonda1direito.Text = "";
+                    txtonda1esquerdo.Text = "";
+                    txtonda2direito.Text = "";
+                    txtonda2esquerdo.Text = "";
+                    txtonda3direito.Text = "";
+                    txtonda3esquerdo.Text = "";
+                    txtonda4direito.Text = "";
+                    txtonda4esquerdo.Text = "";
+                    txtonda5direito.Text = "";
+                    txtonda5esquerdo.Text = "";
+
+                    // Limpa os campos dos intervalos
+                    txt1a3direito.Text = "";
+                    txt1a3esquerdo.Text = "";
+                    txt3a5direito.Text = "";
+                    txt3a5esquerdo.Text = "";
+                    txt1a4direito.Text = "";
+                    txt1a4esquerdo.Text = "";
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar dados: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         private void btnComentario_Click(object sender, EventArgs e)
@@ -367,10 +534,7 @@ namespace WEDLC.Forms
             objcPotenciaisPEV.N145OlhoEsquerdo = txtN145OlhoEsquerdo.Text;
             objcPotenciaisPEV.AmplitudeOlhoDireito = txtAmplitudeOlhoDireito.Text;
             objcPotenciaisPEV.AmplitudeOlhoEsquerdo = txtAmplitudeOlhoEsquerdo.Text;
-            //objcPotenciaisPEV.objComentario.IdComentario = string.IsNullOrEmpty(txtCodigoComentario.Text) ? 0 : Convert.ToInt32(txtCodigoComentario.Text);
-            //objcPotenciaisPEV.objComentario.Sigla = txtSiglaComentario.Text;
-            //objcPotenciaisPEV.objComentario.Nome = txtNomeComentario.Text;
-            //objcPotenciaisPEV.objComentario.Texto = txtTextoComentario.Text;
+
             if (objcPotenciaisPEV.AtualizarResultadoPEV() == false)
             {
                 return false;
@@ -380,6 +544,42 @@ namespace WEDLC.Forms
                 return true;
             }
         }
+
+        private bool GravaGrupoFolhaPea()
+        {
+            cPotenciaisPEA objcPotenciaisPEA = new cPotenciaisPEA();
+            objcPotenciaisPEA.IdResultadoPea = this.IdResultadoPEA;
+            objcPotenciaisPEA.IdResultado = this.IdResultado;
+            objcPotenciaisPEA.IdPaciente = this.IdPaciente;
+
+            // Preencher os outros campos específicos do PEA aqui
+            objcPotenciaisPEA.Onda1OuvidoDireito = txtonda1direito.Text;
+            objcPotenciaisPEA.Onda1OuvidoEsquerdo = txtonda1esquerdo.Text;
+            objcPotenciaisPEA.Onda2OuvidoDireito = txtonda2direito.Text;
+            objcPotenciaisPEA.Onda2OuvidoEsquerdo = txtonda2esquerdo.Text;
+            objcPotenciaisPEA.Onda3OuvidoDireito = txtonda3direito.Text;
+            objcPotenciaisPEA.Onda3OuvidoEsquerdo = txtonda3esquerdo.Text;
+            objcPotenciaisPEA.Onda4OuvidoDireito = txtonda4direito.Text;
+            objcPotenciaisPEA.Onda4OuvidoEsquerdo = txtonda4esquerdo.Text;
+            objcPotenciaisPEA.Onda5OuvidoDireito = txtonda5direito.Text;
+            objcPotenciaisPEA.Onda5OuvidoEsquerdo = txtonda5esquerdo.Text;
+            objcPotenciaisPEA.Intervalo1a3Direito = txt1a3direito.Text;
+            objcPotenciaisPEA.Intervalo1a3Esquerdo = txt1a3esquerdo.Text;
+            objcPotenciaisPEA.Intervalo3a5Direito = txt3a5direito.Text;
+            objcPotenciaisPEA.Intervalo3a5Esquerdo = txt3a5esquerdo.Text;
+            objcPotenciaisPEA.Intervalo1a4Direito = txt1a4direito.Text;
+            objcPotenciaisPEA.Intervalo1a4Esquerdo = txt1a4esquerdo.Text;
+
+            if (objcPotenciaisPEA.AtualizarResultadoPEA() == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private bool GravaGrupoFolhaPotEvocadoTecnica()
         {
             cPotenciaisEvocadosTecnica objPotenciaisEvocadosTecnica = new cPotenciaisEvocadosTecnica();
@@ -390,7 +590,7 @@ namespace WEDLC.Forms
             objPotenciaisEvocadosTecnica.Captacao = txtCaptacao.Text.ToUpper();
             objPotenciaisEvocadosTecnica.UvDivTempo = string.IsNullOrEmpty(txtUvDivTempo.Text) ? (int?)null : Convert.ToInt32(txtUvDivTempo.Text);
             objPotenciaisEvocadosTecnica.Filtros = txtFiltros.Text.ToUpper();
-            objPotenciaisEvocadosTecnica.Estimulacao = txtEstimulacao.Text;
+            objPotenciaisEvocadosTecnica.Estimulacao = txtEstimulacao.Text.ToUpper();
             objPotenciaisEvocadosTecnica.FreqEstimada = string.IsNullOrEmpty(txtFreqEstim.Text) ? (int?)null : Convert.ToInt32(txtFreqEstim.Text);
             objPotenciaisEvocadosTecnica.NEstimulo = string.IsNullOrEmpty(txtNEstimulo.Text) ? (int?)null : Convert.ToInt32(txtNEstimulo.Text);
             objPotenciaisEvocadosTecnica.Intensidade = txtItensidade.Text.ToUpper();
@@ -418,7 +618,7 @@ namespace WEDLC.Forms
             cResultadoComentario.IdPaciente = this.IdPaciente;
             //cResultadoComentario.IdFolha = this.IdFolha;
             cResultadoComentario.IdComentario = Convert.ToInt32(txtCodigoComentario.Text);
-            cResultadoComentario.Texto = txtTextoComentario.Text;
+            cResultadoComentario.Texto = txtTextoComentario.Text.ToUpper();
             if (cResultadoComentario.AtualizarResultadoComentarioPEV() == false)
             {
                 return false;
@@ -435,7 +635,7 @@ namespace WEDLC.Forms
 
         private void txtN75OlhoDireito_Leave(object sender, EventArgs e)
         {
-            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtN75OlhoDireito.Text))
             {
                 txtN75OlhoDireito.Text = "0,0";
@@ -450,17 +650,16 @@ namespace WEDLC.Forms
 
         private void txtN75OlhoEsquerdo_Leave(object sender, EventArgs e)
         {
-            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtN75OlhoEsquerdo.Text))
             {
                 txtN75OlhoEsquerdo.Text = "0,0";
             }
 
         }
-
         private void txtP100OlhoDireito_Leave(object sender, EventArgs e)
         {
-            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
 
             decimal? diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtP100OlhoDireito, txtP100OlhoEsquerdo);
 
@@ -474,7 +673,7 @@ namespace WEDLC.Forms
                 txtP100OlhoDireito.Text = "0,0";
             }
 
-            ValidacaoTextBox.FormatarAoPerderFoco(txtP100Diferenca, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(txtP100Diferenca, e);
         }
 
         private void txtP100OlhoDireito_KeyPress(object sender, KeyPressEventArgs e)
@@ -484,7 +683,7 @@ namespace WEDLC.Forms
 
         private void txtP100OlhoEsquerdo_Leave(object sender, EventArgs e)
         {
-            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             decimal? diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtP100OlhoDireito, txtP100OlhoEsquerdo);
 
             if (diferenca.HasValue)
@@ -497,7 +696,7 @@ namespace WEDLC.Forms
                 txtP100OlhoEsquerdo.Text = "0,0";
             }
 
-            ValidacaoTextBox.FormatarAoPerderFoco(txtP100Diferenca, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(txtP100Diferenca, e);
         }
 
         private void txtP100OlhoEsquerdo_KeyPress(object sender, KeyPressEventArgs e)
@@ -507,7 +706,7 @@ namespace WEDLC.Forms
 
         private void txtN145OlhoDireito_Leave(object sender, EventArgs e)
         {
-            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
 
             if (string.IsNullOrEmpty(txtN145OlhoDireito.Text))
             {
@@ -521,7 +720,7 @@ namespace WEDLC.Forms
 
         private void txtN145OlhoEsquerdo_Leave(object sender, EventArgs e)
         {
-            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtN145OlhoEsquerdo.Text))
             {
                 txtN145OlhoEsquerdo.Text = "0,0";
@@ -535,7 +734,7 @@ namespace WEDLC.Forms
 
         private void txtAmplitudeOlhoDireito_Leave(object sender, EventArgs e)
         {
-            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtAmplitudeOlhoDireito.Text))
             {
                 txtAmplitudeOlhoDireito.Text = "0,0";
@@ -549,7 +748,7 @@ namespace WEDLC.Forms
 
         private void txtAmplitudeOlhoEsquerdo_Leave(object sender, EventArgs e)
         {
-            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtAmplitudeOlhoEsquerdo.Text))
             {
                 txtAmplitudeOlhoEsquerdo.Text = "0,0";
@@ -601,10 +800,265 @@ namespace WEDLC.Forms
             ValidacaoTextBox.SelecionaTextoTextBox((txtAmplitudeOlhoEsquerdo), e);
         }
 
-        private void frmPotenciaisEvocados_Shown(object sender, EventArgs e)
+        private void txtonda1direito_KeyPress(object sender, KeyPressEventArgs e)
         {
-            txtCaptacao.Focus();
-            ValidacaoTextBox.SelecionaTextoTextBox((txtCaptacao), e);
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda1direito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda1direito), e);
+        }
+
+        private void txtonda1direito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda1direito.Text))
+            {
+                txtonda1direito.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda1esquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda1esquerdo), e);
+        }
+
+        private void txtonda1esquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda1esquerdo.Text))
+            {
+                txtonda1esquerdo.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda1esquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda2direito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda2direito), e);
+        }
+
+        private void txtonda2direito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda2direito.Text))
+            {
+                txtonda2direito.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda2direito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda2esquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda2esquerdo), e);
+        }
+
+        private void txtonda2esquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda2esquerdo.Text))
+            {
+                txtonda2esquerdo.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda2esquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda3direito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda3direito), e);
+        }
+
+        private void txtonda3direito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda3direito.Text))
+            {
+                txtonda3direito.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda3direito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda3esquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda3esquerdo), e);
+        }
+
+        private void txtonda3esquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda3esquerdo.Text))
+            {
+                txtonda3esquerdo.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda3esquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda4direito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda4direito), e);
+        }
+
+        private void txtonda4direito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda4direito.Text))
+            {
+                txtonda4direito.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda4direito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda4esquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda4esquerdo), e);
+        }
+
+        private void txtonda4esquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda4esquerdo.Text))
+            {
+                txtonda4esquerdo.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda4esquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda5direito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda5direito), e);
+        }
+
+        private void txtonda5direito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda5direito.Text))
+            {
+                txtonda5direito.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda5direito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtonda5esquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtonda5esquerdo), e);
+        }
+
+        private void txtonda5esquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtonda5esquerdo.Text))
+            {
+                txtonda5esquerdo.Text = "0,00";
+            }
+            CalculaDiferençaPEA();
+        }
+
+        private void txtonda5esquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void CalculaDiferençaPEA()
+        {
+            decimal? diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtonda1direito, txtonda3direito);
+            txt1a3direito.Text = diferenca.HasValue ? diferenca.Value.ToString("N2") : string.Empty;
+
+            diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtonda1esquerdo, txtonda3esquerdo);
+            txt1a3esquerdo.Text = diferenca.HasValue ? diferenca.Value.ToString("N2") : string.Empty;
+
+            diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtonda3direito, txtonda5direito);
+            txt3a5direito.Text = diferenca.HasValue ? diferenca.Value.ToString("N2") : string.Empty;
+
+            diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtonda3esquerdo, txtonda5esquerdo);
+            txt3a5esquerdo.Text = diferenca.HasValue ? diferenca.Value.ToString("N2") : string.Empty;
+
+            diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtonda1direito, txtonda4direito);
+            txt1a4direito.Text = diferenca.HasValue ? diferenca.Value.ToString("N2") : string.Empty;
+
+            diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtonda1esquerdo, txtonda4esquerdo);
+            txt1a4esquerdo.Text = diferenca.HasValue ? diferenca.Value.ToString("N2") : string.Empty;
+        }
+
+        private void txtUvDivTempo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void txtFreqEstim_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void txtNEstimulo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private bool ValidaComentarioPEV()
+        {
+            if (string.IsNullOrEmpty(txtCodigoComentario.Text))
+            {
+                MessageBox.Show("Por favor, selecione um tipo de comentário.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
         }
     }
 }

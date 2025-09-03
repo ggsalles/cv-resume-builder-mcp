@@ -228,12 +228,21 @@ namespace WEDLC.Banco
                 e.Handled = false;
             }
 
-            public static void FormatarAoPerderFoco(object sender, EventArgs e)
+            public static void FormatarAoPerderFocoUmaCasaDecimal(object sender, EventArgs e)
             {
                 var textBox = sender as TextBox;
                 if (textBox != null)
                 {
                     FormatarUmaCasaDecimal(textBox);
+                }
+            }
+
+            public static void FormatarAoPerderFocoDuasCasasDecimais(object sender, EventArgs e)
+            {
+                var textBox = sender as TextBox;
+                if (textBox != null)
+                {
+                    FormatarDuasCasasDecimais(textBox);
                 }
             }
 
@@ -248,28 +257,31 @@ namespace WEDLC.Banco
                 if (string.IsNullOrWhiteSpace(textBox.Text))
                     return;
 
-                // Salva a posição do cursor
                 int cursorPosition = textBox.SelectionStart;
 
                 try
                 {
-                    // Remove formatação anterior
                     string textoLimpo = textBox.Text.Replace("R$", "").Replace(" ", "").Trim();
 
-                    // Converte para decimal
+                    // Verifica se é um número inteiro (apenas dígitos)
+                    bool ehNumeroInteiro = textoLimpo.All(char.IsDigit);
+
                     if (decimal.TryParse(textoLimpo.Replace(".", ","), NumberStyles.Any,
                                         CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
                     {
-                        // Formata com uma casa decimal
-                        textBox.Text = valor.ToString("N1", CultureInfo.GetCultureInfo("pt-BR"));
+                        // Se for número inteiro E tiver mais de 2 dígitos, assume que são centavos
+                        if (ehNumeroInteiro && textoLimpo.Length > 2 && valor != 0)
+                        {
+                            valor = valor / 100m;
+                        }
 
-                        // Restaura a posição do cursor
+                        textBox.Text = valor.ToString("N1", CultureInfo.GetCultureInfo("pt-BR"));
                         textBox.SelectionStart = Math.Min(cursorPosition, textBox.Text.Length);
                     }
                 }
                 catch
                 {
-                    // Em caso de erro, mantém o texto original
+                    // Mantém o texto original em caso de erro
                 }
             }
 
@@ -278,37 +290,31 @@ namespace WEDLC.Banco
                 if (string.IsNullOrWhiteSpace(textBox.Text))
                     return;
 
-                // Salva a posição do cursor
                 int cursorPosition = textBox.SelectionStart;
-                string textoOriginal = textBox.Text;
 
                 try
                 {
-                    // Remove formatação anterior
-                    string textoLimpo = textBox.Text.Replace("R$", "")
-                                                   .Replace(" ", "")
-                                                   .Trim();
+                    string textoLimpo = textBox.Text.Replace("R$", "").Replace(" ", "").Trim();
 
-                    // Converte para decimal
-                    if (decimal.TryParse(textoLimpo, NumberStyles.Any,
+                    // Verifica se é um número inteiro (apenas dígitos)
+                    bool ehNumeroInteiro = textoLimpo.All(char.IsDigit);
+
+                    if (decimal.TryParse(textoLimpo.Replace(".", ","), NumberStyles.Any,
                                         CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
                     {
-                        // Formata com duas casas decimais, mantendo o sinal
-                        textBox.Text = valor.ToString("N2", CultureInfo.GetCultureInfo("pt-BR"));
+                        // Se for número inteiro E tiver mais de 2 dígitos, assume que são centavos
+                        if (ehNumeroInteiro && textoLimpo.Length > 2 && valor != 0)
+                        {
+                            valor = valor / 100m;
+                        }
 
-                        // Restaura a posição do cursor
+                        textBox.Text = valor.ToString("N2", CultureInfo.GetCultureInfo("pt-BR"));
                         textBox.SelectionStart = Math.Min(cursorPosition, textBox.Text.Length);
-                    }
-                    else
-                    {
-                        // Se não conseguir converter, mantém o texto original
-                        textBox.Text = textoOriginal;
                     }
                 }
                 catch
                 {
-                    // Em caso de erro, mantém o texto original
-                    textBox.Text = textoOriginal;
+                    // Mantém o texto original em caso de erro
                 }
             }
 
@@ -327,7 +333,8 @@ namespace WEDLC.Banco
                     if (decimal.TryParse(textoLimpo, NumberStyles.Any,
                                         CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
                     {
-                        return Math.Round(valor, 2); // Garante 2 casas decimais
+                        //return Math.Round(valor, 2); // Garante 2 casas decimais
+                        return Math.Truncate(valor * 100) / 100;
                     }
 
                     return null;
@@ -354,7 +361,7 @@ namespace WEDLC.Banco
                     return false;
                 }
             }
-                      
+
         }
         public static class CalculosTextBox
         {

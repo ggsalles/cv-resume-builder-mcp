@@ -124,6 +124,7 @@
     <Compile Include="Banco\cPotenciaisEvocadosTecnica.cs" />
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
     <Compile Include="Banco\cAtividadeInsercao.cs" />
+    <Compile Include="Banco\cPotenciaisPEA.cs" />
     <Compile Include="Banco\cPotenciaisPEV.cs" />
     <Compile Include="Banco\cResultadoComentario.cs" />
     <Compile Include="Banco\cResultadoPotenciaisUnidadeMotora.cs" />
