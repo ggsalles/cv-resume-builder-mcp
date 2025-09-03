@@ -1,7 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using System.Windows.Forms;
 
 namespace WEDLC.Banco
 {
@@ -68,6 +67,53 @@ namespace WEDLC.Banco
                 // Log para outros erros
                 System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
                 return null;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
+        }
+
+        public bool AtualizaResultadoPotEvocadoTecnica()
+        {
+            if (!conectaBanco())
+                return false;
+
+            if (IdResultadoPotEvocTecnica <= 0 )
+            {
+                return false;
+            }
+            try
+            {
+                using (var cmd = new MySqlCommand("pr_atualizaresultadopotevocadotecninca", conexao))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Adicionando os parâmetros
+                    cmd.Parameters.AddWithValue("pIdresultadopotevoctecnica", IdResultadoPotEvocTecnica);
+                    cmd.Parameters.AddWithValue("pIdresultado", IdResultado);
+                    cmd.Parameters.AddWithValue("pCaptacao", Captacao ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pSensibilidade", Sensibilidade ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pUvdivtempo", UvDivTempo ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pFiltros", Filtros ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pEstimulacao", Estimulacao ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pFreqestimada", FreqEstimada ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pNestimulo", NEstimulo ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pIntensidade", Intensidade ?? (object)DBNull.Value);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao atualizar pr_atualizaresultadopotevocadotecnica: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return false;
             }
             finally
             {

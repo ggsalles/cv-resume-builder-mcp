@@ -11,6 +11,7 @@ namespace WEDLC.Banco
         public Int32 IdResultado { get; set; }
         public Int32 IdComentario { get; set; }
         public Int32 IdResultadoComentario { get; set; }
+        public Int32 IdFolha { get; set; }
         public string Texto { get; set; }
 
         // Construtor
@@ -106,6 +107,44 @@ namespace WEDLC.Banco
             {
                 if (conexao?.State == ConnectionState.Open)
                     conexao.Close();
+            }
+        }
+
+        public bool AtualizarResultadoComentarioPEV()
+        {
+            if (!conectaBanco())
+                return false;
+
+            try
+            {
+                using (var cmd = new MySqlCommand("pr_atualizaresultadocomentariopev", conexao))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Adicionando os parâmetros exatamente como na procedure
+                    cmd.Parameters.AddWithValue("pIdresultadocomentariopev", IdResultadoComentario);
+                    cmd.Parameters.AddWithValue("pIdfolha", IdFolha);
+                    cmd.Parameters.AddWithValue("pIdresultado", IdResultado);
+                    cmd.Parameters.AddWithValue("pIdcomentario", (IdComentario == 0) ? DBNull.Value : (object)IdComentario);
+                    cmd.Parameters.AddWithValue("pTexto", Texto ?? (object)DBNull.Value);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao atualizar resultado comentário PEV: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                conexao?.Close();
             }
         }
     }

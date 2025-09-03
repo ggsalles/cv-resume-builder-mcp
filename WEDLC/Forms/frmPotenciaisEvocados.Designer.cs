@@ -223,7 +223,7 @@
             this.txtItensidade.MaxLength = 10;
             this.txtItensidade.Name = "txtItensidade";
             this.txtItensidade.Size = new System.Drawing.Size(213, 20);
-            this.txtItensidade.TabIndex = 20;
+            this.txtItensidade.TabIndex = 9;
             // 
             // label9
             // 
@@ -240,7 +240,7 @@
             this.txtNEstimulo.MaxLength = 4;
             this.txtNEstimulo.Name = "txtNEstimulo";
             this.txtNEstimulo.Size = new System.Drawing.Size(108, 20);
-            this.txtNEstimulo.TabIndex = 18;
+            this.txtNEstimulo.TabIndex = 8;
             this.txtNEstimulo.Text = "000";
             // 
             // label8
@@ -258,7 +258,7 @@
             this.txtFreqEstim.MaxLength = 2;
             this.txtFreqEstim.Name = "txtFreqEstim";
             this.txtFreqEstim.Size = new System.Drawing.Size(207, 20);
-            this.txtFreqEstim.TabIndex = 15;
+            this.txtFreqEstim.TabIndex = 7;
             this.txtFreqEstim.Text = "000";
             // 
             // label6
@@ -281,7 +281,7 @@
             this.tabPotenciais.Name = "tabPotenciais";
             this.tabPotenciais.SelectedIndex = 0;
             this.tabPotenciais.Size = new System.Drawing.Size(684, 333);
-            this.tabPotenciais.TabIndex = 13;
+            this.tabPotenciais.TabIndex = 10;
             // 
             // tabPevi
             // 
@@ -314,56 +314,74 @@
             // txtAmplitudeOlhoEsquerdo
             // 
             this.txtAmplitudeOlhoEsquerdo.Location = new System.Drawing.Point(309, 120);
-            this.txtAmplitudeOlhoEsquerdo.MaxLength = 3;
+            this.txtAmplitudeOlhoEsquerdo.MaxLength = 4;
             this.txtAmplitudeOlhoEsquerdo.Name = "txtAmplitudeOlhoEsquerdo";
             this.txtAmplitudeOlhoEsquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txtAmplitudeOlhoEsquerdo.TabIndex = 20;
-            this.txtAmplitudeOlhoEsquerdo.Text = "0000,00";
+            this.txtAmplitudeOlhoEsquerdo.TabIndex = 19;
+            this.txtAmplitudeOlhoEsquerdo.Text = "0,0";
+            this.txtAmplitudeOlhoEsquerdo.Enter += new System.EventHandler(this.txtAmplitudeOlhoEsquerdo_Enter);
+            this.txtAmplitudeOlhoEsquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAmplitudeOlhoEsquerdo_KeyPress);
+            this.txtAmplitudeOlhoEsquerdo.Leave += new System.EventHandler(this.txtAmplitudeOlhoEsquerdo_Leave);
             // 
             // txtAmplitudeOlhoDireito
             // 
             this.txtAmplitudeOlhoDireito.Location = new System.Drawing.Point(186, 120);
-            this.txtAmplitudeOlhoDireito.MaxLength = 3;
+            this.txtAmplitudeOlhoDireito.MaxLength = 4;
             this.txtAmplitudeOlhoDireito.Name = "txtAmplitudeOlhoDireito";
             this.txtAmplitudeOlhoDireito.Size = new System.Drawing.Size(81, 20);
-            this.txtAmplitudeOlhoDireito.TabIndex = 19;
-            this.txtAmplitudeOlhoDireito.Text = "0000,00";
+            this.txtAmplitudeOlhoDireito.TabIndex = 18;
+            this.txtAmplitudeOlhoDireito.Text = "0,0";
+            this.txtAmplitudeOlhoDireito.Enter += new System.EventHandler(this.txtAmplitudeOlhoDireito_Enter);
+            this.txtAmplitudeOlhoDireito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAmplitudeOlhoDireito_KeyPress);
+            this.txtAmplitudeOlhoDireito.Leave += new System.EventHandler(this.txtAmplitudeOlhoDireito_Leave);
             // 
             // txtN145OlhoEsquerdo
             // 
             this.txtN145OlhoEsquerdo.Location = new System.Drawing.Point(309, 96);
-            this.txtN145OlhoEsquerdo.MaxLength = 3;
+            this.txtN145OlhoEsquerdo.MaxLength = 4;
             this.txtN145OlhoEsquerdo.Name = "txtN145OlhoEsquerdo";
             this.txtN145OlhoEsquerdo.Size = new System.Drawing.Size(81, 20);
             this.txtN145OlhoEsquerdo.TabIndex = 17;
-            this.txtN145OlhoEsquerdo.Text = "0000,00";
+            this.txtN145OlhoEsquerdo.Text = "0,0";
+            this.txtN145OlhoEsquerdo.Enter += new System.EventHandler(this.txtN145OlhoEsquerdo_Enter);
+            this.txtN145OlhoEsquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtN145OlhoEsquerdo_KeyPress);
+            this.txtN145OlhoEsquerdo.Leave += new System.EventHandler(this.txtN145OlhoEsquerdo_Leave);
             // 
             // txtN145OlhoDireito
             // 
             this.txtN145OlhoDireito.Location = new System.Drawing.Point(186, 96);
-            this.txtN145OlhoDireito.MaxLength = 3;
+            this.txtN145OlhoDireito.MaxLength = 4;
             this.txtN145OlhoDireito.Name = "txtN145OlhoDireito";
             this.txtN145OlhoDireito.Size = new System.Drawing.Size(81, 20);
             this.txtN145OlhoDireito.TabIndex = 16;
-            this.txtN145OlhoDireito.Text = "0000,00";
+            this.txtN145OlhoDireito.Text = "0,0";
+            this.txtN145OlhoDireito.Enter += new System.EventHandler(this.txtN145OlhoDireito_Enter);
+            this.txtN145OlhoDireito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtN145OlhoDireito_KeyPress);
+            this.txtN145OlhoDireito.Leave += new System.EventHandler(this.txtN145OlhoDireito_Leave);
             // 
             // txtP100OlhoEsquerdo
             // 
             this.txtP100OlhoEsquerdo.Location = new System.Drawing.Point(309, 72);
-            this.txtP100OlhoEsquerdo.MaxLength = 3;
+            this.txtP100OlhoEsquerdo.MaxLength = 4;
             this.txtP100OlhoEsquerdo.Name = "txtP100OlhoEsquerdo";
             this.txtP100OlhoEsquerdo.Size = new System.Drawing.Size(81, 20);
             this.txtP100OlhoEsquerdo.TabIndex = 14;
-            this.txtP100OlhoEsquerdo.Text = "0000,00";
+            this.txtP100OlhoEsquerdo.Text = "0,0";
+            this.txtP100OlhoEsquerdo.Enter += new System.EventHandler(this.txtP100OlhoEsquerdo_Enter);
+            this.txtP100OlhoEsquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP100OlhoEsquerdo_KeyPress);
+            this.txtP100OlhoEsquerdo.Leave += new System.EventHandler(this.txtP100OlhoEsquerdo_Leave);
             // 
             // txtP100OlhoDireito
             // 
             this.txtP100OlhoDireito.Location = new System.Drawing.Point(186, 72);
-            this.txtP100OlhoDireito.MaxLength = 3;
+            this.txtP100OlhoDireito.MaxLength = 4;
             this.txtP100OlhoDireito.Name = "txtP100OlhoDireito";
             this.txtP100OlhoDireito.Size = new System.Drawing.Size(81, 20);
             this.txtP100OlhoDireito.TabIndex = 13;
-            this.txtP100OlhoDireito.Text = "0000,00";
+            this.txtP100OlhoDireito.Text = "0,0";
+            this.txtP100OlhoDireito.Enter += new System.EventHandler(this.txtP100OlhoDireito_Enter);
+            this.txtP100OlhoDireito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP100OlhoDireito_KeyPress);
+            this.txtP100OlhoDireito.Leave += new System.EventHandler(this.txtP100OlhoDireito_Leave);
             // 
             // label16
             // 
@@ -376,31 +394,37 @@
             // 
             // txtP100Diferenca
             // 
+            this.txtP100Diferenca.Enabled = false;
             this.txtP100Diferenca.Location = new System.Drawing.Point(424, 72);
-            this.txtP100Diferenca.MaxLength = 3;
+            this.txtP100Diferenca.MaxLength = 4;
             this.txtP100Diferenca.Name = "txtP100Diferenca";
-            this.txtP100Diferenca.ReadOnly = true;
             this.txtP100Diferenca.Size = new System.Drawing.Size(81, 20);
-            this.txtP100Diferenca.TabIndex = 11;
-            this.txtP100Diferenca.Text = "0000,00";
+            this.txtP100Diferenca.TabIndex = 15;
+            this.txtP100Diferenca.Text = "0,0";
             // 
             // txtN75OlhoEsquerdo
             // 
             this.txtN75OlhoEsquerdo.Location = new System.Drawing.Point(309, 48);
-            this.txtN75OlhoEsquerdo.MaxLength = 3;
+            this.txtN75OlhoEsquerdo.MaxLength = 4;
             this.txtN75OlhoEsquerdo.Name = "txtN75OlhoEsquerdo";
             this.txtN75OlhoEsquerdo.Size = new System.Drawing.Size(81, 20);
-            this.txtN75OlhoEsquerdo.TabIndex = 10;
-            this.txtN75OlhoEsquerdo.Text = "0000,00";
+            this.txtN75OlhoEsquerdo.TabIndex = 12;
+            this.txtN75OlhoEsquerdo.Text = "0,0";
+            this.txtN75OlhoEsquerdo.Enter += new System.EventHandler(this.txtN75OlhoEsquerdo_Enter);
+            this.txtN75OlhoEsquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtN75OlhoEsquerdo_KeyPress);
+            this.txtN75OlhoEsquerdo.Leave += new System.EventHandler(this.txtN75OlhoEsquerdo_Leave);
             // 
             // txtN75OlhoDireito
             // 
             this.txtN75OlhoDireito.Location = new System.Drawing.Point(186, 48);
-            this.txtN75OlhoDireito.MaxLength = 3;
+            this.txtN75OlhoDireito.MaxLength = 4;
             this.txtN75OlhoDireito.Name = "txtN75OlhoDireito";
             this.txtN75OlhoDireito.Size = new System.Drawing.Size(81, 20);
-            this.txtN75OlhoDireito.TabIndex = 9;
-            this.txtN75OlhoDireito.Text = "0000,00";
+            this.txtN75OlhoDireito.TabIndex = 11;
+            this.txtN75OlhoDireito.Text = "0,0";
+            this.txtN75OlhoDireito.Enter += new System.EventHandler(this.txtN75OlhoDireito_Enter);
+            this.txtN75OlhoDireito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtN75OlhoDireito_KeyPress);
+            this.txtN75OlhoDireito.Leave += new System.EventHandler(this.txtN75OlhoDireito_Leave);
             // 
             // label15
             // 
@@ -1478,7 +1502,7 @@
             this.txtEstimulacao.MaxLength = 40;
             this.txtEstimulacao.Name = "txtEstimulacao";
             this.txtEstimulacao.Size = new System.Drawing.Size(474, 20);
-            this.txtEstimulacao.TabIndex = 10;
+            this.txtEstimulacao.TabIndex = 6;
             // 
             // label5
             // 
@@ -1495,7 +1519,7 @@
             this.txtFiltros.MaxLength = 20;
             this.txtFiltros.Name = "txtFiltros";
             this.txtFiltros.Size = new System.Drawing.Size(207, 20);
-            this.txtFiltros.TabIndex = 8;
+            this.txtFiltros.TabIndex = 5;
             this.txtFiltros.Text = "2 KHz /20Hz";
             // 
             // label4
@@ -1513,7 +1537,7 @@
             this.txtSensibilidade.MaxLength = 10;
             this.txtSensibilidade.Name = "txtSensibilidade";
             this.txtSensibilidade.Size = new System.Drawing.Size(213, 20);
-            this.txtSensibilidade.TabIndex = 4;
+            this.txtSensibilidade.TabIndex = 3;
             // 
             // label2
             // 
@@ -1547,7 +1571,7 @@
             this.txtUvDivTempo.MaxLength = 3;
             this.txtUvDivTempo.Name = "txtUvDivTempo";
             this.txtUvDivTempo.Size = new System.Drawing.Size(141, 20);
-            this.txtUvDivTempo.TabIndex = 2;
+            this.txtUvDivTempo.TabIndex = 4;
             this.txtUvDivTempo.Text = "0000,00";
             // 
             // lblNome
@@ -1584,7 +1608,7 @@
             this.grpBotoes.Location = new System.Drawing.Point(12, 771);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(700, 49);
-            this.grpBotoes.TabIndex = 7;
+            this.grpBotoes.TabIndex = 0;
             this.grpBotoes.TabStop = false;
             // 
             // btnGravar
@@ -1594,7 +1618,7 @@
             this.btnGravar.Location = new System.Drawing.Point(14, 13);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(85, 27);
-            this.btnGravar.TabIndex = 10;
+            this.btnGravar.TabIndex = 1;
             this.btnGravar.Text = "Gravar";
             this.btnGravar.UseVisualStyleBackColor = true;
             this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
@@ -1606,7 +1630,7 @@
             this.btnSair.Location = new System.Drawing.Point(609, 13);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(85, 27);
-            this.btnSair.TabIndex = 12;
+            this.btnSair.TabIndex = 2;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
@@ -1624,7 +1648,7 @@
             this.groupBox6.Location = new System.Drawing.Point(12, 520);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(699, 249);
-            this.groupBox6.TabIndex = 26;
+            this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Comentários";
             // 
@@ -1634,7 +1658,7 @@
             this.btnComentario.Location = new System.Drawing.Point(662, 32);
             this.btnComentario.Name = "btnComentario";
             this.btnComentario.Size = new System.Drawing.Size(27, 24);
-            this.btnComentario.TabIndex = 34;
+            this.btnComentario.TabIndex = 4;
             this.btnComentario.UseVisualStyleBackColor = true;
             this.btnComentario.Click += new System.EventHandler(this.btnComentario_Click);
             // 
@@ -1647,7 +1671,7 @@
             this.txtTextoComentario.Name = "txtTextoComentario";
             this.txtTextoComentario.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtTextoComentario.Size = new System.Drawing.Size(683, 179);
-            this.txtTextoComentario.TabIndex = 17;
+            this.txtTextoComentario.TabIndex = 5;
             this.txtTextoComentario.WordWrap = false;
             // 
             // txtSiglaComentario
@@ -1657,7 +1681,7 @@
             this.txtSiglaComentario.Name = "txtSiglaComentario";
             this.txtSiglaComentario.ReadOnly = true;
             this.txtSiglaComentario.Size = new System.Drawing.Size(95, 20);
-            this.txtSiglaComentario.TabIndex = 14;
+            this.txtSiglaComentario.TabIndex = 2;
             // 
             // label17
             // 
@@ -1675,7 +1699,7 @@
             this.txtNomeComentario.Name = "txtNomeComentario";
             this.txtNomeComentario.ReadOnly = true;
             this.txtNomeComentario.Size = new System.Drawing.Size(436, 20);
-            this.txtNomeComentario.TabIndex = 15;
+            this.txtNomeComentario.TabIndex = 3;
             // 
             // label18
             // 
@@ -1694,7 +1718,7 @@
             this.txtCodigoComentario.Name = "txtCodigoComentario";
             this.txtCodigoComentario.ReadOnly = true;
             this.txtCodigoComentario.Size = new System.Drawing.Size(103, 20);
-            this.txtCodigoComentario.TabIndex = 13;
+            this.txtCodigoComentario.TabIndex = 1;
             // 
             // label19
             // 
@@ -1722,6 +1746,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Potenciais Evocados";
             this.Load += new System.EventHandler(this.frmPotenciaisEvocados_Load);
+            this.Shown += new System.EventHandler(this.frmPotenciaisEvocados_Shown);
             this.grpBoxDados.ResumeLayout(false);
             this.grpBoxDados.PerformLayout();
             this.tabPotenciais.ResumeLayout(false);

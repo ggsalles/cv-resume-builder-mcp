@@ -140,5 +140,331 @@ namespace WEDLC.Banco
                 return $"{cpf.Substring(0, 3)}.{cpf.Substring(3, 3)}.{cpf.Substring(6, 3)}-{cpf.Substring(9, 2)}";
             }
         }
+
+        public static class ValidacaoTextBox
+        {
+            public static void PermitirDecimaisPositivosNegativos(TextBox textBox, KeyPressEventArgs e, int casasDecimais = 2)
+            {
+                // Teclas de controle permitidas (backspace, delete, tab, etc.)
+                if (char.IsControl(e.KeyChar))
+                {
+                    e.Handled = false;
+                    return;
+                }
+
+                // Permite sinal negativo apenas no início
+                if (e.KeyChar == '-')
+                {
+                    // Só permite se estiver no início e não houver outro sinal negativo
+                    if (textBox.SelectionStart == 0 && !textBox.Text.Contains("-"))
+                    {
+                        e.Handled = false;
+                        return;
+                    }
+                    else
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+                }
+
+                // Permite vírgula
+                if (e.KeyChar == ',' || e.KeyChar == '.')
+                {
+                    // Converte ponto para vírgula (padrão brasileiro)
+                    if (e.KeyChar == '.') e.KeyChar = ',';
+
+                    // Verifica se já existe vírgula
+                    if (textBox.Text.Contains(","))
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+
+                    // Não permite vírgula no início ou logo após o sinal negativo
+                    if (textBox.Text.Length == 0 ||
+                        (textBox.Text.Length == 1 && textBox.Text == "-"))
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+
+                    e.Handled = false;
+                    return;
+                }
+
+                // Permite apenas números
+                if (!char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                // Validação de casas decimais (máximo 2)
+                if (textBox.Text.Contains(","))
+                {
+                    int indexVirgula = textBox.Text.IndexOf(',');
+                    string parteDecimal = textBox.Text.Substring(indexVirgula + 1);
+
+                    // Remove texto selecionado do cálculo
+                    if (textBox.SelectionLength > 0)
+                    {
+                        int startIndex = textBox.SelectionStart - indexVirgula - 1;
+                        if (startIndex >= 0 && startIndex < parteDecimal.Length)
+                        {
+                            parteDecimal = parteDecimal.Remove(startIndex, textBox.SelectionLength);
+                        }
+                    }
+
+                    // Verifica se atingiu o limite de casas decimais
+                    if (parteDecimal.Length >= casasDecimais &&
+                        textBox.SelectionStart > indexVirgula)
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+                }
+
+                e.Handled = false;
+            }
+
+            public static void FormatarAoPerderFoco(object sender, EventArgs e)
+            {
+                var textBox = sender as TextBox;
+                if (textBox != null)
+                {
+                    FormatarUmaCasaDecimal(textBox);
+                }
+            }
+
+            public static void SelecionaTextoTextBox(object sender, EventArgs e)
+            {
+                var textBox = sender as TextBox;
+                textBox?.SelectAll();
+            }
+
+            public static void FormatarUmaCasaDecimal(TextBox textBox)
+            {
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                    return;
+
+                // Salva a posição do cursor
+                int cursorPosition = textBox.SelectionStart;
+
+                try
+                {
+                    // Remove formatação anterior
+                    string textoLimpo = textBox.Text.Replace("R$", "").Replace(" ", "").Trim();
+
+                    // Converte para decimal
+                    if (decimal.TryParse(textoLimpo.Replace(".", ","), NumberStyles.Any,
+                                        CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
+                    {
+                        // Formata com uma casa decimal
+                        textBox.Text = valor.ToString("N1", CultureInfo.GetCultureInfo("pt-BR"));
+
+                        // Restaura a posição do cursor
+                        textBox.SelectionStart = Math.Min(cursorPosition, textBox.Text.Length);
+                    }
+                }
+                catch
+                {
+                    // Em caso de erro, mantém o texto original
+                }
+            }
+
+            public static void FormatarDuasCasasDecimais(TextBox textBox)
+            {
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                    return;
+
+                // Salva a posição do cursor
+                int cursorPosition = textBox.SelectionStart;
+                string textoOriginal = textBox.Text;
+
+                try
+                {
+                    // Remove formatação anterior
+                    string textoLimpo = textBox.Text.Replace("R$", "")
+                                                   .Replace(" ", "")
+                                                   .Trim();
+
+                    // Converte para decimal
+                    if (decimal.TryParse(textoLimpo, NumberStyles.Any,
+                                        CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
+                    {
+                        // Formata com duas casas decimais, mantendo o sinal
+                        textBox.Text = valor.ToString("N2", CultureInfo.GetCultureInfo("pt-BR"));
+
+                        // Restaura a posição do cursor
+                        textBox.SelectionStart = Math.Min(cursorPosition, textBox.Text.Length);
+                    }
+                    else
+                    {
+                        // Se não conseguir converter, mantém o texto original
+                        textBox.Text = textoOriginal;
+                    }
+                }
+                catch
+                {
+                    // Em caso de erro, mantém o texto original
+                    textBox.Text = textoOriginal;
+                }
+            }
+
+            public static decimal? ObterValorDecimal(TextBox textBox)
+            {
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                    return null;
+
+                try
+                {
+                    string textoLimpo = textBox.Text.Replace("R$", "")
+                                                   .Replace(" ", "")
+                                                   .Replace(".", "")
+                                                   .Trim();
+
+                    if (decimal.TryParse(textoLimpo, NumberStyles.Any,
+                                        CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
+                    {
+                        return Math.Round(valor, 2); // Garante 2 casas decimais
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            public static bool ValidarDecimal(string texto)
+            {
+                if (string.IsNullOrWhiteSpace(texto))
+                    return false;
+
+                try
+                {
+                    string textoLimpo = texto.Replace(" ", "").Trim();
+                    return decimal.TryParse(textoLimpo, NumberStyles.Any,
+                                          CultureInfo.GetCultureInfo("pt-BR"), out _);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+                      
+        }
+        public static class CalculosTextBox
+        {
+            public static decimal? CalcularDiferencaPositiva(TextBox textBoxA, TextBox textBoxB)
+            {
+                try
+                {
+                    decimal valorA = ObterValorDecimal(textBoxA);
+                    decimal valorB = ObterValorDecimal(textBoxB);
+
+                    // Calcula a diferença absoluta (sempre positiva)
+                    decimal diferenca = Math.Abs(valorA - valorB);
+
+                    return diferenca;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            public static decimal ObterValorDecimal(TextBox textBox)
+            {
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                    return 0m;
+
+                // Remove formatação e converte para decimal
+                string textoLimpo = textBox.Text.Replace("R$", "")
+                                               .Replace("%", "")
+                                               .Replace(" ", "")
+                                               .Trim();
+
+                if (decimal.TryParse(textoLimpo, System.Globalization.NumberStyles.Any,
+                                    System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
+                {
+                    return valor;
+                }
+
+                return 0m;
+            }
+
+            public static void AtualizarDiferencaPositiva(TextBox textBoxA, TextBox textBoxB, TextBox textBoxResultado)
+            {
+                decimal? diferenca = CalcularDiferencaPositiva(textBoxA, textBoxB);
+
+                if (diferenca.HasValue)
+                {
+                    textBoxResultado.Text = diferenca.Value.ToString("N2",
+                        System.Globalization.CultureInfo.GetCultureInfo("pt-BR"));
+                }
+                else
+                {
+                    textBoxResultado.Text = "0,00";
+                }
+            }
+
+        }
+
+        public static decimal? CalcularDiferencaComNegativos(TextBox textBoxA, TextBox textBoxB, bool semprePositivo = true)
+        {
+            try
+            {
+                decimal? valorA = ObterValorDecimal(textBoxA);
+                decimal? valorB = ObterValorDecimal(textBoxB);
+
+                if (!valorA.HasValue) valorA = 0m;
+                if (!valorB.HasValue) valorB = 0m;
+
+                decimal diferenca = valorA.Value - valorB.Value;
+
+                if (semprePositivo)
+                {
+                    return Math.Abs(diferenca);
+                }
+                else
+                {
+                    return diferenca;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        // Função para obter valor decimal considerando negativos
+        public static decimal? ObterValorDecimal(TextBox textBox)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+                return null;
+
+            try
+            {
+                string textoLimpo = textBox.Text.Replace("R$", "")
+                                               .Replace("%", "")
+                                               .Replace(" ", "")
+                                               .Trim();
+
+                if (decimal.TryParse(textoLimpo, NumberStyles.Any,
+                                    CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
+                {
+                    return valor;
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

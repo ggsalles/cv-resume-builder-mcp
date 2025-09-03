@@ -179,5 +179,53 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
+
+        public bool AtualizarResultadoPEV()
+        {
+            if (!conectaBanco())
+                return false;
+
+            if (IdResultadoPev < 0 || IdResultado < 0)
+            {
+                return false;
+            }
+            try
+            {
+                using (var cmd = new MySqlCommand("pr_atualizaresultadopev", conexao))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Adicionando os parâmetros exatamente como na procedure
+                    cmd.Parameters.AddWithValue("pidresultadopev", IdResultadoPev);
+                    cmd.Parameters.AddWithValue("pidresultado", IdResultado);
+                    cmd.Parameters.AddWithValue("pn75olhodireito", N75OlhoDireito ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pn75olhoesquerdo", N75OlhoEsquerdo ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pp100olhodireito", P100OlhoDireito ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pp100olhoesquerdo", P100OlhoEsquerdo ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pp100diferenca", P100Diferenca ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pn145olhodireito", N145OlhoDireito ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pn145olhoesquerdo", N145OlhoEsquerdo ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pamplitudeolhodireito", AmplitudeOlhoDireito ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("pamplitudeolhoesquerdo", AmplitudeOlhoEsquerdo ?? (object)DBNull.Value);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao atualizar pr_atualizaresultadopev: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
+        }
     }
 }

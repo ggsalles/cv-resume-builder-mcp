@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Activities.Statements;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using static WEDLC.Banco.cUtil;
+using System.Transactions;
 
 namespace WEDLC.Forms
 {
@@ -14,6 +15,8 @@ namespace WEDLC.Forms
 
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
         public int IdResultado { get; set; }
+        public int IdResultadoPEV { get; set; } // Usado para identificar o resultado PEV
+        public int IdResultadoComentarioPEV { get; set; } // Usado para identificar o resultado PEV
         public int IdFolha { get; set; }
         public int IdPaciente { get; set; }
 
@@ -80,16 +83,19 @@ namespace WEDLC.Forms
 
                     if (CarregaDadosPev() == false)
                     {
-                        break;
+                        throw new Exception("Erro na CarregaDadosPev");
                     }
-                    if (CarregaDadosComentarioPev() == false)
-                    {
-                        break;
-                    }
+
                     if (CarregaDadosPotEvocadoTecnica() == false)
                     {
-                        break;
+                        throw new Exception("Erro na CarregaDadosPotEvocadoTecnica"); ;
                     }
+
+                    if (CarregaDadosComentarioPev() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosComentarioPev"); ;
+                    }
+
                     break;
 
                 case (int)GrupoFolha.PEA:
@@ -128,18 +134,64 @@ namespace WEDLC.Forms
                 switch ((int)codGrupoFolha)
                 {
                     case (int)GrupoFolha.PEV:
+
+                        using (var scope = new TransactionScope())
+                        {
+                            try
+                            {
+                                if (GravaGrupoFolhaPotEvocadoTecnica() == false)
+                                {
+                                    throw new Exception("Falha ao gravar técnica PEV");
+                                }
+
+                                if (GravaGrupoFolhaPev() == false)
+                                {
+                                    throw new Exception("Falha ao gravar PEV");
+                                }
+
+                                if (GravaGrupoFolhaComentarioPev() == false)
+                                {
+                                    throw new Exception("Falha ao gravar comentário PEV");
+                                }
+
+                                // Se tudo ok, commit na transação
+                                scope.Complete();
+
+                                MessageBox.Show("Gravado com sucesso!", "Atenção",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erro na gravação: {ex.Message}", "Erro",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                // O rollback é automático quando scope.Complete() não é chamado
+                            }
+                        }
+
                         break;
+
                     case (int)GrupoFolha.PEA:
+
                         tabPotenciais.TabPages.Add(tabPea);
+
                         break;
+
                     case (int)GrupoFolha.PESS:
+
                         tabPotenciais.TabPages.Add(tabPess);
+
                         break;
+
                     case (int)GrupoFolha.PEGC:
+
                         tabPotenciais.TabPages.Add(tabPegc);
+
                         break;
+
                     case (int)GrupoFolha.PESSMED:
+
                         tabPotenciais.TabPages.Add(tabPessMed);
+
                         break;
                 }
             }
@@ -147,7 +199,6 @@ namespace WEDLC.Forms
             {
                 MessageBox.Show("Erro ao tentar gravar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
         private void btnSair_Click(object sender, EventArgs e)
         {
@@ -207,13 +258,14 @@ namespace WEDLC.Forms
             {
                 cPotenciaisPEV objcPotenciaisPEV = new cPotenciaisPEV();
 
-                objcPotenciaisPEV.IdResultado = this.IdResultado;
                 objcPotenciaisPEV.IdFolha = this.IdFolha;
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoPev();
 
                 // Preenche os campos com os dados retornados
+                this.IdResultado = Int32.Parse(dt.Rows[0]["idresultado"].ToString());
+                this.IdResultadoPEV = Int32.Parse(dt.Rows[0]["idresultadopev"].ToString());
                 txtN75OlhoDireito.Text = dt.Rows[0]["N75OlhoDireito"].ToString();
                 txtN75OlhoEsquerdo.Text = dt.Rows[0]["N75OlhoEsquerdo"].ToString();
                 txtP100OlhoDireito.Text = dt.Rows[0]["P100OlhoDireito"].ToString();
@@ -248,15 +300,16 @@ namespace WEDLC.Forms
                 if (dt.Rows.Count > 0)
                 {
                     // Preenche os campos com os dados retornados
+                    this.IdResultadoComentarioPEV = Int32.Parse(dt.Rows[0]["idresultadocomentariopev"].ToString());
                     txtCodigoComentario.Text = dt.Rows[0]["idcomentario"].ToString();
                     txtSiglaComentario.Text = dt.Rows[0]["sigla"].ToString();
                     txtNomeComentario.Text = dt.Rows[0]["nome"].ToString();
                     txtTextoComentario.Text = dt.Rows[0]["descricao"].ToString();
-
                 }
                 else
                 {
                     // Preenche os campos com os dados retornados
+                    this.IdResultadoComentarioPEV = 0;
                     txtCodigoComentario.Text = string.Empty;
                     txtSiglaComentario.Text = string.Empty;
                     txtNomeComentario.Text = string.Empty;
@@ -297,6 +350,264 @@ namespace WEDLC.Forms
                 txtSiglaComentario.Text = objfrmComentarios.Sigla;
                 txtTextoComentario.Text = objfrmComentarios.Texto;
             }
+        }
+
+        private bool GravaGrupoFolhaPev()
+        {
+            cPotenciaisPEV objcPotenciaisPEV = new cPotenciaisPEV();
+            objcPotenciaisPEV.IdResultadoPev = this.IdResultadoPEV;
+            objcPotenciaisPEV.IdResultado = this.IdResultado;
+            objcPotenciaisPEV.IdFolha = this.IdFolha;
+            objcPotenciaisPEV.IdPaciente = this.IdPaciente;
+            objcPotenciaisPEV.N75OlhoDireito = txtN75OlhoDireito.Text;
+            objcPotenciaisPEV.N75OlhoEsquerdo = txtN75OlhoEsquerdo.Text;
+            objcPotenciaisPEV.P100OlhoDireito = txtP100OlhoDireito.Text;
+            objcPotenciaisPEV.P100OlhoEsquerdo = txtP100OlhoEsquerdo.Text;
+            objcPotenciaisPEV.P100Diferenca = txtP100Diferenca.Text;
+            objcPotenciaisPEV.N145OlhoDireito = txtN145OlhoDireito.Text;
+            objcPotenciaisPEV.N145OlhoEsquerdo = txtN145OlhoEsquerdo.Text;
+            objcPotenciaisPEV.AmplitudeOlhoDireito = txtAmplitudeOlhoDireito.Text;
+            objcPotenciaisPEV.AmplitudeOlhoEsquerdo = txtAmplitudeOlhoEsquerdo.Text;
+            //objcPotenciaisPEV.objComentario.IdComentario = string.IsNullOrEmpty(txtCodigoComentario.Text) ? 0 : Convert.ToInt32(txtCodigoComentario.Text);
+            //objcPotenciaisPEV.objComentario.Sigla = txtSiglaComentario.Text;
+            //objcPotenciaisPEV.objComentario.Nome = txtNomeComentario.Text;
+            //objcPotenciaisPEV.objComentario.Texto = txtTextoComentario.Text;
+            if (objcPotenciaisPEV.AtualizarResultadoPEV() == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private bool GravaGrupoFolhaPotEvocadoTecnica()
+        {
+            cPotenciaisEvocadosTecnica objPotenciaisEvocadosTecnica = new cPotenciaisEvocadosTecnica();
+            objPotenciaisEvocadosTecnica.IdResultadoPotEvocTecnica = Convert.ToInt32(txtCodigo.Text);
+            objPotenciaisEvocadosTecnica.IdResultado = this.IdResultado;
+            objPotenciaisEvocadosTecnica.IdPaciente = this.IdPaciente;
+            objPotenciaisEvocadosTecnica.Sensibilidade = txtSensibilidade.Text.ToUpper();
+            objPotenciaisEvocadosTecnica.Captacao = txtCaptacao.Text.ToUpper();
+            objPotenciaisEvocadosTecnica.UvDivTempo = string.IsNullOrEmpty(txtUvDivTempo.Text) ? (int?)null : Convert.ToInt32(txtUvDivTempo.Text);
+            objPotenciaisEvocadosTecnica.Filtros = txtFiltros.Text.ToUpper();
+            objPotenciaisEvocadosTecnica.Estimulacao = txtEstimulacao.Text;
+            objPotenciaisEvocadosTecnica.FreqEstimada = string.IsNullOrEmpty(txtFreqEstim.Text) ? (int?)null : Convert.ToInt32(txtFreqEstim.Text);
+            objPotenciaisEvocadosTecnica.NEstimulo = string.IsNullOrEmpty(txtNEstimulo.Text) ? (int?)null : Convert.ToInt32(txtNEstimulo.Text);
+            objPotenciaisEvocadosTecnica.Intensidade = txtItensidade.Text.ToUpper();
+            if (objPotenciaisEvocadosTecnica.AtualizaResultadoPotEvocadoTecnica() == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+        private bool GravaGrupoFolhaComentarioPev()
+        {
+            if (string.IsNullOrEmpty(txtCodigoComentario.Text))
+            {
+                // Se não houver comentário selecionado, nada a gravar
+                return true;
+            }
+
+            cResultadoComentario cResultadoComentario = new cResultadoComentario();
+            cResultadoComentario.IdResultadoComentario = this.IdResultadoComentarioPEV;
+            cResultadoComentario.IdResultado = this.IdResultado;
+            cResultadoComentario.IdPaciente = this.IdPaciente;
+            cResultadoComentario.IdFolha = this.IdFolha;
+            cResultadoComentario.IdComentario = Convert.ToInt32(txtCodigoComentario.Text);
+            cResultadoComentario.Texto = txtTextoComentario.Text;
+            if (cResultadoComentario.AtualizarResultadoComentarioPEV() == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private void txtN75OlhoDireito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN75OlhoDireito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            if (string.IsNullOrEmpty(txtN75OlhoDireito.Text))
+            {
+                txtN75OlhoDireito.Text = "0,0";
+            }
+
+        }
+
+        private void txtN75OlhoEsquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN75OlhoEsquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            if (string.IsNullOrEmpty(txtN75OlhoEsquerdo.Text))
+            {
+                txtN75OlhoEsquerdo.Text = "0,0";
+            }
+
+        }
+
+        private void txtP100OlhoDireito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+
+            decimal? diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtP100OlhoDireito, txtP100OlhoEsquerdo);
+
+            if (diferenca.HasValue)
+            {
+                txtP100Diferenca.Text = diferenca.Value.ToString("N2");
+            }
+
+            if (string.IsNullOrEmpty(txtP100OlhoDireito.Text))
+            {
+                txtP100OlhoDireito.Text = "0,0";
+            }
+
+            ValidacaoTextBox.FormatarAoPerderFoco(txtP100Diferenca, e);
+        }
+
+        private void txtP100OlhoDireito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtP100OlhoEsquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            decimal? diferenca = CalculosTextBox.CalcularDiferencaPositiva(txtP100OlhoDireito, txtP100OlhoEsquerdo);
+
+            if (diferenca.HasValue)
+            {
+                txtP100Diferenca.Text = diferenca.Value.ToString("N2");
+
+            }
+            if (string.IsNullOrEmpty(txtP100OlhoEsquerdo.Text))
+            {
+                txtP100OlhoEsquerdo.Text = "0,0";
+            }
+
+            ValidacaoTextBox.FormatarAoPerderFoco(txtP100Diferenca, e);
+        }
+
+        private void txtP100OlhoEsquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN145OlhoDireito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+
+            if (string.IsNullOrEmpty(txtN145OlhoDireito.Text))
+            {
+                txtN145OlhoDireito.Text = "0,0";
+            }
+        }
+        private void txtN145OlhoDireito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN145OlhoEsquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            if (string.IsNullOrEmpty(txtN145OlhoEsquerdo.Text))
+            {
+                txtN145OlhoEsquerdo.Text = "0,0";
+            }
+        }
+
+        private void txtN145OlhoEsquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtAmplitudeOlhoDireito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            if (string.IsNullOrEmpty(txtAmplitudeOlhoDireito.Text))
+            {
+                txtAmplitudeOlhoDireito.Text = "0,0";
+            }
+        }
+
+        private void txtAmplitudeOlhoDireito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtAmplitudeOlhoEsquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFoco(sender, e);
+            if (string.IsNullOrEmpty(txtAmplitudeOlhoEsquerdo.Text))
+            {
+                txtAmplitudeOlhoEsquerdo.Text = "0,0";
+            }
+        }
+
+        private void txtAmplitudeOlhoEsquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN75OlhoDireito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtN75OlhoDireito), e);
+        }
+
+        private void txtN75OlhoEsquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtN75OlhoEsquerdo), e);
+        }
+
+        private void txtP100OlhoDireito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtP100OlhoDireito), e);
+        }
+
+        private void txtP100OlhoEsquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtP100OlhoEsquerdo), e);
+        }
+
+        private void txtN145OlhoDireito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtN145OlhoDireito), e);
+        }
+
+        private void txtN145OlhoEsquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtN145OlhoEsquerdo), e);
+        }
+
+        private void txtAmplitudeOlhoDireito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtAmplitudeOlhoDireito), e);
+        }
+
+        private void txtAmplitudeOlhoEsquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtAmplitudeOlhoEsquerdo), e);
+        }
+
+        private void frmPotenciaisEvocados_Shown(object sender, EventArgs e)
+        {
+            txtCaptacao.Focus();
+            ValidacaoTextBox.SelecionaTextoTextBox((txtCaptacao), e);
         }
     }
 }
