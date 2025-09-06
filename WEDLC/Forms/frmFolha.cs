@@ -984,6 +984,7 @@ namespace WEDLC.Forms
                     MessageBox.Show("Avaliação muscular incluída com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //Carrega o grid
                     this.populaGridAvaliacaoMuscular(int.Parse(txtCodigo.Text));
+                    cboAvaliacaoMuscular.Focus();
                 }
                 else
                 {
@@ -1182,6 +1183,7 @@ namespace WEDLC.Forms
                     MessageBox.Show("Neuro condução motora incluída com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //Carrega o grid
                     this.populaGridNeuroConducaoMotora(int.Parse(txtCodigo.Text));
+                    cboNeuroConducaoMotora.Focus();
                 }
                 else
                 {
@@ -1300,6 +1302,7 @@ namespace WEDLC.Forms
                     MessageBox.Show("Neuro condução sensorial incluida com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //Carrega o grid
                     this.populaGridNeuroConducaoSensorial(int.Parse(txtCodigo.Text));
+                    cboNeuroConducaoSensorial.Focus();
                 }
                 else
                 {
@@ -1390,6 +1393,7 @@ namespace WEDLC.Forms
                     //Carrega o grid
                     this.populaGridEstudoPotencial(int.Parse(txtCodigo.Text));
                     txtEstudoPotencial.Text = string.Empty; // Limpa o campo de estudo potencial
+                    txtEstudoPotencial.Focus();
                 }
                 else
                 {

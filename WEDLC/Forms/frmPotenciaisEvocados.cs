@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.Transactions;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using static Mysqlx.Notice.Frame.Types;
 using static WEDLC.Banco.cUtil;
-using System.Transactions;
 
 namespace WEDLC.Forms
 {
@@ -17,6 +18,7 @@ namespace WEDLC.Forms
         public int IdResultado { get; set; }
         public int IdResultadoPEV { get; set; } // Usado para identificar o resultado PEV
         public int IdResultadoPEA { get; set; } // Usado para identificar o resultado PEV
+        public int IdResultadoPESS { get; set; } // Usado para identificar o resultado PESS
         public int IdResultadoComentarioPEV { get; set; } // Usado para identificar o resultado PEV
         public int IdFolha { get; set; }
         public int IdPaciente { get; set; }
@@ -128,6 +130,23 @@ namespace WEDLC.Forms
                 case (int)GrupoFolha.PESS:
 
                     tabPotenciais.TabPages.Add(tabPess);
+
+                    RedimensionaTelaPESS();
+
+                    if (CarregaDadosPess() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosPea");
+                    }
+
+                    if (CarregaDadosPotEvocadoTecnica() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosPotEvocadoTecnica"); ;
+                    }
+
+                    if (CarregaDadosComentarioPev() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosComentarioPev"); ;
+                    }
 
                     break;
 
@@ -241,7 +260,43 @@ namespace WEDLC.Forms
 
                     case (int)GrupoFolha.PESS:
 
-                        tabPotenciais.TabPages.Add(tabPess);
+                        using (var scope = new TransactionScope())
+                        {
+                            try
+                            {
+                                if (GravaGrupoFolhaPotEvocadoTecnica() == false)
+                                {
+                                    throw new Exception("Falha ao gravar técnica PEV");
+                                }
+
+                                if (GravaGrupoFolhaPess() == false)
+                                {
+                                    throw new Exception("Falha ao gravar PEA");
+                                }
+                                if (ValidaComentarioPEV() == false)
+                                {
+                                    break;
+                                }
+                                if (GravaGrupoFolhaComentarioPev() == false)
+                                {
+                                    throw new Exception("Falha ao gravar comentário PEV");
+                                }
+
+                                // Se tudo ok, commit na transação
+                                scope.Complete();
+
+                                MessageBox.Show("Gravado com sucesso!", "Atenção",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                this.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erro na gravação: {ex.Message}", "Erro",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                // O rollback é automático quando scope.Complete() não é chamado
+                            }
+                        }
 
                         break;
 
@@ -410,7 +465,7 @@ namespace WEDLC.Forms
         {
             tabPotenciais.Size = new Size(684, 179);
             grpBoxDados.Size = new Size(699, 344);
-            groupBox6.Location = new Point(12, 360);
+            grpComentario.Location = new Point(12, 360);
             grpBotoes.Location = new Point(12, 617);
             this.Size = new Size(735, 715);
         }
@@ -1060,5 +1115,364 @@ namespace WEDLC.Forms
             }
             return true;
         }
+
+        private bool CarregaDadosPess()
+        {
+            try
+            {
+                cPotenciaisPESS objcPotenciaisPESS = new cPotenciaisPESS();
+
+                objcPotenciaisPESS.IdPaciente = this.IdPaciente;
+                objcPotenciaisPESS.IdResultado = this.IdResultado;
+                objcPotenciaisPESS.IdFolha = this.IdFolha;
+
+                DataTable dt = objcPotenciaisPESS.BuscaResultadoPess();
+
+                // Preenche os campos com os dados retornados
+                this.IdResultado = dt.Rows[0]["idresultado"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultado"].ToString()) : 0;
+                this.IdResultadoPESS = Int32.Parse(dt.Rows[0]["idresultadopess"].ToString());
+
+                grdDadosPess.DataSource = dt;
+
+                configuraGridDadosPess();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao CarregaDadosPev: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private void configuraGridDadosPess()
+        {
+            try
+            {
+                grdDadosPess.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                // Desabilita a edição da coluna
+                grdDadosPess.Columns[0].ReadOnly = true;
+                grdDadosPess.Columns[1].ReadOnly = true;
+                grdDadosPess.Columns[2].ReadOnly = true;
+                grdDadosPess.Columns[2].ReadOnly = true;
+                grdDadosPess.Columns[3].ReadOnly = true;
+                grdDadosPess.Columns[4].ReadOnly = true;
+                grdDadosPess.Columns[5].ReadOnly = true;
+                grdDadosPess.Columns[6].ReadOnly = true;
+                grdDadosPess.Columns[7].ReadOnly = true;
+                grdDadosPess.Columns[8].ReadOnly = true;
+                grdDadosPess.Columns[9].ReadOnly = true;
+                grdDadosPess.Columns[10].ReadOnly = true;
+                grdDadosPess.Columns[11].ReadOnly = true;
+
+                // Deixando as colunas ocultas
+                grdDadosPess.Columns["idfolha"].Visible = false;
+                grdDadosPess.Columns["idresultado"].Visible = false;
+                grdDadosPess.Columns["idestudopotenevocado"].Visible = false;
+                grdDadosPess.Columns["idresultadopess"].Visible = false;
+                grdDadosPess.Columns["idpaciente"].Visible = false;
+
+                // Renomeando os cabeçalhos
+                grdDadosPess.Columns["descricao"].HeaderText = "Descrição";
+                grdDadosPess.Columns["p1n1ladodireitorespobt"].HeaderText = "P1-N1 Direito Obtida";
+                grdDadosPess.Columns["p1n1ladoesquerdorespobt"].HeaderText = "P1-N1 Esquerdo Obtida";
+                grdDadosPess.Columns["diferencaobitida"].HeaderText = "Diferença Obtida";
+                grdDadosPess.Columns["p1n1ladodireitorespoesp"].HeaderText = "P1-N1 Direito Esperada";
+                grdDadosPess.Columns["p1n1ladoesquerdorespoesp"].HeaderText = "P1-N1 Esquerdo Esperada";
+                grdDadosPess.Columns["diferencaesperada"].HeaderText = "Diferença Esperada";
+
+                // Configurando outras propriedades
+                grdDadosPess.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
+                grdDadosPess.MultiSelect = false; // Impede seleção múltipla
+                grdDadosPess.AllowUserToAddRows = false; // Impede adição de novas linhas
+                grdDadosPess.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
+                grdDadosPess.CurrentCell = null; // Desmarca a célula atual
+                grdDadosPess.AllowUserToDeleteRows = false;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar configurar o grid de dados pess!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+        }
+
+        private void grdDadosPess_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (grdDadosPess.SelectedRows.Count > 0)
+                {
+                    DataGridViewRow row = grdDadosPess.SelectedRows[0];
+
+                    // Preenche as TextBoxes com os valores da linha selecionada
+                    txtP1Ni1DireitoObitida.Text = row.Cells["p1n1ladodireitorespobt"].Value != DBNull.Value ? row.Cells["p1n1ladodireitorespobt"].Value.ToString() : "";
+                    txtP1Ni1EsquerdoObidida.Text = row.Cells["p1n1ladoesquerdorespobt"].Value != DBNull.Value ? row.Cells["p1n1ladoesquerdorespobt"].Value.ToString() : "";
+                    txtDiferencaObitida.Text = row.Cells["diferencaobitida"].Value != DBNull.Value ? row.Cells["diferencaobitida"].Value.ToString() : "";
+                    txtP1Ni1DireitoEsperada.Text = row.Cells["p1n1ladodireitorespoesp"].Value != DBNull.Value ? row.Cells["p1n1ladodireitorespoesp"].Value.ToString() : "";
+                    txtP1Ni1EsquerdoEsperada.Text = row.Cells["p1n1ladoesquerdorespoesp"].Value != DBNull.Value ? row.Cells["p1n1ladoesquerdorespoesp"].Value.ToString() : "";
+                    txtDiferencaEsperada.Text = row.Cells["diferencaesperada"].Value != DBNull.Value ? row.Cells["diferencaesperada"].Value.ToString() : "";
+                    txtP1Ni1DireitoObitida.Focus();
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+        private void AtualizaValoresGridPessTXT()
+        {
+            DataGridViewRow row = grdDadosPess.SelectedRows[0];
+
+            // Atualiza os valores da linha com os valores das TextBoxes
+            row.Cells["p1n1ladodireitorespobt"].Value = txtP1Ni1DireitoObitida.Text;
+            row.Cells["p1n1ladodireitorespoesp"].Value = txtP1Ni1DireitoEsperada.Text;
+            row.Cells["p1n1ladoesquerdorespobt"].Value = txtP1Ni1EsquerdoObidida.Text;
+            row.Cells["p1n1ladoesquerdorespoesp"].Value = txtP1Ni1EsquerdoEsperada.Text;
+            row.Cells["diferencaobitida"].Value = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtP1Ni1DireitoObitida, txtP1Ni1EsquerdoObidida));
+            row.Cells["diferencaesperada"].Value = txtDiferencaEsperada.Text;
+
+            txtDiferencaObitida.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtP1Ni1DireitoObitida, txtP1Ni1EsquerdoObidida));
+        }
+        private void txtP1Ni1DireitoObitida_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+
+            if (string.IsNullOrEmpty(txtP1Ni1DireitoObitida.Text))
+            {
+                txtP1Ni1DireitoObitida.Text = "0,0";
+            }
+
+            AtualizaValoresGridPessTXT();
+        }
+
+        private void txtP1Ni1DireitoObitida_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtP1Ni1DireitoObitida), e);
+        }
+
+        private void txtP1Ni1DireitoObitida_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void txtP1Ni1DireitoEsperada_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtP1Ni1DireitoEsperada), e);
+        }
+
+        private void txtP1Ni1DireitoEsperada_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtP1Ni1DireitoEsperada.Text))
+            {
+                txtP1Ni1DireitoEsperada.Text = "0,0";
+            }
+            AtualizaValoresGridPessTXT();
+        }
+
+        private void txtP1Ni1DireitoEsperada_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void txtP1Ni1EsquerdoObidida_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtP1Ni1EsquerdoObidida), e);
+        }
+
+        private void txtP1Ni1EsquerdoObidida_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtP1Ni1EsquerdoObidida.Text))
+            {
+                txtP1Ni1EsquerdoObidida.Text = "0,0";
+            }
+            AtualizaValoresGridPessTXT();
+        }
+
+        private void txtP1Ni1EsquerdoObidida_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void txtP1Ni1EsquerdoEsperada_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtP1Ni1EsquerdoEsperada), e);
+        }
+
+        private void txtP1Ni1EsquerdoEsperada_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtP1Ni1EsquerdoEsperada.Text))
+            {
+                txtP1Ni1EsquerdoEsperada.Text = "0,0";
+            }
+            AtualizaValoresGridPessTXT();
+        }
+
+        private void txtP1Ni1EsquerdoEsperada_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void txtDiferencaEsperada_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtDiferencaEsperada), e);
+        }
+
+        private void txtDiferencaEsperada_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtDiferencaEsperada.Text))
+            {
+                txtDiferencaEsperada.Text = "0,0";
+            }
+            AtualizaValoresGridPessTXT();
+        }
+
+        private void txtDiferencaEsperada_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private bool GravaGrupoFolhaPess()
+
+        {
+            try
+            {
+                cPotenciaisPESS objPotenciaisPESS = new cPotenciaisPESS();
+                objPotenciaisPESS.IdResultado = this.IdResultado;
+                objPotenciaisPESS.IdPaciente = this.IdPaciente;
+                objPotenciaisPESS.IdFolha = this.IdFolha;
+
+                // Validar grid
+                if (grdDadosPess.Rows.Count == 0 ||
+                    (grdDadosPess.Rows.Count == 1 && grdDadosPess.Rows[0].IsNewRow))
+                {
+                    MessageBox.Show("Nenhum dado válido para processar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return true;
+                }
+
+                // Processar cada linha
+                for (int i = 0; i < grdDadosPess.Rows.Count; i++)
+                {
+                    if (grdDadosPess.Rows[i].IsNewRow) continue;
+
+                    var rowView = grdDadosPess.Rows[i].DataBoundItem as DataRowView;
+                    if (rowView == null) continue;
+
+                    PopularObjetoFromDataRowView(objPotenciaisPESS, rowView);
+
+                    if (!objPotenciaisPESS.AtualizarResultadoPESS())
+                    {
+                        // Reverter transação em caso de erro
+                        MessageBox.Show($"Erro ao processar linha {i + 1}. Operação cancelada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private void PopularObjetoFromDataRowView(cPotenciaisPESS obj, DataRowView rowView)
+        {
+            try
+            {
+                obj.IdResultadoPess = ObterValorIntSeguro(rowView, "IdResultadoPess");
+                obj.IdEstudopotenevocado = ObterValorIntSeguro(rowView, "IdEstudopotenevocado");
+                obj.P1N1LadoDireitoRespObt = ObterValorStringSeguro(rowView, "P1N1LadoDireitoRespObt");
+                obj.P1N1LadoDireitoRespOEsp = ObterValorStringSeguro(rowView, "P1N1LadoDireitoRespOEsp");
+                obj.P1N1LadoEsquerdoRespObt = ObterValorStringSeguro(rowView, "P1N1LadoEsquerdoRespObt");
+                obj.P1N1LadoEsquerdoRespOEsp = ObterValorStringSeguro(rowView, "P1N1LadoEsquerdoRespOEsp");
+                obj.DiferencaObitida = ObterValorStringSeguro(rowView, "DiferencaObitida");
+                obj.DiferencaEsperada = ObterValorStringSeguro(rowView, "DiferencaEsperada");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao popular objeto: {ex.Message}");
+            }
+        }
+
+        private int ObterValorIntSeguro(DataRowView rowView, string coluna, int valorPadrao = 0)
+        {
+            try
+            {
+                if (rowView.Row.Table.Columns.Contains(coluna))
+                {
+                    object valor = rowView[coluna];
+                    return (valor == null || valor == DBNull.Value) ? valorPadrao : Convert.ToInt32(valor);
+                }
+                return valorPadrao;
+            }
+            catch
+            {
+                return valorPadrao;
+            }
+        }
+
+        private string ObterValorStringSeguro(DataRowView rowView, string coluna, string valorPadrao = "")
+        {
+            try
+            {
+                if (rowView.Row.Table.Columns.Contains(coluna))
+                {
+                    object valor = rowView[coluna];
+                    return (valor == null || valor == DBNull.Value) ? valorPadrao : valor.ToString();
+                }
+                return valorPadrao;
+            }
+            catch
+            {
+                return valorPadrao;
+            }
+        }
+
+        private void RedimensionaTelaPESS()
+        {
+            tabPotenciais.Size = new Size(684, 268);
+            grpBoxDados.Size = new Size(699, 438);
+            grpComentario.Location = new Point(12, 451);
+            grpBotoes.Location = new Point(12, 704);
+            this.Size = new Size(735, 802);
+        }
     }
 }
+
+

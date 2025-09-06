@@ -86,17 +86,15 @@
             this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.tabPess = new System.Windows.Forms.TabPage();
-            this.textBox32 = new System.Windows.Forms.TextBox();
-            this.grdFolhaPaciente = new System.Windows.Forms.DataGridView();
-            this.textBox34 = new System.Windows.Forms.TextBox();
-            this.textBox35 = new System.Windows.Forms.TextBox();
-            this.textBox36 = new System.Windows.Forms.TextBox();
-            this.textBox37 = new System.Windows.Forms.TextBox();
-            this.textBox39 = new System.Windows.Forms.TextBox();
-            this.textBox40 = new System.Windows.Forms.TextBox();
+            this.txtDiferencaEsperada = new System.Windows.Forms.TextBox();
+            this.grdDadosPess = new System.Windows.Forms.DataGridView();
+            this.txtDiferencaObitida = new System.Windows.Forms.TextBox();
+            this.txtP1Ni1EsquerdoEsperada = new System.Windows.Forms.TextBox();
+            this.txtP1Ni1EsquerdoObidida = new System.Windows.Forms.TextBox();
+            this.txtP1Ni1DireitoEsperada = new System.Windows.Forms.TextBox();
+            this.txtP1Ni1DireitoObitida = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
@@ -168,7 +166,7 @@
             this.grpBotoes = new System.Windows.Forms.GroupBox();
             this.btnGravar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.grpComentario = new System.Windows.Forms.GroupBox();
             this.btnComentario = new System.Windows.Forms.Button();
             this.txtTextoComentario = new System.Windows.Forms.TextBox();
             this.txtSiglaComentario = new System.Windows.Forms.TextBox();
@@ -182,11 +180,11 @@
             this.tabPevi.SuspendLayout();
             this.tabPea.SuspendLayout();
             this.tabPess.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdFolhaPaciente)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdDadosPess)).BeginInit();
             this.tabPegc.SuspendLayout();
             this.tabPessMed.SuspendLayout();
             this.grpBotoes.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.grpComentario.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpBoxDados
@@ -534,7 +532,7 @@
             this.tabPea.Location = new System.Drawing.Point(4, 22);
             this.tabPea.Name = "tabPea";
             this.tabPea.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPea.Size = new System.Drawing.Size(676, 307);
+            this.tabPea.Size = new System.Drawing.Size(676, 244);
             this.tabPea.TabIndex = 1;
             this.tabPea.Text = "PEA";
             this.tabPea.UseVisualStyleBackColor = true;
@@ -838,17 +836,15 @@
             // 
             // tabPess
             // 
-            this.tabPess.Controls.Add(this.textBox32);
-            this.tabPess.Controls.Add(this.grdFolhaPaciente);
-            this.tabPess.Controls.Add(this.textBox34);
-            this.tabPess.Controls.Add(this.textBox35);
-            this.tabPess.Controls.Add(this.textBox36);
-            this.tabPess.Controls.Add(this.textBox37);
-            this.tabPess.Controls.Add(this.textBox39);
-            this.tabPess.Controls.Add(this.textBox40);
+            this.tabPess.Controls.Add(this.txtDiferencaEsperada);
+            this.tabPess.Controls.Add(this.grdDadosPess);
+            this.tabPess.Controls.Add(this.txtDiferencaObitida);
+            this.tabPess.Controls.Add(this.txtP1Ni1EsquerdoEsperada);
+            this.tabPess.Controls.Add(this.txtP1Ni1EsquerdoObidida);
+            this.tabPess.Controls.Add(this.txtP1Ni1DireitoEsperada);
+            this.tabPess.Controls.Add(this.txtP1Ni1DireitoObitida);
             this.tabPess.Controls.Add(this.label35);
             this.tabPess.Controls.Add(this.label36);
-            this.tabPess.Controls.Add(this.label37);
             this.tabPess.Controls.Add(this.label38);
             this.tabPess.Controls.Add(this.label39);
             this.tabPess.Controls.Add(this.label40);
@@ -861,86 +857,89 @@
             this.tabPess.Text = "PESS";
             this.tabPess.UseVisualStyleBackColor = true;
             // 
-            // textBox32
+            // txtDiferencaEsperada
             // 
-            this.textBox32.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.textBox32.Location = new System.Drawing.Point(420, 229);
-            this.textBox32.MaxLength = 3;
-            this.textBox32.Name = "textBox32";
-            this.textBox32.ReadOnly = true;
-            this.textBox32.Size = new System.Drawing.Size(250, 20);
-            this.textBox32.TabIndex = 40;
-            this.textBox32.Text = "Não calcula autom no sist antigo";
+            this.txtDiferencaEsperada.Location = new System.Drawing.Point(312, 211);
+            this.txtDiferencaEsperada.MaxLength = 3;
+            this.txtDiferencaEsperada.Name = "txtDiferencaEsperada";
+            this.txtDiferencaEsperada.Size = new System.Drawing.Size(81, 20);
+            this.txtDiferencaEsperada.TabIndex = 40;
+            this.txtDiferencaEsperada.Text = "0,00";
+            this.txtDiferencaEsperada.Enter += new System.EventHandler(this.txtDiferencaEsperada_Enter);
+            this.txtDiferencaEsperada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDiferencaEsperada_KeyPress);
+            this.txtDiferencaEsperada.Leave += new System.EventHandler(this.txtDiferencaEsperada_Leave);
             // 
-            // grdFolhaPaciente
+            // grdDadosPess
             // 
-            this.grdFolhaPaciente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdFolhaPaciente.Location = new System.Drawing.Point(6, 6);
-            this.grdFolhaPaciente.Name = "grdFolhaPaciente";
-            this.grdFolhaPaciente.Size = new System.Drawing.Size(664, 127);
-            this.grdFolhaPaciente.TabIndex = 39;
+            this.grdDadosPess.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdDadosPess.Location = new System.Drawing.Point(6, 6);
+            this.grdDadosPess.Name = "grdDadosPess";
+            this.grdDadosPess.Size = new System.Drawing.Size(664, 127);
+            this.grdDadosPess.TabIndex = 39;
+            this.grdDadosPess.SelectionChanged += new System.EventHandler(this.grdDadosPess_SelectionChanged);
             // 
-            // textBox34
+            // txtDiferencaObitida
             // 
-            this.textBox34.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.textBox34.Location = new System.Drawing.Point(312, 226);
-            this.textBox34.MaxLength = 3;
-            this.textBox34.Name = "textBox34";
-            this.textBox34.ReadOnly = true;
-            this.textBox34.Size = new System.Drawing.Size(81, 20);
-            this.textBox34.TabIndex = 36;
-            this.textBox34.Text = "0000,00";
+            this.txtDiferencaObitida.Location = new System.Drawing.Point(189, 211);
+            this.txtDiferencaObitida.MaxLength = 3;
+            this.txtDiferencaObitida.Name = "txtDiferencaObitida";
+            this.txtDiferencaObitida.ReadOnly = true;
+            this.txtDiferencaObitida.Size = new System.Drawing.Size(81, 20);
+            this.txtDiferencaObitida.TabIndex = 33;
+            this.txtDiferencaObitida.Text = "0,00";
             // 
-            // textBox35
+            // txtP1Ni1EsquerdoEsperada
             // 
-            this.textBox35.Location = new System.Drawing.Point(189, 226);
-            this.textBox35.MaxLength = 3;
-            this.textBox35.Name = "textBox35";
-            this.textBox35.ReadOnly = true;
-            this.textBox35.Size = new System.Drawing.Size(81, 20);
-            this.textBox35.TabIndex = 35;
-            this.textBox35.Text = "0000,00";
+            this.txtP1Ni1EsquerdoEsperada.Location = new System.Drawing.Point(312, 187);
+            this.txtP1Ni1EsquerdoEsperada.MaxLength = 3;
+            this.txtP1Ni1EsquerdoEsperada.Name = "txtP1Ni1EsquerdoEsperada";
+            this.txtP1Ni1EsquerdoEsperada.Size = new System.Drawing.Size(81, 20);
+            this.txtP1Ni1EsquerdoEsperada.TabIndex = 32;
+            this.txtP1Ni1EsquerdoEsperada.Text = "0,00";
+            this.txtP1Ni1EsquerdoEsperada.Enter += new System.EventHandler(this.txtP1Ni1EsquerdoEsperada_Enter);
+            this.txtP1Ni1EsquerdoEsperada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP1Ni1EsquerdoEsperada_KeyPress);
+            this.txtP1Ni1EsquerdoEsperada.Leave += new System.EventHandler(this.txtP1Ni1EsquerdoEsperada_Leave);
             // 
-            // textBox36
+            // txtP1Ni1EsquerdoObidida
             // 
-            this.textBox36.Location = new System.Drawing.Point(312, 202);
-            this.textBox36.MaxLength = 3;
-            this.textBox36.Name = "textBox36";
-            this.textBox36.Size = new System.Drawing.Size(81, 20);
-            this.textBox36.TabIndex = 34;
-            this.textBox36.Text = "0000,00";
+            this.txtP1Ni1EsquerdoObidida.Location = new System.Drawing.Point(189, 187);
+            this.txtP1Ni1EsquerdoObidida.MaxLength = 3;
+            this.txtP1Ni1EsquerdoObidida.Name = "txtP1Ni1EsquerdoObidida";
+            this.txtP1Ni1EsquerdoObidida.Size = new System.Drawing.Size(81, 20);
+            this.txtP1Ni1EsquerdoObidida.TabIndex = 31;
+            this.txtP1Ni1EsquerdoObidida.Text = "0,00";
+            this.txtP1Ni1EsquerdoObidida.Enter += new System.EventHandler(this.txtP1Ni1EsquerdoObidida_Enter);
+            this.txtP1Ni1EsquerdoObidida.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP1Ni1EsquerdoObidida_KeyPress);
+            this.txtP1Ni1EsquerdoObidida.Leave += new System.EventHandler(this.txtP1Ni1EsquerdoObidida_Leave);
             // 
-            // textBox37
+            // txtP1Ni1DireitoEsperada
             // 
-            this.textBox37.Location = new System.Drawing.Point(189, 202);
-            this.textBox37.MaxLength = 3;
-            this.textBox37.Name = "textBox37";
-            this.textBox37.Size = new System.Drawing.Size(81, 20);
-            this.textBox37.TabIndex = 33;
-            this.textBox37.Text = "0000,00";
+            this.txtP1Ni1DireitoEsperada.Location = new System.Drawing.Point(312, 163);
+            this.txtP1Ni1DireitoEsperada.MaxLength = 3;
+            this.txtP1Ni1DireitoEsperada.Name = "txtP1Ni1DireitoEsperada";
+            this.txtP1Ni1DireitoEsperada.Size = new System.Drawing.Size(81, 20);
+            this.txtP1Ni1DireitoEsperada.TabIndex = 30;
+            this.txtP1Ni1DireitoEsperada.Text = "0,00";
+            this.txtP1Ni1DireitoEsperada.Enter += new System.EventHandler(this.txtP1Ni1DireitoEsperada_Enter);
+            this.txtP1Ni1DireitoEsperada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP1Ni1DireitoEsperada_KeyPress);
+            this.txtP1Ni1DireitoEsperada.Leave += new System.EventHandler(this.txtP1Ni1DireitoEsperada_Leave);
             // 
-            // textBox39
+            // txtP1Ni1DireitoObitida
             // 
-            this.textBox39.Location = new System.Drawing.Point(312, 178);
-            this.textBox39.MaxLength = 3;
-            this.textBox39.Name = "textBox39";
-            this.textBox39.Size = new System.Drawing.Size(81, 20);
-            this.textBox39.TabIndex = 30;
-            this.textBox39.Text = "0000,00";
-            // 
-            // textBox40
-            // 
-            this.textBox40.Location = new System.Drawing.Point(189, 178);
-            this.textBox40.MaxLength = 3;
-            this.textBox40.Name = "textBox40";
-            this.textBox40.Size = new System.Drawing.Size(81, 20);
-            this.textBox40.TabIndex = 29;
-            this.textBox40.Text = "0000,00";
+            this.txtP1Ni1DireitoObitida.Location = new System.Drawing.Point(189, 163);
+            this.txtP1Ni1DireitoObitida.MaxLength = 3;
+            this.txtP1Ni1DireitoObitida.Name = "txtP1Ni1DireitoObitida";
+            this.txtP1Ni1DireitoObitida.Size = new System.Drawing.Size(81, 20);
+            this.txtP1Ni1DireitoObitida.TabIndex = 29;
+            this.txtP1Ni1DireitoObitida.Text = "0,00";
+            this.txtP1Ni1DireitoObitida.Enter += new System.EventHandler(this.txtP1Ni1DireitoObitida_Enter);
+            this.txtP1Ni1DireitoObitida.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP1Ni1DireitoObitida_KeyPress);
+            this.txtP1Ni1DireitoObitida.Leave += new System.EventHandler(this.txtP1Ni1DireitoObitida_Leave);
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(312, 156);
+            this.label35.Location = new System.Drawing.Point(312, 141);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(100, 13);
             this.label35.TabIndex = 27;
@@ -949,25 +948,16 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(189, 156);
+            this.label36.Location = new System.Drawing.Point(189, 141);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(86, 13);
             this.label36.TabIndex = 26;
             this.label36.Text = "Resposta Obtida";
             // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(189, 136);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(86, 13);
-            this.label37.TabIndex = 25;
-            this.label37.Text = "Latências m/seg";
-            // 
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(9, 181);
+            this.label38.Location = new System.Drawing.Point(9, 166);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(123, 13);
             this.label38.TabIndex = 24;
@@ -976,7 +966,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(9, 205);
+            this.label39.Location = new System.Drawing.Point(9, 190);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(138, 13);
             this.label39.TabIndex = 23;
@@ -985,7 +975,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(9, 229);
+            this.label40.Location = new System.Drawing.Point(9, 214);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(136, 13);
             this.label40.TabIndex = 22;
@@ -994,7 +984,7 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(9, 156);
+            this.label41.Location = new System.Drawing.Point(9, 141);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(38, 13);
             this.label41.TabIndex = 21;
@@ -1024,7 +1014,7 @@
             this.tabPegc.Location = new System.Drawing.Point(4, 22);
             this.tabPegc.Name = "tabPegc";
             this.tabPegc.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPegc.Size = new System.Drawing.Size(676, 307);
+            this.tabPegc.Size = new System.Drawing.Size(676, 244);
             this.tabPegc.TabIndex = 3;
             this.tabPegc.Text = "PEGC";
             this.tabPegc.UseVisualStyleBackColor = true;
@@ -1236,7 +1226,7 @@
             this.tabPessMed.Location = new System.Drawing.Point(4, 22);
             this.tabPessMed.Name = "tabPessMed";
             this.tabPessMed.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPessMed.Size = new System.Drawing.Size(676, 307);
+            this.tabPessMed.Size = new System.Drawing.Size(676, 244);
             this.tabPessMed.TabIndex = 4;
             this.tabPessMed.Text = "PESS-MED";
             this.tabPessMed.UseVisualStyleBackColor = true;
@@ -1668,22 +1658,22 @@
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
-            // groupBox6
+            // grpComentario
             // 
-            this.groupBox6.Controls.Add(this.btnComentario);
-            this.groupBox6.Controls.Add(this.txtTextoComentario);
-            this.groupBox6.Controls.Add(this.txtSiglaComentario);
-            this.groupBox6.Controls.Add(this.label17);
-            this.groupBox6.Controls.Add(this.txtNomeComentario);
-            this.groupBox6.Controls.Add(this.label18);
-            this.groupBox6.Controls.Add(this.txtCodigoComentario);
-            this.groupBox6.Controls.Add(this.label19);
-            this.groupBox6.Location = new System.Drawing.Point(12, 520);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(699, 249);
-            this.groupBox6.TabIndex = 0;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Comentários";
+            this.grpComentario.Controls.Add(this.btnComentario);
+            this.grpComentario.Controls.Add(this.txtTextoComentario);
+            this.grpComentario.Controls.Add(this.txtSiglaComentario);
+            this.grpComentario.Controls.Add(this.label17);
+            this.grpComentario.Controls.Add(this.txtNomeComentario);
+            this.grpComentario.Controls.Add(this.label18);
+            this.grpComentario.Controls.Add(this.txtCodigoComentario);
+            this.grpComentario.Controls.Add(this.label19);
+            this.grpComentario.Location = new System.Drawing.Point(12, 520);
+            this.grpComentario.Name = "grpComentario";
+            this.grpComentario.Size = new System.Drawing.Size(699, 249);
+            this.grpComentario.TabIndex = 0;
+            this.grpComentario.TabStop = false;
+            this.grpComentario.Text = "Comentários";
             // 
             // btnComentario
             // 
@@ -1768,7 +1758,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(719, 832);
             this.ControlBox = false;
-            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.grpComentario);
             this.Controls.Add(this.grpBotoes);
             this.Controls.Add(this.grpBoxDados);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1789,14 +1779,14 @@
             this.tabPea.PerformLayout();
             this.tabPess.ResumeLayout(false);
             this.tabPess.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdFolhaPaciente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdDadosPess)).EndInit();
             this.tabPegc.ResumeLayout(false);
             this.tabPegc.PerformLayout();
             this.tabPessMed.ResumeLayout(false);
             this.tabPessMed.PerformLayout();
             this.grpBotoes.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
+            this.grpComentario.ResumeLayout(false);
+            this.grpComentario.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1849,7 +1839,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtAmplitudeOlhoDireito;
         private System.Windows.Forms.TextBox txtAmplitudeOlhoEsquerdo;
-        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox grpComentario;
         private System.Windows.Forms.Button btnComentario;
         private System.Windows.Forms.TextBox txtTextoComentario;
         private System.Windows.Forms.TextBox txtSiglaComentario;
@@ -1887,21 +1877,18 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.TextBox textBox34;
-        private System.Windows.Forms.TextBox textBox35;
-        private System.Windows.Forms.TextBox textBox36;
-        private System.Windows.Forms.TextBox textBox37;
-        private System.Windows.Forms.TextBox textBox39;
-        private System.Windows.Forms.TextBox textBox40;
+        private System.Windows.Forms.TextBox txtDiferencaObitida;
+        private System.Windows.Forms.TextBox txtP1Ni1EsquerdoEsperada;
+        private System.Windows.Forms.TextBox txtP1Ni1EsquerdoObidida;
+        private System.Windows.Forms.TextBox txtP1Ni1DireitoEsperada;
+        private System.Windows.Forms.TextBox txtP1Ni1DireitoObitida;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.DataGridView grdFolhaPaciente;
-        private System.Windows.Forms.TextBox textBox32;
+        private System.Windows.Forms.DataGridView grdDadosPess;
         private System.Windows.Forms.TextBox textBox38;
         private System.Windows.Forms.TextBox textBox42;
         private System.Windows.Forms.TextBox textBox44;
@@ -1952,5 +1939,6 @@
         private System.Windows.Forms.Label label64;
         private System.Windows.Forms.Label label65;
         private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.TextBox txtDiferencaEsperada;
     }
 }
