@@ -11,10 +11,10 @@ namespace WEDLC.Banco
         public Int32 IdPaciente { get; set; }
 
         [DisplayName("idresultado")]
-        public int? IdResultado { get; set; }
+        public Int32 IdResultado { get; set; }
 
         [DisplayName("idresultadopea")]
-        public int IdResultadoPea { get; set; }
+        public Int32 IdResultadoPea { get; set; }
 
         [DisplayName("onda1ouvidodireito")]
         public string Onda1OuvidoDireito { get; set; }
@@ -63,8 +63,6 @@ namespace WEDLC.Banco
 
         [DisplayName("1a4esquerdo")]
         public string Intervalo1a4Esquerdo { get; set; }
-
-
         public cComentario objComentario { get; set; } = new cComentario();
 
         public cPotenciaisEvocadosTecnica objTecnica { get; set; } = new cPotenciaisEvocadosTecnica();
@@ -177,7 +175,7 @@ namespace WEDLC.Banco
                     // Adicionando os parâmetros exatamente como na procedure
                     // Adiciona os parâmetros com tratamento de DBNull
                     cmd.Parameters.AddWithValue("p_idresultadopea", IdResultadoPea);
-                    cmd.Parameters.AddWithValue("p_idresultado", IdResultado.HasValue ? IdResultado.Value : (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("p_idresultado", IdResultado);
                     cmd.Parameters.AddWithValue("p_onda1ouvidodireito", !string.IsNullOrEmpty(Onda1OuvidoDireito) ? Onda1OuvidoDireito : (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("p_onda1ouvidoesquerdo", !string.IsNullOrEmpty(Onda1OuvidoEsquerdo) ? Onda1OuvidoEsquerdo : (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("p_onda2ouvidodireito", !string.IsNullOrEmpty(Onda2OuvidoDireito) ? Onda2OuvidoDireito : (object)DBNull.Value);
@@ -201,7 +199,7 @@ namespace WEDLC.Banco
             }
             catch (MySqlException ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Erro ao atualizar pr_atualizaresultadopev: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro ao atualizar pr_atualizaresultadopea: {ex.Message}");
                 return false;
             }
             catch (Exception ex)

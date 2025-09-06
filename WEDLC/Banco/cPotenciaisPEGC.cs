@@ -5,40 +5,51 @@ using System.Data;
 
 namespace WEDLC.Banco
 {
-    public class cPotenciaisPESS
+    public class cPotenciaisPEGC
     {
         [DisplayName("ID Paciente")]
+        [Browsable(false)] // Oculta no DataGridView
         public Int32 IdPaciente { get; set; }
 
-        [DisplayName("idresultado")]
+        [DisplayName("ID Resultado")]
+        [Browsable(false)] // Oculta no DataGridView
         public Int32 IdResultado { get; set; }
 
-        [DisplayName("idfolha")]
-        public Int32 IdFolha { get; set; }
+        [DisplayName("ID Resultado PEGC")]
+        [Browsable(false)] // Oculta no DataGridView
+        public Int32 IdResultadoPegc { get; set; }
 
-        [DisplayName("idresultadopess")]
-        public Int32 IdResultadoPess { get; set; }
+        [DisplayName("P1 Início Obtido")]
+        [Category("Potenciais")]
+        public string P1InicioValObtido { get; set; } = string.Empty;
 
-        [DisplayName("idestudopotenevocado")]
-        public Int32 IdEstudopotenevocado { get; set; }
+        [DisplayName("P1 Pico Obtido")]
+        [Category("Potenciais")]
+        public string P1PicoValObtido { get; set; } = string.Empty;
 
-        [DisplayName("p1n1ladodireitorespobt")]
-        public string P1N1LadoDireitoRespObt { get; set; }
+        [DisplayName("N1 Pico Obtido")]
+        [Category("Potenciais")]
+        public string N1PicoValObtido { get; set; } = string.Empty;
 
-        [DisplayName("p1n1ladodireitorespoesp")]
-        public string P1N1LadoDireitoRespOEsp { get; set; }
+        [DisplayName("P2 Pico Obtido")]
+        [Category("Potenciais")]
+        public string P2PicoValObtido { get; set; } = string.Empty;
 
-        [DisplayName("p1n1ladoesquerdorespobt")]
-        public string P1N1LadoEsquerdoRespObt { get; set; }
+        [DisplayName("N2 Pico Obtido")]
+        [Category("Potenciais")]
+        public string N2PicoValObtido { get; set; } = string.Empty;
 
-        [DisplayName("p1n1ladoesquerdorespoesp")]
-        public string P1N1LadoEsquerdoRespOEsp { get; set; }
+        [DisplayName("P3 Pico Obtido")]
+        [Category("Potenciais")]
+        public string P3PicoValObtido { get; set; } = string.Empty;
 
-        [DisplayName("diferencaobitida")]
-        public string DiferencaObitida { get; set; }
+        [DisplayName("N3 Pico Obtido")]
+        [Category("Potenciais")]
 
-        [DisplayName("diferencaesperada")]
-        public string    DiferencaEsperada { get; set; }
+        public string N3PicoValObtido { get; set; } = string.Empty;
+        [DisplayName("Resposta Espinhal")]
+        [Category("Resultados")]
+        public string RespostaEspinhal { get; set; } = string.Empty;
 
         public cComentario objComentario { get; set; } = new cComentario();
 
@@ -94,9 +105,9 @@ namespace WEDLC.Banco
             }
         }
 
-        public DataTable BuscaResultadoPess()
+        public DataTable BuscaResultadoPegc()
         {
-            if (IdPaciente < 0 && IdFolha < 0)
+            if (IdPaciente < 0)
                 return null;
 
             if (!conectaBanco())
@@ -106,11 +117,10 @@ namespace WEDLC.Banco
 
             try
             {
-                using (var sqlDa = new MySqlDataAdapter("pr_buscaresultadopess", conexao))
+                using (var sqlDa = new MySqlDataAdapter("pr_buscaresultadopegc", conexao))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
-                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", IdFolha);
 
                     sqlDa.Fill(dt);
                     return dt;
@@ -133,41 +143,49 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
-        public bool AtualizarResultadoPESS()
+
+        public bool AtualizarResultadoPegc()
         {
             if (!conectaBanco())
                 return false;
 
-            if (IdResultadoPess < 0)
+            if (IdResultadoPegc < 0 || IdResultado < 0)
             {
                 return false;
             }
             try
             {
-                using (var cmd = new MySqlCommand("pr_atualizaresultadopess", conexao))
+                using (var cmd = new MySqlCommand("pr_atualizaresultadopegc", conexao))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    // Adicionando os parâmetros exatamente como na procedure
-                    // Adiciona os parâmetros com tratamento de DBNull
-                    cmd.Parameters.AddWithValue("p_idresultadopess", IdResultadoPess);
+                    // Adicionar parâmetros
+                    cmd.Parameters.AddWithValue("p_idresultadopegc", IdResultadoPegc);
                     cmd.Parameters.AddWithValue("p_idresultado", IdResultado);
-                    cmd.Parameters.AddWithValue("p_idfolha", IdFolha);
-                    cmd.Parameters.AddWithValue("p_idestudopotenevocado", IdEstudopotenevocado);
-                    cmd.Parameters.AddWithValue("p_p1n1ladodireitorespobt", P1N1LadoDireitoRespObt);
-                    cmd.Parameters.AddWithValue("p_p1n1ladodireitorespoesp", P1N1LadoDireitoRespOEsp);
-                    cmd.Parameters.AddWithValue("p_p1n1ladoesquerdorespobt", P1N1LadoEsquerdoRespObt);
-                    cmd.Parameters.AddWithValue("p_p1n1ladoesquerdorespoesp", P1N1LadoEsquerdoRespOEsp);
-                    cmd.Parameters.AddWithValue("p_diferencaobitida", DiferencaObitida);
-                    cmd.Parameters.AddWithValue("p_diferencaesperada", DiferencaEsperada);
+                    cmd.Parameters.AddWithValue("p_p1iniciovalobtido",
+                        string.IsNullOrEmpty(P1InicioValObtido) ? DBNull.Value : (object)P1InicioValObtido);
+                    cmd.Parameters.AddWithValue("p_p1picovalobtido",
+                        string.IsNullOrEmpty(P1PicoValObtido) ? DBNull.Value : (object)P1PicoValObtido);
+                    cmd.Parameters.AddWithValue("p_n1picovalobtido",
+                        string.IsNullOrEmpty(N1PicoValObtido) ? DBNull.Value : (object)N1PicoValObtido);
+                    cmd.Parameters.AddWithValue("p_p2picovalobtido",
+                        string.IsNullOrEmpty(P2PicoValObtido) ? DBNull.Value : (object)P2PicoValObtido);
+                    cmd.Parameters.AddWithValue("p_n2picovalobtido",
+                        string.IsNullOrEmpty(N2PicoValObtido) ? DBNull.Value : (object)N2PicoValObtido);
+                    cmd.Parameters.AddWithValue("p_p3picovalobtido",
+                        string.IsNullOrEmpty(P3PicoValObtido) ? DBNull.Value : (object)P3PicoValObtido);
+                    cmd.Parameters.AddWithValue("p_n3picovalobtido",
+                        string.IsNullOrEmpty(N3PicoValObtido) ? DBNull.Value : (object)N3PicoValObtido);
+                    cmd.Parameters.AddWithValue("p_respostaespinhal",
+                        string.IsNullOrEmpty(RespostaEspinhal) ? DBNull.Value : (object)RespostaEspinhal);
+
                     int rowsAffected = cmd.ExecuteNonQuery();
                     return rowsAffected > 0;
                 }
-
             }
             catch (MySqlException ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Erro ao atualizar pr_atualizaresultadopev: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Erro ao atualizar pr_atualizaresultadopegc: {ex.Message}");
                 return false;
             }
             catch (Exception ex)

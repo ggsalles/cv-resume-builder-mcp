@@ -19,6 +19,7 @@ namespace WEDLC.Forms
         public int IdResultadoPEV { get; set; } // Usado para identificar o resultado PEV
         public int IdResultadoPEA { get; set; } // Usado para identificar o resultado PEV
         public int IdResultadoPESS { get; set; } // Usado para identificar o resultado PESS
+        public int IdResultadoPEGC { get; set; } // Usado para identificar o resultado PEGC
         public int IdResultadoComentarioPEV { get; set; } // Usado para identificar o resultado PEV
         public int IdFolha { get; set; }
         public int IdPaciente { get; set; }
@@ -135,7 +136,7 @@ namespace WEDLC.Forms
 
                     if (CarregaDadosPess() == false)
                     {
-                        throw new Exception("Erro na CarregaDadosPea");
+                        throw new Exception("Erro na CarregaDadosPess");
                     }
 
                     if (CarregaDadosPotEvocadoTecnica() == false)
@@ -153,6 +154,22 @@ namespace WEDLC.Forms
                 case (int)GrupoFolha.PEGC:
 
                     tabPotenciais.TabPages.Add(tabPegc);
+                    RedimensionaTelaPESS();
+
+                    if (CarregaDadosPegc() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosPegc");
+                    }
+
+                    if (CarregaDadosPotEvocadoTecnica() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosPotEvocadoTecnica"); ;
+                    }
+
+                    if (CarregaDadosComentarioPev() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosComentarioPev"); ;
+                    }
 
                     break;
 
@@ -302,7 +319,43 @@ namespace WEDLC.Forms
 
                     case (int)GrupoFolha.PEGC:
 
-                        tabPotenciais.TabPages.Add(tabPegc);
+                        using (var scope = new TransactionScope())
+                        {
+                            try
+                            {
+                                if (GravaGrupoFolhaPotEvocadoTecnica() == false)
+                                {
+                                    throw new Exception("Falha ao gravar técnica PEV");
+                                }
+
+                                if (GravaGrupoFolhaPegc() == false)
+                                {
+                                    throw new Exception("Falha ao gravar PEGC");
+                                }
+                                if (ValidaComentarioPEV() == false)
+                                {
+                                    break;
+                                }
+                                if (GravaGrupoFolhaComentarioPev() == false)
+                                {
+                                    throw new Exception("Falha ao gravar comentário PEV");
+                                }
+
+                                // Se tudo ok, commit na transação
+                                scope.Complete();
+
+                                MessageBox.Show("Gravado com sucesso!", "Atenção",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                this.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erro na gravação: {ex.Message}", "Erro",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                // O rollback é automático quando scope.Complete() não é chamado
+                            }
+                        }
 
                         break;
 
@@ -1258,12 +1311,7 @@ namespace WEDLC.Forms
 
         private void txtP1Ni1DireitoObitida_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {
-                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
-                e.Handled = true;
-            }
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
         }
 
         private void txtP1Ni1DireitoEsperada_Enter(object sender, EventArgs e)
@@ -1283,12 +1331,7 @@ namespace WEDLC.Forms
 
         private void txtP1Ni1DireitoEsperada_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {
-                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
-                e.Handled = true;
-            }
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
         }
 
         private void txtP1Ni1EsquerdoObidida_Enter(object sender, EventArgs e)
@@ -1308,12 +1351,7 @@ namespace WEDLC.Forms
 
         private void txtP1Ni1EsquerdoObidida_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {
-                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
-                e.Handled = true;
-            }
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
         }
 
         private void txtP1Ni1EsquerdoEsperada_Enter(object sender, EventArgs e)
@@ -1333,12 +1371,7 @@ namespace WEDLC.Forms
 
         private void txtP1Ni1EsquerdoEsperada_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {
-                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
-                e.Handled = true;
-            }
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
         }
 
         private void txtDiferencaEsperada_Enter(object sender, EventArgs e)
@@ -1471,6 +1504,240 @@ namespace WEDLC.Forms
             grpComentario.Location = new Point(12, 451);
             grpBotoes.Location = new Point(12, 704);
             this.Size = new Size(735, 802);
+        }
+
+        private void txtp1inicio_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtp1inicio), e);
+        }
+
+        private void txtp1inicio_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtp1inicio.Text))
+            {
+                txtp1inicio.Text = "0,0";
+            }
+        }
+
+        private void txtp1inicio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtp1pico_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtp1pico), e);
+        }
+
+        private void txtp1pico_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtp1pico.Text))
+            {
+                txtp1pico.Text = "0,0";
+            }
+        }
+
+        private void txtp1pico_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtn1pico_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtn1pico), e);
+        }
+
+        private void txtn1pico_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtn1pico.Text))
+            {
+                txtn1pico.Text = "0,0";
+            }
+        }
+
+        private void txtn1pico_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtp2pico_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtp2pico), e);
+        }
+
+        private void txtp2pico_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtp2pico.Text))
+            {
+                txtp2pico.Text = "0,0";
+            }
+        }
+
+        private void txtp2pico_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtn2pico_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtn2pico), e);
+        }
+
+        private void txtn2pico_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtn2pico.Text))
+            {
+                txtn2pico.Text = "0,0";
+            }
+        }
+
+        private void txtn2pico_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtp3pico_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtp3pico), e);
+        }
+
+        private void txtp3pico_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtp3pico.Text))
+            {
+                txtp3pico.Text = "0,0";
+            }
+        }
+
+        private void txtp3pico_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtn3pico_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtn3pico), e);
+        }
+
+        private void txtn3pico_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtn3pico.Text))
+            {
+                txtn3pico.Text = "0,0";
+            }
+        }
+
+        private void txtn3pico_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtrepostaespinhal_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtrepostaespinhal), e);
+        }
+
+        private void txtrepostaespinhal_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+            if (string.IsNullOrEmpty(txtrepostaespinhal.Text))
+            {
+                txtrepostaespinhal.Text = "0,0";
+            }
+        }
+
+        private void txtrepostaespinhal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+
+            }
+        }
+
+        private bool CarregaDadosPegc()
+        {
+            try
+            {
+                cPotenciaisPEGC objcPotenciaisPEGC = new cPotenciaisPEGC();
+
+                objcPotenciaisPEGC.IdPaciente = this.IdPaciente;
+                objcPotenciaisPEGC.IdResultado = this.IdResultado;
+
+                DataTable dt = objcPotenciaisPEGC.BuscaResultadoPegc();
+
+                if (dt.Rows.Count > 0)
+                {
+                    // Preenche os campos com os dados retornados
+                    this.IdResultado = dt.Rows[0]["idresultado"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultado"].ToString()) : 0;
+                    this.IdResultadoPEGC = Int32.Parse(dt.Rows[0]["idresultadopegc"].ToString());
+                    txtp1inicio.Text = dt.Rows[0]["p1iniciovalobtido"].ToString();
+                    txtp1pico.Text = dt.Rows[0]["p1picovalobtido"].ToString();
+                    txtn1pico.Text = dt.Rows[0]["n1picovalobtido"].ToString();
+                    txtp2pico.Text = dt.Rows[0]["p2picovalobtido"].ToString();
+                    txtn2pico.Text = dt.Rows[0]["n2picovalobtido"].ToString();
+                    txtp3pico.Text = dt.Rows[0]["p3picovalobtido"].ToString();
+                    txtn3pico.Text = dt.Rows[0]["n3picovalobtido"].ToString();
+                    txtrepostaespinhal.Text = dt.Rows[0]["respostaespinhal"].ToString();
+
+                    return true;
+                }
+                else
+                {
+                    // Limpa os campos de texto
+                    txtp1inicio.Text = "0,0";
+                    txtp1pico.Text = "0,0";
+                    txtn1pico.Text = "0,0";
+                    txtp2pico.Text = "0,0";
+                    txtn2pico.Text = "0,0";
+                    txtp3pico.Text = "0,0";
+                    txtn3pico.Text = "0,0";
+                    txtrepostaespinhal.Text = "0,0";
+
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao CarregaDadosPev: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private bool GravaGrupoFolhaPegc()
+        {
+            cPotenciaisPEGC objcPotenciaisPEGC = new cPotenciaisPEGC();
+            objcPotenciaisPEGC.IdResultadoPegc = this.IdResultadoPEGC;
+            objcPotenciaisPEGC.IdResultado = this.IdResultado;
+            objcPotenciaisPEGC.IdPaciente = this.IdPaciente;
+
+            // Preencher os outros campos específicos do PEGC aqui
+            objcPotenciaisPEGC.P1InicioValObtido = txtp1inicio.Text;
+            objcPotenciaisPEGC.P1PicoValObtido = txtp1pico.Text;
+            objcPotenciaisPEGC.N1PicoValObtido = txtn1pico.Text;
+            objcPotenciaisPEGC.P2PicoValObtido = txtp2pico.Text;
+            objcPotenciaisPEGC.N2PicoValObtido = txtn2pico.Text;
+            objcPotenciaisPEGC.P3PicoValObtido = txtp3pico.Text;
+            objcPotenciaisPEGC.N3PicoValObtido = txtn3pico.Text;
+            objcPotenciaisPEGC.RespostaEspinhal = txtrepostaespinhal.Text;
+
+            if (objcPotenciaisPEGC.AtualizarResultadoPegc() == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

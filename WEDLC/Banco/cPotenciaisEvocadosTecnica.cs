@@ -6,9 +6,9 @@ namespace WEDLC.Banco
 {
     public class cPotenciaisEvocadosTecnica
     {
-        public int IdPaciente { get; set; }
-        public int IdResultadoPotEvocTecnica { get; set; }
-        public int IdResultado { get; set; }
+        public Int32 IdPaciente { get; set; }
+        public Int32 IdResultadoPotEvocTecnica { get; set; }
+        public Int32 IdResultado { get; set; }
         public string Captacao { get; set; }
         public string Sensibilidade { get; set; }
         public int? UvDivTempo { get; set; }
