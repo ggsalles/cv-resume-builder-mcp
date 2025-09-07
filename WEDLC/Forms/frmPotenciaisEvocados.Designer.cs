@@ -120,30 +120,30 @@
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
             this.tabPessMed = new System.Windows.Forms.TabPage();
-            this.textBox55 = new System.Windows.Forms.TextBox();
-            this.textBox56 = new System.Windows.Forms.TextBox();
-            this.textBox57 = new System.Windows.Forms.TextBox();
-            this.textBox58 = new System.Windows.Forms.TextBox();
-            this.textBox59 = new System.Windows.Forms.TextBox();
-            this.textBox60 = new System.Windows.Forms.TextBox();
+            this.txtN11N13N19Esquerdo = new System.Windows.Forms.TextBox();
+            this.txtN11N13N19Direito = new System.Windows.Forms.TextBox();
+            this.txtEpp22Esquerdo = new System.Windows.Forms.TextBox();
+            this.txtEpp22Direito = new System.Windows.Forms.TextBox();
+            this.txtEpN19Esquerdo = new System.Windows.Forms.TextBox();
+            this.txtEpN19Direito = new System.Windows.Forms.TextBox();
             this.label59 = new System.Windows.Forms.Label();
-            this.textBox61 = new System.Windows.Forms.TextBox();
-            this.textBox62 = new System.Windows.Forms.TextBox();
+            this.txtEpN11N13Esquerdo = new System.Windows.Forms.TextBox();
+            this.txtEpN11N13Direito = new System.Windows.Forms.TextBox();
             this.label60 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
             this.label63 = new System.Windows.Forms.Label();
             this.label64 = new System.Windows.Forms.Label();
             this.label65 = new System.Windows.Forms.Label();
             this.label61 = new System.Windows.Forms.Label();
-            this.textBox33 = new System.Windows.Forms.TextBox();
-            this.textBox41 = new System.Windows.Forms.TextBox();
-            this.textBox43 = new System.Windows.Forms.TextBox();
-            this.textBox45 = new System.Windows.Forms.TextBox();
-            this.textBox47 = new System.Windows.Forms.TextBox();
-            this.textBox49 = new System.Windows.Forms.TextBox();
+            this.txtP22Esquerdo = new System.Windows.Forms.TextBox();
+            this.txtP22Direito = new System.Windows.Forms.TextBox();
+            this.txtN19Esquerdo = new System.Windows.Forms.TextBox();
+            this.txtN19Direito = new System.Windows.Forms.TextBox();
+            this.txtN11N13Esquerdo = new System.Windows.Forms.TextBox();
+            this.txtN11N13Direito = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
-            this.textBox51 = new System.Windows.Forms.TextBox();
-            this.textBox53 = new System.Windows.Forms.TextBox();
+            this.txtErbsEsquerdo = new System.Windows.Forms.TextBox();
+            this.txtErbsDireito = new System.Windows.Forms.TextBox();
             this.label46 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
@@ -540,7 +540,7 @@
             // txt1a4esquerdo
             // 
             this.txt1a4esquerdo.Location = new System.Drawing.Point(309, 263);
-            this.txt1a4esquerdo.MaxLength = 4;
+            this.txt1a4esquerdo.MaxLength = 5;
             this.txt1a4esquerdo.Name = "txt1a4esquerdo";
             this.txt1a4esquerdo.ReadOnly = true;
             this.txt1a4esquerdo.Size = new System.Drawing.Size(81, 20);
@@ -550,7 +550,7 @@
             // txt1a4direito
             // 
             this.txt1a4direito.Location = new System.Drawing.Point(186, 263);
-            this.txt1a4direito.MaxLength = 4;
+            this.txt1a4direito.MaxLength = 5;
             this.txt1a4direito.Name = "txt1a4direito";
             this.txt1a4direito.ReadOnly = true;
             this.txt1a4direito.Size = new System.Drawing.Size(81, 20);
@@ -560,7 +560,7 @@
             // txt3a5esquerdo
             // 
             this.txt3a5esquerdo.Location = new System.Drawing.Point(309, 236);
-            this.txt3a5esquerdo.MaxLength = 4;
+            this.txt3a5esquerdo.MaxLength = 5;
             this.txt3a5esquerdo.Name = "txt3a5esquerdo";
             this.txt3a5esquerdo.ReadOnly = true;
             this.txt3a5esquerdo.Size = new System.Drawing.Size(81, 20);
@@ -570,7 +570,7 @@
             // txt3a5direito
             // 
             this.txt3a5direito.Location = new System.Drawing.Point(186, 236);
-            this.txt3a5direito.MaxLength = 4;
+            this.txt3a5direito.MaxLength = 5;
             this.txt3a5direito.Name = "txt3a5direito";
             this.txt3a5direito.ReadOnly = true;
             this.txt3a5direito.Size = new System.Drawing.Size(81, 20);
@@ -580,7 +580,7 @@
             // txt1a3esquerdo
             // 
             this.txt1a3esquerdo.Location = new System.Drawing.Point(309, 209);
-            this.txt1a3esquerdo.MaxLength = 4;
+            this.txt1a3esquerdo.MaxLength = 5;
             this.txt1a3esquerdo.Name = "txt1a3esquerdo";
             this.txt1a3esquerdo.ReadOnly = true;
             this.txt1a3esquerdo.Size = new System.Drawing.Size(81, 20);
@@ -590,7 +590,7 @@
             // txt1a3direito
             // 
             this.txt1a3direito.Location = new System.Drawing.Point(186, 209);
-            this.txt1a3direito.MaxLength = 4;
+            this.txt1a3direito.MaxLength = 5;
             this.txt1a3direito.Name = "txt1a3direito";
             this.txt1a3direito.ReadOnly = true;
             this.txt1a3direito.Size = new System.Drawing.Size(81, 20);
@@ -636,7 +636,7 @@
             // txtonda5esquerdo
             // 
             this.txtonda5esquerdo.Location = new System.Drawing.Point(309, 156);
-            this.txtonda5esquerdo.MaxLength = 4;
+            this.txtonda5esquerdo.MaxLength = 5;
             this.txtonda5esquerdo.Name = "txtonda5esquerdo";
             this.txtonda5esquerdo.Size = new System.Drawing.Size(81, 20);
             this.txtonda5esquerdo.TabIndex = 20;
@@ -648,7 +648,7 @@
             // txtonda5direito
             // 
             this.txtonda5direito.Location = new System.Drawing.Point(186, 156);
-            this.txtonda5direito.MaxLength = 4;
+            this.txtonda5direito.MaxLength = 5;
             this.txtonda5direito.Name = "txtonda5direito";
             this.txtonda5direito.Size = new System.Drawing.Size(81, 20);
             this.txtonda5direito.TabIndex = 19;
@@ -669,7 +669,7 @@
             // txtonda4esquerdo
             // 
             this.txtonda4esquerdo.Location = new System.Drawing.Point(309, 129);
-            this.txtonda4esquerdo.MaxLength = 4;
+            this.txtonda4esquerdo.MaxLength = 5;
             this.txtonda4esquerdo.Name = "txtonda4esquerdo";
             this.txtonda4esquerdo.Size = new System.Drawing.Size(81, 20);
             this.txtonda4esquerdo.TabIndex = 18;
@@ -681,7 +681,7 @@
             // txtonda4direito
             // 
             this.txtonda4direito.Location = new System.Drawing.Point(186, 129);
-            this.txtonda4direito.MaxLength = 4;
+            this.txtonda4direito.MaxLength = 5;
             this.txtonda4direito.Name = "txtonda4direito";
             this.txtonda4direito.Size = new System.Drawing.Size(81, 20);
             this.txtonda4direito.TabIndex = 17;
@@ -693,7 +693,7 @@
             // txtonda3esquerdo
             // 
             this.txtonda3esquerdo.Location = new System.Drawing.Point(309, 102);
-            this.txtonda3esquerdo.MaxLength = 4;
+            this.txtonda3esquerdo.MaxLength = 5;
             this.txtonda3esquerdo.Name = "txtonda3esquerdo";
             this.txtonda3esquerdo.Size = new System.Drawing.Size(81, 20);
             this.txtonda3esquerdo.TabIndex = 16;
@@ -705,7 +705,7 @@
             // txtonda3direito
             // 
             this.txtonda3direito.Location = new System.Drawing.Point(186, 102);
-            this.txtonda3direito.MaxLength = 4;
+            this.txtonda3direito.MaxLength = 5;
             this.txtonda3direito.Name = "txtonda3direito";
             this.txtonda3direito.Size = new System.Drawing.Size(81, 20);
             this.txtonda3direito.TabIndex = 15;
@@ -717,7 +717,7 @@
             // txtonda2esquerdo
             // 
             this.txtonda2esquerdo.Location = new System.Drawing.Point(309, 75);
-            this.txtonda2esquerdo.MaxLength = 4;
+            this.txtonda2esquerdo.MaxLength = 5;
             this.txtonda2esquerdo.Name = "txtonda2esquerdo";
             this.txtonda2esquerdo.Size = new System.Drawing.Size(81, 20);
             this.txtonda2esquerdo.TabIndex = 14;
@@ -729,7 +729,7 @@
             // txtonda2direito
             // 
             this.txtonda2direito.Location = new System.Drawing.Point(186, 75);
-            this.txtonda2direito.MaxLength = 4;
+            this.txtonda2direito.MaxLength = 5;
             this.txtonda2direito.Name = "txtonda2direito";
             this.txtonda2direito.Size = new System.Drawing.Size(81, 20);
             this.txtonda2direito.TabIndex = 13;
@@ -750,7 +750,7 @@
             // txtonda1esquerdo
             // 
             this.txtonda1esquerdo.Location = new System.Drawing.Point(309, 48);
-            this.txtonda1esquerdo.MaxLength = 4;
+            this.txtonda1esquerdo.MaxLength = 5;
             this.txtonda1esquerdo.Name = "txtonda1esquerdo";
             this.txtonda1esquerdo.Size = new System.Drawing.Size(81, 20);
             this.txtonda1esquerdo.TabIndex = 12;
@@ -762,7 +762,7 @@
             // txtonda1direito
             // 
             this.txtonda1direito.Location = new System.Drawing.Point(186, 48);
-            this.txtonda1direito.MaxLength = 4;
+            this.txtonda1direito.MaxLength = 5;
             this.txtonda1direito.Name = "txtonda1direito";
             this.txtonda1direito.Size = new System.Drawing.Size(81, 20);
             this.txtonda1direito.TabIndex = 11;
@@ -1216,30 +1216,30 @@
             // 
             // tabPessMed
             // 
-            this.tabPessMed.Controls.Add(this.textBox55);
-            this.tabPessMed.Controls.Add(this.textBox56);
-            this.tabPessMed.Controls.Add(this.textBox57);
-            this.tabPessMed.Controls.Add(this.textBox58);
-            this.tabPessMed.Controls.Add(this.textBox59);
-            this.tabPessMed.Controls.Add(this.textBox60);
+            this.tabPessMed.Controls.Add(this.txtN11N13N19Esquerdo);
+            this.tabPessMed.Controls.Add(this.txtN11N13N19Direito);
+            this.tabPessMed.Controls.Add(this.txtEpp22Esquerdo);
+            this.tabPessMed.Controls.Add(this.txtEpp22Direito);
+            this.tabPessMed.Controls.Add(this.txtEpN19Esquerdo);
+            this.tabPessMed.Controls.Add(this.txtEpN19Direito);
             this.tabPessMed.Controls.Add(this.label59);
-            this.tabPessMed.Controls.Add(this.textBox61);
-            this.tabPessMed.Controls.Add(this.textBox62);
+            this.tabPessMed.Controls.Add(this.txtEpN11N13Esquerdo);
+            this.tabPessMed.Controls.Add(this.txtEpN11N13Direito);
             this.tabPessMed.Controls.Add(this.label60);
             this.tabPessMed.Controls.Add(this.label62);
             this.tabPessMed.Controls.Add(this.label63);
             this.tabPessMed.Controls.Add(this.label64);
             this.tabPessMed.Controls.Add(this.label65);
             this.tabPessMed.Controls.Add(this.label61);
-            this.tabPessMed.Controls.Add(this.textBox33);
-            this.tabPessMed.Controls.Add(this.textBox41);
-            this.tabPessMed.Controls.Add(this.textBox43);
-            this.tabPessMed.Controls.Add(this.textBox45);
-            this.tabPessMed.Controls.Add(this.textBox47);
-            this.tabPessMed.Controls.Add(this.textBox49);
+            this.tabPessMed.Controls.Add(this.txtP22Esquerdo);
+            this.tabPessMed.Controls.Add(this.txtP22Direito);
+            this.tabPessMed.Controls.Add(this.txtN19Esquerdo);
+            this.tabPessMed.Controls.Add(this.txtN19Direito);
+            this.tabPessMed.Controls.Add(this.txtN11N13Esquerdo);
+            this.tabPessMed.Controls.Add(this.txtN11N13Direito);
             this.tabPessMed.Controls.Add(this.label43);
-            this.tabPessMed.Controls.Add(this.textBox51);
-            this.tabPessMed.Controls.Add(this.textBox53);
+            this.tabPessMed.Controls.Add(this.txtErbsEsquerdo);
+            this.tabPessMed.Controls.Add(this.txtErbsDireito);
             this.tabPessMed.Controls.Add(this.label46);
             this.tabPessMed.Controls.Add(this.label53);
             this.tabPessMed.Controls.Add(this.label54);
@@ -1255,65 +1255,65 @@
             this.tabPessMed.Text = "PESS-MED";
             this.tabPessMed.UseVisualStyleBackColor = true;
             // 
-            // textBox55
+            // txtN11N13N19Esquerdo
             // 
-            this.textBox55.Location = new System.Drawing.Point(586, 133);
-            this.textBox55.MaxLength = 3;
-            this.textBox55.Name = "textBox55";
-            this.textBox55.ReadOnly = true;
-            this.textBox55.Size = new System.Drawing.Size(81, 20);
-            this.textBox55.TabIndex = 69;
-            this.textBox55.Text = "0000,00";
+            this.txtN11N13N19Esquerdo.Location = new System.Drawing.Point(586, 133);
+            this.txtN11N13N19Esquerdo.MaxLength = 4;
+            this.txtN11N13N19Esquerdo.Name = "txtN11N13N19Esquerdo";
+            this.txtN11N13N19Esquerdo.ReadOnly = true;
+            this.txtN11N13N19Esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtN11N13N19Esquerdo.TabIndex = 26;
+            this.txtN11N13N19Esquerdo.Text = "00,00";
             // 
-            // textBox56
+            // txtN11N13N19Direito
             // 
-            this.textBox56.Location = new System.Drawing.Point(498, 133);
-            this.textBox56.MaxLength = 3;
-            this.textBox56.Name = "textBox56";
-            this.textBox56.ReadOnly = true;
-            this.textBox56.Size = new System.Drawing.Size(81, 20);
-            this.textBox56.TabIndex = 68;
-            this.textBox56.Text = "0000,00";
+            this.txtN11N13N19Direito.Location = new System.Drawing.Point(498, 133);
+            this.txtN11N13N19Direito.MaxLength = 4;
+            this.txtN11N13N19Direito.Name = "txtN11N13N19Direito";
+            this.txtN11N13N19Direito.ReadOnly = true;
+            this.txtN11N13N19Direito.Size = new System.Drawing.Size(81, 20);
+            this.txtN11N13N19Direito.TabIndex = 25;
+            this.txtN11N13N19Direito.Text = "00,00";
             // 
-            // textBox57
+            // txtEpp22Esquerdo
             // 
-            this.textBox57.Location = new System.Drawing.Point(586, 106);
-            this.textBox57.MaxLength = 3;
-            this.textBox57.Name = "textBox57";
-            this.textBox57.ReadOnly = true;
-            this.textBox57.Size = new System.Drawing.Size(81, 20);
-            this.textBox57.TabIndex = 67;
-            this.textBox57.Text = "0000,00";
+            this.txtEpp22Esquerdo.Location = new System.Drawing.Point(586, 106);
+            this.txtEpp22Esquerdo.MaxLength = 4;
+            this.txtEpp22Esquerdo.Name = "txtEpp22Esquerdo";
+            this.txtEpp22Esquerdo.ReadOnly = true;
+            this.txtEpp22Esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtEpp22Esquerdo.TabIndex = 24;
+            this.txtEpp22Esquerdo.Text = "00,00";
             // 
-            // textBox58
+            // txtEpp22Direito
             // 
-            this.textBox58.Location = new System.Drawing.Point(498, 106);
-            this.textBox58.MaxLength = 3;
-            this.textBox58.Name = "textBox58";
-            this.textBox58.ReadOnly = true;
-            this.textBox58.Size = new System.Drawing.Size(81, 20);
-            this.textBox58.TabIndex = 66;
-            this.textBox58.Text = "0000,00";
+            this.txtEpp22Direito.Location = new System.Drawing.Point(498, 106);
+            this.txtEpp22Direito.MaxLength = 4;
+            this.txtEpp22Direito.Name = "txtEpp22Direito";
+            this.txtEpp22Direito.ReadOnly = true;
+            this.txtEpp22Direito.Size = new System.Drawing.Size(81, 20);
+            this.txtEpp22Direito.TabIndex = 23;
+            this.txtEpp22Direito.Text = "00,00";
             // 
-            // textBox59
+            // txtEpN19Esquerdo
             // 
-            this.textBox59.Location = new System.Drawing.Point(586, 79);
-            this.textBox59.MaxLength = 3;
-            this.textBox59.Name = "textBox59";
-            this.textBox59.ReadOnly = true;
-            this.textBox59.Size = new System.Drawing.Size(81, 20);
-            this.textBox59.TabIndex = 65;
-            this.textBox59.Text = "0000,00";
+            this.txtEpN19Esquerdo.Location = new System.Drawing.Point(586, 79);
+            this.txtEpN19Esquerdo.MaxLength = 4;
+            this.txtEpN19Esquerdo.Name = "txtEpN19Esquerdo";
+            this.txtEpN19Esquerdo.ReadOnly = true;
+            this.txtEpN19Esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtEpN19Esquerdo.TabIndex = 22;
+            this.txtEpN19Esquerdo.Text = "00,00";
             // 
-            // textBox60
+            // txtEpN19Direito
             // 
-            this.textBox60.Location = new System.Drawing.Point(498, 79);
-            this.textBox60.MaxLength = 3;
-            this.textBox60.Name = "textBox60";
-            this.textBox60.ReadOnly = true;
-            this.textBox60.Size = new System.Drawing.Size(81, 20);
-            this.textBox60.TabIndex = 64;
-            this.textBox60.Text = "0000,00";
+            this.txtEpN19Direito.Location = new System.Drawing.Point(498, 79);
+            this.txtEpN19Direito.MaxLength = 4;
+            this.txtEpN19Direito.Name = "txtEpN19Direito";
+            this.txtEpN19Direito.ReadOnly = true;
+            this.txtEpN19Direito.Size = new System.Drawing.Size(81, 20);
+            this.txtEpN19Direito.TabIndex = 21;
+            this.txtEpN19Direito.Text = "00,00";
             // 
             // label59
             // 
@@ -1324,25 +1324,25 @@
             this.label59.TabIndex = 63;
             this.label59.Text = "N11-N13/N19";
             // 
-            // textBox61
+            // txtEpN11N13Esquerdo
             // 
-            this.textBox61.Location = new System.Drawing.Point(586, 52);
-            this.textBox61.MaxLength = 3;
-            this.textBox61.Name = "textBox61";
-            this.textBox61.ReadOnly = true;
-            this.textBox61.Size = new System.Drawing.Size(81, 20);
-            this.textBox61.TabIndex = 62;
-            this.textBox61.Text = "0000,00";
+            this.txtEpN11N13Esquerdo.Location = new System.Drawing.Point(586, 52);
+            this.txtEpN11N13Esquerdo.MaxLength = 4;
+            this.txtEpN11N13Esquerdo.Name = "txtEpN11N13Esquerdo";
+            this.txtEpN11N13Esquerdo.ReadOnly = true;
+            this.txtEpN11N13Esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtEpN11N13Esquerdo.TabIndex = 20;
+            this.txtEpN11N13Esquerdo.Text = "00,00";
             // 
-            // textBox62
+            // txtEpN11N13Direito
             // 
-            this.textBox62.Location = new System.Drawing.Point(498, 52);
-            this.textBox62.MaxLength = 3;
-            this.textBox62.Name = "textBox62";
-            this.textBox62.ReadOnly = true;
-            this.textBox62.Size = new System.Drawing.Size(81, 20);
-            this.textBox62.TabIndex = 61;
-            this.textBox62.Text = "0000,00";
+            this.txtEpN11N13Direito.Location = new System.Drawing.Point(498, 52);
+            this.txtEpN11N13Direito.MaxLength = 4;
+            this.txtEpN11N13Direito.Name = "txtEpN11N13Direito";
+            this.txtEpN11N13Direito.ReadOnly = true;
+            this.txtEpN11N13Direito.Size = new System.Drawing.Size(81, 20);
+            this.txtEpN11N13Direito.TabIndex = 19;
+            this.txtEpN11N13Direito.Text = "00,00";
             // 
             // label60
             // 
@@ -1398,59 +1398,77 @@
             this.label61.TabIndex = 55;
             this.label61.Text = "Latências Interpicos (mseg)";
             // 
-            // textBox33
+            // txtP22Esquerdo
             // 
-            this.textBox33.Location = new System.Drawing.Point(199, 130);
-            this.textBox33.MaxLength = 3;
-            this.textBox33.Name = "textBox33";
-            this.textBox33.Size = new System.Drawing.Size(81, 20);
-            this.textBox33.TabIndex = 54;
-            this.textBox33.Text = "0000,00";
+            this.txtP22Esquerdo.Location = new System.Drawing.Point(199, 130);
+            this.txtP22Esquerdo.MaxLength = 5;
+            this.txtP22Esquerdo.Name = "txtP22Esquerdo";
+            this.txtP22Esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtP22Esquerdo.TabIndex = 18;
+            this.txtP22Esquerdo.Text = "00,00";
+            this.txtP22Esquerdo.Enter += new System.EventHandler(this.txtP22Esquerdo_Enter);
+            this.txtP22Esquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP22Esquerdo_KeyPress);
+            this.txtP22Esquerdo.Leave += new System.EventHandler(this.txtP22Esquerdo_Leave);
             // 
-            // textBox41
+            // txtP22Direito
             // 
-            this.textBox41.Location = new System.Drawing.Point(111, 130);
-            this.textBox41.MaxLength = 3;
-            this.textBox41.Name = "textBox41";
-            this.textBox41.Size = new System.Drawing.Size(81, 20);
-            this.textBox41.TabIndex = 53;
-            this.textBox41.Text = "0000,00";
+            this.txtP22Direito.Location = new System.Drawing.Point(111, 130);
+            this.txtP22Direito.MaxLength = 5;
+            this.txtP22Direito.Name = "txtP22Direito";
+            this.txtP22Direito.Size = new System.Drawing.Size(81, 20);
+            this.txtP22Direito.TabIndex = 17;
+            this.txtP22Direito.Text = "00,00";
+            this.txtP22Direito.Enter += new System.EventHandler(this.txtP22Direito_Enter);
+            this.txtP22Direito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP22Direito_KeyPress);
+            this.txtP22Direito.Leave += new System.EventHandler(this.txtP22Direito_Leave);
             // 
-            // textBox43
+            // txtN19Esquerdo
             // 
-            this.textBox43.Location = new System.Drawing.Point(199, 103);
-            this.textBox43.MaxLength = 3;
-            this.textBox43.Name = "textBox43";
-            this.textBox43.Size = new System.Drawing.Size(81, 20);
-            this.textBox43.TabIndex = 52;
-            this.textBox43.Text = "0000,00";
+            this.txtN19Esquerdo.Location = new System.Drawing.Point(199, 103);
+            this.txtN19Esquerdo.MaxLength = 5;
+            this.txtN19Esquerdo.Name = "txtN19Esquerdo";
+            this.txtN19Esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtN19Esquerdo.TabIndex = 16;
+            this.txtN19Esquerdo.Text = "00,00";
+            this.txtN19Esquerdo.Enter += new System.EventHandler(this.txtN19Esquerdo_Enter);
+            this.txtN19Esquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtN19Esquerdo_KeyPress);
+            this.txtN19Esquerdo.Leave += new System.EventHandler(this.txtN19Esquerdo_Leave);
             // 
-            // textBox45
+            // txtN19Direito
             // 
-            this.textBox45.Location = new System.Drawing.Point(111, 103);
-            this.textBox45.MaxLength = 3;
-            this.textBox45.Name = "textBox45";
-            this.textBox45.Size = new System.Drawing.Size(81, 20);
-            this.textBox45.TabIndex = 51;
-            this.textBox45.Text = "0000,00";
+            this.txtN19Direito.Location = new System.Drawing.Point(111, 103);
+            this.txtN19Direito.MaxLength = 5;
+            this.txtN19Direito.Name = "txtN19Direito";
+            this.txtN19Direito.Size = new System.Drawing.Size(81, 20);
+            this.txtN19Direito.TabIndex = 15;
+            this.txtN19Direito.Text = "00,00";
+            this.txtN19Direito.Enter += new System.EventHandler(this.txtN19Direito_Enter);
+            this.txtN19Direito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtN19Direito_KeyPress);
+            this.txtN19Direito.Leave += new System.EventHandler(this.txtN19Direito_Leave);
             // 
-            // textBox47
+            // txtN11N13Esquerdo
             // 
-            this.textBox47.Location = new System.Drawing.Point(199, 76);
-            this.textBox47.MaxLength = 3;
-            this.textBox47.Name = "textBox47";
-            this.textBox47.Size = new System.Drawing.Size(81, 20);
-            this.textBox47.TabIndex = 50;
-            this.textBox47.Text = "0000,00";
+            this.txtN11N13Esquerdo.Location = new System.Drawing.Point(199, 76);
+            this.txtN11N13Esquerdo.MaxLength = 5;
+            this.txtN11N13Esquerdo.Name = "txtN11N13Esquerdo";
+            this.txtN11N13Esquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtN11N13Esquerdo.TabIndex = 14;
+            this.txtN11N13Esquerdo.Text = "00,00";
+            this.txtN11N13Esquerdo.Enter += new System.EventHandler(this.txtN11N13Esquerdo_Enter);
+            this.txtN11N13Esquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtN11N13Esquerdo_KeyPress);
+            this.txtN11N13Esquerdo.Leave += new System.EventHandler(this.txtN11N13Esquerdo_Leave);
             // 
-            // textBox49
+            // txtN11N13Direito
             // 
-            this.textBox49.Location = new System.Drawing.Point(111, 76);
-            this.textBox49.MaxLength = 3;
-            this.textBox49.Name = "textBox49";
-            this.textBox49.Size = new System.Drawing.Size(81, 20);
-            this.textBox49.TabIndex = 49;
-            this.textBox49.Text = "0000,00";
+            this.txtN11N13Direito.Location = new System.Drawing.Point(111, 76);
+            this.txtN11N13Direito.MaxLength = 5;
+            this.txtN11N13Direito.Name = "txtN11N13Direito";
+            this.txtN11N13Direito.Size = new System.Drawing.Size(81, 20);
+            this.txtN11N13Direito.TabIndex = 13;
+            this.txtN11N13Direito.Text = "00,00";
+            this.txtN11N13Direito.Enter += new System.EventHandler(this.txtN11N13Direito_Enter);
+            this.txtN11N13Direito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtN11N13Direito_KeyPress);
+            this.txtN11N13Direito.Leave += new System.EventHandler(this.txtN11N13Direito_Leave);
             // 
             // label43
             // 
@@ -1461,23 +1479,29 @@
             this.label43.TabIndex = 48;
             this.label43.Text = "P22";
             // 
-            // textBox51
+            // txtErbsEsquerdo
             // 
-            this.textBox51.Location = new System.Drawing.Point(199, 49);
-            this.textBox51.MaxLength = 3;
-            this.textBox51.Name = "textBox51";
-            this.textBox51.Size = new System.Drawing.Size(81, 20);
-            this.textBox51.TabIndex = 47;
-            this.textBox51.Text = "0000,00";
+            this.txtErbsEsquerdo.Location = new System.Drawing.Point(199, 49);
+            this.txtErbsEsquerdo.MaxLength = 5;
+            this.txtErbsEsquerdo.Name = "txtErbsEsquerdo";
+            this.txtErbsEsquerdo.Size = new System.Drawing.Size(81, 20);
+            this.txtErbsEsquerdo.TabIndex = 12;
+            this.txtErbsEsquerdo.Text = "00,00";
+            this.txtErbsEsquerdo.Enter += new System.EventHandler(this.txtErbsEsquerdo_Enter);
+            this.txtErbsEsquerdo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtErbsEsquerdo_KeyPress);
+            this.txtErbsEsquerdo.Leave += new System.EventHandler(this.txtErbsEsquerdo_Leave);
             // 
-            // textBox53
+            // txtErbsDireito
             // 
-            this.textBox53.Location = new System.Drawing.Point(111, 49);
-            this.textBox53.MaxLength = 3;
-            this.textBox53.Name = "textBox53";
-            this.textBox53.Size = new System.Drawing.Size(81, 20);
-            this.textBox53.TabIndex = 46;
-            this.textBox53.Text = "0000,00";
+            this.txtErbsDireito.Location = new System.Drawing.Point(111, 49);
+            this.txtErbsDireito.MaxLength = 5;
+            this.txtErbsDireito.Name = "txtErbsDireito";
+            this.txtErbsDireito.Size = new System.Drawing.Size(81, 20);
+            this.txtErbsDireito.TabIndex = 11;
+            this.txtErbsDireito.Text = "00,00";
+            this.txtErbsDireito.Enter += new System.EventHandler(this.txtErbsDireito_Enter);
+            this.txtErbsDireito.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtErbsDireito_KeyPress);
+            this.txtErbsDireito.Leave += new System.EventHandler(this.txtErbsDireito_Leave);
             // 
             // label46
             // 
@@ -1932,15 +1956,15 @@
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.Label label52;
-        private System.Windows.Forms.TextBox textBox33;
-        private System.Windows.Forms.TextBox textBox41;
-        private System.Windows.Forms.TextBox textBox43;
-        private System.Windows.Forms.TextBox textBox45;
-        private System.Windows.Forms.TextBox textBox47;
-        private System.Windows.Forms.TextBox textBox49;
+        private System.Windows.Forms.TextBox txtP22Esquerdo;
+        private System.Windows.Forms.TextBox txtP22Direito;
+        private System.Windows.Forms.TextBox txtN19Esquerdo;
+        private System.Windows.Forms.TextBox txtN19Direito;
+        private System.Windows.Forms.TextBox txtN11N13Esquerdo;
+        private System.Windows.Forms.TextBox txtN11N13Direito;
         private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.TextBox textBox51;
-        private System.Windows.Forms.TextBox textBox53;
+        private System.Windows.Forms.TextBox txtErbsEsquerdo;
+        private System.Windows.Forms.TextBox txtErbsDireito;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.Label label54;
@@ -1948,15 +1972,15 @@
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.TextBox textBox55;
-        private System.Windows.Forms.TextBox textBox56;
-        private System.Windows.Forms.TextBox textBox57;
-        private System.Windows.Forms.TextBox textBox58;
-        private System.Windows.Forms.TextBox textBox59;
-        private System.Windows.Forms.TextBox textBox60;
+        private System.Windows.Forms.TextBox txtN11N13N19Esquerdo;
+        private System.Windows.Forms.TextBox txtN11N13N19Direito;
+        private System.Windows.Forms.TextBox txtEpp22Esquerdo;
+        private System.Windows.Forms.TextBox txtEpp22Direito;
+        private System.Windows.Forms.TextBox txtEpN19Esquerdo;
+        private System.Windows.Forms.TextBox txtEpN19Direito;
         private System.Windows.Forms.Label label59;
-        private System.Windows.Forms.TextBox textBox61;
-        private System.Windows.Forms.TextBox textBox62;
+        private System.Windows.Forms.TextBox txtEpN11N13Esquerdo;
+        private System.Windows.Forms.TextBox txtEpN11N13Direito;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.Label label63;

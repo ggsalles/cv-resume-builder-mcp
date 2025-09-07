@@ -20,6 +20,7 @@ namespace WEDLC.Forms
         public int IdResultadoPEA { get; set; } // Usado para identificar o resultado PEV
         public int IdResultadoPESS { get; set; } // Usado para identificar o resultado PESS
         public int IdResultadoPEGC { get; set; } // Usado para identificar o resultado PEGC
+        public int IdResultadoPESSMED { get; set; } // Usado para identificar o resultado PESSMED
         public int IdResultadoComentarioPEV { get; set; } // Usado para identificar o resultado PEV
         public int IdFolha { get; set; }
         public int IdPaciente { get; set; }
@@ -176,6 +177,23 @@ namespace WEDLC.Forms
                 case (int)GrupoFolha.PESSMED:
 
                     tabPotenciais.TabPages.Add(tabPessMed);
+
+                    RedimensionaTelaPESSMED();
+
+                    if (CarregaDadosPessMed() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosPessM");
+                    }
+
+                    if (CarregaDadosPotEvocadoTecnica() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosPotEvocadoTecnica"); ;
+                    }
+
+                    if (CarregaDadosComentarioPev() == false)
+                    {
+                        throw new Exception("Erro na CarregaDadosComentarioPev"); ;
+                    }
 
                     break;
             }
@@ -361,7 +379,43 @@ namespace WEDLC.Forms
 
                     case (int)GrupoFolha.PESSMED:
 
-                        tabPotenciais.TabPages.Add(tabPessMed);
+                        using (var scope = new TransactionScope())
+                        {
+                            try
+                            {
+                                if (GravaGrupoFolhaPotEvocadoTecnica() == false)
+                                {
+                                    throw new Exception("Falha ao gravar técnica PEV");
+                                }
+
+                                if (GravaGrupoFolhaPessMed() == false)
+                                {
+                                    throw new Exception("Falha ao gravar PESSMED");
+                                }
+                                if (ValidaComentarioPEV() == false)
+                                {
+                                    break;
+                                }
+                                if (GravaGrupoFolhaComentarioPev() == false)
+                                {
+                                    throw new Exception("Falha ao gravar comentário PEV");
+                                }
+
+                                // Se tudo ok, commit na transação
+                                scope.Complete();
+
+                                MessageBox.Show("Gravado com sucesso!", "Atenção",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                this.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erro na gravação: {ex.Message}", "Erro",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                // O rollback é automático quando scope.Complete() não é chamado
+                            }
+                        }
 
                         break;
                 }
@@ -464,7 +518,7 @@ namespace WEDLC.Forms
                     txtN145OlhoDireito.Text = "";
                     txtN145OlhoEsquerdo.Text = "";
                     txtAmplitudeOlhoDireito.Text = "";
-                    txtAmplitudeOlhoEsquerdo.Text = ""; ;
+                    txtAmplitudeOlhoEsquerdo.Text = "";
                     return false;
                 }
             }
@@ -1655,12 +1709,7 @@ namespace WEDLC.Forms
 
         private void txtrepostaespinhal_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {
-                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
-
-            }
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
         }
 
         private bool CarregaDadosPegc()
@@ -1731,6 +1780,293 @@ namespace WEDLC.Forms
             objcPotenciaisPEGC.RespostaEspinhal = txtrepostaespinhal.Text;
 
             if (objcPotenciaisPEGC.AtualizarResultadoPegc() == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private bool CarregaDadosPessMed()
+        {
+            try
+            {
+                cPotenciaisPESSMED objcPotenciaisPESSMED = new cPotenciaisPESSMED();
+
+                objcPotenciaisPESSMED.IdPaciente = this.IdPaciente;
+                objcPotenciaisPESSMED.IdResultado = this.IdResultado;
+
+                DataTable dt = objcPotenciaisPESSMED.BuscaResultadoPessMed();
+
+                // Preenche os campos com os dados retornados
+                this.IdResultado = dt.Rows[0]["idresultado"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultado"].ToString()) : 0;
+                this.IdResultadoPESSMED = Int32.Parse(dt.Rows[0]["idresultadopessmed"].ToString());
+
+                if (dt.Rows.Count > 0)
+                {
+                    // Preenche os campos com os dados retornados
+                    this.IdResultado = dt.Rows[0]["idresultado"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultado"].ToString()) : 0;
+                    this.IdResultadoPEV = Int32.Parse(dt.Rows[0]["idresultadopessmed"].ToString());
+
+                    txtErbsDireito.Text = dt.Rows[0]["erbsdireito"].ToString();
+                    txtErbsEsquerdo.Text = dt.Rows[0]["erbsesquerdo"].ToString();
+                    txtN11N13Direito.Text = dt.Rows[0]["n11n13direito"].ToString();
+                    txtN11N13Esquerdo.Text = dt.Rows[0]["n11n13esquerdo"].ToString();
+                    txtN19Direito.Text = dt.Rows[0]["n19direito"].ToString();
+                    txtN19Esquerdo.Text = dt.Rows[0]["n19esquerdo"].ToString();
+                    txtP22Direito.Text = dt.Rows[0]["p22direito"].ToString();
+                    txtP22Esquerdo.Text = dt.Rows[0]["p22esquerdo"].ToString();
+                    txtEpN11N13Direito.Text = dt.Rows[0]["epn11n13direito"].ToString();
+                    txtEpN11N13Esquerdo.Text = dt.Rows[0]["epn11n13esquerdo"].ToString();
+                    txtEpN19Direito.Text = dt.Rows[0]["epn19direito"].ToString();
+                    txtEpN19Esquerdo.Text = dt.Rows[0]["epn19esquerdo"].ToString();
+                    txtEpp22Direito.Text = dt.Rows[0]["epp22direito"].ToString();
+                    txtEpp22Esquerdo.Text = dt.Rows[0]["epp22esquerdo"].ToString();
+                    txtN11N13N19Direito.Text = dt.Rows[0]["n11n13n19direito"].ToString();
+                    txtN11N13N19Esquerdo.Text = dt.Rows[0]["n11n13n19esquerdo"].ToString();
+
+                    return true;
+                }
+                else
+                {
+                    // Limpa os campos de texto
+                    txtErbsDireito.Text = "0,00";
+                    txtErbsEsquerdo.Text = "0,00";
+                    txtN11N13Direito.Text = "0,00";
+                    txtN11N13Esquerdo.Text = "0,00";
+                    txtN19Direito.Text = "0,00";
+                    txtN19Esquerdo.Text = "0,00";
+                    txtP22Direito.Text = "0,00";
+                    txtP22Esquerdo.Text = "0,00";
+                    txtEpN11N13Direito.Text = "0,00";
+                    txtEpN11N13Esquerdo.Text = "0,00";
+                    txtEpN19Direito.Text = "0,00";
+                    txtEpN19Esquerdo.Text = "0,00";
+                    txtEpp22Direito.Text = "0,00";
+                    txtEpp22Esquerdo.Text = "0,00";
+                    txtN11N13N19Direito.Text = "0,00";
+                    txtN11N13N19Esquerdo.Text = "0,00";
+
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao CarregaDadosPessMed: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private void txtErbsDireito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtErbsDireito), e);
+        }
+
+        private void txtErbsDireito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtErbsDireito.Text))
+            {
+                txtErbsDireito.Text = "0,00";
+            }
+            CalculaCamposPESSMED();
+        }
+
+        private void txtErbsDireito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtErbsEsquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtErbsEsquerdo), e);
+        }
+
+        private void txtErbsEsquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtErbsEsquerdo.Text))
+            {
+                txtErbsEsquerdo.Text = "0,00";
+            }
+            CalculaCamposPESSMED();
+        }
+
+        private void txtErbsEsquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN11N13Direito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtN11N13Direito), e);
+        }
+
+        private void txtN11N13Direito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtN11N13Direito.Text))
+            {
+                txtN11N13Direito.Text = "0,00";
+            }
+            CalculaCamposPESSMED();
+        }
+
+        private void txtN11N13Direito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN11N13Esquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtN11N13Esquerdo), e);
+        }
+
+        private void txtN11N13Esquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtN11N13Esquerdo.Text))
+            {
+                txtN11N13Esquerdo.Text = "0,00";
+            }
+            CalculaCamposPESSMED();
+        }
+
+        private void txtN11N13Esquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN19Direito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtN19Direito), e);
+        }
+
+        private void txtN19Direito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtN19Direito.Text))
+            {
+                txtN19Direito.Text = "0,00";
+            }
+            CalculaCamposPESSMED();
+        }
+
+        private void txtN19Direito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtN19Esquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtN19Esquerdo), e);
+        }
+
+        private void txtN19Esquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtN19Esquerdo.Text))
+            {
+                txtN19Esquerdo.Text = "0,00";
+            }
+            CalculaCamposPESSMED();
+        }
+
+        private void txtN19Esquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtP22Direito_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtP22Direito), e);
+        }
+
+        private void txtP22Direito_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtP22Direito.Text))
+            {
+                txtP22Direito.Text = "0,00";
+            }
+            CalculaCamposPESSMED();
+        }
+
+        private void txtP22Direito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtP22Esquerdo_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtP22Esquerdo), e);
+        }
+
+        private void txtP22Esquerdo_Leave(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
+            if (string.IsNullOrEmpty(txtP22Esquerdo.Text))
+            {
+                txtP22Esquerdo.Text = "0,00";
+            }
+            CalculaCamposPESSMED();
+        }
+
+        private void txtP22Esquerdo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void CalculaCamposPESSMED()
+        {
+            txtEpN11N13Direito.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtErbsDireito, txtN11N13Direito));
+            txtEpN11N13Esquerdo.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtErbsEsquerdo, txtN11N13Esquerdo));
+            txtEpN19Direito.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtErbsDireito, txtN19Direito));
+            txtEpN19Esquerdo.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtErbsEsquerdo, txtN19Esquerdo));
+            txtEpp22Direito.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtErbsDireito, txtP22Direito));
+            txtEpp22Esquerdo.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtErbsEsquerdo, txtP22Esquerdo));
+            txtN11N13N19Direito.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtN11N13Direito, txtN19Direito));
+            txtN11N13N19Esquerdo.Text = Convert.ToString(CalculosTextBox.CalcularDiferencaPositiva(txtN11N13Esquerdo, txtN19Esquerdo));
+        }
+
+        private void RedimensionaTelaPESSMED()
+        {
+            tabPotenciais.Size = new Size(684, 187);
+            grpBoxDados.Size = new Size(699, 357);
+            grpComentario.Location = new Point(12, 375);
+            grpBotoes.Location = new Point(12, 630);
+            this.Size = new Size(735, 729);
+        }
+
+        private bool GravaGrupoFolhaPessMed()
+        {
+            cPotenciaisPESSMED objcPotenciaisPESSMED = new cPotenciaisPESSMED();
+            objcPotenciaisPESSMED.IdResultadoPessMed = this.IdResultadoPESSMED;
+            objcPotenciaisPESSMED.IdResultado = this.IdResultado;
+            objcPotenciaisPESSMED.IdPaciente = this.IdPaciente;
+
+            // Preencher os outros campos específicos do PEGC aqui
+            objcPotenciaisPESSMED.ErbsDireito = txtErbsDireito.Text;
+            objcPotenciaisPESSMED.ErbsEsquerdo = txtErbsEsquerdo.Text;
+            objcPotenciaisPESSMED.N11N13Direito = txtN11N13Direito.Text;
+            objcPotenciaisPESSMED.N11N13Esquerdo = txtN11N13Esquerdo.Text;
+            objcPotenciaisPESSMED.N19Direito = txtN19Direito.Text;
+            objcPotenciaisPESSMED.N19Esquerdo = txtN19Esquerdo.Text;
+            objcPotenciaisPESSMED.P22Direito = txtP22Direito.Text;
+            objcPotenciaisPESSMED.P22Esquerdo = txtP22Esquerdo.Text;
+            objcPotenciaisPESSMED.EpN11N13Direito = txtEpN11N13Direito.Text;
+            objcPotenciaisPESSMED.EpN11N13Esquerdo = txtEpN11N13Esquerdo.Text;
+            objcPotenciaisPESSMED.EpN19Direito = txtEpN19Direito.Text;
+            objcPotenciaisPESSMED.EpN19Esquerdo = txtEpN19Esquerdo.Text;
+            objcPotenciaisPESSMED.EpP22Direito = txtEpp22Direito.Text;
+            objcPotenciaisPESSMED.EpP22Esquerdo = txtEpp22Esquerdo.Text;
+            objcPotenciaisPESSMED.N11N13N19Direito = txtN11N13N19Direito.Text;
+            objcPotenciaisPESSMED.N11N13N19Esquerdo = txtN11N13N19Esquerdo.Text;
+
+            if (objcPotenciaisPESSMED.AtualizarResultadoPessMed() == false)
             {
                 return false;
             }
