@@ -20,7 +20,7 @@ namespace WEDLC.Forms
 
         public Acao cAcao = Acao.UPDATE;
 
-        public const int codModulo = 1; //Código do módulo
+        public const int codModulo = 7; //Código do módulo
         public frmIndicacao()
         {
             InitializeComponent();

@@ -20,6 +20,8 @@ namespace WEDLC.Forms
         public int NumeroLinha = -1; // Variável para controlar a linha do grid da folha
         public int CodGrupoFolha = 0; // Variável para controlar o código do grupo da folha
 
+        public const int codModulo = 13; //Código do módulo
+
         public enum Acao
         {
             INSERT = 0,

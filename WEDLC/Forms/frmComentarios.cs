@@ -21,7 +21,7 @@ namespace WEDLC.Forms
         public Acao cAcao = Acao.UPDATE;
 
         //Código do módulo
-        public const int codModulo = 1;
+        public const int codModulo = 3;
 
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
         public bool VemdeResultado { get; set; } = false;

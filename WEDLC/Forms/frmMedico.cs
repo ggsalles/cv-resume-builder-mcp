@@ -33,6 +33,8 @@ namespace WEDLC.Forms
         public DataTable dadosXML = new DataTable(); // Datatable para armazenar os dados do XML
         public int NumeroLinha = -1; // Variável para controlar a linha do grid
 
+        public const int codModulo =11; //Código do módulo
+
         public frmMedico()
         {
             InitializeComponent();
