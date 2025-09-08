@@ -224,6 +224,7 @@ namespace WEDLC.Forms
             txtRaizes.Text = string.Empty;
 
             txtCodigo.Enabled = false; //Desabilita o campo código
+            grdDados.Enabled = false; //Desabilita o grid
 
             txtRaizes.Enabled = true; //Habilita o campo raizes
             txtInervacao.Enabled = true; //Habilita o campo inervação
@@ -322,6 +323,8 @@ namespace WEDLC.Forms
             //Habilita o campo código
             txtCodigo.Enabled = true;
 
+            grdDados.Enabled = true; //Habilita o grid
+
             //Desabilita os campos normncs, normncm e normlmd
             txtRaizes.Enabled = false;
             txtInervacao.Enabled = false;
@@ -376,6 +379,8 @@ namespace WEDLC.Forms
                 txtCodigo.Enabled = false;
                 txtRaizes.Enabled = true;
                 txtInervacao.Enabled = true;
+
+                grdDados.Enabled = false; //Desabilita o grid
 
                 txtSigla.Focus();
             }

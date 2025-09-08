@@ -202,6 +202,7 @@ namespace WEDLC.Forms
             txtNome.Text = string.Empty;
 
             txtCodigo.Enabled = false; //Desabilita o campo código
+            grdDados.Enabled = false; //Desabilita o grid
 
             //Deixa o foco no nome
             txtSigla.Focus();
@@ -295,6 +296,8 @@ namespace WEDLC.Forms
             //Habilita o campo código
             txtCodigo.Enabled = true;
 
+            grdDados.Enabled = true; //Habilita o grid
+
             //Limpa os campos
             limpaControles();
 
@@ -339,6 +342,8 @@ namespace WEDLC.Forms
 
                 //Desabilita o campo código
                 txtCodigo.Enabled = false;
+
+                grdDados.Enabled = false; //Desabilita o grid
 
                 txtSigla.Focus();
             }

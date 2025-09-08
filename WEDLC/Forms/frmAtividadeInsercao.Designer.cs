@@ -78,6 +78,7 @@
             // txtTexto
             // 
             this.txtTexto.AcceptsReturn = true;
+            this.txtTexto.Enabled = false;
             this.txtTexto.Location = new System.Drawing.Point(5, 247);
             this.txtTexto.MaxLength = 4000;
             this.txtTexto.Multiline = true;

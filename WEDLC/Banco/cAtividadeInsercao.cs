@@ -37,7 +37,7 @@ namespace WEDLC.Banco
             if (TipoPesquisa < 0)
                 return null;
 
-            if (TipoPesquisa == 1 && IdAatividadeInsercao <= 0)
+            if (TipoPesquisa == 1 && IdAatividadeInsercao < 0)
                 return null;
 
             if (!conectaBanco())

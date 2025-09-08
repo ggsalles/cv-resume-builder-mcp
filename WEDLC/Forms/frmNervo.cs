@@ -201,6 +201,7 @@ namespace WEDLC.Forms
             txtNormLmd.Text = string.Empty;
 
             txtCodigo.Enabled = false; //Desabilita o campo código
+            grdDados.Enabled = false; //Desabilita o grid
 
             txtNormNcs.Enabled = true; //Habilita o campo normncs
             txtNormNcm.Enabled = true; //Habilita o campo normncm
@@ -292,6 +293,9 @@ namespace WEDLC.Forms
             //Habilita o campo código
             txtCodigo.Enabled = true;
 
+            //Habilita o grid
+            grdDados.Enabled = true;
+
             //Desabilita os campos normncs, normncm e normlmd
             txtNormNcs.Enabled = false;
             txtNormNcm.Enabled = false;
@@ -349,6 +353,9 @@ namespace WEDLC.Forms
                 txtNormNcs.Enabled = true;
                 txtNormNcm.Enabled = true;
                 txtNormLmd.Enabled = true;
+
+                grdDados.Enabled = false; //Desabilita o grid
+
 
                 txtSigla.Focus();
             }

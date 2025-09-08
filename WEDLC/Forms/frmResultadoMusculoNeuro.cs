@@ -281,7 +281,7 @@ namespace WEDLC.Forms
                 grdNeuroConducaoMotora.AllowUserToAddRows = false; // Impede adição de novas linhas
                 grdNeuroConducaoMotora.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue; // Cor de fundo das linhas alternadas
                 grdNeuroConducaoMotora.CurrentCell = null; // Desmarca a célula atual
-                grdAvaliacaoMuscular.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
+                grdNeuroConducaoMotora.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
             }
             catch (Exception)
             {
