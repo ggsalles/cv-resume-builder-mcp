@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace WEDLC.Banco
@@ -362,7 +364,24 @@ namespace WEDLC.Banco
                 }
             }
 
+            public static bool IsValidEmail(string email)
+            {
+                if (string.IsNullOrWhiteSpace(email))
+                    return false;
+
+                try
+                {
+                    // Usa a classe MailAddress do .NET para validação
+                    var addr = new System.Net.Mail.MailAddress(email);
+                    return addr.Address == email;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
+
         public static class CalculosTextBox
         {
             public static decimal? CalcularDiferencaPositiva(TextBox textBoxA, TextBox textBoxB)
@@ -472,6 +491,73 @@ namespace WEDLC.Banco
             {
                 return null;
             }
+        }
+
+        public class AdvancedEmailValidator
+        {
+            public static EmailValidationResult ValidateEmail(string email)
+            {
+                // Resultado da validação
+                var result = new EmailValidationResult();
+
+                // 1. Verifica se está vazio
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    result.IsValid = false;
+                    result.ErrorMessage = "Email não pode estar vazio";
+                    return result;
+                }
+
+                // 2. Verifica comprimento máximo
+                if (email.Length > 254)
+                {
+                    result.IsValid = false;
+                    result.ErrorMessage = "Email muito longo (máximo 254 caracteres)";
+                    return result;
+                }
+
+                // 3. Verifica formato básico com regex
+                try
+                {
+                    if (!Regex.IsMatch(email,
+                        @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"))
+                    {
+                        result.IsValid = false;
+                        result.ErrorMessage = "Formato de email inválido";
+                        return result;
+                    }
+                }
+                catch
+                {
+                    result.IsValid = false;
+                    result.ErrorMessage = "Erro na validação do formato";
+                    return result;
+                }
+
+                // 4. Tenta criar um MailAddress (validação do .NET)
+                try
+                {
+                    var mailAddress = new MailAddress(email);
+                    result.IsValid = true;
+                    result.NormalizedEmail = mailAddress.Address;
+                }
+                catch
+                {
+                    result.IsValid = false;
+                    result.ErrorMessage = "Endereço de email inválido";
+                    return result;
+                }
+
+                return result;
+            }
+        }
+
+        // Classe para armazenar o resultado da validação
+        public class EmailValidationResult
+        {
+            public bool IsValid { get; set; }
+            public string ErrorMessage { get; set; }
+            public string NormalizedEmail { get; set; }
         }
     }
 }

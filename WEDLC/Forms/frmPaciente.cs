@@ -4,10 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms;
 using System.Xml;
 using WEDLC.Banco;
-using System.Transactions;
+using static WEDLC.Banco.cUtil;
 
 namespace WEDLC.Forms
 {
@@ -191,14 +192,15 @@ namespace WEDLC.Forms
                     mskTelefone.Text = row.Cells[8].Value.ToString();
                     cboSexo.SelectedValue = int.TryParse(row.Cells[9].Value?.ToString(), out int resultsexo) ? resultsexo : 0;
                     mskNascimento.Text = DateTime.Parse(row.Cells[10].Value.ToString()).ToString("dd/MM/yyyy");
+                    txtEmail.Text = row.Cells[11].Value != null ? row.Cells[11].Value.ToString() : string.Empty;
                     txtIdade.Text = cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(DateTime.Parse(row.Cells[10].Value.ToString())).ToString();
-                    cboConvenio.SelectedValue = row.Cells[11].Value.ToString() ?? "0";
-                    cboIndPrinc.SelectedValue = int.TryParse(row.Cells[12].Value?.ToString(), out int resultprinc) ? resultprinc : 0;
-                    cboIndSec.SelectedValue = int.TryParse(row.Cells[13].Value?.ToString(), out int resultindsec) ? resultindsec : 0;
-                    cboMedico.SelectedValue = int.TryParse(row.Cells[14].Value?.ToString(), out int resultmed) ? resultmed : 0;
-                    cboBeneficente.SelectedValue = int.TryParse(row.Cells[15].Value?.ToString(), out int resultbenef) ? resultbenef : 0;
-                    txtDataCadastro.Text = row.Cells[16].Value.ToString();
-                    txtObs.Text = row.Cells[17].Value != null ? row.Cells[17].Value.ToString() : string.Empty;
+                    cboConvenio.SelectedValue = row.Cells[12].Value.ToString() ?? "0";
+                    cboIndPrinc.SelectedValue = int.TryParse(row.Cells[13].Value?.ToString(), out int resultprinc) ? resultprinc : 0;
+                    cboIndSec.SelectedValue = int.TryParse(row.Cells[14].Value?.ToString(), out int resultindsec) ? resultindsec : 0;
+                    cboMedico.SelectedValue = int.TryParse(row.Cells[15].Value?.ToString(), out int resultmed) ? resultmed : 0;
+                    cboBeneficente.SelectedValue = int.TryParse(row.Cells[16].Value?.ToString(), out int resultbenef) ? resultbenef : 0;
+                    txtDataCadastro.Text = row.Cells[17].Value.ToString();
+                    txtObs.Text = row.Cells[18].Value != null ? row.Cells[18].Value.ToString() : string.Empty;
                     cboFolha.SelectedIndex = 0; // Reseta o combo de especialização consultório
 
                     if (buscaDadosPacienteFolha() == false)
@@ -285,6 +287,7 @@ namespace WEDLC.Forms
             cboSexo.SelectedIndex = 0; // Reseta o combo de sexo
             mskNascimento.Text = string.Empty; // Reseta o campo data de nascimento para a data atual
             txtIdade.Text = string.Empty; // Limpa o campo de idade
+            txtEmail.Text = string.Empty; // Limpa o campo de email
             cboConvenio.SelectedIndex = 0; // Reseta o combo de convênio
             cboIndPrinc.SelectedIndex = 0; // Reseta o combo de indicação principal
             cboIndSec.SelectedIndex = 0; // Reseta o combo de indicação secundária
@@ -303,6 +306,7 @@ namespace WEDLC.Forms
             mskTelefone.Enabled = Ativa; //Habilita - Desabilita o campo telefone
             cboSexo.Enabled = Ativa; //Habilita - Desabilita o campo sexo
             mskNascimento.Enabled = Ativa; //Habilita - Desabilita o campo data de nascimento
+            txtEmail.Enabled = Ativa; //Habilita - Desabilita o campo email
             cboConvenio.Enabled = Ativa; //Habilita - Desabilita o campo convênio
             cboIndPrinc.Enabled = Ativa; //Habilita - Desabilita o campo indicação principal
             cboIndSec.Enabled = Ativa; //Habilita - Desabilita o campo indicação secundária
@@ -1177,6 +1181,7 @@ namespace WEDLC.Forms
                 objcPaciente.Telefone = mskTelefone.Text;
                 objcPaciente.IdSexo = int.Parse(cboSexo.SelectedValue.ToString());
                 objcPaciente.DataNascimento = mskNascimento.Text;
+                objcPaciente.Email = txtEmail.Text;
                 objcPaciente.IdConvenio = int.Parse(cboConvenio.SelectedValue.ToString());
                 objcPaciente.IdIndicacao1 = int.Parse(cboIndPrinc.SelectedValue.ToString());
                 objcPaciente.IdIndicacao2 = int.Parse(cboIndSec.SelectedValue.ToString());
@@ -1441,6 +1446,29 @@ namespace WEDLC.Forms
                 MessageBox.Show("Erro ao selecionar um exame para excluir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void txtEmail_Leave(object sender, EventArgs e)
+        {
+            string email = txtEmail.Text.Trim();
+            var resultado = AdvancedEmailValidator.ValidateEmail(email);
+
+            if (!resultado.IsValid)
+            {
+                MessageBox.Show($"Erro: {resultado.ErrorMessage}",
+              "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
+                txtEmail.Focus();
+                txtEmail.Text = string.Empty;
+
+                //MessageBox.Show($"Email válido: {resultado.NormalizedEmail}",
+                //              "Validação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            //else
+            //{
+            //    MessageBox.Show($"Erro: {resultado.ErrorMessage}",
+            //                  "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
         }
     }
 

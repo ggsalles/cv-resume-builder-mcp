@@ -23,6 +23,7 @@ namespace WEDLC.Banco
         public string Telefone { get; set; }
         public int IdSexo { get; set; }
         public string DataNascimento { get; set; }
+        public string Email { get; set; }
         public Int32 IdConvenio { get; set; }
         public Int32 IdIndicacao1 { get; set; }
         public Int32 IdIndicacao2 { get; set; }
@@ -139,6 +140,7 @@ namespace WEDLC.Banco
                 new MySqlParameter("pTelefone", MySqlDbType.VarChar) { Value = Telefone ?? string.Empty },
                 new MySqlParameter("pIdSexo", MySqlDbType.Int32) { Value = IdSexo },
                 new MySqlParameter("pNascimento", MySqlDbType.Date) { Value =  DateTime.Parse(DataNascimento).ToString("yyyy/MM/dd") },
+                new MySqlParameter("pEmail", MySqlDbType.VarChar) { Value = Email ?? string.Empty },
                 new MySqlParameter("pIdConvenio", MySqlDbType.Int32) { Value = (IdConvenio == 0) ? DBNull.Value : (object)IdConvenio},
                 new MySqlParameter("pIdIndicacao1", MySqlDbType.Int32) { Value = (IdIndicacao1 == 0) ? DBNull.Value : (object)IdIndicacao1},
                 new MySqlParameter("pIdIndicacao2", MySqlDbType.Int32) { Value = (IdIndicacao2 == 0) ? DBNull.Value : (object)IdIndicacao2},
@@ -251,6 +253,7 @@ namespace WEDLC.Banco
                     command.Parameters.AddWithValue("pTelefone", Telefone ?? string.Empty);
                     command.Parameters.AddWithValue("pIdSexo", IdSexo);
                     command.Parameters.AddWithValue("pNascimento", DateTime.Parse(DataNascimento).ToString("yyyy/MM/dd"));
+                    command.Parameters.AddWithValue("pEmail", Email ?? string.Empty);
                     command.Parameters.AddWithValue("pIdConvenio", (IdConvenio == 0) ? DBNull.Value : (object)IdConvenio);
                     command.Parameters.AddWithValue("pIdIndicacao1", (IdIndicacao1 == 0) ? DBNull.Value : (object)IdIndicacao1);
                     command.Parameters.AddWithValue("pIdIndicacao2", (IdIndicacao2 == 0) ? DBNull.Value : (object)IdIndicacao2);

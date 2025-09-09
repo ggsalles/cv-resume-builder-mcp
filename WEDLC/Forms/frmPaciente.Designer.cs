@@ -84,6 +84,8 @@
             this.btnGravar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.Email = new System.Windows.Forms.Label();
             this.grpPaciente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdExame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdDadosPessoais)).BeginInit();
@@ -93,6 +95,8 @@
             // 
             // grpPaciente
             // 
+            this.grpPaciente.Controls.Add(this.txtEmail);
+            this.grpPaciente.Controls.Add(this.Email);
             this.grpPaciente.Controls.Add(this.grdExame);
             this.grpPaciente.Controls.Add(this.cboExame);
             this.grpPaciente.Controls.Add(this.btnExcluiExame);
@@ -156,7 +160,7 @@
             this.grdExame.Location = new System.Drawing.Point(6, 389);
             this.grdExame.Name = "grdExame";
             this.grdExame.Size = new System.Drawing.Size(1149, 94);
-            this.grdExame.TabIndex = 22;
+            this.grdExame.TabIndex = 24;
             this.grdExame.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdExame_CellClick);
             // 
             // cboExame
@@ -165,7 +169,7 @@
             this.cboExame.Location = new System.Drawing.Point(6, 362);
             this.cboExame.Name = "cboExame";
             this.cboExame.Size = new System.Drawing.Size(489, 21);
-            this.cboExame.TabIndex = 19;
+            this.cboExame.TabIndex = 21;
             this.cboExame.Validating += new System.ComponentModel.CancelEventHandler(this.cboExame_Validating);
             // 
             // btnExcluiExame
@@ -175,7 +179,7 @@
             this.btnExcluiExame.Location = new System.Drawing.Point(534, 360);
             this.btnExcluiExame.Name = "btnExcluiExame";
             this.btnExcluiExame.Size = new System.Drawing.Size(27, 24);
-            this.btnExcluiExame.TabIndex = 21;
+            this.btnExcluiExame.TabIndex = 23;
             this.btnExcluiExame.UseVisualStyleBackColor = true;
             this.btnExcluiExame.Click += new System.EventHandler(this.btnExcluiExame_Click);
             // 
@@ -186,7 +190,7 @@
             this.btnIncluiExame.Location = new System.Drawing.Point(501, 360);
             this.btnIncluiExame.Name = "btnIncluiExame";
             this.btnIncluiExame.Size = new System.Drawing.Size(27, 24);
-            this.btnIncluiExame.TabIndex = 20;
+            this.btnIncluiExame.TabIndex = 22;
             this.btnIncluiExame.UseVisualStyleBackColor = true;
             this.btnIncluiExame.Click += new System.EventHandler(this.btnIncluiExame_Click);
             // 
@@ -207,7 +211,7 @@
             this.txtIdade.Name = "txtIdade";
             this.txtIdade.ReadOnly = true;
             this.txtIdade.Size = new System.Drawing.Size(44, 20);
-            this.txtIdade.TabIndex = 36;
+            this.txtIdade.TabIndex = 13;
             // 
             // label18
             // 
@@ -266,7 +270,7 @@
             this.txtObs.Name = "txtObs";
             this.txtObs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtObs.Size = new System.Drawing.Size(1149, 77);
-            this.txtObs.TabIndex = 26;
+            this.txtObs.TabIndex = 29;
             // 
             // txtLocalidade
             // 
@@ -293,7 +297,7 @@
             this.grdFolha.Location = new System.Drawing.Point(6, 536);
             this.grdFolha.Name = "grdFolha";
             this.grdFolha.Size = new System.Drawing.Size(1149, 94);
-            this.grdFolha.TabIndex = 22;
+            this.grdFolha.TabIndex = 28;
             this.grdFolha.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdFolha_CellClick);
             // 
             // txtDataCadastro
@@ -303,7 +307,7 @@
             this.txtDataCadastro.MaxLength = 8;
             this.txtDataCadastro.Name = "txtDataCadastro";
             this.txtDataCadastro.Size = new System.Drawing.Size(155, 20);
-            this.txtDataCadastro.TabIndex = 18;
+            this.txtDataCadastro.TabIndex = 20;
             // 
             // label15
             // 
@@ -329,7 +333,7 @@
             this.cboBeneficente.Location = new System.Drawing.Point(567, 317);
             this.cboBeneficente.Name = "cboBeneficente";
             this.cboBeneficente.Size = new System.Drawing.Size(81, 21);
-            this.cboBeneficente.TabIndex = 17;
+            this.cboBeneficente.TabIndex = 19;
             // 
             // cboFolha
             // 
@@ -337,7 +341,7 @@
             this.cboFolha.Location = new System.Drawing.Point(6, 509);
             this.cboFolha.Name = "cboFolha";
             this.cboFolha.Size = new System.Drawing.Size(489, 21);
-            this.cboFolha.TabIndex = 23;
+            this.cboFolha.TabIndex = 25;
             this.cboFolha.Validating += new System.ComponentModel.CancelEventHandler(this.cboFolha_Validating);
             // 
             // label13
@@ -356,7 +360,7 @@
             this.btnExcluiFolha.Location = new System.Drawing.Point(534, 507);
             this.btnExcluiFolha.Name = "btnExcluiFolha";
             this.btnExcluiFolha.Size = new System.Drawing.Size(27, 24);
-            this.btnExcluiFolha.TabIndex = 25;
+            this.btnExcluiFolha.TabIndex = 27;
             this.btnExcluiFolha.UseVisualStyleBackColor = true;
             this.btnExcluiFolha.Click += new System.EventHandler(this.btnExcluiFolha_Click);
             // 
@@ -366,7 +370,7 @@
             this.cboMedico.Location = new System.Drawing.Point(6, 317);
             this.cboMedico.Name = "cboMedico";
             this.cboMedico.Size = new System.Drawing.Size(555, 21);
-            this.cboMedico.TabIndex = 16;
+            this.cboMedico.TabIndex = 18;
             // 
             // btnIncluiFolha
             // 
@@ -375,7 +379,7 @@
             this.btnIncluiFolha.Location = new System.Drawing.Point(501, 507);
             this.btnIncluiFolha.Name = "btnIncluiFolha";
             this.btnIncluiFolha.Size = new System.Drawing.Size(27, 24);
-            this.btnIncluiFolha.TabIndex = 24;
+            this.btnIncluiFolha.TabIndex = 26;
             this.btnIncluiFolha.UseVisualStyleBackColor = true;
             this.btnIncluiFolha.Click += new System.EventHandler(this.btnIncluiFolha_Click);
             // 
@@ -429,7 +433,7 @@
             this.cboIndSec.Location = new System.Drawing.Point(567, 271);
             this.cboIndSec.Name = "cboIndSec";
             this.cboIndSec.Size = new System.Drawing.Size(588, 21);
-            this.cboIndSec.TabIndex = 15;
+            this.cboIndSec.TabIndex = 17;
             // 
             // label9
             // 
@@ -515,7 +519,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(421, 209);
+            this.label3.Location = new System.Drawing.Point(710, 209);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 7;
@@ -536,15 +540,15 @@
             this.cboIndPrinc.Location = new System.Drawing.Point(6, 271);
             this.cboIndPrinc.Name = "cboIndPrinc";
             this.cboIndPrinc.Size = new System.Drawing.Size(555, 21);
-            this.cboIndPrinc.TabIndex = 14;
+            this.cboIndPrinc.TabIndex = 16;
             // 
             // cboConvenio
             // 
             this.cboConvenio.FormattingEnabled = true;
-            this.cboConvenio.Location = new System.Drawing.Point(421, 226);
+            this.cboConvenio.Location = new System.Drawing.Point(710, 226);
             this.cboConvenio.Name = "cboConvenio";
-            this.cboConvenio.Size = new System.Drawing.Size(734, 21);
-            this.cboConvenio.TabIndex = 13;
+            this.cboConvenio.Size = new System.Drawing.Size(445, 21);
+            this.cboConvenio.TabIndex = 15;
             // 
             // txtCep
             // 
@@ -613,7 +617,7 @@
             this.grpBotoes.Location = new System.Drawing.Point(11, 747);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(1162, 47);
-            this.grpBotoes.TabIndex = 27;
+            this.grpBotoes.TabIndex = 30;
             this.grpBotoes.TabStop = false;
             // 
             // btnCancelar
@@ -624,7 +628,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(282, 13);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(85, 27);
-            this.btnCancelar.TabIndex = 31;
+            this.btnCancelar.TabIndex = 34;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -637,7 +641,7 @@
             this.btnExcluir.Location = new System.Drawing.Point(100, 13);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(85, 27);
-            this.btnExcluir.TabIndex = 29;
+            this.btnExcluir.TabIndex = 32;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
             // 
@@ -649,7 +653,7 @@
             this.btnGravar.Location = new System.Drawing.Point(191, 13);
             this.btnGravar.Name = "btnGravar";
             this.btnGravar.Size = new System.Drawing.Size(85, 27);
-            this.btnGravar.TabIndex = 30;
+            this.btnGravar.TabIndex = 33;
             this.btnGravar.Text = "Gravar";
             this.btnGravar.UseVisualStyleBackColor = true;
             this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
@@ -661,7 +665,7 @@
             this.btnSair.Location = new System.Drawing.Point(1071, 13);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(85, 27);
-            this.btnSair.TabIndex = 32;
+            this.btnSair.TabIndex = 35;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
@@ -673,10 +677,29 @@
             this.btnNovo.Location = new System.Drawing.Point(9, 13);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(85, 27);
-            this.btnNovo.TabIndex = 28;
+            this.btnNovo.TabIndex = 31;
             this.btnNovo.Text = "Novo";
             this.btnNovo.UseVisualStyleBackColor = true;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Enabled = false;
+            this.txtEmail.Location = new System.Drawing.Point(422, 226);
+            this.txtEmail.MaxLength = 30;
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(282, 20);
+            this.txtEmail.TabIndex = 14;
+            this.txtEmail.Leave += new System.EventHandler(this.txtEmail_Leave);
+            // 
+            // Email
+            // 
+            this.Email.AutoSize = true;
+            this.Email.Location = new System.Drawing.Point(422, 210);
+            this.Email.Name = "Email";
+            this.Email.Size = new System.Drawing.Size(32, 13);
+            this.Email.TabIndex = 40;
+            this.Email.Text = "Email";
             // 
             // frmPaciente
             // 
@@ -762,5 +785,7 @@
         private System.Windows.Forms.Button btnExcluiExame;
         private System.Windows.Forms.Button btnIncluiExame;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.Label Email;
     }
 }
