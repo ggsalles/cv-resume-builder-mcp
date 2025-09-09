@@ -35,7 +35,7 @@ namespace WEDLC.Banco
         {
             // Validação básica dos parâmetros
 
-            if (IdResultado <= 0)
+            if (IdResultado < 0)
                 return null;
 
             if (!conectaBanco())

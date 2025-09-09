@@ -7,6 +7,14 @@ namespace WEDLC.Forms
 {
     public partial class frmLogin : Form
     {
+        public enum NivelAcesso
+        {
+            NIVEL1_ADM = 1,
+            NIVEL2_USUCOMPLETO = 2,
+            NIVEL3_USULEITURA = 3,
+            NIVEL4_SEMACESSO = 4
+        }
+
         public frmLogin()
         {
             InitializeComponent();
@@ -39,7 +47,7 @@ namespace WEDLC.Forms
 
                 //pDescripto = objclLogin.descritptografiaSenha(txtSenha.Text.ToString(), pCifrado);
 
-                dtAux = objclLogin.buscaUsuarioLogin(txtUsuario.Text.ToString());
+                dtAux = objclLogin.buscaUsuarioLogin(txtUsuario.Text.ToString(), 0); // 0 = modulo acesso
 
                 // Se não econtrou ninguém...
                 if (dtAux.Rows.Count == 0)
@@ -63,6 +71,16 @@ namespace WEDLC.Forms
                     dtAux.Dispose();
 
                     return;
+                }
+
+                // Se encontrou, valida a permissão de acesso
+                if (dtAux.Rows.Count > 0)
+                {
+                    if (Convert.ToInt32(dtAux.Rows[0]["idnivel"].ToString()) == (Int32)NivelAcesso.NIVEL4_SEMACESSO)
+                    {
+                        MessageBox.Show("Você não tem permissão de acesso.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                 }
 
                 // Se encontrou e for troca de senha...
@@ -112,7 +130,7 @@ namespace WEDLC.Forms
                     txtSenha.Text = "";
 
                     // Fecha o DataTable
-                    dtAux.Dispose(); 
+                    dtAux.Dispose();
 
 
                     return;
@@ -141,7 +159,7 @@ namespace WEDLC.Forms
                         this.Hide();
 
                         // Cria um objeto para o form principal abrir
-                        frmPrincipal objPrincipal = new frmPrincipal(txtUsuario.Text,null);
+                        frmPrincipal objPrincipal = new frmPrincipal(txtUsuario.Text, null);
                         //objPrincipal.FindForm().Text = objPrincipal.FindForm().Text + ": " + txtUsuario.Text.ToString();
 
                         //Abre o form principal

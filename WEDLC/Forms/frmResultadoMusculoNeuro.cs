@@ -2,6 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Transactions;
 using WEDLC.Banco;
 
 namespace WEDLC.Forms
@@ -38,6 +39,7 @@ namespace WEDLC.Forms
             this.DoubleBuffered = true;
             this.Text = "Folha: " + objResultadoAvaliacaoMuscular.Sigla.ToString() + " - " + objResultadoAvaliacaoMuscular.Nome.ToString();
             int var = grupoFolha; // Apenas para evitar o aviso de variável não utilizada
+            IdResultado = objResultadoAvaliacaoMuscular.IdResultado;
 
             if (CarregaAvaliacaoMuscular() == false)
             {
@@ -63,7 +65,7 @@ namespace WEDLC.Forms
                 return;
             }
 
-            if (CarregaComentario() == true)
+            if (CarregaComentario() == false)
             {
                 return;
             }
@@ -81,6 +83,8 @@ namespace WEDLC.Forms
                 // Define o IdFolha e IdResultado com base no objeto atual
                 objResultadoAvaliacaoMuscular.IdFolha = this.objResultadoAvaliacaoMuscular.IdFolha;
                 objResultadoAvaliacaoMuscular.IdPaciente = this.objResultadoAvaliacaoMuscular.IdPaciente;
+                objResultadoAvaliacaoMuscular.IdResultado = IdResultado;
+
                 // Busca os dados da avaliação muscular
                 DataTable dtGridAvaliacaoMuscular = objResultadoAvaliacaoMuscular.buscaResultadoAvaliacaoMuscular();
 
@@ -90,9 +94,6 @@ namespace WEDLC.Forms
                 dtGridAvaliacaoMuscular.Columns["sigla"].ColumnName = "Sigla";
                 dtGridAvaliacaoMuscular.Columns["nome"].ColumnName = "Nome";
                 dtGridAvaliacaoMuscular.Columns["lado"].ColumnName = "Lado";
-
-                // Pega o IdResultado da primeira linha, se existir
-                IdResultado = Int32.Parse(dtGridAvaliacaoMuscular.Rows[0]["idresultado"].ToString());
 
                 grdAvaliacaoMuscular.SuspendLayout();
                 grdAvaliacaoMuscular.DataSource = dtGridAvaliacaoMuscular;
@@ -554,62 +555,82 @@ namespace WEDLC.Forms
 
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            if (GravaMusculoExaminado() == false)
+            using (var scope = new TransactionScope())
             {
-                return;
+                try
+                {
+                    if (GravaMusculoExaminado() == false)
+                    {
+                        return;
+                    }
+
+                    if (GravaNeuroConducaoMotora() == false)
+                    {
+                        return;
+                    }
+
+                    if (GravaNeuroConducaoSensorial() == false)
+                    {
+                        return;
+                    }
+
+                    if (GravaAtividadeInsercao() == false)
+                    {
+                        return;
+                    }
+
+                    if (GravaPotencialUnidade() == false)
+                    {
+                        return;
+                    }
+
+                    if (GravaComentario() == false)
+                    {
+                        return;
+                    }
+
+                    // Se tudo ok, commit na transação
+                    scope.Complete();
+
+                    MessageBox.Show("Dados gravados com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    Close();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
-
-            if (GravaNeuroConducaoMotora() == false)
-            {
-                return;
-            }
-
-            if (GravaNeuroConducaoSensorial() == false)
-            {
-                return;
-            }
-
-            if (GravaAtividadeInsercao() == false)
-            {
-                return;
-            }
-
-            if (GravaPotencialUnidade() == false)
-            {
-                return;
-            }
-
-            if (GravaComentario() == false)
-            {
-                return;
-            }
-
-            MessageBox.Show("Dados gravados com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
 
         private bool GravaMusculoExaminado()
         {
             try
             {
-                // Cria uma instância do objeto cResultadoAvaliacaoMuscular
-                cResultadoAvaliacaoMuscular objResultadoAvaliacaoMuscular = new cResultadoAvaliacaoMuscular();
-
-                // Percorre as linhas do DataGridView e grava os dados
-                foreach (DataGridViewRow row in grdAvaliacaoMuscular.Rows)
+                //verifica se existe alguma linha no grid
+                if (grdAvaliacaoMuscular.Rows.Count > 0)
                 {
-                    if (row.IsNewRow) continue; // Ignora a linha de novo registro
+                    // Cria uma instância do objeto cResultadoAvaliacaoMuscular
+                    cResultadoAvaliacaoMuscular objResultadoAvaliacaoMuscular = new cResultadoAvaliacaoMuscular();
 
-                    objResultadoAvaliacaoMuscular.IdResultadoAvaliacao = Int32.Parse(row.Cells["idresultadoavaliacao"].Value.ToString());
-                    objResultadoAvaliacaoMuscular.Lado = row.Cells["lado"].Value.ToString();
-
-                    // Chama o método para gravar os dados
-                    if (!objResultadoAvaliacaoMuscular.gravaResultadoAvaliacaoMuscular())
+                    // Percorre as linhas do DataGridView e grava os dados
+                    foreach (DataGridViewRow row in grdAvaliacaoMuscular.Rows)
                     {
-                        MessageBox.Show("Erro ao gravar avaliação muscular.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false; // Falha ao gravar os dados
+                        if (row.IsNewRow) continue; // Ignora a linha de novo registro
+
+                        objResultadoAvaliacaoMuscular.IdResultadoAvaliacao = Int32.Parse(row.Cells["idresultadoavaliacao"].Value.ToString());
+                        objResultadoAvaliacaoMuscular.Lado = row.Cells["lado"].Value.ToString();
+
+                        // Chama o método para gravar os dados
+                        if (!objResultadoAvaliacaoMuscular.gravaResultadoAvaliacaoMuscular())
+                        {
+                            MessageBox.Show("Erro ao gravar avaliação muscular.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false; // Falha ao gravar os dados
+                        }
                     }
                 }
+
                 return true; // Sucesso ao gravar os dados
             }
             catch (Exception ex)
@@ -623,27 +644,32 @@ namespace WEDLC.Forms
         {
             try
             {
-                // Cria uma instância do objeto cResultadoAvaliacaoMuscular
-                cResultadoNeuroCondMotora objResultadoNeuroCondMotora = new cResultadoNeuroCondMotora();
-
-                // Percorre as linhas do DataGridView e grava os dados
-                foreach (DataGridViewRow row in grdNeuroConducaoMotora.Rows)
+                //verifica se existe alguma linha no grid
+                if (grdNeuroConducaoMotora.Rows.Count > 0)
                 {
-                    if (row.IsNewRow) continue; // Ignora a linha de novo registro
+                    // Cria uma instância do objeto cResultadoAvaliacaoMuscular
+                    cResultadoNeuroCondMotora objResultadoNeuroCondMotora = new cResultadoNeuroCondMotora();
 
-                    objResultadoNeuroCondMotora.IdResultadoVelocNeuroCondMotora = Int32.Parse(row.Cells["idresultadovelocneurocondmotora"].Value.ToString());
-                    objResultadoNeuroCondMotora.VelocidadeDireito = row.Cells["vel.direito"].Value.ToString();
-                    objResultadoNeuroCondMotora.VelocidadeEsquerdo = row.Cells["vel.esquerdo"].Value.ToString();
-                    objResultadoNeuroCondMotora.LatenciaDireito = row.Cells["lat.direito"].Value.ToString();
-                    objResultadoNeuroCondMotora.LatenciaEsquerdo = row.Cells["lat.esquerdo"].Value.ToString();
-
-                    // Chama o método para gravar os dados
-                    if (!objResultadoNeuroCondMotora.gravaResultadoNeuroConducaoMotora())
+                    // Percorre as linhas do DataGridView e grava os dados
+                    foreach (DataGridViewRow row in grdNeuroConducaoMotora.Rows)
                     {
-                        MessageBox.Show("Erro ao gravar Resultado Neuro Condução Motora.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false; // Falha ao gravar os dados
+                        if (row.IsNewRow) continue; // Ignora a linha de novo registro
+
+                        objResultadoNeuroCondMotora.IdResultadoVelocNeuroCondMotora = Int32.Parse(row.Cells["idresultadovelocneurocondmotora"].Value.ToString());
+                        objResultadoNeuroCondMotora.VelocidadeDireito = row.Cells["vel.direito"].Value.ToString();
+                        objResultadoNeuroCondMotora.VelocidadeEsquerdo = row.Cells["vel.esquerdo"].Value.ToString();
+                        objResultadoNeuroCondMotora.LatenciaDireito = row.Cells["lat.direito"].Value.ToString();
+                        objResultadoNeuroCondMotora.LatenciaEsquerdo = row.Cells["lat.esquerdo"].Value.ToString();
+
+                        // Chama o método para gravar os dados
+                        if (!objResultadoNeuroCondMotora.gravaResultadoNeuroConducaoMotora())
+                        {
+                            MessageBox.Show("Erro ao gravar Resultado Neuro Condução Motora.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false; // Falha ao gravar os dados
+                        }
                     }
                 }
+
                 return true; // Sucesso ao gravar os dados
             }
             catch (Exception ex)
@@ -657,25 +683,30 @@ namespace WEDLC.Forms
         {
             try
             {
-                // Cria uma instância do objeto cResultadoAvaliacaoMuscular
-                cResultadoNeuroCondSensorial objResultadoNeuroCondSensorial = new cResultadoNeuroCondSensorial();
-
-                // Percorre as linhas do DataGridView e grava os dados
-                foreach (DataGridViewRow row in grdNeuroConducaoSensorial.Rows)
+                //verifica se existe alguma linha no grid
+                if (grdNeuroConducaoSensorial.Rows.Count > 0)
                 {
-                    if (row.IsNewRow) continue; // Ignora a linha de novo registro
+                    // Cria uma instância do objeto cResultadoAvaliacaoMuscular
+                    cResultadoNeuroCondSensorial objResultadoNeuroCondSensorial = new cResultadoNeuroCondSensorial();
 
-                    objResultadoNeuroCondSensorial.IdResultadoNeuroCondSensorial = Int32.Parse(row.Cells["idresultadoneurocondsensorial"].Value.ToString());
-                    objResultadoNeuroCondSensorial.LatenciaDireito = row.Cells["lat.direito"].Value.ToString();
-                    objResultadoNeuroCondSensorial.LatenciaEsquerdo = row.Cells["lat.esquerdo"].Value.ToString();
-
-                    // Chama o método para gravar os dados
-                    if (!objResultadoNeuroCondSensorial.gravaResultadoNeuroConducaoSensorial())
+                    // Percorre as linhas do DataGridView e grava os dados
+                    foreach (DataGridViewRow row in grdNeuroConducaoSensorial.Rows)
                     {
-                        MessageBox.Show("Erro ao gravar Resultado Neuro Condução Sensorial.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false; // Falha ao gravar os dados
+                        if (row.IsNewRow) continue; // Ignora a linha de novo registro
+
+                        objResultadoNeuroCondSensorial.IdResultadoNeuroCondSensorial = Int32.Parse(row.Cells["idresultadoneurocondsensorial"].Value.ToString());
+                        objResultadoNeuroCondSensorial.LatenciaDireito = row.Cells["lat.direito"].Value.ToString();
+                        objResultadoNeuroCondSensorial.LatenciaEsquerdo = row.Cells["lat.esquerdo"].Value.ToString();
+
+                        // Chama o método para gravar os dados
+                        if (!objResultadoNeuroCondSensorial.gravaResultadoNeuroConducaoSensorial())
+                        {
+                            MessageBox.Show("Erro ao gravar Resultado Neuro Condução Sensorial.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false; // Falha ao gravar os dados
+                        }
                     }
                 }
+
                 return true; // Sucesso ao gravar os dados
             }
             catch (Exception ex)
@@ -710,7 +741,7 @@ namespace WEDLC.Forms
                     txtNomeAtividade.Text = string.Empty;
                     txtSiglaAtividade.Text = string.Empty;
                     txtTextoAtividade.Text = string.Empty;
-                    return false; // Falha ao carregar os dados
+                    //return false; // Falha ao carregar os dados
                 }
 
                 return true; // Sucesso ao carregar os dados
@@ -804,7 +835,7 @@ namespace WEDLC.Forms
                     cResultadoAtividadeInsercao objResultadoAtividadeInsercao = new cResultadoAtividadeInsercao();
 
                     objResultadoAtividadeInsercao.IdAtividadeInsercao = txtCodAtividade.Text != string.Empty ? Int32.Parse(txtCodAtividade.Text) : 0;
-                    objResultadoAtividadeInsercao.IdResultado = IdResultado;
+                    objResultadoAtividadeInsercao.IdResultado = this.IdResultado;
                     objResultadoAtividadeInsercao.Texto = txtTextoAtividade.Text;
 
                     // Chama o método para gravar os dados

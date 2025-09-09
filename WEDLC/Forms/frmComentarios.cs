@@ -43,7 +43,6 @@ namespace WEDLC.Forms
             if (VemdeResultado == true)
             {
                 btnNovo.Enabled = false;
-                btnCancelar.Enabled = true;
             }
         }
 
@@ -335,6 +334,9 @@ namespace WEDLC.Forms
                 txtNome.Enabled = true;
                 txtSigla.Enabled = true;
 
+                //Desabilita o cancelar
+                btnCancelar.Enabled = false;
+
                 //Limpa os campos
                 limpaControles();
 
@@ -445,7 +447,7 @@ namespace WEDLC.Forms
                     //Desabilita botões
                     btnNovo.Enabled = false;
                     btnGravar.Enabled = false;
-                    //btnCancelar.Enabled = true;
+                    btnCancelar.Enabled = true;
                     btnExcluir.Enabled = false;
                     //Desabilita os campos
                     txtCodigo.Enabled = false;

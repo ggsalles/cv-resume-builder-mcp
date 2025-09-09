@@ -19,6 +19,7 @@ namespace WEDLC.Forms
         public DataTable dtComboFolha;
         public int NumeroLinha = -1; // Variável para controlar a linha do grid da folha
         public int CodGrupoFolha = 0; // Variável para controlar o código do grupo da folha
+        public int IdResultado = 0; //Variável para controlar o código do resultado
 
         public const int codModulo = 13; //Código do módulo
 
@@ -366,7 +367,7 @@ namespace WEDLC.Forms
                     if (row.Cells[0].Value != null && row.Cells[1].Value != null)
                     {
 
-                        // Obtém o ID do paciente e o ID da folha
+                        // Obtém o ID e os textos das células necessárias
                         int idpaciente = Convert.ToInt32(row.Cells[0].Value);
                         int idfolha = Convert.ToInt32(row.Cells[1].Value);
                         string sigla = row.Cells[2].Value.ToString();
@@ -374,6 +375,14 @@ namespace WEDLC.Forms
 
                         // Armazena o número da linha selecionada do Grupo da folha
                         CodGrupoFolha = Convert.ToInt32(row.Cells[4].Value);
+
+                        cResultado objResultado = new cResultado();
+                        objResultado.Paciente.IdPaciente = idpaciente;
+
+                        DataTable dtAux = new DataTable();
+                        dtAux = objResultado.buscaIdResultado();
+                        IdResultado = Convert.ToInt32(dtAux.Rows[0]["idresultado"]);
+
                         {
                             switch ((int)CodGrupoFolha)
                             {
@@ -384,6 +393,7 @@ namespace WEDLC.Forms
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular = new cResultadoAvaliacaoMuscular();
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdPaciente = idpaciente;
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdFolha = idfolha;
+                                    objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdResultado = IdResultado;
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla;
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome;
                                     objResultadoMusculoNeuro.grupoFolha = CodGrupoFolha;
@@ -410,7 +420,7 @@ namespace WEDLC.Forms
                                     objPotenciaisEvocados.codGrupoFolha = CodGrupoFolha;
                                     objPotenciaisEvocados.IdFolha = idfolha;
                                     objPotenciaisEvocados.IdPaciente = idpaciente;
-                                    objPotenciaisEvocados.IdResultado = 0; //Sempre inicia com zero
+                                    objPotenciaisEvocados.IdResultado = IdResultado; 
                                     objPotenciaisEvocados.sigla = sigla;
                                     objPotenciaisEvocados.nome = nome;
 

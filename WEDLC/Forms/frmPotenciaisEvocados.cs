@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Transactions;
 using System.Windows.Forms;
 using WEDLC.Banco;
-using static Mysqlx.Notice.Frame.Types;
 using static WEDLC.Banco.cUtil;
 
 namespace WEDLC.Forms

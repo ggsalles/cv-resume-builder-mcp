@@ -325,6 +325,32 @@ namespace WEDLC.Forms
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            // Se a chamada for do formulário de resultado, apenas limpa os campos e retorna
+            if (VemdeResultado == true)
+            {
+                //Habilita os campos
+                txtCodigo.Enabled = true;
+                txtNome.Enabled = true;
+                txtSigla.Enabled = true;
+
+                //Desabilita o cancelar
+                btnCancelar.Enabled = false;
+
+                //Limpa os campos
+                limpaControles();
+
+                //Habilita o grid
+                grdDados.Enabled = true;
+
+                //Desmarca a seleção do grid
+                grdDados.CurrentCell = null;
+
+                //Carrega o grid
+                carregaTela();
+
+                return;
+            }
+
             //Determina a acao
             cAcao = Acao.CANCELAR;
 
@@ -420,7 +446,7 @@ namespace WEDLC.Forms
                     //Desabilita botões
                     btnNovo.Enabled = false;
                     btnGravar.Enabled = false;
-                    btnCancelar.Enabled = false;
+                    btnCancelar.Enabled = true;
                     btnExcluir.Enabled = false;
                     //Desabilita os campos
                     txtCodigo.Enabled = false;

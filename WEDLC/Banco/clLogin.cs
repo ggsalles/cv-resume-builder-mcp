@@ -48,7 +48,7 @@ namespace WEDLC.Banco
             return conexao;
         }
 
-        public DataTable buscaUsuarioLogin(string pNome)
+        public DataTable buscaUsuarioLogin(string pNome, Int32 pIdModulo)
 
         {
             try
@@ -70,6 +70,7 @@ namespace WEDLC.Banco
                 MySqlDataAdapter sqlDa = new MySqlDataAdapter("pr_login", conexao);
                 sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                 sqlDa.SelectCommand.Parameters.AddWithValue("pNome", pNome);
+                sqlDa.SelectCommand.Parameters.AddWithValue("pIdModulo", pIdModulo);
                 DataTable dt = new DataTable();
                 sqlDa.Fill(dt);
                 conexao.Close();
