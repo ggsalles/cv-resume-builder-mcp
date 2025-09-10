@@ -57,6 +57,7 @@ namespace WEDLC.Banco
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", Paciente.IdPaciente);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", Paciente.IdFolha);
                     sqlDa.Fill(dt);
                     return dt;
                 }

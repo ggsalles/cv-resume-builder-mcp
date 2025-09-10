@@ -15,6 +15,10 @@ namespace WEDLC.Banco
         [Browsable(false)] // Oculta no DataGridView
         public Int32 IdResultado { get; set; }
 
+        [DisplayName("ID Folha")]
+        [Browsable(false)] // Oculta no DataGridView
+        public Int32 IdFolha { get; set; }
+
         [DisplayName("ID Resultado PEGC")]
         [Browsable(false)] // Oculta no DataGridView
         public Int32 IdResultadoPegc { get; set; }
@@ -121,6 +125,7 @@ namespace WEDLC.Banco
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", IdFolha);
 
                     sqlDa.Fill(dt);
                     return dt;

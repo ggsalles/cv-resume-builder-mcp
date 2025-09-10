@@ -13,6 +13,9 @@ namespace WEDLC.Banco
         [DisplayName("idresultado")]
         public Int32 IdResultado { get; set; }
 
+        [DisplayName("ID Folha")]
+        public Int32 IdFolha { get; set; }
+
         [DisplayName("idresultadopea")]
         public Int32 IdResultadoPea { get; set; }
 
@@ -134,6 +137,7 @@ namespace WEDLC.Banco
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     //sqlDa.SelectCommand.Parameters.AddWithValue("pIdResultado", IdResultado);
                     sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", IdFolha);
 
                     sqlDa.Fill(dt);
                     return dt;

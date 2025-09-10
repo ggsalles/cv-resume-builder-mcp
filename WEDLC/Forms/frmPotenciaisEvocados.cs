@@ -438,6 +438,7 @@ namespace WEDLC.Forms
 
                 objcPotenciaisPEV.IdResultado = this.IdResultado;
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
+                objcPotenciaisPEV.IdFolha = this.IdFolha;
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoPotEvocadoTecnica();
 
@@ -485,6 +486,8 @@ namespace WEDLC.Forms
 
                 objcPotenciaisPEV.IdPaciente = this.IdPaciente;
                 objcPotenciaisPEV.IdResultado = this.IdResultado;
+                objcPotenciaisPEV.IdFolha = this.IdFolha;
+
 
                 DataTable dt = objcPotenciaisPEV.BuscaResultadoPev();
 
@@ -584,6 +587,7 @@ namespace WEDLC.Forms
 
                 objcPotenciaisPEA.IdResultado = this.IdResultado;
                 objcPotenciaisPEA.IdPaciente = this.IdPaciente;
+                objcPotenciaisPEA.IdFolha = this.IdFolha;
 
                 DataTable dt = objcPotenciaisPEA.BuscaResultadoPea();
 
@@ -1719,6 +1723,7 @@ namespace WEDLC.Forms
 
                 objcPotenciaisPEGC.IdPaciente = this.IdPaciente;
                 objcPotenciaisPEGC.IdResultado = this.IdResultado;
+                objcPotenciaisPEGC.IdFolha = this.IdFolha;
 
                 DataTable dt = objcPotenciaisPEGC.BuscaResultadoPegc();
 
@@ -1796,6 +1801,7 @@ namespace WEDLC.Forms
 
                 objcPotenciaisPESSMED.IdPaciente = this.IdPaciente;
                 objcPotenciaisPESSMED.IdResultado = this.IdResultado;
+                objcPotenciaisPESSMED.IdFolha = this.IdFolha;
 
                 DataTable dt = objcPotenciaisPESSMED.BuscaResultadoPessMed();
 

@@ -378,6 +378,7 @@ namespace WEDLC.Forms
 
                         cResultado objResultado = new cResultado();
                         objResultado.Paciente.IdPaciente = idpaciente;
+                        objResultado.Paciente.IdFolha = idfolha;
 
                         DataTable dtAux = new DataTable();
                         dtAux = objResultado.buscaIdResultado();
