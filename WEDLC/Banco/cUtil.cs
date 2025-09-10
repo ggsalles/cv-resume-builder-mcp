@@ -500,52 +500,62 @@ namespace WEDLC.Banco
                 // Resultado da validação
                 var result = new EmailValidationResult();
 
-                // 1. Verifica se está vazio
-                //if (string.IsNullOrWhiteSpace(email))
-                //{
-                //    result.IsValid = false;
-                //    result.ErrorMessage = "Email não pode estar vazio";
-                //    return result;
-                //}
-
-                // 2. Verifica comprimento máximo
-                if (email.Length > 254)
+                if (!string.IsNullOrWhiteSpace(email))
                 {
-                    result.IsValid = false;
-                    result.ErrorMessage = "Email muito longo (máximo 254 caracteres)";
-                    return result;
-                }
+                    // 1. Verifica se está vazio
+                    //if (string.IsNullOrWhiteSpace(email))
+                    //{
+                    //    result.IsValid = false;
+                    //    result.ErrorMessage = "Email não pode estar vazio";
+                    //    return result;
+                    //}
 
-                // 3. Verifica formato básico com regex
-                try
-                {
-                    if (!Regex.IsMatch(email,
-                        @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"))
+                    // 2. Verifica comprimento máximo
+                    if (email.Length > 254)
                     {
                         result.IsValid = false;
-                        result.ErrorMessage = "Formato de email inválido";
+                        result.ErrorMessage = "Email muito longo (máximo 254 caracteres)";
                         return result;
                     }
-                }
-                catch
-                {
-                    result.IsValid = false;
-                    result.ErrorMessage = "Erro na validação do formato";
+
+                    // 3. Verifica formato básico com regex
+                    try
+                    {
+                        if (!Regex.IsMatch(email,
+                            @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"))
+                        {
+                            result.IsValid = false;
+                            result.ErrorMessage = "Formato de email inválido";
+                            return result;
+                        }
+                    }
+                    catch
+                    {
+                        result.IsValid = false;
+                        result.ErrorMessage = "Erro na validação do formato";
+                        return result;
+                    }
+
+                    // 4. Tenta criar um MailAddress (validação do .NET)
+                    try
+                    {
+                        var mailAddress = new MailAddress(email);
+                        result.IsValid = true;
+                        result.NormalizedEmail = mailAddress.Address;
+                    }
+                    catch
+                    {
+                        result.IsValid = false;
+                        result.ErrorMessage = "Endereço de email inválido";
+                        return result;
+                    }
+
                     return result;
                 }
 
-                // 4. Tenta criar um MailAddress (validação do .NET)
-                try
+                else
                 {
-                    var mailAddress = new MailAddress(email);
                     result.IsValid = true;
-                    result.NormalizedEmail = mailAddress.Address;
-                }
-                catch
-                {
-                    result.IsValid = false;
-                    result.ErrorMessage = "Endereço de email inválido";
-                    return result;
                 }
 
                 return result;
