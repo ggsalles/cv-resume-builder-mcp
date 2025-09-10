@@ -501,12 +501,12 @@ namespace WEDLC.Banco
                 var result = new EmailValidationResult();
 
                 // 1. Verifica se está vazio
-                if (string.IsNullOrWhiteSpace(email))
-                {
-                    result.IsValid = false;
-                    result.ErrorMessage = "Email não pode estar vazio";
-                    return result;
-                }
+                //if (string.IsNullOrWhiteSpace(email))
+                //{
+                //    result.IsValid = false;
+                //    result.ErrorMessage = "Email não pode estar vazio";
+                //    return result;
+                //}
 
                 // 2. Verifica comprimento máximo
                 if (email.Length > 254)
