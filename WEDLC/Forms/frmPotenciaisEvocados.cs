@@ -111,6 +111,9 @@ namespace WEDLC.Forms
 
                     tabPotenciais.TabPages.Add(tabPea);
 
+                    // Redimensiona a tela para PEA
+                    RedimensionaTelaPEA();
+
                     if (CarregaDadosPea() == false)
                     {
                         throw new Exception("Erro na CarregaDadosPea");
@@ -154,7 +157,8 @@ namespace WEDLC.Forms
                 case (int)GrupoFolha.PEGC:
 
                     tabPotenciais.TabPages.Add(tabPegc);
-                    RedimensionaTelaPESS();
+
+                    RedimensionaTelaPEGC();
 
                     if (CarregaDadosPegc() == false)
                     {
@@ -572,11 +576,20 @@ namespace WEDLC.Forms
 
         private void RedimensionaTelaPEV()
         {
-            tabPotenciais.Size = new Size(684, 179);
+            tabPotenciais.Size = new Size(684, 172);
             grpBoxDados.Size = new Size(699, 344);
             grpComentario.Location = new Point(12, 360);
             grpBotoes.Location = new Point(12, 617);
             this.Size = new Size(735, 715);
+        }
+
+        private void RedimensionaTelaPEA()
+        {
+            tabPotenciais.Size = new Size(684, 216);
+            grpBoxDados.Size = new Size(699, 390);
+            grpComentario.Location = new Point(12, 409);
+            grpBotoes.Location = new Point(12, 664);
+            this.Size = new Size(738, 763);
         }
 
         private bool CarregaDadosPea()
@@ -1561,6 +1574,15 @@ namespace WEDLC.Forms
             grpComentario.Location = new Point(12, 451);
             grpBotoes.Location = new Point(12, 704);
             this.Size = new Size(735, 802);
+        }
+
+        private void RedimensionaTelaPEGC()
+        {
+            tabPotenciais.Size = new Size(684, 186);
+            grpBoxDados.Size = new Size(699, 357);
+            grpComentario.Location = new Point(12, 375);
+            grpBotoes.Location = new Point(11, 630);
+            this.Size = new Size(738, 729);
         }
 
         private void txtp1inicio_Enter(object sender, EventArgs e)

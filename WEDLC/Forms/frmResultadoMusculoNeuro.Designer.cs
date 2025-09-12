@@ -80,7 +80,7 @@
             // 
             this.grpBotoes.Controls.Add(this.btnGravar);
             this.grpBotoes.Controls.Add(this.btnSair);
-            this.grpBotoes.Location = new System.Drawing.Point(12, 758);
+            this.grpBotoes.Location = new System.Drawing.Point(13, 540);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(1289, 47);
             this.grpBotoes.TabIndex = 25;
@@ -116,7 +116,7 @@
             this.grpMusculos.Controls.Add(this.grdAvaliacaoMuscular);
             this.grpMusculos.Location = new System.Drawing.Point(12, 12);
             this.grpMusculos.Name = "grpMusculos";
-            this.grpMusculos.Size = new System.Drawing.Size(671, 249);
+            this.grpMusculos.Size = new System.Drawing.Size(671, 170);
             this.grpMusculos.TabIndex = 1;
             this.grpMusculos.TabStop = false;
             this.grpMusculos.Text = "Músculos Examinados";
@@ -126,7 +126,7 @@
             this.grdAvaliacaoMuscular.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdAvaliacaoMuscular.Location = new System.Drawing.Point(6, 16);
             this.grdAvaliacaoMuscular.Name = "grdAvaliacaoMuscular";
-            this.grdAvaliacaoMuscular.Size = new System.Drawing.Size(659, 226);
+            this.grdAvaliacaoMuscular.Size = new System.Drawing.Size(659, 149);
             this.grdAvaliacaoMuscular.TabIndex = 2;
             this.grdAvaliacaoMuscular.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdAvaliacaoMuscular_CellValidating);
             this.grdAvaliacaoMuscular.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdAvaliacaoMuscular_EditingControlShowing);
@@ -144,7 +144,7 @@
             this.grpAtividade.Controls.Add(this.txtTextoAtividade);
             this.grpAtividade.Location = new System.Drawing.Point(690, 12);
             this.grpAtividade.Name = "grpAtividade";
-            this.grpAtividade.Size = new System.Drawing.Size(610, 249);
+            this.grpAtividade.Size = new System.Drawing.Size(610, 170);
             this.grpAtividade.TabIndex = 7;
             this.grpAtividade.TabStop = false;
             this.grpAtividade.Text = "Atividade de Inserção e Pós Inserção";
@@ -222,7 +222,7 @@
             this.txtTextoAtividade.Multiline = true;
             this.txtTextoAtividade.Name = "txtTextoAtividade";
             this.txtTextoAtividade.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtTextoAtividade.Size = new System.Drawing.Size(597, 179);
+            this.txtTextoAtividade.Size = new System.Drawing.Size(597, 101);
             this.txtTextoAtividade.TabIndex = 12;
             this.txtTextoAtividade.WordWrap = false;
             // 
@@ -237,9 +237,9 @@
             this.grpPotenciais.Controls.Add(this.txtCodigoPotencial);
             this.grpPotenciais.Controls.Add(this.label9);
             this.grpPotenciais.Controls.Add(this.txtTextoPotencial);
-            this.grpPotenciais.Location = new System.Drawing.Point(690, 260);
+            this.grpPotenciais.Location = new System.Drawing.Point(691, 188);
             this.grpPotenciais.Name = "grpPotenciais";
-            this.grpPotenciais.Size = new System.Drawing.Size(610, 249);
+            this.grpPotenciais.Size = new System.Drawing.Size(610, 170);
             this.grpPotenciais.TabIndex = 13;
             this.grpPotenciais.TabStop = false;
             this.grpPotenciais.Text = "Potenciais de Unidade Motora";
@@ -317,7 +317,7 @@
             this.txtTextoPotencial.Multiline = true;
             this.txtTextoPotencial.Name = "txtTextoPotencial";
             this.txtTextoPotencial.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtTextoPotencial.Size = new System.Drawing.Size(597, 179);
+            this.txtTextoPotencial.Size = new System.Drawing.Size(597, 101);
             this.txtTextoPotencial.TabIndex = 18;
             this.txtTextoPotencial.WordWrap = false;
             // 
@@ -325,9 +325,9 @@
             // 
             this.grpVelocidade.BackColor = System.Drawing.SystemColors.Control;
             this.grpVelocidade.Controls.Add(this.grdNeuroConducaoMotora);
-            this.grpVelocidade.Location = new System.Drawing.Point(12, 260);
+            this.grpVelocidade.Location = new System.Drawing.Point(13, 188);
             this.grpVelocidade.Name = "grpVelocidade";
-            this.grpVelocidade.Size = new System.Drawing.Size(671, 249);
+            this.grpVelocidade.Size = new System.Drawing.Size(671, 170);
             this.grpVelocidade.TabIndex = 3;
             this.grpVelocidade.TabStop = false;
             this.grpVelocidade.Text = "Velocidade de Neurocondução Motora";
@@ -337,7 +337,7 @@
             this.grdNeuroConducaoMotora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdNeuroConducaoMotora.Location = new System.Drawing.Point(6, 16);
             this.grdNeuroConducaoMotora.Name = "grdNeuroConducaoMotora";
-            this.grdNeuroConducaoMotora.Size = new System.Drawing.Size(659, 226);
+            this.grdNeuroConducaoMotora.Size = new System.Drawing.Size(659, 149);
             this.grdNeuroConducaoMotora.TabIndex = 4;
             this.grdNeuroConducaoMotora.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdNeuroConducaoMotora_CellEndEdit);
             this.grdNeuroConducaoMotora.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdNeuroConducaoMotora_EditingControlShowing);
@@ -346,9 +346,9 @@
             // 
             this.grpNeuro.BackColor = System.Drawing.SystemColors.Control;
             this.grpNeuro.Controls.Add(this.grdNeuroConducaoSensorial);
-            this.grpNeuro.Location = new System.Drawing.Point(12, 508);
+            this.grpNeuro.Location = new System.Drawing.Point(13, 364);
             this.grpNeuro.Name = "grpNeuro";
-            this.grpNeuro.Size = new System.Drawing.Size(671, 249);
+            this.grpNeuro.Size = new System.Drawing.Size(671, 170);
             this.grpNeuro.TabIndex = 5;
             this.grpNeuro.TabStop = false;
             this.grpNeuro.Text = "Neurocondução Sensorial";
@@ -358,7 +358,7 @@
             this.grdNeuroConducaoSensorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdNeuroConducaoSensorial.Location = new System.Drawing.Point(6, 16);
             this.grdNeuroConducaoSensorial.Name = "grdNeuroConducaoSensorial";
-            this.grdNeuroConducaoSensorial.Size = new System.Drawing.Size(659, 226);
+            this.grdNeuroConducaoSensorial.Size = new System.Drawing.Size(659, 149);
             this.grdNeuroConducaoSensorial.TabIndex = 6;
             this.grdNeuroConducaoSensorial.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdNeuroConducaoSensorial_CellEndEdit);
             this.grdNeuroConducaoSensorial.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdNeuroConducaoSensorial_EditingControlShowing);
@@ -373,9 +373,9 @@
             this.grpComentarios.Controls.Add(this.label1);
             this.grpComentarios.Controls.Add(this.txtCodigoComentario);
             this.grpComentarios.Controls.Add(this.label2);
-            this.grpComentarios.Location = new System.Drawing.Point(690, 508);
+            this.grpComentarios.Location = new System.Drawing.Point(691, 364);
             this.grpComentarios.Name = "grpComentarios";
-            this.grpComentarios.Size = new System.Drawing.Size(610, 249);
+            this.grpComentarios.Size = new System.Drawing.Size(610, 170);
             this.grpComentarios.TabIndex = 19;
             this.grpComentarios.TabStop = false;
             this.grpComentarios.Text = "Comentários";
@@ -398,7 +398,7 @@
             this.txtTextoComentario.Multiline = true;
             this.txtTextoComentario.Name = "txtTextoComentario";
             this.txtTextoComentario.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtTextoComentario.Size = new System.Drawing.Size(597, 179);
+            this.txtTextoComentario.Size = new System.Drawing.Size(597, 101);
             this.txtTextoComentario.TabIndex = 24;
             this.txtTextoComentario.WordWrap = false;
             // 
@@ -461,7 +461,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1313, 814);
+            this.ClientSize = new System.Drawing.Size(1313, 597);
             this.ControlBox = false;
             this.Controls.Add(this.grpComentarios);
             this.Controls.Add(this.grpAtividade);
