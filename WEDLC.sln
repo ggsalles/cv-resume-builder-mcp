@@ -5,6 +5,10 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEDLC", "WEDLC\WEDLC.csproj", "{5C20E54C-804E-4AA3-B267-6602D70FB8C3}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "install", "install\install.vdproj", "{0F48EF4B-3063-23E4-72C6-21544904F984}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APP", "APP\APP.csproj", "{FAC8BB96-F759-493E-BF84-BDA923849C5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +19,17 @@ Global
 		{5C20E54C-804E-4AA3-B267-6602D70FB8C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C20E54C-804E-4AA3-B267-6602D70FB8C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C20E54C-804E-4AA3-B267-6602D70FB8C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F48EF4B-3063-23E4-72C6-21544904F984}.Debug|Any CPU.ActiveCfg = Debug
+		{0F48EF4B-3063-23E4-72C6-21544904F984}.Release|Any CPU.ActiveCfg = Release
+		{FAC8BB96-F759-493E-BF84-BDA923849C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC8BB96-F759-493E-BF84-BDA923849C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC8BB96-F759-493E-BF84-BDA923849C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC8BB96-F759-493E-BF84-BDA923849C5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1B70A6F-45A9-4340-9A83-F6B4197733B8}
 	EndGlobalSection
 EndGlobal
