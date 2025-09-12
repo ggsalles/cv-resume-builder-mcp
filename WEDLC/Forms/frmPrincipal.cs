@@ -18,13 +18,14 @@ namespace WEDLC.Forms
             this.DoubleBuffered = true;
             string ip = "";
             string mac = ObterMACAddress();
+            string version = AssemblyInfoHelper.GetAssemblyVersion();
             GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
 
             // Use a local async function to await the IP and set the form text
             async void SetFormTextAsync()
             {
                 ip = await ObterIPExterno();
-                this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac;
+                this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac + " || Versão: " + version;
             }
             SetFormTextAsync();
         }

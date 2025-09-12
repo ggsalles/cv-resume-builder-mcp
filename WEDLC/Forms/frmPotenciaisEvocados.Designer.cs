@@ -56,6 +56,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPea = new System.Windows.Forms.TabPage();
+            this.label68 = new System.Windows.Forms.Label();
+            this.label69 = new System.Windows.Forms.Label();
             this.txt1a4esquerdo = new System.Windows.Forms.TextBox();
             this.txt1a4direito = new System.Windows.Forms.TextBox();
             this.txt3a5esquerdo = new System.Windows.Forms.TextBox();
@@ -100,6 +102,9 @@
             this.label40 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
             this.tabPegc = new System.Windows.Forms.TabPage();
+            this.label67 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label66 = new System.Windows.Forms.Label();
             this.txtrepostaespinhal = new System.Windows.Forms.TextBox();
             this.txtn3pico = new System.Windows.Forms.TextBox();
             this.txtp3pico = new System.Windows.Forms.TextBox();
@@ -175,11 +180,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.txtCodigoComentario = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label66 = new System.Windows.Forms.Label();
-            this.label67 = new System.Windows.Forms.Label();
-            this.label68 = new System.Windows.Forms.Label();
-            this.label69 = new System.Windows.Forms.Label();
             this.grpBoxDados.SuspendLayout();
             this.tabPotenciais.SuspendLayout();
             this.tabPevi.SuspendLayout();
@@ -285,7 +285,7 @@
             this.tabPotenciais.Location = new System.Drawing.Point(9, 162);
             this.tabPotenciais.Name = "tabPotenciais";
             this.tabPotenciais.SelectedIndex = 0;
-            this.tabPotenciais.Size = new System.Drawing.Size(684, 216);
+            this.tabPotenciais.Size = new System.Drawing.Size(684, 336);
             this.tabPotenciais.TabIndex = 10;
             // 
             // tabPevi
@@ -311,7 +311,7 @@
             this.tabPevi.Location = new System.Drawing.Point(4, 22);
             this.tabPevi.Name = "tabPevi";
             this.tabPevi.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPevi.Size = new System.Drawing.Size(676, 307);
+            this.tabPevi.Size = new System.Drawing.Size(676, 310);
             this.tabPevi.TabIndex = 0;
             this.tabPevi.Text = "PEV";
             this.tabPevi.UseVisualStyleBackColor = true;
@@ -539,10 +539,28 @@
             this.tabPea.Location = new System.Drawing.Point(4, 22);
             this.tabPea.Name = "tabPea";
             this.tabPea.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPea.Size = new System.Drawing.Size(676, 190);
+            this.tabPea.Size = new System.Drawing.Size(676, 310);
             this.tabPea.TabIndex = 1;
             this.tabPea.Text = "PEA";
             this.tabPea.UseVisualStyleBackColor = true;
+            // 
+            // label68
+            // 
+            this.label68.AutoSize = true;
+            this.label68.Location = new System.Drawing.Point(550, 33);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(89, 13);
+            this.label68.TabIndex = 47;
+            this.label68.Text = "Ouvido Esquerdo";
+            // 
+            // label69
+            // 
+            this.label69.AutoSize = true;
+            this.label69.Location = new System.Drawing.Point(427, 33);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(74, 13);
+            this.label69.TabIndex = 46;
+            this.label69.Text = "Ouvido Direito";
             // 
             // txt1a4esquerdo
             // 
@@ -859,7 +877,7 @@
             this.tabPess.Location = new System.Drawing.Point(4, 22);
             this.tabPess.Name = "tabPess";
             this.tabPess.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPess.Size = new System.Drawing.Size(676, 147);
+            this.tabPess.Size = new System.Drawing.Size(676, 310);
             this.tabPess.TabIndex = 2;
             this.tabPess.Text = "PESS";
             this.tabPess.UseVisualStyleBackColor = true;
@@ -870,7 +888,7 @@
             this.txtDiferencaEsperada.MaxLength = 4;
             this.txtDiferencaEsperada.Name = "txtDiferencaEsperada";
             this.txtDiferencaEsperada.Size = new System.Drawing.Size(81, 20);
-            this.txtDiferencaEsperada.TabIndex = 40;
+            this.txtDiferencaEsperada.TabIndex = 17;
             this.txtDiferencaEsperada.Text = "0,00";
             this.txtDiferencaEsperada.Enter += new System.EventHandler(this.txtDiferencaEsperada_Enter);
             this.txtDiferencaEsperada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDiferencaEsperada_KeyPress);
@@ -882,7 +900,7 @@
             this.grdDadosPess.Location = new System.Drawing.Point(6, 6);
             this.grdDadosPess.Name = "grdDadosPess";
             this.grdDadosPess.Size = new System.Drawing.Size(664, 127);
-            this.grdDadosPess.TabIndex = 39;
+            this.grdDadosPess.TabIndex = 11;
             this.grdDadosPess.SelectionChanged += new System.EventHandler(this.grdDadosPess_SelectionChanged);
             // 
             // txtDiferencaObitida
@@ -892,7 +910,7 @@
             this.txtDiferencaObitida.Name = "txtDiferencaObitida";
             this.txtDiferencaObitida.ReadOnly = true;
             this.txtDiferencaObitida.Size = new System.Drawing.Size(81, 20);
-            this.txtDiferencaObitida.TabIndex = 33;
+            this.txtDiferencaObitida.TabIndex = 16;
             this.txtDiferencaObitida.Text = "0,00";
             // 
             // txtP1Ni1EsquerdoEsperada
@@ -901,7 +919,7 @@
             this.txtP1Ni1EsquerdoEsperada.MaxLength = 4;
             this.txtP1Ni1EsquerdoEsperada.Name = "txtP1Ni1EsquerdoEsperada";
             this.txtP1Ni1EsquerdoEsperada.Size = new System.Drawing.Size(81, 20);
-            this.txtP1Ni1EsquerdoEsperada.TabIndex = 32;
+            this.txtP1Ni1EsquerdoEsperada.TabIndex = 15;
             this.txtP1Ni1EsquerdoEsperada.Text = "0,00";
             this.txtP1Ni1EsquerdoEsperada.Enter += new System.EventHandler(this.txtP1Ni1EsquerdoEsperada_Enter);
             this.txtP1Ni1EsquerdoEsperada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP1Ni1EsquerdoEsperada_KeyPress);
@@ -913,7 +931,7 @@
             this.txtP1Ni1EsquerdoObidida.MaxLength = 4;
             this.txtP1Ni1EsquerdoObidida.Name = "txtP1Ni1EsquerdoObidida";
             this.txtP1Ni1EsquerdoObidida.Size = new System.Drawing.Size(81, 20);
-            this.txtP1Ni1EsquerdoObidida.TabIndex = 31;
+            this.txtP1Ni1EsquerdoObidida.TabIndex = 14;
             this.txtP1Ni1EsquerdoObidida.Text = "0,00";
             this.txtP1Ni1EsquerdoObidida.Enter += new System.EventHandler(this.txtP1Ni1EsquerdoObidida_Enter);
             this.txtP1Ni1EsquerdoObidida.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP1Ni1EsquerdoObidida_KeyPress);
@@ -925,7 +943,7 @@
             this.txtP1Ni1DireitoEsperada.MaxLength = 4;
             this.txtP1Ni1DireitoEsperada.Name = "txtP1Ni1DireitoEsperada";
             this.txtP1Ni1DireitoEsperada.Size = new System.Drawing.Size(81, 20);
-            this.txtP1Ni1DireitoEsperada.TabIndex = 30;
+            this.txtP1Ni1DireitoEsperada.TabIndex = 13;
             this.txtP1Ni1DireitoEsperada.Text = "0,00";
             this.txtP1Ni1DireitoEsperada.Enter += new System.EventHandler(this.txtP1Ni1DireitoEsperada_Enter);
             this.txtP1Ni1DireitoEsperada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP1Ni1DireitoEsperada_KeyPress);
@@ -937,7 +955,7 @@
             this.txtP1Ni1DireitoObitida.MaxLength = 4;
             this.txtP1Ni1DireitoObitida.Name = "txtP1Ni1DireitoObitida";
             this.txtP1Ni1DireitoObitida.Size = new System.Drawing.Size(81, 20);
-            this.txtP1Ni1DireitoObitida.TabIndex = 29;
+            this.txtP1Ni1DireitoObitida.TabIndex = 12;
             this.txtP1Ni1DireitoObitida.Text = "0,00";
             this.txtP1Ni1DireitoObitida.Enter += new System.EventHandler(this.txtP1Ni1DireitoObitida_Enter);
             this.txtP1Ni1DireitoObitida.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtP1Ni1DireitoObitida_KeyPress);
@@ -1024,10 +1042,37 @@
             this.tabPegc.Location = new System.Drawing.Point(4, 22);
             this.tabPegc.Name = "tabPegc";
             this.tabPegc.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPegc.Size = new System.Drawing.Size(676, 147);
+            this.tabPegc.Size = new System.Drawing.Size(676, 310);
             this.tabPegc.TabIndex = 3;
             this.tabPegc.Text = "PEGC";
             this.tabPegc.UseVisualStyleBackColor = true;
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.Location = new System.Drawing.Point(304, 26);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(100, 13);
+            this.label67.TabIndex = 77;
+            this.label67.Text = "Respostas Corticais";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(481, 26);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(81, 13);
+            this.label37.TabIndex = 76;
+            this.label37.Text = "Valores Obtidos";
+            // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.Location = new System.Drawing.Point(481, 6);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(90, 13);
+            this.label66.TabIndex = 75;
+            this.label66.Text = "Latências  (mseg)";
             // 
             // txtrepostaespinhal
             // 
@@ -1260,7 +1305,7 @@
             this.tabPessMed.Location = new System.Drawing.Point(4, 22);
             this.tabPessMed.Name = "tabPessMed";
             this.tabPessMed.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPessMed.Size = new System.Drawing.Size(676, 147);
+            this.tabPessMed.Size = new System.Drawing.Size(676, 310);
             this.tabPessMed.TabIndex = 4;
             this.tabPessMed.Text = "PESS-MED";
             this.tabPessMed.UseVisualStyleBackColor = true;
@@ -1809,51 +1854,6 @@
             this.label19.Size = new System.Drawing.Size(40, 13);
             this.label19.TabIndex = 0;
             this.label19.Text = "Código";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(481, 26);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(81, 13);
-            this.label37.TabIndex = 76;
-            this.label37.Text = "Valores Obtidos";
-            // 
-            // label66
-            // 
-            this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(481, 6);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(90, 13);
-            this.label66.TabIndex = 75;
-            this.label66.Text = "Latências  (mseg)";
-            // 
-            // label67
-            // 
-            this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(304, 26);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(100, 13);
-            this.label67.TabIndex = 77;
-            this.label67.Text = "Respostas Corticais";
-            // 
-            // label68
-            // 
-            this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(550, 33);
-            this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(89, 13);
-            this.label68.TabIndex = 47;
-            this.label68.Text = "Ouvido Esquerdo";
-            // 
-            // label69
-            // 
-            this.label69.AutoSize = true;
-            this.label69.Location = new System.Drawing.Point(427, 33);
-            this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(74, 13);
-            this.label69.TabIndex = 46;
-            this.label69.Text = "Ouvido Direito";
             // 
             // frmPotenciaisEvocados
             // 

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -568,6 +570,49 @@ namespace WEDLC.Banco
             public bool IsValid { get; set; }
             public string ErrorMessage { get; set; }
             public string NormalizedEmail { get; set; }
+        }
+    }
+
+    public class AssemblyInfoHelper
+    {
+        public static string GetAssemblyTitle()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var attribute = assembly.GetCustomAttribute<AssemblyTitleAttribute>();
+            return attribute?.Title ?? Path.GetFileNameWithoutExtension(assembly.Location);
+        }
+
+        public static string GetAssemblyVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0.0";
+        }
+
+        public static string GetAssemblyDescription()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var attribute = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
+            return attribute?.Description ?? string.Empty;
+        }
+
+        public static string GetAssemblyCompany()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var attribute = assembly.GetCustomAttribute<AssemblyCompanyAttribute>();
+            return attribute?.Company ?? string.Empty;
+        }
+
+        public static string GetAssemblyCopyright()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var attribute = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>();
+            return attribute?.Copyright ?? string.Empty;
+        }
+
+        public static string GetAssemblyProduct()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var attribute = assembly.GetCustomAttribute<AssemblyProductAttribute>();
+            return attribute?.Product ?? string.Empty;
         }
     }
 }
