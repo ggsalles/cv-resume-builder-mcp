@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
 using WEDLC.Banco;
@@ -18,6 +19,8 @@ namespace WEDLC.Forms
         public frmLogin()
         {
             InitializeComponent();
+            EncryptConnectionString();
+            //DecryptConnectionString();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -205,6 +208,34 @@ namespace WEDLC.Forms
 
             return true;
         }
-    }
 
+        public static void EncryptConnectionString()
+        {
+            // Abre o arquivo de configuração do aplicativo
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConfigurationSection section = config.GetSection("connectionStrings");
+
+            if (section != null && !section.SectionInformation.IsProtected)
+            {
+                // Criptografa a seção usando o provedor DPAPI
+                section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider");
+                config.Save();
+                Console.WriteLine("Connection string encrypted successfully.");
+            }
+        }
+
+        public static void DecryptConnectionString()
+        {
+            // Abre o arquivo de configuração do aplicativo
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConfigurationSection section = config.GetSection("connectionStrings");
+            if (section != null && section.SectionInformation.IsProtected)
+            {
+                // Descriptografa a seção
+                section.SectionInformation.UnprotectSection();
+                config.Save();
+                Console.WriteLine("Connection string decrypted successfully.");
+            }
+        }
+    }
 }
