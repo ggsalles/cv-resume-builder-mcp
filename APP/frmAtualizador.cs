@@ -63,26 +63,36 @@ namespace APP
 
         private bool ArquivosSaoIguais(string caminho1, string caminho2)
         {
-            // Método 1: Comparar por hash MD5 (mais preciso)
-            using (var md5 = System.Security.Cryptography.MD5.Create())
-            {
-                using (var stream1 = File.OpenRead(caminho1))
-                using (var stream2 = File.OpenRead(caminho2))
-                {
-                    byte[] hash1 = md5.ComputeHash(stream1);
-                    byte[] hash2 = md5.ComputeHash(stream2);
+            //// Método 1: Comparar por hash MD5 (mais preciso)
+            //using (var md5 = System.Security.Cryptography.MD5.Create())
+            //{
+            //    using (var stream1 = File.OpenRead(caminho1))
+            //    using (var stream2 = File.OpenRead(caminho2))
+            //    {
+            //        byte[] hash1 = md5.ComputeHash(stream1);
+            //        byte[] hash2 = md5.ComputeHash(stream2);
 
-                    for (int i = 0; i < hash1.Length; i++)
-                    {
-                        if (hash1[i] != hash2[i])
-                            return false;
-                    }
-                    return true;
-                }
-            }
+            //        for (int i = 0; i < hash1.Length; i++)
+            //        {
+            //            if (hash1[i] != hash2[i])
+            //                return false;
+            //        }
+            //        return true;
+            //    }
+            //}
 
             // Método alternativo: Comparar por versão do arquivo (se for .exe)
             // return GetFileVersion(caminho1) == GetFileVersion(caminho2);
+
+            if (GetFileVersion(caminho1) == GetFileVersion(caminho2))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         private string GetFileVersion(string caminho)
