@@ -1,7 +1,8 @@
-﻿using System.Windows.Forms;
+﻿using CredentialManagement;
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace APP
 {
@@ -16,8 +17,8 @@ namespace APP
         {
             try
             {
-                string caminhoLocal = txtCaminhoLocal.Text;
-                string caminhoRepositorio = txtCaminhoRepositorio.Text;
+                string caminhoLocal = @"C:\WEDLC\WEDLC.exe";  //txtCaminhoLocal.Text;
+                string caminhoRepositorio = $@"\\191.252.156.57\WEDLC\WEDLC.exe"; //txtCaminhoRepositorio.Text;
 
                 if (string.IsNullOrEmpty(caminhoLocal) || string.IsNullOrEmpty(caminhoRepositorio))
                 {
@@ -43,13 +44,13 @@ namespace APP
                     lblStatus.ForeColor = System.Drawing.Color.Red;
 
                     // Perguntar se deseja atualizar
-                    DialogResult resultado = MessageBox.Show(
+                    System.Windows.Forms.DialogResult resultado = MessageBox.Show(
                         "Versão diferente encontrada. Deseja atualizar o arquivo local?",
                         "Atualização Disponível",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question);
 
-                    if (resultado == DialogResult.Yes)
+                    if (resultado == System.Windows.Forms.DialogResult.Yes)
                     {
                         AtualizarArquivo(caminhoLocal, caminhoRepositorio);
                     }
@@ -138,7 +139,7 @@ namespace APP
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Executáveis (*.exe)|*.exe|Todos os arquivos (*.*)|*.*";
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     txtCaminhoLocal.Text = openFileDialog.FileName;
                 }
@@ -150,11 +151,63 @@ namespace APP
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Executáveis (*.exe)|*.exe|Todos os arquivos (*.*)|*.*";
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     txtCaminhoRepositorio.Text = openFileDialog.FileName;
                 }
             }
+        }
+
+        private void BuscaCredencial()
+        {
+            var target = "WEDLC";
+            if (string.IsNullOrEmpty(target))
+            {
+                MessageBox.Show("Informe o Target (identificador).");
+                return;
+            }
+
+            using (var cred = new Credential { Target = target, Type = CredentialType.Generic })
+            {
+                bool found = cred.Load();
+                if (found)
+                {
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Gerando Credencial.");
+
+                    if (GravaCredencial()==false)
+                    {
+                        MessageBox.Show("Erro ao gravar Credencial.");
+                        return;
+                    }
+                }
+            }
+        }
+
+        private bool GravaCredencial()
+        {
+            var target = "WEDLC";
+            if (string.IsNullOrEmpty(target))
+            {
+                MessageBox.Show("Informe o Target (identificador).");
+                return false;
+            }
+
+            using (var cred = new Credential())
+            {
+                cred.Target = target;
+                cred.Username = "Usuario";
+                cred.Password = "Stock7!";
+                cred.Type = CredentialType.Generic; // credencial genérica
+                cred.PersistanceType = PersistanceType.LocalComputer; // disponível no computador local
+                bool ok = cred.Save();
+
+            }
+
+            return true;
         }
     }
 }
