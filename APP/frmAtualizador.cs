@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace APP
 {
@@ -212,9 +213,40 @@ namespace APP
 
         private void btnSplash_Click(object sender, EventArgs e)
         {
+
+            EncryptConnectionString();
+            //DecryptConnectionString();
             var splash = new SplashForm();
             splash.Show();
             Application.DoEvents();
+        }
+        public static void EncryptConnectionString()
+        {
+            // Abre o arquivo de configuração do aplicativo
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConfigurationSection section = config.GetSection("connectionStrings");
+
+            if (section != null && !section.SectionInformation.IsProtected)
+            {
+                // Criptografa a seção usando o provedor DPAPI
+                section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider");
+                config.Save();
+                Console.WriteLine("Connection string encrypted successfully.");
+            }
+        }
+
+        public static void DecryptConnectionString()
+        {
+            // Abre o arquivo de configuração do aplicativo
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConfigurationSection section = config.GetSection("connectionStrings");
+            if (section != null && section.SectionInformation.IsProtected)
+            {
+                // Descriptografa a seção
+                section.SectionInformation.UnprotectSection();
+                config.Save();
+                Console.WriteLine("Connection string decrypted successfully.");
+            }
         }
     }
 }
