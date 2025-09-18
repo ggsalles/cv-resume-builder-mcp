@@ -1,6 +1,5 @@
 ﻿using APP.Classes;
 using System;
-using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace APP
@@ -15,6 +14,7 @@ namespace APP
 
         Button btnMap = new Button() { Left = 20, Top = 180, Text = "Mapear Pasta", Width = 140 };
         Button btnUnmap = new Button() { Left = 180, Top = 180, Text = "Desmapear Pasta", Width = 140 };
+        Button btnCripto = new Button() { Left = 20, Top = 200, Text = "Cripto", Width = 140 };
 
         Label lblIP = new Label() { Left = 20, Top = 20, Text = "IP / Host:", Width = 100 };
         Label lblUser = new Label() { Left = 20, Top = 60, Text = "Usuário:", Width = 100 };
@@ -26,10 +26,11 @@ namespace APP
             this.Text = "Mapeamento de Pasta de Rede";
             this.ClientSize = new System.Drawing.Size(360, 230);
 
-            Controls.AddRange(new Control[] { txtIP, txtUser, txtPass, txtShare, btnMap, btnUnmap, lblIP, lblUser, lblPass, lblShare });
+            Controls.AddRange(new Control[] { txtIP, txtUser, txtPass, txtShare, btnMap, btnUnmap, btnCripto, lblIP, lblUser, lblPass, lblShare });
 
             btnMap.Click += BtnMap_Click;
             btnUnmap.Click += BtnUnmap_Click;
+            btnCripto.Click += BtnCripto_Click;
         }
 
         private void BtnMap_Click(object sender, EventArgs e)
@@ -66,6 +67,16 @@ namespace APP
                 MessageBox.Show($"Desconectado {localDrive} com sucesso.");
             else
                 MessageBox.Show($"Falha ao desconectar {localDrive}. Código: {rc}.");
+        }
+
+        private void BtnCripto_Click(object sender, EventArgs e)
+        {
+            //WEDLC.CryptoHelper cryptoHelper = new APP.Classes.CryptoHelper();
+            //APP.Classes.CryptoHelper.ipServidor = txtIP.Text.Trim();
+            //APP.Classes.CryptoHelper.shareServidor = txtShare.Text.Trim();
+            //APP.Classes.CryptoHelper.usuario = txtUser.Text.Trim();
+            //APP.Classes.CryptoHelper.senha = txtPass.Text;
+
         }
     }
 }
