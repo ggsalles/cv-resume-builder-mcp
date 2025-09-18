@@ -209,5 +209,12 @@ namespace APP
 
             return true;
         }
+
+        private void btnSplash_Click(object sender, EventArgs e)
+        {
+            var splash = new SplashForm();
+            splash.Show();
+            Application.DoEvents();
+        }
     }
 }

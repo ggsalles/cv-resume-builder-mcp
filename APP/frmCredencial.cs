@@ -1,6 +1,9 @@
 ﻿using APP.Classes;
 using System;
+using System.Data;
 using System.Windows.Forms;
+using WEDLC;
+using WEDLC.Banco;
 
 namespace APP
 {
@@ -71,12 +74,21 @@ namespace APP
 
         private void BtnCripto_Click(object sender, EventArgs e)
         {
-            //WEDLC.CryptoHelper cryptoHelper = new APP.Classes.CryptoHelper();
-            //APP.Classes.CryptoHelper.ipServidor = txtIP.Text.Trim();
-            //APP.Classes.CryptoHelper.shareServidor = txtShare.Text.Trim();
-            //APP.Classes.CryptoHelper.usuario = txtUser.Text.Trim();
-            //APP.Classes.CryptoHelper.senha = txtPass.Text;
+
+            // Setar credenciais
+            CryptoHelper.SetCredenciais("191.252.156.57", "WEDLC", "Usuario", "A!wop_");
+            CryptoHelper.Id = 1;
+
+            // Inserir no banco
+            if (CryptoHelper.IncluiCriptografia())
+                Console.WriteLine("Credenciais inseridas com sucesso!");
+
+            // Buscar do banco
+            DataTable dt = CryptoHelper.BuscaCriptografia();
+            if (dt != null && dt.Rows.Count > 0)
+                Console.WriteLine("IP descriptografado: " + dt.Rows[0]["ip"]);
 
         }
+        
     }
 }

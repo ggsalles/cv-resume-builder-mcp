@@ -1,152 +1,228 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using WEDLC.Banco;
+using System.Text.Json;
 
-public static class CryptoHelper
+namespace WEDLC.Banco
 {
-    // Chave secreta (32 bytes para AES-256) - você pode guardar em config seguro
-    private static readonly byte[] Key = Encoding.UTF8.GetBytes("MinhaChaveSuperSecreta123456789012");
-    private static readonly byte[] IV = Encoding.UTF8.GetBytes("ChaveInicial12345"); // 16 bytes
-
-    // Construtor
-    static GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
-    static MySqlConnection conexao = new MySqlConnection();
-
-    // Dados originais
-    public static int id { get; set; }
-    public static string ipServidor { get; set; }
-    public static string shareServidor { get; set; }
-    public static string usuario { get; set; }
-    public static string senha { get; set; }
-
-    // Criptografa
-    private static byte[] ipEnc = CryptoHelper.Encrypt(ipServidor);
-    private static byte[] shareEnc = CryptoHelper.Encrypt(shareServidor);
-    private static byte[] userEnc = CryptoHelper.Encrypt(usuario);
-    private static byte[] passEnc = CryptoHelper.Encrypt(senha);
-
-    public static bool conectaBanco()
+    public static class CryptoHelper
     {
-        conexao = objcConexao.CriarConexao();
-        conexao.Open();
-        if (conexao.State == ConnectionState.Open)
+        private static GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
+        private static MySqlConnection conexao = new MySqlConnection();
+
+        private static readonly string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CryptoConfig.json");
+        private static byte[] Key;
+        private static byte[] IV;
+
+        // Dados originais
+        public static int Id { get; set; }
+        public static string IpServidor { get; private set; }
+        public static string ShareServidor { get; private set; }
+        public static string Usuario { get; private set; }
+        public static string Senha { get; private set; }
+
+        static CryptoHelper()
         {
-            return true;
+            LoadOrCreateKeyIV();
         }
-        else
+
+        private static void LoadOrCreateKeyIV()
         {
-            return false;
-        }
-    }
-    public static byte[] Encrypt(string plainText)
-    {
-        using (Aes aes = Aes.Create())
-        {
-            aes.Key = Key;
-            aes.IV = IV;
-            ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-
-            byte[] inputBytes = Encoding.UTF8.GetBytes(plainText);
-            return encryptor.TransformFinalBlock(inputBytes, 0, inputBytes.Length);
-        }
-    }
-
-    public static string Decrypt(byte[] cipherBytes)
-    {
-        using (Aes aes = Aes.Create())
-        {
-            aes.Key = Key;
-            aes.IV = IV;
-            ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-
-            byte[] decryptedBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
-            return Encoding.UTF8.GetString(decryptedBytes);
-        }
-    }
-
-    public static bool IncluiCriptografia()
-    {
-        if (!conectaBanco())
-            return false;
-
-        try
-        {
-            using (var cmd = new MySqlCommand("sp_inserir_credenciais", conexao))
+            if (File.Exists(ConfigPath))
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddRange(new MySqlParameter[]
+                string json = File.ReadAllText(ConfigPath);
+                var cfg = JsonSerializer.Deserialize<CryptoConfig>(json);
+                Key = Convert.FromBase64String(cfg.Key);
+                IV = Convert.FromBase64String(cfg.IV);
+            }
+            else
+            {
+                using (var rng = RandomNumberGenerator.Create())
                 {
-                cmd.Parameters.AddWithValue("@ip", ipEnc),
-                cmd.Parameters.AddWithValue("@share", shareEnc),
-                cmd.Parameters.AddWithValue("@user", userEnc),
-                cmd.Parameters.AddWithValue("@pass", passEnc),
-            });
+                    Key = new byte[32]; // AES-256
+                    IV = new byte[16];  // AES IV
+                    rng.GetBytes(Key);
+                    rng.GetBytes(IV);
 
-                int rowsAffected = cmd.ExecuteNonQuery();
-                return rowsAffected > 0; // Qualquer número positivo indica sucesso
+                    var cfg = new CryptoConfig
+                    {
+                        Key = Convert.ToBase64String(Key),
+                        IV = Convert.ToBase64String(IV)
+                    };
+
+                    File.WriteAllText(ConfigPath, JsonSerializer.Serialize(cfg, new JsonSerializerOptions { WriteIndented = true }));
+                }
             }
         }
-        catch (MySqlException ex)
-        {
-            // Log específico para diagnóstico
-            System.Diagnostics.Debug.WriteLine($"Erro ao incluir sp_inserir_credenciais: {ex.Message}");
-            return false;
-        }
-        catch (Exception ex)
-        {
-            // Log para outros tipos de erro
-            System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
-            return false;
-        }
-        finally
-        {
-            conexao?.Close();
-        }
-    }
 
-    public static DataTable BuscaCriptografia()
-    {
-        if (!conectaBanco())
-            return null;
-
-        DataTable dt = new DataTable();
-
-        try
+        private class CryptoConfig
         {
-            using (var sqlDa = new MySqlDataAdapter("sp_obter_credenciais", conexao))
+            public string Key { get; set; }
+            public string IV { get; set; }
+        }
+
+        public static bool conectaBanco()
+        {
+            conexao = objcConexao.CriarConexao();
+            conexao.Open();
+            return conexao.State == ConnectionState.Open;
+        }
+
+        // --- MÉTODO PARA SETAR CREDENCIAIS
+        public static void SetCredenciais(string ip, string share, string user, string pass)
+        {
+            IpServidor = ip;
+            ShareServidor = share;
+            Usuario = user;
+            Senha = pass;
+        }
+
+        // --- ENCRYPT / DECRYPT
+        public static byte[] Encrypt(string plainText)
+        {
+            if (string.IsNullOrEmpty(plainText))
+                return null;
+
+            using (Aes aes = Aes.Create())
             {
-                sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
-                sqlDa.SelectCommand.Parameters.AddWithValue("pId", id);
+                aes.Key = Key;
+                aes.IV = IV;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
 
-                sqlDa.Fill(dt);
-
-                dt.Rows[dt.Rows.Count - 1]["ip"] = Decrypt((byte[])dt.Rows[dt.Rows.Count - 1]["ip"]);
-                dt.Rows[dt.Rows.Count - 1]["share"] = Decrypt((byte[])dt.Rows[dt.Rows.Count - 1]["share"]);
-                dt.Rows[dt.Rows.Count - 1]["user"] = Decrypt((byte[])dt.Rows[dt.Rows.Count - 1]["user"]);
-                dt.Rows[dt.Rows.Count - 1]["pass"] = Decrypt(((byte[])dt.Rows[dt.Rows.Count - 1]["pass"]));
-
-                return dt;
+                using (ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                {
+                    byte[] inputBytes = Encoding.UTF8.GetBytes(plainText);
+                    return encryptor.TransformFinalBlock(inputBytes, 0, inputBytes.Length);
+                }
             }
         }
-        catch (MySqlException ex)
+
+        public static string Decrypt(byte[] cipherBytes)
         {
-            // Log específico para diagnóstico
-            System.Diagnostics.Debug.WriteLine($"Erro na sp_obter_credenciais: {ex.Message}");
-            return null;
+            if (cipherBytes == null || cipherBytes.Length == 0)
+                return string.Empty;
+
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Key;
+                aes.IV = IV;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+
+                using (ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                {
+                    byte[] decryptedBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
+                    return Encoding.UTF8.GetString(decryptedBytes);
+                }
+            }
         }
-        catch (Exception ex)
+
+        // --- INSERIR NO BANCO
+        public static bool IncluiCriptografia()
         {
-            // Log para outros erros
-            System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
-            return null;
+            if (!conectaBanco())
+                return false;
+
+            try
+            {
+                using (var command = new MySqlCommand("sp_inserir_credenciais", conexao))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddRange(new MySqlParameter[]
+                    {
+                        new MySqlParameter("p_ip_servidor", MySqlDbType.VarBinary) { Value = Encrypt(IpServidor) },
+                        new MySqlParameter("p_share_servidor", MySqlDbType.VarBinary) { Value = Encrypt(ShareServidor)},
+                        new MySqlParameter("p_usuario", MySqlDbType.VarBinary) { Value = Encrypt(Usuario)},
+                        new MySqlParameter("p_senha", MySqlDbType.VarBinary) { Value = Encrypt(Senha)},
+                    });
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected >= 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao incluir: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
         }
-        finally
+
+        // --- BUSCAR DO BANCO
+        public static DataTable BuscaCriptografia()
         {
-            conexao?.Close();
+            if (!conectaBanco())
+                return null;
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (var sqlDa = new MySqlDataAdapter("sp_obter_credenciais", conexao))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pId", Id);
+
+                    sqlDa.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        var row = dt.Rows[dt.Rows.Count - 1];
+
+                        // Descriptografa os valores
+                        string ip = Decrypt((byte[])row["ip_servidor"]);
+                        string share = Decrypt((byte[])row["share_servidor"]);
+                        string user = Decrypt((byte[])row["usuario"]);
+                        string pass = Decrypt((byte[])row["senha"]);
+
+                        // Cria novas colunas para armazenar os valores como string (se ainda não existirem)
+                        if (!dt.Columns.Contains("ip_descriptografado"))
+                            dt.Columns.Add("ip_descriptografado", typeof(string));
+                        if (!dt.Columns.Contains("share_descriptografado"))
+                            dt.Columns.Add("share_descriptografado", typeof(string));
+                        if (!dt.Columns.Contains("user_descriptografado"))
+                            dt.Columns.Add("user_descriptografado", typeof(string));
+                        if (!dt.Columns.Contains("pass_descriptografado"))
+                            dt.Columns.Add("pass_descriptografado", typeof(string));
+
+                        // Atribui os valores descriptografados nas novas colunas
+                        row["ip_descriptografado"] = ip;
+                        row["share_descriptografado"] = share;
+                        row["user_descriptografado"] = user;
+                        row["pass_descriptografado"] = pass;
+                    }
+
+                    return dt;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao buscar do banco: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
         }
+
     }
 }

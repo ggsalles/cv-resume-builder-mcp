@@ -13,7 +13,7 @@ namespace APP
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmCredencial());
+            Application.Run(new frmAtualizador());
         }
     }
 }
