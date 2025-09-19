@@ -1,5 +1,6 @@
 ﻿using APP.Classes;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
@@ -17,12 +18,17 @@ namespace APP
             progressBar.Minimum = 0;
             progressBar.Maximum = 100;
             progressBar.Value = 0;
+            EncryptConnectionString();
+            //DecryptConnectionString();
+            lblMensagem.Text = "Buscando por atualização...";
         }
 
         private async Task AtualizarClienteAsync()
         {
             try
             {
+                Application.DoEvents();
+
                 await AtualizarMensagemAsync("Iniciando atualização...", 5);
 
                 // 1️⃣ Buscar credenciais
@@ -139,6 +145,35 @@ namespace APP
         private async void SplashForm_Load(object sender, EventArgs e)
         {
             await AtualizarClienteAsync();
+        }
+
+        public static void EncryptConnectionString()
+        {
+            // Abre o arquivo de configuração do aplicativo
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConfigurationSection section = config.GetSection("connectionStrings");
+
+            if (section != null && !section.SectionInformation.IsProtected)
+            {
+                // Criptografa a seção usando o provedor DPAPI
+                section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider");
+                config.Save();
+                Console.WriteLine("Connection string encrypted successfully.");
+            }
+        }
+
+        public static void DecryptConnectionString()
+        {
+            // Abre o arquivo de configuração do aplicativo
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            ConfigurationSection section = config.GetSection("connectionStrings");
+            if (section != null && section.SectionInformation.IsProtected)
+            {
+                // Descriptografa a seção
+                section.SectionInformation.UnprotectSection();
+                config.Save();
+                Console.WriteLine("Connection string decrypted successfully.");
+            }
         }
     }
 }

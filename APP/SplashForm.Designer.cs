@@ -35,28 +35,32 @@
             // lblMensagem
             // 
             this.lblMensagem.AutoSize = true;
-            this.lblMensagem.Location = new System.Drawing.Point(12, 26);
+            this.lblMensagem.Location = new System.Drawing.Point(154, 19);
             this.lblMensagem.Name = "lblMensagem";
-            this.lblMensagem.Size = new System.Drawing.Size(58, 13);
+            this.lblMensagem.Size = new System.Drawing.Size(139, 13);
             this.lblMensagem.TabIndex = 0;
-            this.lblMensagem.Text = "mensagem";
+            this.lblMensagem.Text = "Buscando por atualização...";
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(107, 26);
+            this.progressBar.Location = new System.Drawing.Point(12, 50);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(100, 23);
+            this.progressBar.Size = new System.Drawing.Size(448, 22);
             this.progressBar.TabIndex = 1;
             // 
             // SplashForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 71);
+            this.ClientSize = new System.Drawing.Size(472, 90);
+            this.ControlBox = false;
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.lblMensagem);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SplashForm";
-            this.Text = "SplashForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Módulo de Segurança";
             this.Load += new System.EventHandler(this.SplashForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
