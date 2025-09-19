@@ -40,6 +40,13 @@ namespace WEDLC.Forms
         }
         private void especializacaoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmEspecializacao>() == true)
+            {
+                MessageBox.Show("O formulário de Especialização já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -59,6 +66,13 @@ namespace WEDLC.Forms
 
         private void nervoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmNervo>() == true)
+            {
+                MessageBox.Show("O formulário de Nervo já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -77,6 +91,12 @@ namespace WEDLC.Forms
 
         private void músculoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmMusculo>() == true)
+            {
+                MessageBox.Show("O formulário de Músculo já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -130,6 +150,12 @@ namespace WEDLC.Forms
 
         private void folhaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmFolha>() == true)
+            {
+                MessageBox.Show("O formulário de Folha já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -148,6 +174,12 @@ namespace WEDLC.Forms
 
         private void comentárioToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmComentarios>() == true)
+            {
+                MessageBox.Show("O formulário de Comentário já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -220,6 +252,12 @@ namespace WEDLC.Forms
 
         private void convênioToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmConvenio>() == true)
+            {
+                MessageBox.Show("O formulário de Convênio já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -238,6 +276,12 @@ namespace WEDLC.Forms
 
         private void indicaçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmIndicacao>() == true)
+            {
+                MessageBox.Show("O formulário de Indicação já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -298,6 +342,12 @@ namespace WEDLC.Forms
 
         private void atividadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmAtividadeInsercao>() == true)
+            {
+                MessageBox.Show("O formulário de Resultados já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 
@@ -317,6 +367,12 @@ namespace WEDLC.Forms
 
         private void potenciaisToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmPotenciais>() == true)
+            {
+                MessageBox.Show("O formulário de Potenciais já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             // Altera o cursor para "espera"
             Cursor.Current = Cursors.WaitCursor;
 

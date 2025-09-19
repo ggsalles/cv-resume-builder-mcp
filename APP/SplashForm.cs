@@ -12,7 +12,7 @@ namespace APP
 {
     public partial class SplashForm : Form
     {
-        public SplashForm()
+         public SplashForm()
         {
             InitializeComponent();
             progressBar.Minimum = 0;
@@ -85,15 +85,39 @@ namespace APP
                 // 4️⃣ Limpar mapeamento
                 NetworkHelper.Unmap(localDrive, true);
 
-                // 5️⃣ Abrir login e fechar splash
+                // 5️⃣ VERIFICAR SE JÁ ESTÁ EM EXECUÇÃO ANTES DE ABRIR
                 await AtualizarMensagemAsync("Finalizando...", 100);
                 await Task.Delay(300);
-                Process.Start(@"C:\WEDLC\WEDLC.exe");
-                this.Close();
+
+                if (!IsProcessRunning("WEDLC"))
+                {
+                    Process.Start(exeLocal);
+                    this.Close();
+                }
+                else
+                {
+                    await AtualizarMensagemAsync("WEDLC já está em execução. Fechando...", 100);
+                    await Task.Delay(2000);
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
                 await AtualizarMensagemAsync($"Erro: {ex.Message}", 100);
+            }
+        }
+
+        // Método para verificar se o processo está em execução
+        private bool IsProcessRunning(string processName)
+        {
+            try
+            {
+                Process[] processes = Process.GetProcessesByName(processName);
+                return processes.Length > 0;
+            }
+            catch
+            {
+                return false;
             }
         }
 

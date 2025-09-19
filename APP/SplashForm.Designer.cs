@@ -35,7 +35,7 @@
             // lblMensagem
             // 
             this.lblMensagem.AutoSize = true;
-            this.lblMensagem.Location = new System.Drawing.Point(154, 19);
+            this.lblMensagem.Location = new System.Drawing.Point(400, 201);
             this.lblMensagem.Name = "lblMensagem";
             this.lblMensagem.Size = new System.Drawing.Size(139, 13);
             this.lblMensagem.TabIndex = 0;
@@ -43,7 +43,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(12, 50);
+            this.progressBar.Location = new System.Drawing.Point(258, 232);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(448, 22);
             this.progressBar.TabIndex = 1;
@@ -52,7 +52,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(472, 90);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackgroundImage = global::APP.Properties.Resources.logo_luiz_total;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1014, 266);
             this.ControlBox = false;
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.lblMensagem);

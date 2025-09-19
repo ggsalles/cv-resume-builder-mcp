@@ -20,7 +20,7 @@ namespace WEDLC.Forms
         {
             InitializeComponent();
             EncryptConnectionString();
-            DecryptConnectionString();
+            //DecryptConnectionString();
         }
 
         private void btnOk_Click(object sender, EventArgs e)

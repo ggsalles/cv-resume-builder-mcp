@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 using WEDLC.Forms;
 
@@ -15,6 +13,13 @@ namespace WEDLC
         [STAThread]
         static void Main()
         {
+
+            // Verificação adicional como segurança
+            if (Process.GetProcessesByName("WEDLC").Length > 1)
+            {
+                MessageBox.Show("O programa já está em execução.");
+                return;
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmLogin());
