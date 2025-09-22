@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WEDLC.Banco;
@@ -28,12 +29,11 @@ namespace APP
             try
             {
                 Application.DoEvents();
-
                 await AtualizarMensagemAsync("Iniciando atualização...", 5);
 
                 // 1️⃣ Buscar credenciais
                 await AtualizarMensagemAsync("Buscando credenciais no banco...", 15);
-                CryptoHelper.Id = 2; // ID da credencial unica
+                CryptoHelper.Id = 2; // ID da credencial única
                 DataTable dt = CryptoHelper.BuscaCriptografia();
                 if (dt == null || dt.Rows.Count == 0)
                 {
@@ -47,23 +47,35 @@ namespace APP
                 string user = row["user_descriptografado"].ToString();
                 string pass = row["pass_descriptografado"].ToString();
 
-                // 2️⃣ Verificar se o servidor está acessível
+                // 2️⃣ Verificar se o servidor responde ao ping
                 await AtualizarMensagemAsync("Verificando acesso ao servidor...", 20);
                 if (!HostDisponivel(ip))
                 {
                     throw new Exception($"Servidor {ip} inacessível. Verifique a conexão ou VPN.");
                 }
 
-                // 3️⃣ Mapear unidade de rede
+                // 3️⃣ Mapear unidade de rede (SMB)
                 await AtualizarMensagemAsync("Conectando ao servidor...", 25);
                 string localDrive = "Z:";
-                await Task.Run(() =>
+
+                await Task.Run(async () =>
                 {
-                    NetworkHelper.Unmap(localDrive, true);
-                    int rc = NetworkHelper.MapNetworkDrive(localDrive, $@"\\{ip}\{share}", user, pass);
-                    if (rc != 0)
+                    try
                     {
-                        throw new Exception($"Falha ao mapear unidade {share}. {TranslateError(rc)}");
+                        NetworkHelper.Unmap(localDrive, true);
+                        NetworkHelper.MapNetworkDrive(localDrive, $@"\\{ip}\{share}", user, pass);
+                    }
+                    catch (Exception ex)
+                    {
+                        int? rc = ExtractErrorCode(ex.Message);
+                        if (rc == 53 || rc == 67)
+                        {
+                            bool portaBloqueada = !await PortaAcessivelAsync(ip, 445);
+                            if (portaBloqueada)
+                                throw new Exception($"A porta 445 (SMB) no servidor {ip} parece bloqueada pelo provedor ou requer VPN.");
+                        }
+
+                        throw; // mantém a mensagem original para outros erros
                     }
                 });
 
@@ -117,9 +129,8 @@ namespace APP
             }
         }
 
-        /// <summary>
-        /// Verifica se o host responde ao ping
-        /// </summary>
+        // ==================== Métodos auxiliares ====================
+
         private bool HostDisponivel(string host, int timeout = 2000)
         {
             try
@@ -134,6 +145,31 @@ namespace APP
             {
                 return false;
             }
+        }
+
+        private async Task<bool> PortaAcessivelAsync(string host, int porta, int timeout = 2000)
+        {
+            try
+            {
+                using (var tcp = new TcpClient())
+                {
+                    var task = tcp.ConnectAsync(host, porta);
+                    var result = await Task.WhenAny(task, Task.Delay(timeout));
+                    return task.IsCompleted && tcp.Connected;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static int? ExtractErrorCode(string message)
+        {
+            var match = System.Text.RegularExpressions.Regex.Match(message, @"Código:\s*(\d+)");
+            if (match.Success && int.TryParse(match.Groups[1].Value, out int code))
+                return code;
+            return null;
         }
 
         /// <summary>
