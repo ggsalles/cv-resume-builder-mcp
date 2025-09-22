@@ -47,17 +47,27 @@ namespace APP
                 string user = row["user_descriptografado"].ToString();
                 string pass = row["pass_descriptografado"].ToString();
 
-                // 2️⃣ Mapear unidade de rede
+                // 2️⃣ Verificar se o servidor está acessível
+                await AtualizarMensagemAsync("Verificando acesso ao servidor...", 20);
+                if (!HostDisponivel(ip))
+                {
+                    throw new Exception($"Servidor {ip} inacessível. Verifique a conexão ou VPN.");
+                }
+
+                // 3️⃣ Mapear unidade de rede
                 await AtualizarMensagemAsync("Conectando ao servidor...", 25);
                 string localDrive = "Z:";
                 await Task.Run(() =>
                 {
                     NetworkHelper.Unmap(localDrive, true);
                     int rc = NetworkHelper.MapNetworkDrive(localDrive, $@"\\{ip}\{share}", user, pass);
-                    if (rc != 0) throw new Exception($"Falha ao mapear unidade {share}. Código: {rc}");
+                    if (rc != 0)
+                    {
+                        throw new Exception($"Falha ao mapear unidade {share}. {TranslateError(rc)}");
+                    }
                 });
 
-                // 3️⃣ Verificar e atualizar cliente
+                // 4️⃣ Verificar e atualizar cliente
                 string exeServidor = "WEDLC.exe";
                 string exeLocal = @"C:\WEDLC\WEDLC.exe";
                 string serverExePath = Path.Combine(localDrive + "\\", exeServidor);
@@ -82,10 +92,10 @@ namespace APP
                     await AtualizarMensagemAsync("Cliente já está atualizado.", 100);
                 }
 
-                // 4️⃣ Limpar mapeamento
+                // 5️⃣ Limpar mapeamento
                 NetworkHelper.Unmap(localDrive, true);
 
-                // 5️⃣ VERIFICAR SE JÁ ESTÁ EM EXECUÇÃO ANTES DE ABRIR
+                // 6️⃣ Verificar se já está em execução antes de abrir
                 await AtualizarMensagemAsync("Finalizando...", 100);
                 await Task.Delay(300);
 
@@ -106,6 +116,52 @@ namespace APP
                 await AtualizarMensagemAsync($"Erro: {ex.Message}", 100);
             }
         }
+
+        /// <summary>
+        /// Verifica se o host responde ao ping
+        /// </summary>
+        private bool HostDisponivel(string host, int timeout = 2000)
+        {
+            try
+            {
+                using (var ping = new System.Net.NetworkInformation.Ping())
+                {
+                    var reply = ping.Send(host, timeout);
+                    return reply.Status == System.Net.NetworkInformation.IPStatus.Success;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Tradução dos códigos de erro mais comuns do mapeamento
+        /// </summary>
+        private static string TranslateError(int code)
+        {
+            switch (code)
+            {
+                case 53:
+                    return "Caminho de rede não encontrado.";
+                case 67:
+                    return "Nome de rede inválido.";
+                case 86:
+                case 1326:
+                    return "Usuário ou senha incorretos.";
+                case 1219:
+                    return "Conflito de credenciais (já existe conexão com outro usuário).";
+                case 1909:
+                    return "A conta está bloqueada.";
+                case 1921:
+                    return "O servidor não está disponível.";
+                default:
+                    return $"Erro desconhecido. Código {code}";
+            }
+        }
+
+
 
         // Método para verificar se o processo está em execução
         private bool IsProcessRunning(string processName)

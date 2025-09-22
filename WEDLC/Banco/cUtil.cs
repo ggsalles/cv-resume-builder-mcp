@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -142,6 +143,20 @@ namespace WEDLC.Banco
                 if (cpf.Length != 11) return cpf;
 
                 return $"{cpf.Substring(0, 3)}.{cpf.Substring(3, 3)}.{cpf.Substring(6, 3)}-{cpf.Substring(9, 2)}";
+            }
+        }
+
+        public static class FormScaler
+        {
+            public static float ScaleFactor { get; set; } = 1.2f;
+
+            public static void ApplyScaling(Form form)
+            {
+                form.Scale(new SizeF(ScaleFactor, ScaleFactor));
+                foreach (Control ctrl in form.Controls)
+                {
+                    ctrl.Font = new Font(ctrl.Font.FontFamily, ctrl.Font.Size * ScaleFactor, ctrl.Font.Style);
+                }
             }
         }
 
