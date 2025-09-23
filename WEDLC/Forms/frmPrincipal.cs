@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WEDLC.Banco;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
 
 
 namespace WEDLC.Forms
@@ -18,7 +19,7 @@ namespace WEDLC.Forms
             this.DoubleBuffered = true;
             string ip = "";
             string mac = ObterMACAddress();
-            string version = AssemblyInfoHelper.GetAssemblyVersion();
+            string version = GetAssemblyFileVersion();
             GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
 
             cUtil.FormScaler.ApplyScaling(this);
@@ -30,6 +31,13 @@ namespace WEDLC.Forms
                 this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac + " || Versão: " + version;
             }
             SetFormTextAsync();
+        }
+
+        static string GetAssemblyFileVersion()
+        {
+            var assembly = Assembly.LoadFrom(@"C:\WEDLC\WEDLC.exe"); // ou Assembly.LoadFrom("Caminho/MeuExe.exe")
+            var attribute = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
+            return attribute?.Version ?? "Versão não encontrada";
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
