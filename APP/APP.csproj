@@ -50,18 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\NetworkHelper.cs" />
     <Compile Include="frmAtualizador.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmAtualizador.Designer.cs">
       <DependentUpon>frmAtualizador.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmCredencial.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCredencial.Designer.cs">
-      <DependentUpon>frmCredencial.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,6 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo luiz total.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

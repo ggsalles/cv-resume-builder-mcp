@@ -1,10 +1,10 @@
-﻿using APP.Classes;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Sockets;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WEDLC.Banco;
@@ -13,7 +13,7 @@ namespace APP
 {
     public partial class SplashForm : Form
     {
-         public SplashForm()
+        public SplashForm()
         {
             InitializeComponent();
             progressBar.Minimum = 0;
@@ -42,8 +42,8 @@ namespace APP
                 }
 
                 var row = dt.Rows[dt.Rows.Count - 1];
-                string ip = row["ip_descriptografado"].ToString();
-                string share = row["share_descriptografado"].ToString();
+                string ip = row["ip_descriptografado"].ToString().Trim();
+                string share = row["share_descriptografado"].ToString().Trim('/').Trim();
                 string user = row["user_descriptografado"].ToString();
                 string pass = row["pass_descriptografado"].ToString();
 
@@ -54,60 +54,118 @@ namespace APP
                     throw new Exception($"Servidor {ip} inacessível. Verifique a conexão ou VPN.");
                 }
 
-                // 3️⃣ Mapear unidade de rede (SMB)
-                await AtualizarMensagemAsync("Conectando ao servidor...", 25);
-                string localDrive = "Z:";
-
-                await Task.Run(async () =>
-                {
-                    try
-                    {
-                        NetworkHelper.Unmap(localDrive, true);
-                        NetworkHelper.MapNetworkDrive(localDrive, $@"\\{ip}\{share}", user, pass);
-                    }
-                    catch (Exception ex)
-                    {
-                        int? rc = ExtractErrorCode(ex.Message);
-                        if (rc == 53 || rc == 67)
-                        {
-                            bool portaBloqueada = !await PortaAcessivelAsync(ip, 445);
-                            if (portaBloqueada)
-                                throw new Exception($"A porta 445 (SMB) no servidor {ip} parece bloqueada pelo provedor ou requer VPN.");
-                        }
-
-                        throw; // mantém a mensagem original para outros erros
-                    }
-                });
-
-                // 4️⃣ Verificar e atualizar cliente
+                // 3️⃣ Montar URL do arquivo no IIS (HTTP)
+                await AtualizarMensagemAsync("Montando URL do servidor...", 25);
                 string exeServidor = "WEDLC.exe";
+                string baseUrl = $"http://{ip}"; // se usar porta diferente, coloque :porta aqui
+                //if (!string.IsNullOrWhiteSpace(share))
+                //    baseUrl = $"{baseUrl}/{share}";
+                string fileUrl = $"{baseUrl}/{exeServidor}";
+
+                // 4️⃣ Verificar versão do EXE remoto (fazendo download para temp)
+                await AtualizarMensagemAsync("Verificando versão do cliente no servidor...", 35);
+
+                FileVersionInfo serverVer = null;
+                string tempRemote = null;
+                try
+                {
+                    tempRemote = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + "_" + exeServidor);
+                    using (var http = CreateHttpClientBasic(user, pass))
+                    {
+                        bool ok = await DownloadFileWithProgressAsync(http, fileUrl, tempRemote, (p) =>
+                        {
+                            // mapear progresso do download dentro do passo 35..40 (pequeno feedback)
+                            int prog = 35 + (int)(p * 5 / 100.0); // 35..40
+                            AtualizarProgresso(prog);
+                        });
+
+                        if (!ok)
+                            throw new Exception("Não foi possível baixar temporariamente o arquivo remoto para verificação de versão.");
+                    }
+
+                    serverVer = FileVersionInfo.GetVersionInfo(tempRemote);
+                }
+                catch
+                {
+                    // limpa o temp caso haja erro (será tratado abaixo)
+                    if (tempRemote != null && File.Exists(tempRemote))
+                        File.Delete(tempRemote);
+                    throw;
+                }
+
+                // 5️⃣ Comparar versões e atualizar se necessário
                 string exeLocal = @"C:\WEDLC\WEDLC.exe";
-                string serverExePath = Path.Combine(localDrive + "\\", exeServidor);
-
-                if (!File.Exists(serverExePath))
-                    throw new FileNotFoundException("Arquivo do servidor não encontrado.");
-
-                await AtualizarMensagemAsync("Verificando versão do cliente...", 35);
-
-                FileVersionInfo serverVer = FileVersionInfo.GetVersionInfo(serverExePath);
                 FileVersionInfo localVer = File.Exists(exeLocal) ? FileVersionInfo.GetVersionInfo(exeLocal) : null;
 
-                if (localVer == null || new Version(serverVer.FileMajorPart, serverVer.FileMinorPart, serverVer.FileBuildPart, serverVer.FilePrivatePart) >
-                    new Version(localVer.FileMajorPart, localVer.FileMinorPart, localVer.FileBuildPart, localVer.FilePrivatePart))
+                Version serverVersion = new Version(serverVer.FileMajorPart, serverVer.FileMinorPart, serverVer.FileBuildPart, serverVer.FilePrivatePart);
+                Version localVersion = null;
+                if (localVer != null)
+                    localVersion = new Version(localVer.FileMajorPart, localVer.FileMinorPart, localVer.FileBuildPart, localVer.FilePrivatePart);
+
+                if (localVer == null || serverVersion > localVersion)
                 {
                     await AtualizarMensagemAsync("Atualizando cliente...", 40);
-                    await CopiarArquivoComProgressoAsync(serverExePath, exeLocal);
-                    await AtualizarMensagemAsync("Cliente atualizado com sucesso!", 100);
+
+                    // Se já temos tempRemote (arquivo baixado), podemos usá-lo em vez de baixar novamente.
+                    if (tempRemote != null && File.Exists(tempRemote))
+                    {
+                        // mover/replace de forma segura
+                        string backup = exeLocal + ".bak";
+                        try
+                        {
+                            // garante pasta existe
+                            Directory.CreateDirectory(Path.GetDirectoryName(exeLocal));
+
+                            // se o arquivo local está em uso, a substituição pode falhar — tratamos exceções
+                            if (File.Exists(exeLocal))
+                            {
+                                // tenta substituir com File.Replace (mantendo backup)
+                                File.Replace(tempRemote, exeLocal, backup, true);
+                                // remove backup se quiser
+                                if (File.Exists(backup)) File.Delete(backup);
+                            }
+                            else
+                            {
+                                File.Move(tempRemote, exeLocal);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            // fallback: sobrescrever (pode lançar se arquivo em uso)
+                            File.Copy(tempRemote, exeLocal, true);
+                        }
+                        finally
+                        {
+                            if (File.Exists(tempRemote)) File.Delete(tempRemote);
+                        }
+
+                        AtualizarProgresso(100);
+                        await AtualizarMensagemAsync("Cliente atualizado com sucesso!", 100);
+                    }
+                    else
+                    {
+                        // caso não tenha o temp (por algum motivo), baixa diretamente com progresso
+                        using (var http = CreateHttpClientBasic(user, pass))
+                        {
+                            await DownloadFileWithProgressAsync(http, fileUrl, exeLocal, (p) =>
+                            {
+                                // mapear progresso do download para 40..100
+                                int prog = 40 + (int)((p * 60) / 100.0);
+                                AtualizarProgresso(prog);
+                            });
+                        }
+
+                        await AtualizarMensagemAsync("Cliente atualizado com sucesso!", 100);
+                    }
                 }
                 else
                 {
                     await AtualizarMensagemAsync("Cliente já está atualizado.", 100);
+                    // apagar temp, se existir
+                    if (tempRemote != null && File.Exists(tempRemote)) File.Delete(tempRemote);
                 }
 
-                // 5️⃣ Limpar mapeamento
-                NetworkHelper.Unmap(localDrive, true);
-
-                // 6️⃣ Verificar se já está em execução antes de abrir
+                // 6️⃣ Finalizar e executar
                 await AtualizarMensagemAsync("Finalizando...", 100);
                 await Task.Delay(300);
 
@@ -147,23 +205,6 @@ namespace APP
             }
         }
 
-        private async Task<bool> PortaAcessivelAsync(string host, int porta, int timeout = 2000)
-        {
-            try
-            {
-                using (var tcp = new TcpClient())
-                {
-                    var task = tcp.ConnectAsync(host, porta);
-                    var result = await Task.WhenAny(task, Task.Delay(timeout));
-                    return task.IsCompleted && tcp.Connected;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public static int? ExtractErrorCode(string message)
         {
             var match = System.Text.RegularExpressions.Regex.Match(message, @"Código:\s*(\d+)");
@@ -171,33 +212,6 @@ namespace APP
                 return code;
             return null;
         }
-
-        /// <summary>
-        /// Tradução dos códigos de erro mais comuns do mapeamento
-        /// </summary>
-        private static string TranslateError(int code)
-        {
-            switch (code)
-            {
-                case 53:
-                    return "Caminho de rede não encontrado.";
-                case 67:
-                    return "Nome de rede inválido.";
-                case 86:
-                case 1326:
-                    return "Usuário ou senha incorretos.";
-                case 1219:
-                    return "Conflito de credenciais (já existe conexão com outro usuário).";
-                case 1909:
-                    return "A conta está bloqueada.";
-                case 1921:
-                    return "O servidor não está disponível.";
-                default:
-                    return $"Erro desconhecido. Código {code}";
-            }
-        }
-
-
 
         // Método para verificar se o processo está em execução
         private bool IsProcessRunning(string processName)
@@ -230,32 +244,9 @@ namespace APP
         private void AtualizarProgresso(int valor)
         {
             if (progressBar.InvokeRequired)
-                progressBar.Invoke(new Action(() => progressBar.Value = valor));
+                progressBar.Invoke(new Action(() => progressBar.Value = Math.Max(progressBar.Minimum, Math.Min(progressBar.Maximum, valor))));
             else
-                progressBar.Value = valor;
-        }
-
-        // Copia arquivo atualizando a barra suavemente
-        private async Task CopiarArquivoComProgressoAsync(string origem, string destino)
-        {
-            const int bufferSize = 1024 * 256; // 256 KB
-            using (FileStream fsOrigem = new FileStream(origem, FileMode.Open, FileAccess.Read))
-            using (FileStream fsDestino = new FileStream(destino, FileMode.Create, FileAccess.Write))
-            {
-                byte[] buffer = new byte[bufferSize];
-                long totalBytes = fsOrigem.Length;
-                long bytesCopiados = 0;
-                int bytesLidos;
-
-                while ((bytesLidos = await fsOrigem.ReadAsync(buffer, 0, buffer.Length)) > 0)
-                {
-                    await fsDestino.WriteAsync(buffer, 0, bytesLidos);
-                    bytesCopiados += bytesLidos;
-
-                    int progresso = 40 + (int)((bytesCopiados * 60) / totalBytes); // da etapa 40 até 100
-                    AtualizarProgresso(progresso);
-                }
-            }
+                progressBar.Value = Math.Max(progressBar.Minimum, Math.Min(progressBar.Maximum, valor));
         }
 
         private async void SplashForm_Load(object sender, EventArgs e)
@@ -289,6 +280,84 @@ namespace APP
                 section.SectionInformation.UnprotectSection();
                 config.Save();
                 Console.WriteLine("Connection string decrypted successfully.");
+            }
+        }
+
+        // ==================== HTTP Helpers: Basic Auth + Download com progresso ====================
+
+        /// <summary>
+        /// Cria um HttpClient configurado para Basic Authentication usando header Authorization.
+        /// Caller deve descartar (dispose) o HttpClient.
+        /// </summary>
+        private HttpClient CreateHttpClientBasic(string user, string pass)
+        {
+            var handler = new HttpClientHandler
+            {
+                AllowAutoRedirect = true
+            };
+
+            var client = new HttpClient(handler)
+            {
+                Timeout = TimeSpan.FromSeconds(120)
+            };
+
+            if (!string.IsNullOrWhiteSpace(user) && !string.IsNullOrWhiteSpace(pass))
+            {
+                var token = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{user}:{pass}"));
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", token);
+            }
+
+            return client;
+        }
+
+        /// <summary>
+        /// Faz download do arquivo via HttpClient de forma streaming e reporta progresso (0..100).
+        /// Retorna true se sucesso.
+        /// </summary>
+        private async Task<bool> DownloadFileWithProgressAsync(HttpClient client, string url, string destinationPath, Action<int> reportProgress)
+        {
+            try
+            {
+                using (var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
+                {
+                    if (!response.IsSuccessStatusCode)
+                        throw new Exception($"Falha ao baixar arquivo. Status: {response.StatusCode}");
+
+                    var contentLength = response.Content.Headers.ContentLength;
+
+                    // garantir pasta destino existe
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+
+                    using (var stream = await response.Content.ReadAsStreamAsync())
+                    using (var fs = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        var buffer = new byte[1024 * 64];
+                        long totalRead = 0;
+                        int read;
+                        while ((read = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                        {
+                            await fs.WriteAsync(buffer, 0, read);
+                            totalRead += read;
+
+                            if (contentLength.HasValue && contentLength.Value > 0)
+                            {
+                                int pct = (int)((totalRead * 100) / contentLength.Value);
+                                reportProgress?.Invoke(pct);
+                            }
+                            else
+                            {
+                                // se tamanho desconhecido, reporta - usa 0..100 estimado por chunks
+                                reportProgress?.Invoke(0);
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao baixar {url}: {ex.Message}", ex);
             }
         }
     }
