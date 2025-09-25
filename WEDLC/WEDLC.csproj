@@ -124,6 +124,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="ZstdSharp, Version=0.8.6.0, Culture=neutral, PublicKeyToken=8d151af33a4ad5cf, processorArchitecture=MSIL">
       <HintPath>..\packages\ZstdSharp.Port.0.8.6\lib\net462\ZstdSharp.dll</HintPath>
     </Reference>
@@ -169,6 +170,7 @@
     <Compile Include="Banco\cFolha.cs" />
     <Compile Include="Banco\cSequence.cs" />
     <Compile Include="Banco\cSimNao.cs" />
+    <Compile Include="Banco\FormZoomHelper.cs" />
     <Compile Include="Forms\frmAtividadeInsercao.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -29,9 +30,12 @@ namespace WEDLC.Forms
         public string Sigla { get; set; }
         public string Texto { get; set; }
 
+        private FormZoomHelper zoomHelper;
+
         public frmAtividadeInsercao()
         {
             InitializeComponent();
+            zoomHelper = new FormZoomHelper(this);
         }
 
         private void frmAtividadeInsercao_Load(object sender, EventArgs e)

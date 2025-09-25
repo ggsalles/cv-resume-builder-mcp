@@ -21,7 +21,7 @@ namespace WEDLC.Forms
             string version = GetAssemblyFileVersion();
             GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
 
-            cUtil.FormScaler.ApplyScaling(this);
+            //cUtil.FormScaler.ApplyScaling(this);
 
             // Use a local async function to await the IP and set the form text
             async void SetFormTextAsync()
