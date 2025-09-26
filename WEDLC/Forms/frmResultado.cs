@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -22,6 +23,8 @@ namespace WEDLC.Forms
         public int IdResultado = 0; //Variável para controlar o código do resultado
 
         public const int codModulo = 13; //Código do módulo
+
+        private FormZoomHelper zoomHelper;
 
         public enum Acao
         {
@@ -52,6 +55,8 @@ namespace WEDLC.Forms
             toolTip1.ReshowDelay = 500; // Tempo entre as aparições do ToolTip
             toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
             //toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
+
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmResultado_Load(object sender, EventArgs e)
@@ -421,7 +426,7 @@ namespace WEDLC.Forms
                                     objPotenciaisEvocados.codGrupoFolha = CodGrupoFolha;
                                     objPotenciaisEvocados.IdFolha = idfolha;
                                     objPotenciaisEvocados.IdPaciente = idpaciente;
-                                    objPotenciaisEvocados.IdResultado = IdResultado; 
+                                    objPotenciaisEvocados.IdResultado = IdResultado;
                                     objPotenciaisEvocados.sigla = sigla;
                                     objPotenciaisEvocados.nome = nome;
 

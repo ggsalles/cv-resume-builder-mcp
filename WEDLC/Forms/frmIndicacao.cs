@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -21,9 +22,12 @@ namespace WEDLC.Forms
         public Acao cAcao = Acao.UPDATE;
 
         public const int codModulo = 7; //Código do módulo
+
+        private FormZoomHelper zoomHelper;
         public frmIndicacao()
         {
             InitializeComponent();
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
         private void frmIndicacao_Load(object sender, EventArgs e)
         {

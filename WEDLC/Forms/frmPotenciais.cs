@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -30,9 +31,11 @@ namespace WEDLC.Forms
         public string Sigla { get; set; }
         public string Texto { get; set; }
 
+        private FormZoomHelper zoomHelper;
         public frmPotenciais()
         {
             InitializeComponent();
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmPotenciais_Load(object sender, EventArgs e)

@@ -3,11 +3,14 @@ using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
     public partial class frmLogin : Form
     {
+        private FormZoomHelper zoomHelper;
+
         public enum NivelAcesso
         {
             NIVEL1_ADM = 1,
@@ -21,6 +24,8 @@ namespace WEDLC.Forms
             InitializeComponent();
             EncryptConnectionString();
             //DecryptConnectionString();
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
+
         }
 
         private void btnOk_Click(object sender, EventArgs e)

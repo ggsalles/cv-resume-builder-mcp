@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -32,9 +33,12 @@ namespace WEDLC.Forms
         public DataTable dtNeuroCondSenorial = new DataTable();
         public DataTable dtEstudoPotencial = new DataTable();
 
+        private FormZoomHelper zoomHelper;
+
         public frmFolha()
         {
             InitializeComponent();
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmFolha_Load(object sender, EventArgs e)

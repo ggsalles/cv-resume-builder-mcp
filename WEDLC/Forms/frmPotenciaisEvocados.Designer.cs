@@ -1870,7 +1870,6 @@
             this.MinimizeBox = false;
             this.Name = "frmPotenciaisEvocados";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Potenciais Evocados";
             this.Load += new System.EventHandler(this.frmPotenciaisEvocados_Load);
             this.Shown += new System.EventHandler(this.frmPotenciaisEvocados_Shown);
             this.grpBoxDados.ResumeLayout(false);

@@ -8,6 +8,7 @@ using System.Transactions;
 using System.Windows.Forms;
 using System.Xml;
 using WEDLC.Banco;
+using WinFormsZoom;
 using static WEDLC.Banco.cUtil;
 
 namespace WEDLC.Forms
@@ -30,6 +31,7 @@ namespace WEDLC.Forms
         public Int32 sequence = 0;
 
         public const int codModulo = 12; //Código do módulo
+        private FormZoomHelper zoomHelper;
 
         public enum Acao
         {
@@ -50,6 +52,8 @@ namespace WEDLC.Forms
             toolTip1.ReshowDelay = 500; // Tempo entre as aparições do ToolTip
             toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
             toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
+
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmPaciente_Load(object sender, EventArgs e)

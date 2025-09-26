@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -34,6 +35,7 @@ namespace WEDLC.Forms
         public int NumeroLinha = -1; // Variável para controlar a linha do grid
 
         public const int codModulo =11; //Código do módulo
+        private FormZoomHelper zoomHelper;
 
         public frmMedico()
         {
@@ -47,6 +49,8 @@ namespace WEDLC.Forms
             toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
             toolTip1.SetToolTip(txtCepConsultorio, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
             toolTip1.SetToolTip(txtMediaConsultorio, "Digite o valor médio da consulta. Exemplo: 150,00");
+
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmPaciente_Load(object sender, EventArgs e)

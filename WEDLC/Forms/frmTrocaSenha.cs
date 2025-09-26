@@ -2,17 +2,20 @@
 using System.Data;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
     public partial class frmTrocaSenha : Form
     {
         public clLogin objCllogin;
+        private FormZoomHelper zoomHelper;
 
         public frmTrocaSenha(clLogin objCllogin)
         {
             InitializeComponent();
             this.objCllogin = objCllogin;
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void btnSair_Click(object sender, EventArgs e)

@@ -31,7 +31,6 @@ namespace WEDLC.Forms
         public string Texto { get; set; }
 
         private FormZoomHelper zoomHelper;
-
         public frmAtividadeInsercao()
         {
             InitializeComponent();

@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -21,10 +22,11 @@ namespace WEDLC.Forms
 
         //Código do módulo
         public const int codModulo = 1;
-
+        private FormZoomHelper zoomHelper;
         public frmEspecializacao()
         {
             InitializeComponent();
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmEspecializacao_Load(object sender, EventArgs e)

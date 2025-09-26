@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -20,9 +21,11 @@ namespace WEDLC.Forms
         public Acao cAcao = Acao.UPDATE;
 
         public const int codModulo = 5; //Código do módulo
+        private FormZoomHelper zoomHelper;
         public frmExame()
         {
             InitializeComponent();
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
         private void frmMusculo_Load(object sender, EventArgs e)
         {

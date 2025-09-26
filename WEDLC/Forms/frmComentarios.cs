@@ -36,7 +36,7 @@ namespace WEDLC.Forms
         public frmComentarios()
         {
             InitializeComponent();
-            zoomHelper = new FormZoomHelper(this);
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmComentarios_Load(object sender, EventArgs e)

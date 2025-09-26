@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WEDLC.Banco;

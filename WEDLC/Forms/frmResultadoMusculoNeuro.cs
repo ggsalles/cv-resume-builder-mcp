@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Transactions;
+using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 
 namespace WEDLC.Forms
 {
@@ -21,6 +22,8 @@ namespace WEDLC.Forms
         public Int32 IdResultado = 0;
         public int grupoFolha = 0;
 
+        private FormZoomHelper zoomHelper;
+
         public frmResultadoMusculoNeuro()
         {
             InitializeComponent();
@@ -30,7 +33,8 @@ namespace WEDLC.Forms
             toolTip1.InitialDelay = 500; // Tempo antes do ToolTip aparecer
             toolTip1.ReshowDelay = 500; // Tempo entre as aparições do ToolTip
             toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
-            //toolTip1.SetToolTip(txtCep, "Digite o CEP sem pontos ou traços. Exemplo: 12345678");
+
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmResultadoMusculoNeuro_Load(object sender, EventArgs e)

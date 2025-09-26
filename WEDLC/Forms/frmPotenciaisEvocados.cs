@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Transactions;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WinFormsZoom;
 using static WEDLC.Banco.cUtil;
 
 namespace WEDLC.Forms
@@ -26,10 +27,13 @@ namespace WEDLC.Forms
 
         public int codGrupoFolha; //Código do grupo de folha (PEV, PESS, PEA, PEGC, PESSMED)
 
+        public bool jaIniciou = false;
+
         public string sigla;
 
         public string nome;
 
+        private FormZoomHelper zoomHelper;
         public enum GrupoFolha
         {
             ENG = 1,
@@ -49,8 +53,9 @@ namespace WEDLC.Forms
         {
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
-            this.Text = "Folha: " + sigla + " - " + nome;
             iniciaTela();
+            this.Text = "Folha: " + sigla + " - " + nome;
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
         }
 
         private void frmPotenciaisEvocados_Shown(object sender, EventArgs e)
@@ -64,9 +69,6 @@ namespace WEDLC.Forms
             {
                 //De acordo com o grupo de folha, formata a tela
                 formataCarregaTela();
-
-                // Ativa a visualização do click no form
-                this.KeyPreview = true;
 
             }
             catch (Exception)
