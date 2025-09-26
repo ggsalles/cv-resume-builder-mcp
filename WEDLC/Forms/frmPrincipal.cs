@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -18,7 +19,8 @@ namespace WEDLC.Forms
             this.DoubleBuffered = true;
             string ip = "";
             string mac = ObterMACAddress();
-            string version = GetAssemblyFileVersion();
+            string version = GetExternalExeFileVersion();
+
             GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
 
             //cUtil.FormScaler.ApplyScaling(this);
@@ -32,11 +34,17 @@ namespace WEDLC.Forms
             SetFormTextAsync();
         }
 
-        static string GetAssemblyFileVersion()
+        static string GetExternalExeFileVersion(string path = @"C:\WEDLC\WEDLC.exe")
         {
-            var assembly = Assembly.LoadFrom(@"C:\WEDLC\WEDLC.exe"); // ou Assembly.LoadFrom("Caminho/MeuExe.exe")
-            var attribute = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
-            return attribute?.Version ?? "Versão não encontrada";
+            try
+            {
+                var fvi = FileVersionInfo.GetVersionInfo(path);
+                return fvi.FileVersion ?? "Versão não encontrada";
+            }
+            catch (Exception ex)
+            {
+                return $"Erro: {ex.Message}";
+            }
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
