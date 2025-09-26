@@ -47,6 +47,7 @@ namespace WEDLC.Forms
         public frmPotenciaisEvocados()
         {
             InitializeComponent();
+            this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
         }
 
         private void frmPotenciaisEvocados_Load(object sender, EventArgs e)

@@ -35,6 +35,8 @@ namespace WEDLC.Forms
         {
             InitializeComponent();
             zoomHelper = new FormZoomHelper(this);
+            // Descarta automaticamente quando o form for fechado
+            this.FormClosed += (s, e) => zoomHelper.Dispose();
         }
 
         private void frmAtividadeInsercao_Load(object sender, EventArgs e)
@@ -47,7 +49,7 @@ namespace WEDLC.Forms
                 btnNovo.Enabled = false;
             }
         }
-
+ 
         public void carregaTela()
         {
             try

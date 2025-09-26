@@ -288,8 +288,8 @@ namespace WEDLC.Banco
                     if (decimal.TryParse(textoLimpo.Replace(".", ","), NumberStyles.Any,
                                         CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
                     {
-                        // Se for número inteiro E tiver mais de 2 dígitos, assume que são centavos
-                        if (ehNumeroInteiro && textoLimpo.Length > 2 && valor != 0)
+                        // Se for número inteiro E tiver mais de 3 dígitos, assume que são centavos
+                        if (ehNumeroInteiro && textoLimpo.Length > 3 && valor != 0)
                         {
                             valor = valor / 100m;
                         }

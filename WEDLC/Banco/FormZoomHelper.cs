@@ -12,7 +12,7 @@ namespace WinFormsZoom
         private readonly Form form;
         private readonly string baseTitle;
 
-        public float ZoomFactor { get; private set; } = 1.0f;  // zoom atual
+        public float ZoomFactor { get; private set; } = 1.0f;
         public float MinZoom { get; set; } = 0.5f;
         public float MaxZoom { get; set; } = 2.0f;
 
@@ -25,6 +25,8 @@ namespace WinFormsZoom
         private readonly Dictionary<Control, float> originalFontSizes = new Dictionary<Control, float>();
 
         private readonly string zoomFilePath;
+        private bool zoomLoaded = false;
+        private bool initializing = false;
 
         public FormZoomHelper(Form targetForm)
         {
@@ -41,13 +43,21 @@ namespace WinFormsZoom
             animationTimer = new Timer { Interval = 5 };
             animationTimer.Tick += AnimationTimer_Tick;
 
-            // caminho do arquivo JSON
             zoomFilePath = Path.Combine(Application.UserAppDataPath, "zoom.json");
 
-            // carrega zoom salvo
+            initializing = true;
             LoadSavedZoom();
 
+            if (Math.Abs(ZoomFactor - 1.0f) > 0.001f)
+            {
+                ApplyZoom(); // aplica sem salvar
+            }
+            initializing = false;
+
             UpdateTitle();
+
+            // Salva posição/tamanho no fechamento do form
+            form.FormClosing += (s, e) => SavePositionAndSize();
         }
 
         private void AnimationTimer_Tick(object sender, EventArgs e)
@@ -74,7 +84,7 @@ namespace WinFormsZoom
             {
                 if (!originalBounds.ContainsKey(ctrl))
                 {
-                    originalBounds[ctrl] = ctrl.Bounds;
+                    originalBounds[ctrl] = new Rectangle(ctrl.Left, ctrl.Top, ctrl.Width, ctrl.Height);
                     originalFontSizes[ctrl] = ctrl.Font.Size;
                 }
 
@@ -115,13 +125,16 @@ namespace WinFormsZoom
 
         private void SetTargetZoom(float newZoom)
         {
-            float rounded = (float)Math.Round(newZoom * 20f) / 20f;
-            targetZoom = Math.Max(MinZoom, Math.Min(MaxZoom, rounded));
+            if (!zoomLoaded) return;
+
+            targetZoom = Math.Max(MinZoom, Math.Min(MaxZoom, newZoom));
             animationTimer.Start();
         }
 
         private void ApplyZoom()
         {
+            if (!zoomLoaded) return;
+
             form.SuspendLayout();
 
             form.ClientSize = new Size(
@@ -145,18 +158,21 @@ namespace WinFormsZoom
             }
 
             UpdateTitle();
-            SaveCurrentZoom();
+
+            // 🔹 salva zoom apenas quando alterado pelo usuário
+            if (!initializing)
+                SaveZoom();
 
             form.ResumeLayout();
         }
 
         private void UpdateTitle()
         {
+            if (!zoomLoaded) return;
             int percent = (int)(ZoomFactor * 100);
             form.Text = $"{baseTitle} - {percent}%";
         }
 
-        // 🔹 Persistência em JSON
         private void LoadSavedZoom()
         {
             try
@@ -165,18 +181,38 @@ namespace WinFormsZoom
                 {
                     var json = File.ReadAllText(zoomFilePath);
                     var dict = JsonSerializer.Deserialize<Dictionary<string, int>>(json);
-                    if (dict != null && dict.TryGetValue(form.Name, out int percent))
+
+                    if (dict != null)
                     {
-                        ZoomFactor = targetZoom = percent / 100f;
-                        ApplyZoom();
+                        if (dict.TryGetValue(form.Name + "_Zoom", out int percent))
+                            ZoomFactor = targetZoom = percent / 100f;
+
+                        if (dict.TryGetValue(form.Name + "_Left", out int left) &&
+                            dict.TryGetValue(form.Name + "_Top", out int top))
+                        {
+                            form.StartPosition = FormStartPosition.Manual;
+                            form.Location = new Point(left, top);
+                        }
+
+                        if (dict.TryGetValue(form.Name + "_Width", out int w) &&
+                            dict.TryGetValue(form.Name + "_Height", out int h))
+                        {
+                            form.Size = new Size(w, h);
+                        }
                     }
                 }
+                zoomLoaded = true;
             }
-            catch { /* ignorar erros */ }
+            catch
+            {
+                zoomLoaded = true;
+            }
         }
 
-        private void SaveCurrentZoom()
+        private void SaveZoom()
         {
+            if (!zoomLoaded) return;
+
             try
             {
                 Dictionary<string, int> dict;
@@ -187,13 +223,45 @@ namespace WinFormsZoom
                 }
                 else dict = new Dictionary<string, int>();
 
-                dict[form.Name] = (int)(ZoomFactor * 100);
-                var jsonOut = JsonSerializer.Serialize(dict, new JsonSerializerOptions { WriteIndented = true });
+                dict[form.Name + "_Zoom"] = (int)(ZoomFactor * 100);
 
+                var jsonOut = JsonSerializer.Serialize(dict, new JsonSerializerOptions { WriteIndented = true });
                 Directory.CreateDirectory(Path.GetDirectoryName(zoomFilePath));
                 File.WriteAllText(zoomFilePath, jsonOut);
             }
-            catch { /* ignorar erros */ }
+            catch { }
+        }
+
+        private void SavePositionAndSize()
+        {
+            if (!zoomLoaded) return;
+
+            try
+            {
+                Dictionary<string, int> dict;
+                if (File.Exists(zoomFilePath))
+                {
+                    var json = File.ReadAllText(zoomFilePath);
+                    dict = JsonSerializer.Deserialize<Dictionary<string, int>>(json) ?? new Dictionary<string, int>();
+                }
+                else dict = new Dictionary<string, int>();
+
+                dict[form.Name + "_Left"] = form.Left;
+                dict[form.Name + "_Top"] = form.Top;
+                dict[form.Name + "_Width"] = form.Width;
+                dict[form.Name + "_Height"] = form.Height;
+
+                var jsonOut = JsonSerializer.Serialize(dict, new JsonSerializerOptions { WriteIndented = true });
+                Directory.CreateDirectory(Path.GetDirectoryName(zoomFilePath));
+                File.WriteAllText(zoomFilePath, jsonOut);
+            }
+            catch { }
+        }
+
+        public void Dispose()
+        {
+            animationTimer?.Stop();
+            animationTimer?.Dispose();
         }
     }
 }

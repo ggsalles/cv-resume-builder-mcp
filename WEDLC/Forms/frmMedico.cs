@@ -51,6 +51,7 @@ namespace WEDLC.Forms
             toolTip1.SetToolTip(txtMediaConsultorio, "Digite o valor médio da consulta. Exemplo: 150,00");
 
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
+            this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
         }
 
         private void frmPaciente_Load(object sender, EventArgs e)

@@ -35,6 +35,7 @@ namespace WEDLC.Forms
             toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
 
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
+            this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
         }
 
         private void frmResultadoMusculoNeuro_Load(object sender, EventArgs e)

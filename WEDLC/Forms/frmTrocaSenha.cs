@@ -16,6 +16,7 @@ namespace WEDLC.Forms
             InitializeComponent();
             this.objCllogin = objCllogin;
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
+            this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
         }
 
         private void btnSair_Click(object sender, EventArgs e)

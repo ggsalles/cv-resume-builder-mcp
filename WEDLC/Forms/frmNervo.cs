@@ -28,6 +28,7 @@ namespace WEDLC.Forms
         {
             InitializeComponent();
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
+            this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
         }
 
         private void frmNervo_Load(object sender, EventArgs e)

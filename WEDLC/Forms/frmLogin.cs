@@ -25,6 +25,7 @@ namespace WEDLC.Forms
             EncryptConnectionString();
             //DecryptConnectionString();
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
+            this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
 
         }
 
