@@ -167,5 +167,46 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
+
+        public DataTable BuscaRelResultadoPaciente()
+        {
+            // Validação básica dos parâmetros
+
+            if (Paciente.IdPaciente < 0)
+                return null;
+
+            if (!conectaBanco())
+                return null;
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (var sqlDa = new MySqlDataAdapter("pr_reldadospaciente", conexao))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", Paciente.IdPaciente);
+
+                    sqlDa.Fill(dt);
+                    return dt;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Log específico para diagnóstico
+                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadopaciente: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                // Log para outros erros
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
+        }
     }
 }

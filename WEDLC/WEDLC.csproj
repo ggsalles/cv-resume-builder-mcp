@@ -196,6 +196,11 @@
     <Compile Include="Banco\cSequence.cs" />
     <Compile Include="Banco\cSimNao.cs" />
     <Compile Include="Banco\FormZoomHelper.cs" />
+    <Compile Include="DataSetsReport\dsPaciente.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPaciente.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmRelResultadoMusculoNeuro.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -392,6 +397,17 @@
     <EmbeddedResource Include="Relatorios\relResultadoMusculoNeuro.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="DataSetsReport\dsPaciente.xsc">
+      <DependentUpon>dsPaciente.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsPaciente.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPaciente.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetsReport\dsPaciente.xss">
+      <DependentUpon>dsPaciente.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -426,6 +442,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Imagens\add.png" />
+    <None Include="Imagens\PrinT.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll" />
     <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll" />

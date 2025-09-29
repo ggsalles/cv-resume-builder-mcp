@@ -26,6 +26,14 @@ namespace WEDLC.Forms
 
         private FormZoomHelper zoomHelper;
 
+        // Variaveis de controle para o relatório
+
+        private Int32 relIdpaciente = 0;
+        private Int32 relIdfolha = 0;
+        private Int32 relCodGrupoFolha = 0;
+        private string relSigla = string.Empty;
+        private string relNome = string.Empty;
+
         public enum Acao
         {
             INSERT = 0,
@@ -122,6 +130,17 @@ namespace WEDLC.Forms
             txtNome.Text = string.Empty;
             grdDadosPessoais.DataSource = null;
             grdFolhaPaciente.DataSource = null;
+
+            //Libera as variáveis do relatório
+            relIdpaciente = 0;
+            relIdfolha = 0;
+            relCodGrupoFolha = 0;
+            relSigla = string.Empty;
+            relNome = string.Empty;
+
+            NumeroLinha = -1; // Variável para controlar a linha do grid da folha
+            CodGrupoFolha = 0; // Variável para controlar o código do grupo da folha
+            IdResultado = 0; //Variável para controlar o código do resultado
 
             //Libera os objetos
             txtCodigoProntuario.Enabled = true; //Habilita o campo código
@@ -374,8 +393,8 @@ namespace WEDLC.Forms
                     {
 
                         // Obtém o ID e os textos das células necessárias
-                        int idpaciente = Convert.ToInt32(row.Cells[0].Value);
-                        int idfolha = Convert.ToInt32(row.Cells[1].Value);
+                        Int32 idpaciente = Convert.ToInt32(row.Cells[0].Value);
+                        Int32 idfolha = Convert.ToInt32(row.Cells[1].Value);
                         string sigla = row.Cells[2].Value.ToString();
                         string nome = row.Cells[3].Value.ToString();
 
@@ -459,6 +478,59 @@ namespace WEDLC.Forms
             this.limpaFormulario();
         }
 
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
+            if (relIdpaciente > 0) // Verifica se um paciente foi selecionado
+            {
+                // Altera o cursor para "espera"
+                Cursor.Current = Cursors.WaitCursor;
+                var frm = new frmRelResultadoMusculoNeuro(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome); // passando ID do cliente
+                // Restaura o cursor normal
+                Cursor.Current = Cursors.Default;
+                frm.ShowDialog();
+            }
+
+            else
+            {
+                // Restaura o cursor normal
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show("Selecione uma folha para imprimir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
+
+        private void grdFolhaPaciente_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    // Otimização: Acessa a linha apenas uma vez
+                    DataGridViewRow row = grdFolhaPaciente.Rows[e.RowIndex];
+
+                    SuspendLayout(); //Suspende o layout para evitar flickering
+
+                    if (row.Cells[0].Value != null && row.Cells[1].Value != null)
+                    {
+                        // Obtém o ID e os textos das células necessárias
+                        relIdpaciente = Convert.ToInt32(row.Cells[0].Value); // IdPaciente
+                        relIdfolha = Convert.ToInt32(row.Cells[1].Value); // IdFolha
+                        relSigla = row.Cells[2].Value.ToString(); // Sigla
+                        relNome = row.Cells[3].Value.ToString(); // Nome
+                        relCodGrupoFolha = Convert.ToInt32(row.Cells[4].Value); // Armazena o número da linha selecionada do Grupo da folha
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao selecionar um item na grid dados!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            finally
+            {
+                ResumeLayout();
+            }
+        }
     }
 }
 

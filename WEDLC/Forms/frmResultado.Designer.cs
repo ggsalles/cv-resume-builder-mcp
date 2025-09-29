@@ -35,6 +35,7 @@
             this.txtCodigoProntuario = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.grpBotoes = new System.Windows.Forms.GroupBox();
+            this.btnImprimir = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnLimpar = new System.Windows.Forms.Button();
             this.grpfolha = new System.Windows.Forms.GroupBox();
@@ -109,6 +110,7 @@
             // 
             // grpBotoes
             // 
+            this.grpBotoes.Controls.Add(this.btnImprimir);
             this.grpBotoes.Controls.Add(this.btnSair);
             this.grpBotoes.Controls.Add(this.btnLimpar);
             this.grpBotoes.Location = new System.Drawing.Point(11, 340);
@@ -116,6 +118,18 @@
             this.grpBotoes.Size = new System.Drawing.Size(717, 49);
             this.grpBotoes.TabIndex = 24;
             this.grpBotoes.TabStop = false;
+            // 
+            // btnImprimir
+            // 
+            this.btnImprimir.Image = global::WEDLC.Properties.Resources.PrinT;
+            this.btnImprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnImprimir.Location = new System.Drawing.Point(98, 14);
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(85, 27);
+            this.btnImprimir.TabIndex = 26;
+            this.btnImprimir.Text = "Imprimir";
+            this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // btnSair
             // 
@@ -159,6 +173,7 @@
             this.grdFolhaPaciente.Name = "grdFolhaPaciente";
             this.grdFolhaPaciente.Size = new System.Drawing.Size(705, 133);
             this.grdFolhaPaciente.TabIndex = 5;
+            this.grdFolhaPaciente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdFolhaPaciente_CellClick);
             this.grdFolhaPaciente.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdFolhaPaciente_CellDoubleClick);
             // 
             // frmResultado
@@ -201,5 +216,6 @@
         private System.Windows.Forms.DataGridView grdDadosPessoais;
         private System.Windows.Forms.GroupBox grpfolha;
         private System.Windows.Forms.DataGridView grdFolhaPaciente;
+        private System.Windows.Forms.Button btnImprimir;
     }
 }
