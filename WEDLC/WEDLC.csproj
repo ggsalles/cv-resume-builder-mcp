@@ -395,7 +395,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Relatorios\relResultadoMusculoNeuro.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="DataSetsReport\dsPaciente.xsc">
       <DependentUpon>dsPaciente.xsd</DependentUpon>

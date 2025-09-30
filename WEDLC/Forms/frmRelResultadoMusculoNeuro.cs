@@ -1,6 +1,7 @@
 ﻿using Microsoft.Reporting.WinForms;
 using System;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
 using WEDLC.Banco;
 
@@ -51,7 +52,8 @@ namespace WEDLC.Forms
                 // Cálculo da idade
                 idade = cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(DateTime.Parse(dt.Rows[0]["nascimento"].ToString())).ToString();
 
-                reportViewer1.LocalReport.ReportPath = @"Relatorios\relResultadoMusculoNeuro.rdlc";
+                string path = Path.Combine(Application.StartupPath, "Relatorios", "relResultadoMusculoNeuro.rdlc");
+                reportViewer1.LocalReport.ReportPath = path;
                 reportViewer1.LocalReport.DataSources.Clear();
 
                 // Parâmetro
@@ -73,11 +75,13 @@ namespace WEDLC.Forms
                 // Restaura o cursor normal
                 Cursor.Current = Cursors.Default;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Restaura o cursor normal
                 Cursor.Current = Cursors.Default;
-                MessageBox.Show("Erro ao tentar carregar o relatório!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao tentar carregar o relatório:\n\n" + ex.Message,
+                                "Atenção",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
 
         }
