@@ -34,7 +34,6 @@ namespace WEDLC.Forms
             toolTip1.ReshowDelay = 500; // Tempo entre as aparições do ToolTip
             toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
 
-            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
         }
 
@@ -43,7 +42,8 @@ namespace WEDLC.Forms
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
             this.Text = "Folha: " + objResultadoAvaliacaoMuscular.Sigla.ToString() + " - " + objResultadoAvaliacaoMuscular.Nome.ToString();
-            int var = grupoFolha; // Apenas para evitar o aviso de variável não utilizada
+            zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
+            //int var = grupoFolha; // Apenas para evitar o aviso de variável não utilizada
             IdResultado = objResultadoAvaliacaoMuscular.IdResultado;
 
             if (CarregaAvaliacaoMuscular() == false)

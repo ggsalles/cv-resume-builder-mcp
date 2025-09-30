@@ -12,7 +12,8 @@ namespace WEDLC.Forms
         public Int32 pIdFolha { get; set; }
         public string pSigla { get; set; }
         public string pNome { get; set; }
-
+        public bool gerar { get; set; }
+        public string idade { get; set; }
         public frmRelResultadoMusculoNeuro(int IdPaciente, Int32 IdFolha, Int32 CodGrupoFolha, string Sigla, string Nome)
         {
             InitializeComponent();
@@ -24,27 +25,62 @@ namespace WEDLC.Forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DataTable dt = this.buscaRelResultadoPaciente(pIdPaciente);
-
-            reportViewer1.LocalReport.ReportPath = @"Relatorios\relResultadoMusculoNeuro.rdlc";
-            reportViewer1.LocalReport.DataSources.Clear();
-
-            // Parâmetro
-            ReportParameter[] parametros = new ReportParameter[]
+            try
             {
-                new ReportParameter("pIdade", "56"),
-                new ReportParameter("pTitulo", pSigla + " - " + pNome)
-            };
-            reportViewer1.LocalReport.SetParameters(parametros);
+                // Pergunta ao usuário
+                var resposta = MessageBox.Show("Deseja gerar uma página em branco após a impressão?",
+                                               "Confirmação",
+                                               MessageBoxButtons.YesNo,
+                                               MessageBoxIcon.Question);
 
-            // Dataset
-            reportViewer1.LocalReport.DataSources.Add(
-                new ReportDataSource("dsPaciente", dt));
+                // Altera o cursor para "espera"
+                Cursor.Current = Cursors.WaitCursor;
 
-            // Renderiza
-            reportViewer1.RefreshReport();
+                DataTable dt = this.buscaRelResultadoPaciente(pIdPaciente);
+
+                // Define a variável com base na resposta do usuário
+                if (resposta == DialogResult.Yes)
+                {
+                    gerar = true;
+                }
+                else
+                {
+                    gerar = false;
+                }
+
+                // Cálculo da idade
+                idade = cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(DateTime.Parse(dt.Rows[0]["nascimento"].ToString())).ToString();
+
+                reportViewer1.LocalReport.ReportPath = @"Relatorios\relResultadoMusculoNeuro.rdlc";
+                reportViewer1.LocalReport.DataSources.Clear();
+
+                // Parâmetro
+                ReportParameter[] parametros = new ReportParameter[]
+                {
+                new ReportParameter("pIdade", idade.ToString()),
+                new ReportParameter("pTitulo", pSigla + " - " + pNome),
+                new ReportParameter("PaginaEmBranco", gerar.ToString().ToLower()) // ou "false"
+                };
+                reportViewer1.LocalReport.SetParameters(parametros);
+
+                // Dataset
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsPaciente", dt));
+
+                // Renderiza
+                reportViewer1.RefreshReport();
+
+                // Restaura o cursor normal
+                Cursor.Current = Cursors.Default;
+            }
+            catch (Exception)
+            {
+                // Restaura o cursor normal
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show("Erro ao tentar carregar o relatório!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
-
 
         private DataTable buscaRelResultadoPaciente(Int32 idPaciente)
         {

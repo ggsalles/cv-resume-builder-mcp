@@ -1320,7 +1320,7 @@
             </Paragraphs>
             <rd:DefaultName>localidade</rd:DefaultName>
             <Top>7.50562cm</Top>
-            <Left>9.24206cm</Left>
+            <Left>9.39378cm</Left>
             <Height>0.6cm</Height>
             <Width>8.72758cm</Width>
             <ZIndex>5</ZIndex>
@@ -1569,8 +1569,8 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <Top>8.2392cm</Top>
-            <Left>9.24206cm</Left>
+            <Top>8.21145cm</Top>
+            <Left>9.39378cm</Left>
             <Height>1.2cm</Height>
             <Width>8.72758cm</Width>
             <ZIndex>6</ZIndex>
@@ -1580,14 +1580,37 @@
               </Border>
             </Style>
           </Tablix>
+          <Rectangle Name="Rectangle2">
+            <PageBreak>
+              <BreakLocation>End</BreakLocation>
+            </PageBreak>
+            <KeepTogether>true</KeepTogether>
+            <Top>23.54474cm</Top>
+            <Left>12.69915cm</Left>
+            <Height>0.58209cm</Height>
+            <Width>4.30444cm</Width>
+            <ZIndex>7</ZIndex>
+            <Visibility>
+              <Hidden>=IIF(Parameters!PaginaEmBranco.Value.ToString() = "true", False, True)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
         </ReportItems>
-        <Height>3.93425in</Height>
-        <Style />
+        <Height>10.0925in</Height>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Body>
-      <Width>7.18716in</Width>
+      <Width>7.17606in</Width>
       <Page>
         <PageHeader>
-          <Height>3.96875cm</Height>
+          <Height>3.65125cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1597,7 +1620,7 @@
               <Sizing>Fit</Sizing>
               <Top>0.0635cm</Top>
               <Left>6.22462cm</Left>
-              <Height>2.0947cm</Height>
+              <Height>2.30637cm</Height>
               <Width>11.86145cm</Width>
               <Style>
                 <Border>
@@ -1696,9 +1719,9 @@
               </Paragraphs>
               <rd:DefaultName>PageNumber</rd:DefaultName>
               <Top>2.88453cm</Top>
-              <Left>17.06773cm</Left>
+              <Left>16.75024cm</Left>
               <Height>0.6cm</Height>
-              <Width>1.01833cm</Width>
+              <Width>1.33583cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -1729,9 +1752,9 @@
               </Paragraphs>
               <rd:DefaultName>PageName</rd:DefaultName>
               <Top>2.88453cm</Top>
-              <Left>16.18346cm</Left>
+              <Left>15.61196cm</Left>
               <Height>0.6cm</Height>
-              <Width>0.9125cm</Width>
+              <Width>1.07125cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
@@ -1752,10 +1775,10 @@
         </PageHeader>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
-        <LeftMargin>1.5cm</LeftMargin>
-        <RightMargin>0.5cm</RightMargin>
-        <TopMargin>0.5cm</TopMargin>
-        <BottomMargin>0.5cm</BottomMargin>
+        <LeftMargin>1cm</LeftMargin>
+        <RightMargin>1.5cm</RightMargin>
+        <TopMargin>0.2cm</TopMargin>
+        <BottomMargin>0.2cm</BottomMargin>
         <ColumnSpacing>0.13cm</ColumnSpacing>
         <Style />
       </Page>
@@ -1769,6 +1792,12 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="pTitulo">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PaginaEmBranco">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -1789,6 +1818,11 @@
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>pTitulo</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>PaginaEmBranco</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

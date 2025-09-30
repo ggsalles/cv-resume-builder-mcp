@@ -482,18 +482,12 @@ namespace WEDLC.Forms
         {
             if (relIdpaciente > 0) // Verifica se um paciente foi selecionado
             {
-                // Altera o cursor para "espera"
-                Cursor.Current = Cursors.WaitCursor;
                 var frm = new frmRelResultadoMusculoNeuro(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome); // passando ID do cliente
-                // Restaura o cursor normal
-                Cursor.Current = Cursors.Default;
                 frm.ShowDialog();
             }
 
             else
             {
-                // Restaura o cursor normal
-                Cursor.Current = Cursors.Default;
                 MessageBox.Show("Selecione uma folha para imprimir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
