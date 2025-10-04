@@ -1624,8 +1624,7 @@
               <Width>11.86145cm</Width>
               <Style>
                 <Border>
-                  <Color>SeaGreen</Color>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
               </Style>
             </Image>
