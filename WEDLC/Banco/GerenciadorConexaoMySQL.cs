@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Configuration;
+using static WEDLC.Banco.CryptoHelper;
+using System;
 
 namespace WEDLC.Banco
 {
@@ -23,24 +25,58 @@ namespace WEDLC.Banco
         }
 
         /// <summary>
-        /// Obtém a string de conexão configurada para o ambiente atual
+        /// Obtém a string de conexão configurada para o ambiente atual 
+        /// Aqui também é feita a criptografia automática da string de conexão
         /// </summary>
         private string ObterStringConexao()
         {
-            var config = ConfigurationManager.ConnectionStrings;
+            string nomeConexao = (_ambiente == Ambiente.LOCAL) ? "L_WEDLC" : "R_WEDLC";
 
-            if (_ambiente == Ambiente.LOCAL)
+            var config = ConfigurationManager.ConnectionStrings[nomeConexao];
+
+            if (config == null)
+                throw new ConfigurationErrorsException($"String de conexão '{nomeConexao}' não configurada");
+
+            string csValue = config.ConnectionString;
+
+            if (string.IsNullOrEmpty(csValue))
+                throw new ConfigurationErrorsException($"String de conexão '{nomeConexao}' vazia");
+
+            try
             {
-                if (config["L_WEDLC"] == null)
-                    throw new ConfigurationErrorsException("String de conexão LOCAL não configurada");
-
-                return config["L_WEDLC"].ConnectionString;
+                // Tenta interpretar como Base64 (assumindo que já está criptografada)
+                byte[] encryptedBytes = Convert.FromBase64String(csValue);
+                // Se der certo, descriptografa
+                return CryptoHelper.Decrypt(encryptedBytes);
             }
+            catch (FormatException)
+            {
+                // Se não for Base64, significa que ainda está em texto puro
+                string decrypted = csValue; // já é o texto original
 
-            if (config["R_WEDLC"] == null)
-                throw new ConfigurationErrorsException("String de conexão REMOTA não configurada");
+                // Criptografa e salva de volta no App.config
+                try
+                {
+                    string encrypted = Convert.ToBase64String(CryptoHelper.Encrypt(decrypted));
+                    Configuration configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                    configFile.ConnectionStrings.ConnectionStrings[nomeConexao].ConnectionString = encrypted;
+                    configFile.Save(ConfigurationSaveMode.Modified);
+                    ConfigurationManager.RefreshSection("connectionStrings");
 
-            return config["R_WEDLC"].ConnectionString;
+                    Console.WriteLine($"✅ Connection string '{nomeConexao}' criptografada automaticamente.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Falha ao criptografar connection string '{nomeConexao}': {ex.Message}");
+                }
+
+                // Retorna o valor original para uso imediato
+                return decrypted;
+            }
+            catch (Exception ex)
+            {
+                throw new ConfigurationErrorsException($"Erro ao processar a string de conexão '{nomeConexao}': {ex.Message}");
+            }
         }
 
         /// <summary>
