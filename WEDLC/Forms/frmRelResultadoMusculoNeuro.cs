@@ -24,7 +24,7 @@ namespace WEDLC.Forms
             this.pNome = Nome;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void frmRelResultadoMusculoNeuro_Load(object sender, EventArgs e)
         {
             try
             {
@@ -37,7 +37,9 @@ namespace WEDLC.Forms
                 // Altera o cursor para "espera"
                 Cursor.Current = Cursors.WaitCursor;
 
-                DataTable dt = this.buscaRelResultadoPaciente(pIdPaciente);
+                DataTable dtPaciente = this.buscaRelResultadoPaciente(pIdPaciente);
+                DataTable dtAvaliacaoMuscularD = this.buscaRelResultadoAvaliacaoMuscular(pIdPaciente, pIdFolha, "D");
+                DataTable dtAvaliacaoMuscularE = this.buscaRelResultadoAvaliacaoMuscular(pIdPaciente, pIdFolha, "E");
 
                 // Define a variável com base na resposta do usuário
                 if (resposta == DialogResult.Yes)
@@ -50,7 +52,7 @@ namespace WEDLC.Forms
                 }
 
                 // Cálculo da idade
-                idade = cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(DateTime.Parse(dt.Rows[0]["nascimento"].ToString())).ToString();
+                idade = cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(DateTime.Parse(dtPaciente.Rows[0]["nascimento"].ToString())).ToString();
 
                 string path = Path.Combine(Application.StartupPath, "Relatorios", "relResultadoMusculoNeuro.rdlc");
                 reportViewer1.LocalReport.ReportPath = path;
@@ -67,7 +69,13 @@ namespace WEDLC.Forms
 
                 // Dataset
                 reportViewer1.LocalReport.DataSources.Add(
-                    new ReportDataSource("dsPaciente", dt));
+                    new ReportDataSource("dsPaciente", dtPaciente));
+
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsAvalMuscD", dtAvaliacaoMuscularD));
+
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsAvalMuscE", dtAvaliacaoMuscularE));
 
                 // Renderiza
                 reportViewer1.RefreshReport();
@@ -83,7 +91,6 @@ namespace WEDLC.Forms
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
             }
-
         }
 
         private DataTable buscaRelResultadoPaciente(Int32 idPaciente)
@@ -106,5 +113,29 @@ namespace WEDLC.Forms
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }
+
+        private DataTable buscaRelResultadoAvaliacaoMuscular(Int32 idPaciente, Int32 idFolha, string lado)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cResultadoAvaliacaoMuscular objResultadoAvaliacaoMuscular = new cResultadoAvaliacaoMuscular();
+
+                objResultadoAvaliacaoMuscular.IdPaciente = idPaciente; //Código da especialização
+                objResultadoAvaliacaoMuscular.IdFolha = idFolha; //Código da especialização
+                objResultadoAvaliacaoMuscular.Lado = lado; //Código da especialização   
+
+                dtAux = objResultadoAvaliacaoMuscular.buscaRelAvaliacaoMuscular();
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar buscar o paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
     }
 }

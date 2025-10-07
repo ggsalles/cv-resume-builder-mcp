@@ -197,6 +197,11 @@
     <Compile Include="Banco\cSequence.cs" />
     <Compile Include="Banco\cSimNao.cs" />
     <Compile Include="Banco\FormZoomHelper.cs" />
+    <Compile Include="DataSetsReport\dsAvaliacaoMuscular.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAvaliacaoMuscular.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSetsReport\dsPaciente.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -397,6 +402,17 @@
     <EmbeddedResource Include="Relatorios\relResultadoMusculoNeuro.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="DataSetsReport\dsAvaliacaoMuscular.xsc">
+      <DependentUpon>dsAvaliacaoMuscular.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsAvaliacaoMuscular.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAvaliacaoMuscular.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetsReport\dsAvaliacaoMuscular.xss">
+      <DependentUpon>dsAvaliacaoMuscular.xsd</DependentUpon>
+    </None>
     <None Include="DataSetsReport\dsPaciente.xsc">
       <DependentUpon>dsPaciente.xsd</DependentUpon>
     </None>

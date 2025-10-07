@@ -48,7 +48,7 @@
             this.Controls.Add(this.reportViewer1);
             this.Name = "frmRelResultadoMusculoNeuro";
             this.Text = "Impressão";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.frmRelResultadoMusculoNeuro_Load);
             this.ResumeLayout(false);
 
         }

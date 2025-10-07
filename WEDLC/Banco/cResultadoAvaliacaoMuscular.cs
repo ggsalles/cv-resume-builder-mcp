@@ -110,5 +110,48 @@ namespace WEDLC.Banco
                     conexao.Close();
             }
         }
+
+        public DataTable buscaRelAvaliacaoMuscular()
+        {
+            // Validação básica dos parâmetros
+
+            if (IdFolha <= 0 || IdPaciente <= 0)
+                return null;
+
+            if (!conectaBanco())
+                return null;
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (var sqlDa = new MySqlDataAdapter("pr_relavaliacaomuscular", conexao))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", IdFolha);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdPaciente", IdPaciente > 0 ? IdPaciente : (object)DBNull.Value);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pLado", Lado);
+
+                    sqlDa.Fill(dt);
+                    return dt;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Log específico para diagnóstico
+                System.Diagnostics.Debug.WriteLine($"Erro na pr_buscaresultadoavaliacaomuscular: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                // Log para outros erros
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
+        }
     }
 }
