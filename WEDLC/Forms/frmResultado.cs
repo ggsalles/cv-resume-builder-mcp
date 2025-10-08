@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using WEDLC.Banco;
+using WEDLC.DataSetsReport;
 using WinFormsZoom;
 
 namespace WEDLC.Forms
@@ -480,17 +481,33 @@ namespace WEDLC.Forms
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            if (relIdpaciente > 0) // Verifica se um paciente foi selecionado
+            try
             {
-                var frm = new frmRelResultadoMusculoNeuro(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome); // passando ID do cliente
-                frm.ShowDialog();
-            }
+                if (relIdpaciente > 0) // Verifica se um paciente foi selecionado
+                {
+                    cResultado objResultado = new cResultado();
+                    objResultado.Paciente.IdPaciente = relIdpaciente;
+                    objResultado.Paciente.IdFolha = relIdfolha;
 
-            else
-            {
-                MessageBox.Show("Selecione uma folha para imprimir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                    DataTable dtAux = new DataTable();
+                    dtAux = objResultado.buscaIdResultado();
+                    IdResultado = Convert.ToInt32(dtAux.Rows[0]["idresultado"]);
+
+                    var frm = new frmRelResultadoMusculoNeuro(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
+                    frm.ShowDialog();
+                }
+
+                else
+                {
+                    MessageBox.Show("Selecione uma folha para imprimir!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar imprimir o relatório!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
         }
 
         private void grdFolhaPaciente_CellClick(object sender, DataGridViewCellEventArgs e)

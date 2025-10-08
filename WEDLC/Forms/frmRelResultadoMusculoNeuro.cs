@@ -15,13 +15,16 @@ namespace WEDLC.Forms
         public string pNome { get; set; }
         public bool gerar { get; set; }
         public string idade { get; set; }
-        public frmRelResultadoMusculoNeuro(int IdPaciente, Int32 IdFolha, Int32 CodGrupoFolha, string Sigla, string Nome)
+
+        public Int32 idResultado { get; set; }
+        public frmRelResultadoMusculoNeuro(int IdPaciente, Int32 IdFolha, Int32 CodGrupoFolha, string Sigla, string Nome, Int32 idResultado)
         {
             InitializeComponent();
             this.pIdPaciente = IdPaciente;
             this.pIdFolha = IdFolha;
             this.pSigla = Sigla;
             this.pNome = Nome;
+            this.idResultado = idResultado;
         }
 
         private void frmRelResultadoMusculoNeuro_Load(object sender, EventArgs e)
@@ -40,6 +43,7 @@ namespace WEDLC.Forms
                 DataTable dtPaciente = this.buscaRelResultadoPaciente(pIdPaciente);
                 DataTable dtAvaliacaoMuscularD = this.buscaRelResultadoAvaliacaoMuscular(pIdPaciente, pIdFolha, "D");
                 DataTable dtAvaliacaoMuscularE = this.buscaRelResultadoAvaliacaoMuscular(pIdPaciente, pIdFolha, "E");
+                DataTable dtAtividadeInsercao = this.buscaRelResultadoAtividadeInsercao(idResultado);
 
                 // Define a variável com base na resposta do usuário
                 if (resposta == DialogResult.Yes)
@@ -76,6 +80,9 @@ namespace WEDLC.Forms
 
                 reportViewer1.LocalReport.DataSources.Add(
                     new ReportDataSource("dsAvalMuscE", dtAvaliacaoMuscularE));
+
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsAtividadeInsercao", dtAtividadeInsercao));
 
                 // Renderiza
                 reportViewer1.RefreshReport();
@@ -126,6 +133,27 @@ namespace WEDLC.Forms
                 objResultadoAvaliacaoMuscular.Lado = lado; //Código da especialização   
 
                 dtAux = objResultadoAvaliacaoMuscular.buscaRelAvaliacaoMuscular();
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao tentar buscar o paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private DataTable buscaRelResultadoAtividadeInsercao(Int32 idResultado)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cResultadoAtividadeInsercao objResultadoAtividadeInsercao = new cResultadoAtividadeInsercao();
+
+                objResultadoAtividadeInsercao.IdResultado = idResultado; //Código do resultado
+
+                dtAux = objResultadoAtividadeInsercao.buscaResultadoAtividadeInsercao();
 
                 return dtAux;
 

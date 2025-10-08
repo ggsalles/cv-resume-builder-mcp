@@ -771,7 +771,7 @@ namespace WEDLC.Forms
                 if (dtPotenciaisUnidade.Rows.Count > 0)
                 {
                     //popula campos Atividade Inserção
-                    txtCodigoPotencial.Text = dtPotenciaisUnidade.Rows[0]["idresultadopotenciaisunidade"].ToString();
+                    txtCodigoPotencial.Text = dtPotenciaisUnidade.Rows[0]["idpotenciaisunidade"].ToString();
                     txtNomePotencial.Text = dtPotenciaisUnidade.Rows[0]["nome"].ToString();
                     txtSiglaPotencial.Text = dtPotenciaisUnidade.Rows[0]["sigla"].ToString();
                     txtTextoPotencial.Text = dtPotenciaisUnidade.Rows[0]["texto"].ToString();
@@ -807,7 +807,7 @@ namespace WEDLC.Forms
                 if (dtComentario.Rows.Count > 0)
                 {
                     //popula campos Atividade Inserção
-                    txtCodigoComentario.Text = dtComentario.Rows[0]["idresultadocomentario"].ToString();
+                    txtCodigoComentario.Text = dtComentario.Rows[0]["idcomentario"].ToString();
                     txtNomeComentario.Text = dtComentario.Rows[0]["nome"].ToString();
                     txtSiglaComentario.Text = dtComentario.Rows[0]["sigla"].ToString();
                     txtTextoComentario.Text = dtComentario.Rows[0]["texto"].ToString();
@@ -891,7 +891,7 @@ namespace WEDLC.Forms
         }
 
         private bool GravaComentario()
-        {
+         {
             try
             {
                 if (!string.IsNullOrEmpty(txtCodigoComentario.Text))
