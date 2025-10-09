@@ -44,6 +44,8 @@ namespace WEDLC.Forms
                 DataTable dtAvaliacaoMuscularD = this.buscaRelResultadoAvaliacaoMuscular(pIdPaciente, pIdFolha, "D");
                 DataTable dtAvaliacaoMuscularE = this.buscaRelResultadoAvaliacaoMuscular(pIdPaciente, pIdFolha, "E");
                 DataTable dtAtividadeInsercao = this.buscaRelResultadoAtividadeInsercao(idResultado);
+                DataTable dtPotenciaisUnidade = this.buscaRelResultadoPotenciaisUnidade(idResultado);
+                DataTable dtNeuroConducaoMotoraLatencia = this.buscaRelNeuroCondMotoraLatencia(pIdFolha, idResultado);
 
                 // Define a variável com base na resposta do usuário
                 if (resposta == DialogResult.Yes)
@@ -83,6 +85,12 @@ namespace WEDLC.Forms
 
                 reportViewer1.LocalReport.DataSources.Add(
                     new ReportDataSource("dsAtividadeInsercao", dtAtividadeInsercao));
+
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsPotenciaisUnidadeMotora", dtPotenciaisUnidade));
+
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsVelNeuroCondMotora", dtNeuroConducaoMotoraLatencia));
 
                 // Renderiza
                 reportViewer1.RefreshReport();
@@ -139,7 +147,7 @@ namespace WEDLC.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro ao tentar buscar o paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro na buscaRelResultadoAvaliacaoMuscular!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }
@@ -160,7 +168,50 @@ namespace WEDLC.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro ao tentar buscar o paciente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro na buscaRelResultadoAtividadeInsercao!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private DataTable buscaRelResultadoPotenciaisUnidade(Int32 idResultado)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cResultadoPotenciaisUnidadeMotora objResultadoPotenciaisUnidadeMotora = new cResultadoPotenciaisUnidadeMotora();
+
+                objResultadoPotenciaisUnidadeMotora.IdResultado = idResultado; //Código do resultado
+
+                dtAux = objResultadoPotenciaisUnidadeMotora.buscaResultadoUnidadePotencial();
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na buscaRelResultadoPotenciaisUnidade!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private DataTable buscaRelNeuroCondMotoraLatencia(Int32 idFolha, Int32 idResultado)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cResultadoNeuroCondMotora objResultadoNeuroCondMotora = new cResultadoNeuroCondMotora();
+
+                objResultadoNeuroCondMotora.IdResultado = idResultado; //Código do resultado
+                objResultadoNeuroCondMotora.IdFolha = idFolha; //Código do resultado
+
+                dtAux = objResultadoNeuroCondMotora.buscaRelNeuroCondMotoraLatencia();
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na buscaRelNeuroCondMotoraLatencia!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }

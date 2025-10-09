@@ -162,6 +162,62 @@
         <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
+    <DataSet Name="dsPotenciaisUnidadeMotora">
+      <Query>
+        <DataSourceName>dsAvaliacaoMuscular</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="texto">
+          <DataField>texto</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsAvaliacaoMuscular</rd:DataSetName>
+        <rd:SchemaPath>C:\Projetos\WEDLC\WEDLC\DataSetsReport\dsAvaliacaoMuscular.xsd</rd:SchemaPath>
+        <rd:TableName>dtPotenciaisUnidadeMotora</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="dsVelNeuroCondMotora">
+      <Query>
+        <DataSourceName>dsAvaliacaoMuscular</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Nervo">
+          <DataField>Nervo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VelLadoDireito">
+          <DataField>VelLadoDireito</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VelLadoEsquerdo">
+          <DataField>VelLadoEsquerdo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LatLadoDireito">
+          <DataField>LatLadoDireito</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LatLadoEsquerdo">
+          <DataField>LatLadoEsquerdo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsAvaliacaoMuscular</rd:DataSetName>
+        <rd:SchemaPath>C:\Projetos\WEDLC\WEDLC\DataSetsReport\dsAvaliacaoMuscular.xsd</rd:SchemaPath>
+        <rd:TableName>dtNeuroCondLat</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -953,51 +1009,25 @@
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>1.27385cm</Top>
-            <Left>0.15874cm</Left>
+            <Top>0.00385cm</Top>
+            <Left>0.01574cm</Left>
             <Height>4.9586cm</Height>
             <Width>17.96262cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
               </Border>
+              <TopBorder>
+                <Style>None</Style>
+              </TopBorder>
+              <LeftBorder>
+                <Style>None</Style>
+              </LeftBorder>
+              <RightBorder>
+                <Style>None</Style>
+              </RightBorder>
             </Style>
           </Rectangle>
-          <Textbox Name="Textbox31">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=Parameters!pTitulo.Value</Value>
-                    <Style>
-                      <FontFamily>Consolas</FontFamily>
-                      <FontSize>14pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox31</rd:DefaultName>
-            <Top>0.20317cm</Top>
-            <Left>0.15874cm</Left>
-            <Height>0.92604cm</Height>
-            <Width>17.92733cm</Width>
-            <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <BackgroundColor>LightGrey</BackgroundColor>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
           <Textbox Name="Textbox32">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
@@ -1017,11 +1047,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox31</rd:DefaultName>
-            <Top>6.43847cm</Top>
-            <Left>0.15874cm</Left>
+            <Top>5.16847cm</Top>
+            <Left>0.01574cm</Left>
             <Height>0.92604cm</Height>
-            <Width>17.8109cm</Width>
-            <ZIndex>2</ZIndex>
+            <Width>17.96262cm</Width>
+            <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1038,11 +1068,11 @@
               <BreakLocation>End</BreakLocation>
             </PageBreak>
             <KeepTogether>true</KeepTogether>
-            <Top>17.43285cm</Top>
-            <Left>9.31848cm</Left>
+            <Top>21.3197cm</Top>
+            <Left>13.33877cm</Left>
             <Height>0.58209cm</Height>
             <Width>4.30444cm</Width>
-            <ZIndex>3</ZIndex>
+            <ZIndex>2</ZIndex>
             <Visibility>
               <Hidden>=IIF(Parameters!PaginaEmBranco.Value.ToString() = "true", False, True)</Hidden>
             </Visibility>
@@ -1064,7 +1094,9 @@
                         <Value>LADO DIREITO (Músculos Examinados)</Value>
                         <Style>
                           <FontFamily>Consolas</FontFamily>
+                          <FontSize>11pt</FontSize>
                           <FontWeight>Bold</FontWeight>
+                          <TextDecoration>None</TextDecoration>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -1075,7 +1107,7 @@
                 <Top>0.08114cm</Top>
                 <Left>0.06175cm</Left>
                 <Height>0.6cm</Height>
-                <Width>17.59568cm</Width>
+                <Width>17.90087cm</Width>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -1090,13 +1122,13 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>6.20352cm</Width>
+                      <Width>6.30467cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>3.54951cm</Width>
+                      <Width>3.65066cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>7.8444cm</Width>
+                      <Width>7.94555cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -1331,7 +1363,7 @@
                 <Top>0.78697cm</Top>
                 <Left>0.06175cm</Left>
                 <Height>1.2cm</Height>
-                <Width>17.59743cm</Width>
+                <Width>17.90087cm</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
@@ -1341,11 +1373,11 @@
               </Tablix>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>7.57618cm</Top>
-            <Left>0.15874cm</Left>
+            <Top>6.30618cm</Top>
+            <Left>0.01574cm</Left>
             <Height>2.15604cm</Height>
-            <Width>17.8109cm</Width>
-            <ZIndex>4</ZIndex>
+            <Width>17.96262cm</Width>
+            <ZIndex>3</ZIndex>
             <Visibility>
               <Hidden>=CountRows("dsAvalMuscD") = 0</Hidden>
             </Visibility>
@@ -1367,7 +1399,9 @@
                         <Value>LADO ESQUERDO (Músculos Examinados)</Value>
                         <Style>
                           <FontFamily>Consolas</FontFamily>
+                          <FontSize>11pt</FontSize>
                           <FontWeight>Bold</FontWeight>
+                          <TextDecoration>None</TextDecoration>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -1378,7 +1412,7 @@
                 <Top>0.12775cm</Top>
                 <Left>0.015cm</Left>
                 <Height>0.6cm</Height>
-                <Width>17.7174cm</Width>
+                <Width>17.94762cm</Width>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -1393,13 +1427,13 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>6.20352cm</Width>
+                      <Width>6.26968cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>3.54951cm</Width>
+                      <Width>3.61567cm</Width>
                     </TablixColumn>
                     <TablixColumn>
-                      <Width>7.99612cm</Width>
+                      <Width>8.06228cm</Width>
                     </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
@@ -1634,7 +1668,7 @@
                 <Top>0.823cm</Top>
                 <Left>0.015cm</Left>
                 <Height>1.2cm</Height>
-                <Width>17.74915cm</Width>
+                <Width>17.94762cm</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
@@ -1644,11 +1678,14 @@
               </Tablix>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>9.84511cm</Top>
-            <Left>0.15874cm</Left>
+            <Top>8.57511cm</Top>
+            <Left>0.01574cm</Left>
             <Height>2.15cm</Height>
-            <Width>17.77915cm</Width>
-            <ZIndex>5</ZIndex>
+            <Width>17.96262cm</Width>
+            <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("dsAvalMuscE") = 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1657,11 +1694,11 @@
           </Rectangle>
           <Rectangle Name="Rectangle5">
             <KeepTogether>true</KeepTogether>
-            <Top>12.1715cm</Top>
-            <Left>0.15874cm</Left>
+            <Top>10.9015cm</Top>
+            <Left>0.01574cm</Left>
             <Height>0.92604cm</Height>
-            <Width>17.83428cm</Width>
-            <ZIndex>6</ZIndex>
+            <Width>17.96262cm</Width>
+            <ZIndex>5</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1687,11 +1724,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox31</rd:DefaultName>
-            <Top>12.1715cm</Top>
-            <Left>0.20549cm</Left>
+            <Top>10.9015cm</Top>
+            <Left>0.01574cm</Left>
             <Height>0.92604cm</Height>
-            <Width>17.76415cm</Width>
-            <ZIndex>7</ZIndex>
+            <Width>17.96262cm</Width>
+            <ZIndex>6</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1703,28 +1740,343 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
-          <Rectangle Name="retResultados">
+          <Tablix Name="lstAtividade">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>17.96262cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>1.70625cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="Rectangle9">
+                          <ReportItems>
+                            <Rectangle Name="retResultados">
+                              <ReportItems>
+                                <Textbox Name="localidade4">
+                                  <CanGrow>true</CanGrow>
+                                  <KeepTogether>true</KeepTogether>
+                                  <Paragraphs>
+                                    <Paragraph>
+                                      <TextRuns>
+                                        <TextRun>
+                                          <Value>ATIVIDADE DE INSERÇÃO E PÓS INSERÇÃO</Value>
+                                          <Style>
+                                            <FontFamily>Consolas</FontFamily>
+                                            <FontSize>11pt</FontSize>
+                                            <FontWeight>Bold</FontWeight>
+                                            <TextDecoration>None</TextDecoration>
+                                          </Style>
+                                        </TextRun>
+                                      </TextRuns>
+                                      <Style />
+                                    </Paragraph>
+                                  </Paragraphs>
+                                  <rd:DefaultName>localidade</rd:DefaultName>
+                                  <Left>0.04601cm</Left>
+                                  <Height>0.60678cm</Height>
+                                  <Width>17.74915cm</Width>
+                                  <Style>
+                                    <Border>
+                                      <Style>None</Style>
+                                    </Border>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                </Textbox>
+                                <Textbox Name="txtAtividade">
+                                  <CanGrow>true</CanGrow>
+                                  <KeepTogether>true</KeepTogether>
+                                  <Paragraphs>
+                                    <Paragraph>
+                                      <TextRuns>
+                                        <TextRun>
+                                          <Value>=Fields!texto.Value</Value>
+                                          <Style>
+                                            <FontFamily>Consolas</FontFamily>
+                                          </Style>
+                                        </TextRun>
+                                      </TextRuns>
+                                      <Style />
+                                    </Paragraph>
+                                  </Paragraphs>
+                                  <Top>0.78317cm</Top>
+                                  <Left>0.16773cm</Left>
+                                  <Height>0.6cm</Height>
+                                  <Width>17.67405cm</Width>
+                                  <ZIndex>1</ZIndex>
+                                  <Style>
+                                    <Border>
+                                      <Style>None</Style>
+                                    </Border>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                </Textbox>
+                              </ReportItems>
+                              <KeepTogether>true</KeepTogether>
+                              <Height>1.60073cm</Height>
+                              <Width>17.86516cm</Width>
+                              <Visibility>
+                                <Hidden>=IIf(
+    IsNothing(Fields!texto.Value) 
+    OR Trim(CStr(Fields!texto.Value)) = "",
+    True,
+    False
+)</Hidden>
+                              </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Rectangle>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>dsAtividadeInsercao</DataSetName>
+            <Top>11.94043cm</Top>
+            <Left>0.01574cm</Left>
+            <Height>1.70625cm</Height>
+            <Width>17.96262cm</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Tablix Name="lstPotenciais">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>17.96262cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>1.44167cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="Rectangle4">
+                          <ReportItems>
+                            <Rectangle Name="Rectangle3">
+                              <ReportItems>
+                                <Textbox Name="localidade5">
+                                  <CanGrow>true</CanGrow>
+                                  <KeepTogether>true</KeepTogether>
+                                  <Paragraphs>
+                                    <Paragraph>
+                                      <TextRuns>
+                                        <TextRun>
+                                          <Value>POTENCIAIS DE UNIDADE MOTORA</Value>
+                                          <Style>
+                                            <FontFamily>Consolas</FontFamily>
+                                            <FontSize>11pt</FontSize>
+                                            <FontWeight>Bold</FontWeight>
+                                            <TextDecoration>None</TextDecoration>
+                                          </Style>
+                                        </TextRun>
+                                      </TextRuns>
+                                      <Style />
+                                    </Paragraph>
+                                  </Paragraphs>
+                                  <rd:DefaultName>localidade</rd:DefaultName>
+                                  <Left>0.04675cm</Left>
+                                  <Height>0.6cm</Height>
+                                  <Width>17.7809cm</Width>
+                                  <Style>
+                                    <Border>
+                                      <Style>None</Style>
+                                    </Border>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                </Textbox>
+                                <Textbox Name="texto">
+                                  <CanGrow>true</CanGrow>
+                                  <KeepTogether>true</KeepTogether>
+                                  <Paragraphs>
+                                    <Paragraph>
+                                      <TextRuns>
+                                        <TextRun>
+                                          <Value>=Fields!texto.Value</Value>
+                                          <Style>
+                                            <FontFamily>Consolas</FontFamily>
+                                          </Style>
+                                        </TextRun>
+                                      </TextRuns>
+                                      <Style />
+                                    </Paragraph>
+                                  </Paragraphs>
+                                  <rd:DefaultName>texto</rd:DefaultName>
+                                  <Top>0.74111cm</Top>
+                                  <Left>0.07863cm</Left>
+                                  <Height>0.6cm</Height>
+                                  <Width>17.71727cm</Width>
+                                  <ZIndex>1</ZIndex>
+                                  <Style>
+                                    <Border>
+                                      <Style>None</Style>
+                                    </Border>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                </Textbox>
+                              </ReportItems>
+                              <KeepTogether>true</KeepTogether>
+                              <Left>0.02294cm</Left>
+                              <Height>1.44167cm</Height>
+                              <Width>17.82765cm</Width>
+                              <Visibility>
+                                <Hidden>=IIf(
+    IsNothing(Fields!texto.Value) 
+    OR Trim(CStr(Fields!texto.Value)) = "",
+    True,
+    False
+)</Hidden>
+                              </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Rectangle>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details1" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>dsPotenciaisUnidadeMotora</DataSetName>
+            <Top>13.72269cm</Top>
+            <Left>0.01574cm</Left>
+            <Height>1.44167cm</Height>
+            <Width>17.96262cm</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="Textbox38">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Velocidade de Neuro Condução Motora e Latência Motora Distal</Value>
+                    <Style>
+                      <FontFamily>Consolas</FontFamily>
+                      <FontSize>14pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox31</rd:DefaultName>
+            <Top>15.62297cm</Top>
+            <Left>0.06175cm</Left>
+            <Height>0.92604cm</Height>
+            <Width>17.88486cm</Width>
+            <ZIndex>9</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <BackgroundColor>LightGrey</BackgroundColor>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Rectangle Name="retLadoDireito2">
             <ReportItems>
-              <Textbox Name="texto">
+              <Textbox Name="localidade6">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=First(Fields!texto.Value, "dsAtividadeInsercao")</Value>
+                        <Value>LADO DIREITO</Value>
                         <Style>
                           <FontFamily>Consolas</FontFamily>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <TextDecoration>None</TextDecoration>
                         </Style>
                       </TextRun>
                     </TextRuns>
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>texto</rd:DefaultName>
-                <Left>0.07863cm</Left>
+                <rd:DefaultName>localidade</rd:DefaultName>
+                <Top>0.08114cm</Top>
+                <Left>0.06175cm</Left>
                 <Height>0.6cm</Height>
-                <Width>17.65377cm</Width>
+                <Width>17.90087cm</Width>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -1735,13 +2087,573 @@
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
               </Textbox>
+              <Tablix Name="Tablix4">
+                <TablixBody>
+                  <TablixColumns>
+                    <TablixColumn>
+                      <Width>6.30467cm</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>6.50816cm</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>5.08805cm</Width>
+                    </TablixColumn>
+                  </TablixColumns>
+                  <TablixRows>
+                    <TablixRow>
+                      <Height>0.6cm</Height>
+                      <TablixCells>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Textbox39">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Nervo</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox2</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Textbox40">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Velocidade</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox4</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Textbox41">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Latência</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox6</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                    <TablixRow>
+                      <Height>0.6cm</Height>
+                      <TablixCells>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Nervo">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Nervo.Value</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Nervo</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="VelLadoDireito">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!VelLadoDireito.Value</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>VelLadoDireito</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="LatLadoDireito">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!LatLadoDireito.Value</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>LatLadoDireito</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                  </TablixRows>
+                </TablixBody>
+                <TablixColumnHierarchy>
+                  <TablixMembers>
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixColumnHierarchy>
+                <TablixRowHierarchy>
+                  <TablixMembers>
+                    <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
+                      <Group Name="Details4" />
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixRowHierarchy>
+                <DataSetName>dsVelNeuroCondMotora</DataSetName>
+                <Top>0.78697cm</Top>
+                <Left>0.06175cm</Left>
+                <Height>1.2cm</Height>
+                <Width>17.90088cm</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Tablix>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>13.21043cm</Top>
-            <Left>0.15874cm</Left>
-            <Height>0.67437cm</Height>
-            <Width>17.77915cm</Width>
-            <ZIndex>8</ZIndex>
+            <Top>16.5984cm</Top>
+            <Left>0.01574cm</Left>
+            <Height>2.15604cm</Height>
+            <Width>17.96263cm</Width>
+            <ZIndex>10</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("dsVelNeuroCondMotora") = 0</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="retLadoDireito3">
+            <ReportItems>
+              <Textbox Name="localidade7">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>LADO ESQUERDO</Value>
+                        <Style>
+                          <FontFamily>Consolas</FontFamily>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <TextDecoration>None</TextDecoration>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>localidade</rd:DefaultName>
+                <Top>0.08114cm</Top>
+                <Left>0.06175cm</Left>
+                <Height>0.6cm</Height>
+                <Width>17.90087cm</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Tablix Name="Tablix5">
+                <TablixBody>
+                  <TablixColumns>
+                    <TablixColumn>
+                      <Width>6.30467cm</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>6.5239cm</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>5.05629cm</Width>
+                    </TablixColumn>
+                  </TablixColumns>
+                  <TablixRows>
+                    <TablixRow>
+                      <Height>0.6cm</Height>
+                      <TablixCells>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Textbox45">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Nervo</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox2</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Textbox46">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Velocidade</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox4</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Textbox47">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Latência</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox6</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                    <TablixRow>
+                      <Height>0.6cm</Height>
+                      <TablixCells>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="Nervo1">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Nervo.Value</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Nervo1</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="VelLadoEsquerdo">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!VelLadoEsquerdo.Value</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>VelLadoEsquerdo</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="LatLadoEsquerdo">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!LatLadoEsquerdo.Value</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>LatLadoEsquerdo</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                  </TablixRows>
+                </TablixBody>
+                <TablixColumnHierarchy>
+                  <TablixMembers>
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixColumnHierarchy>
+                <TablixRowHierarchy>
+                  <TablixMembers>
+                    <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
+                      <Group Name="Details5" />
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixRowHierarchy>
+                <DataSetName>dsVelNeuroCondMotora</DataSetName>
+                <Top>0.78697cm</Top>
+                <Left>0.06175cm</Left>
+                <Height>1.2cm</Height>
+                <Width>17.88486cm</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Tablix>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+            <Top>18.89202cm</Top>
+            <Height>2.15604cm</Height>
+            <Width>17.96263cm</Width>
+            <ZIndex>11</ZIndex>
+            <Visibility>
+              <Hidden>=CountRows("dsVelNeuroCondMotora") = 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1749,17 +2661,17 @@
             </Style>
           </Rectangle>
         </ReportItems>
-        <Height>7.36333in</Height>
+        <Height>8.71025in</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>7.13439in</Width>
+      <Width>7.1267in</Width>
       <Page>
         <PageHeader>
-          <Height>4.11953cm</Height>
+          <Height>5.41246cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1768,7 +2680,7 @@
               <Value>logoluiztotal</Value>
               <Sizing>Fit</Sizing>
               <Top>0.0635cm</Top>
-              <Left>6.22462cm</Left>
+              <Left>6.24036cm</Left>
               <Height>2.30637cm</Height>
               <Width>11.86145cm</Width>
               <Style>
@@ -1799,7 +2711,7 @@
               </Paragraphs>
               <rd:DefaultName>ExecutionTime</rd:DefaultName>
               <Top>3.51953cm</Top>
-              <Left>1.6304cm</Left>
+              <Left>1.64614cm</Left>
               <Height>0.6cm</Height>
               <Width>3.58302cm</Width>
               <ZIndex>1</ZIndex>
@@ -1833,7 +2745,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
               <Top>3.51953cm</Top>
-              <Left>0.19403cm</Left>
+              <Left>0.11276cm</Left>
               <Height>0.6cm</Height>
               <Width>1.43637cm</Width>
               <ZIndex>2</ZIndex>
@@ -1867,7 +2779,7 @@
               </Paragraphs>
               <rd:DefaultName>PageNumber</rd:DefaultName>
               <Top>2.74314cm</Top>
-              <Left>16.75024cm</Left>
+              <Left>16.76598cm</Left>
               <Height>0.6cm</Height>
               <Width>1.33583cm</Width>
               <ZIndex>3</ZIndex>
@@ -1900,7 +2812,7 @@
               </Paragraphs>
               <rd:DefaultName>PageName</rd:DefaultName>
               <Top>2.74314cm</Top>
-              <Left>15.61196cm</Left>
+              <Left>15.6277cm</Left>
               <Height>0.6cm</Height>
               <Width>1.07125cm</Width>
               <ZIndex>4</ZIndex>
@@ -1934,7 +2846,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
               <Top>2.74314cm</Top>
-              <Left>0.17374cm</Left>
+              <Left>0.11276cm</Left>
               <Height>0.6cm</Height>
               <Width>2.56363cm</Width>
               <ZIndex>5</ZIndex>
@@ -1967,7 +2879,7 @@
               </Paragraphs>
               <rd:DefaultName>idpaciente</rd:DefaultName>
               <Top>2.74314cm</Top>
-              <Left>2.80793cm</Left>
+              <Left>2.82367cm</Left>
               <Height>0.6cm</Height>
               <Width>2.2895cm</Width>
               <ZIndex>6</ZIndex>
@@ -1981,6 +2893,53 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
+            <Textbox Name="Textbox31">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Parameters!pTitulo.Value</Value>
+                      <Style>
+                        <FontFamily>Consolas</FontFamily>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox31</rd:DefaultName>
+              <Top>4.30121cm</Top>
+              <Left>0.11276cm</Left>
+              <Height>0.92604cm</Height>
+              <Width>17.92733cm</Width>
+              <ZIndex>7</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <BackgroundColor>LightGrey</BackgroundColor>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Line Name="Line1">
+              <Top>5.33309cm</Top>
+              <Left>0.03868cm</Left>
+              <Height>0cm</Height>
+              <Width>17.92394cm</Width>
+              <ZIndex>8</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
           </ReportItems>
           <Style>
             <Border>
