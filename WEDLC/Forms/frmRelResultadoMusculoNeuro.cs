@@ -47,6 +47,7 @@ namespace WEDLC.Forms
                 DataTable dtPotenciaisUnidade = this.buscaRelResultadoPotenciaisUnidade(idResultado);
                 DataTable dtNeuroConducaoMotoraLatencia = this.buscaRelNeuroCondMotoraLatencia(pIdFolha, idResultado);
                 DataTable dtNeuroConducaoSensorial = this.buscaRelNeuroCondSensorial(pIdFolha, idResultado);
+                DataTable dtComentarios = this.buscaRelComentarios(idResultado);
 
                 // Define a variável com base na resposta do usuário
                 if (resposta == DialogResult.Yes)
@@ -95,6 +96,9 @@ namespace WEDLC.Forms
 
                 reportViewer1.LocalReport.DataSources.Add(
                     new ReportDataSource("dsNeuroCondSensorial", dtNeuroConducaoSensorial));
+
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsComentario", dtComentarios));
 
                 // Renderiza
                 reportViewer1.RefreshReport();
@@ -237,7 +241,28 @@ namespace WEDLC.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Erro na buscaRelNeuroCondMotoraLatencia!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro na buscaRelNeuroCondSensorial!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private DataTable buscaRelComentarios(Int32 idResultado)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cResultadoComentario objResultadoComentario = new cResultadoComentario();
+
+                objResultadoComentario.IdResultado = idResultado; //Código do resultado
+
+                dtAux = objResultadoComentario.buscaResultadoComentario();
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na buscaRelComentarios!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }

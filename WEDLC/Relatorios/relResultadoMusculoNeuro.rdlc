@@ -250,6 +250,42 @@
         <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
+    <DataSet Name="dsComentario">
+      <Query>
+        <DataSourceName>dsAvaliacaoMuscular</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="idcomentario">
+          <DataField>idcomentario</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="idresultado">
+          <DataField>idresultado</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="sigla">
+          <DataField>sigla</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="nome">
+          <DataField>nome</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="texto">
+          <DataField>texto</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsAvaliacaoMuscular</rd:DataSetName>
+        <rd:SchemaPath>C:\Projetos\WEDLC\WEDLC\DataSetsReport\dsAvaliacaoMuscular.xsd</rd:SchemaPath>
+        <rd:TableName>dtComentario</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -1100,7 +1136,7 @@
               <BreakLocation>End</BreakLocation>
             </PageBreak>
             <KeepTogether>true</KeepTogether>
-            <Top>24.1772cm</Top>
+            <Top>26.0822cm</Top>
             <Left>13.33877cm</Left>
             <Height>0.58209cm</Height>
             <Width>4.30444cm</Width>
@@ -3087,15 +3123,151 @@
               </Border>
             </Style>
           </Rectangle>
+          <Rectangle Name="Rectangle8">
+            <ReportItems>
+              <Tablix Name="Tablix1">
+                <TablixBody>
+                  <TablixColumns>
+                    <TablixColumn>
+                      <Width>17.89866cm</Width>
+                    </TablixColumn>
+                  </TablixColumns>
+                  <TablixRows>
+                    <TablixRow>
+                      <Height>0.92604cm</Height>
+                      <TablixCells>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="nome2">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Comentários: </Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                        <FontSize>14pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!nome.Value</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                        <FontSize>14pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>nome2</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                    <TablixRow>
+                      <Height>0.6cm</Height>
+                      <TablixCells>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="texto1">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!texto.Value</Value>
+                                      <Style>
+                                        <FontFamily>Consolas</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>texto1</rd:DefaultName>
+                              <Style>
+                                <Border>
+                                  <Color>LightGrey</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                  </TablixRows>
+                </TablixBody>
+                <TablixColumnHierarchy>
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixColumnHierarchy>
+                <TablixRowHierarchy>
+                  <TablixMembers>
+                    <TablixMember>
+                      <Group Name="Details7" />
+                      <TablixMembers>
+                        <TablixMember />
+                        <TablixMember />
+                      </TablixMembers>
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixRowHierarchy>
+                <DataSetName>dsComentario</DataSetName>
+                <Top>0.015cm</Top>
+                <Left>0.03874cm</Left>
+                <Height>1.52604cm</Height>
+                <Width>17.89866cm</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Tablix>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+            <Top>24.05863cm</Top>
+            <Height>1.63746cm</Height>
+            <Width>17.96916cm</Width>
+            <ZIndex>14</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
         </ReportItems>
-        <Height>9.83109in</Height>
+        <Height>11.05003in</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>7.18815in</Width>
+      <Width>7.1267in</Width>
       <Page>
         <PageHeader>
           <Height>5.41246cm</Height>
