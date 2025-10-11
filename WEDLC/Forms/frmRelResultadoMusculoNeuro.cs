@@ -46,6 +46,7 @@ namespace WEDLC.Forms
                 DataTable dtAtividadeInsercao = this.buscaRelResultadoAtividadeInsercao(idResultado);
                 DataTable dtPotenciaisUnidade = this.buscaRelResultadoPotenciaisUnidade(idResultado);
                 DataTable dtNeuroConducaoMotoraLatencia = this.buscaRelNeuroCondMotoraLatencia(pIdFolha, idResultado);
+                DataTable dtNeuroConducaoSensorial = this.buscaRelNeuroCondSensorial(pIdFolha, idResultado);
 
                 // Define a variável com base na resposta do usuário
                 if (resposta == DialogResult.Yes)
@@ -91,6 +92,9 @@ namespace WEDLC.Forms
 
                 reportViewer1.LocalReport.DataSources.Add(
                     new ReportDataSource("dsVelNeuroCondMotora", dtNeuroConducaoMotoraLatencia));
+
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsNeuroCondSensorial", dtNeuroConducaoSensorial));
 
                 // Renderiza
                 reportViewer1.RefreshReport();
@@ -205,6 +209,28 @@ namespace WEDLC.Forms
                 objResultadoNeuroCondMotora.IdFolha = idFolha; //Código do resultado
 
                 dtAux = objResultadoNeuroCondMotora.buscaRelNeuroCondMotoraLatencia();
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na buscaRelNeuroCondMotoraLatencia!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private DataTable buscaRelNeuroCondSensorial(Int32 idFolha, Int32 idResultado)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cResultadoNeuroCondSensorial objResultadoNeuroCondSensorial = new cResultadoNeuroCondSensorial();
+
+                objResultadoNeuroCondSensorial.IdResultado = idResultado; //Código do resultado
+                objResultadoNeuroCondSensorial.IdFolha = idFolha; //Código do resultado
+
+                dtAux = objResultadoNeuroCondSensorial.buscaRelNeuroCondSensorial();
 
                 return dtAux;
 

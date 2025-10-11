@@ -74,6 +74,16 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="dtNeuroCondSensorial" msprop:Generator_RowEvHandlerName="dtNeuroCondSensorialRowChangeEventHandler" msprop:Generator_RowDeletedName="dtNeuroCondSensorialRowDeleted" msprop:Generator_RowDeletingName="dtNeuroCondSensorialRowDeleting" msprop:Generator_RowEvArgName="dtNeuroCondSensorialRowChangeEvent" msprop:Generator_TablePropName="dtNeuroCondSensorial" msprop:Generator_RowChangedName="dtNeuroCondSensorialRowChanged" msprop:Generator_RowChangingName="dtNeuroCondSensorialRowChanging" msprop:Generator_TableClassName="dtNeuroCondSensorialDataTable" msprop:Generator_RowClassName="dtNeuroCondSensorialRow" msprop:Generator_TableVarName="tabledtNeuroCondSensorial" msprop:Generator_UserTableName="dtNeuroCondSensorial">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Nervo" msprop:Generator_ColumnPropNameInRow="Nervo" msprop:Generator_ColumnPropNameInTable="NervoColumn" msprop:Generator_ColumnVarNameInTable="columnNervo" msprop:Generator_UserColumnName="Nervo" type="xs:string" minOccurs="0" />
+              <xs:element name="Direito" msprop:Generator_ColumnPropNameInRow="Direito" msprop:Generator_ColumnPropNameInTable="DireitoColumn" msprop:Generator_ColumnVarNameInTable="columnDireito" msprop:Generator_UserColumnName="Direito" type="xs:string" minOccurs="0" />
+              <xs:element name="Esquerdo" msprop:Generator_ColumnPropNameInRow="Esquerdo" msprop:Generator_ColumnPropNameInTable="EsquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnEsquerdo" msprop:Generator_UserColumnName="Esquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="NormNcs" msprop:Generator_ColumnPropNameInRow="NormNcs" msprop:Generator_ColumnPropNameInTable="NormNcsColumn" msprop:Generator_ColumnVarNameInTable="columnNormNcs" msprop:Generator_UserColumnName="NormNcs" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

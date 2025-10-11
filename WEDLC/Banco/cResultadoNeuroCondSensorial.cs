@@ -113,5 +113,47 @@ namespace WEDLC.Banco
                     conexao.Close();
             }
         }
+
+        public DataTable buscaRelNeuroCondSensorial()
+        {
+            // Validação básica dos parâmetros
+
+            if (IdFolha <= 0)
+                return null;
+
+            if (!conectaBanco())
+                return null;
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (var sqlDa = new MySqlDataAdapter("pr_relneuroconducaosensorial", conexao))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdFolha", IdFolha);
+                    sqlDa.SelectCommand.Parameters.AddWithValue("pIdResultado", IdResultado);
+
+                    sqlDa.Fill(dt);
+                    return dt;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Log específico para diagnóstico
+                System.Diagnostics.Debug.WriteLine($"Erro na busca da pr_buscaresultadoneurocondsensorial: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                // Log para outros erros
+                System.Diagnostics.Debug.WriteLine($"Erro inesperado: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                conexao?.Close();
+            }
+        }
     }
 }
