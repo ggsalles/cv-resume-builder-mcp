@@ -30,7 +30,10 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.2")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
 
-// Impressão Laudo: 1.0.0.2
+// Impressão Laudo: 1.0.0.0
 // 09/10/2025 - Bloco Velocidade Neuro 
+
+// Impressão Laudo: 1.0.1.0
+// 13/10/2025 - Término do Rel de Avaliação Muscular
