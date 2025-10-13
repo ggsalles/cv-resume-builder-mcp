@@ -65,20 +65,22 @@
             this.txtCodigoComentario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.grpReflexo = new System.Windows.Forms.GroupBox();
-            this.txtIdade = new System.Windows.Forms.TextBox();
-            this.lblIdade = new System.Windows.Forms.Label();
-            this.txtComprimentoPerna = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtLatenciaDireita = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtLatenciaEsquerda = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txtLatenciaEsperada = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.txtLimiteSuperior = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.txtLimiteInferior = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.txtlimiteSuperior = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
+            this.txtLatenciaEsperada = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtLatenciaEsquerda = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtLatenciaDireita = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtComprimentoPerna = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtIdade = new System.Windows.Forms.TextBox();
+            this.lblIdade = new System.Windows.Forms.Label();
+            this.txtDiferenca = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.grpBotoes.SuspendLayout();
             this.grpMusculos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdAvaliacaoMuscular)).BeginInit();
@@ -475,7 +477,9 @@
             // 
             // grpReflexo
             // 
-            this.grpReflexo.Controls.Add(this.txtlimiteSuperior);
+            this.grpReflexo.Controls.Add(this.txtDiferenca);
+            this.grpReflexo.Controls.Add(this.label10);
+            this.grpReflexo.Controls.Add(this.txtLimiteSuperior);
             this.grpReflexo.Controls.Add(this.label16);
             this.grpReflexo.Controls.Add(this.txtLimiteInferior);
             this.grpReflexo.Controls.Add(this.label15);
@@ -496,6 +500,122 @@
             this.grpReflexo.TabStop = false;
             this.grpReflexo.Text = "\"Reflexo H\" em N. Tibial Posterior";
             // 
+            // txtLimiteSuperior
+            // 
+            this.txtLimiteSuperior.Enabled = false;
+            this.txtLimiteSuperior.Location = new System.Drawing.Point(447, 76);
+            this.txtLimiteSuperior.MaxLength = 8;
+            this.txtLimiteSuperior.Name = "txtLimiteSuperior";
+            this.txtLimiteSuperior.Size = new System.Drawing.Size(141, 20);
+            this.txtLimiteSuperior.TabIndex = 26;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(447, 60);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(98, 13);
+            this.label16.TabIndex = 27;
+            this.label16.Text = "Limite Superior (ms)";
+            // 
+            // txtLimiteInferior
+            // 
+            this.txtLimiteInferior.Enabled = false;
+            this.txtLimiteInferior.Location = new System.Drawing.Point(300, 76);
+            this.txtLimiteInferior.MaxLength = 8;
+            this.txtLimiteInferior.Name = "txtLimiteInferior";
+            this.txtLimiteInferior.Size = new System.Drawing.Size(141, 20);
+            this.txtLimiteInferior.TabIndex = 24;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(300, 60);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(91, 13);
+            this.label15.TabIndex = 25;
+            this.label15.Text = "Limite Inferior (ms)";
+            // 
+            // txtLatenciaEsperada
+            // 
+            this.txtLatenciaEsperada.Enabled = false;
+            this.txtLatenciaEsperada.Location = new System.Drawing.Point(153, 76);
+            this.txtLatenciaEsperada.MaxLength = 8;
+            this.txtLatenciaEsperada.Name = "txtLatenciaEsperada";
+            this.txtLatenciaEsperada.Size = new System.Drawing.Size(141, 20);
+            this.txtLatenciaEsperada.TabIndex = 22;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(153, 60);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(118, 13);
+            this.label14.TabIndex = 23;
+            this.label14.Text = "Latência Esperada (ms)";
+            // 
+            // txtLatenciaEsquerda
+            // 
+            this.txtLatenciaEsquerda.Location = new System.Drawing.Point(447, 37);
+            this.txtLatenciaEsquerda.MaxLength = 8;
+            this.txtLatenciaEsquerda.Name = "txtLatenciaEsquerda";
+            this.txtLatenciaEsquerda.Size = new System.Drawing.Size(141, 20);
+            this.txtLatenciaEsquerda.TabIndex = 20;
+            this.txtLatenciaEsquerda.Text = "0,0";
+            this.txtLatenciaEsquerda.Enter += new System.EventHandler(this.txtLatenciaEsquerda_Enter);
+            this.txtLatenciaEsquerda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLatenciaEsquerda_KeyPress);
+            this.txtLatenciaEsquerda.Leave += new System.EventHandler(this.txtLatenciaEsquerda_Leave);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(447, 21);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(118, 13);
+            this.label13.TabIndex = 21;
+            this.label13.Text = "Latência Esquerda (ms)";
+            // 
+            // txtLatenciaDireita
+            // 
+            this.txtLatenciaDireita.Location = new System.Drawing.Point(300, 37);
+            this.txtLatenciaDireita.MaxLength = 8;
+            this.txtLatenciaDireita.Name = "txtLatenciaDireita";
+            this.txtLatenciaDireita.Size = new System.Drawing.Size(141, 20);
+            this.txtLatenciaDireita.TabIndex = 18;
+            this.txtLatenciaDireita.Text = "0,0";
+            this.txtLatenciaDireita.Enter += new System.EventHandler(this.txtLatenciaDireita_Enter);
+            this.txtLatenciaDireita.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLatenciaDireita_KeyPress);
+            this.txtLatenciaDireita.Leave += new System.EventHandler(this.txtLatenciaDireita_Leave);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(300, 21);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(103, 13);
+            this.label12.TabIndex = 19;
+            this.label12.Text = "Latência Direita (ms)";
+            // 
+            // txtComprimentoPerna
+            // 
+            this.txtComprimentoPerna.Location = new System.Drawing.Point(153, 37);
+            this.txtComprimentoPerna.MaxLength = 8;
+            this.txtComprimentoPerna.Name = "txtComprimentoPerna";
+            this.txtComprimentoPerna.Size = new System.Drawing.Size(141, 20);
+            this.txtComprimentoPerna.TabIndex = 16;
+            this.txtComprimentoPerna.Enter += new System.EventHandler(this.txtComprimentoPerna_Enter);
+            this.txtComprimentoPerna.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtComprimentoPerna_KeyPress);
+            this.txtComprimentoPerna.Leave += new System.EventHandler(this.txtComprimentoPerna_Leave);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(153, 21);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(121, 13);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "Comprimento perna (cm)";
+            // 
             // txtIdade
             // 
             this.txtIdade.Enabled = false;
@@ -514,110 +634,23 @@
             this.lblIdade.TabIndex = 15;
             this.lblIdade.Text = "Idade";
             // 
-            // txtComprimentoPerna
+            // txtDiferenca
             // 
-            this.txtComprimentoPerna.Location = new System.Drawing.Point(153, 37);
-            this.txtComprimentoPerna.MaxLength = 8;
-            this.txtComprimentoPerna.Name = "txtComprimentoPerna";
-            this.txtComprimentoPerna.Size = new System.Drawing.Size(141, 20);
-            this.txtComprimentoPerna.TabIndex = 16;
+            this.txtDiferenca.Enabled = false;
+            this.txtDiferenca.Location = new System.Drawing.Point(6, 76);
+            this.txtDiferenca.MaxLength = 8;
+            this.txtDiferenca.Name = "txtDiferenca";
+            this.txtDiferenca.Size = new System.Drawing.Size(141, 20);
+            this.txtDiferenca.TabIndex = 28;
             // 
-            // label11
+            // label10
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(153, 21);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(121, 13);
-            this.label11.TabIndex = 17;
-            this.label11.Text = "Comprimento perna (cm)";
-            // 
-            // txtLatenciaDireita
-            // 
-            this.txtLatenciaDireita.Location = new System.Drawing.Point(300, 37);
-            this.txtLatenciaDireita.MaxLength = 8;
-            this.txtLatenciaDireita.Name = "txtLatenciaDireita";
-            this.txtLatenciaDireita.Size = new System.Drawing.Size(141, 20);
-            this.txtLatenciaDireita.TabIndex = 18;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(300, 21);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(103, 13);
-            this.label12.TabIndex = 19;
-            this.label12.Text = "Latência Direita (ms)";
-            // 
-            // txtLatenciaEsquerda
-            // 
-            this.txtLatenciaEsquerda.Location = new System.Drawing.Point(447, 37);
-            this.txtLatenciaEsquerda.MaxLength = 8;
-            this.txtLatenciaEsquerda.Name = "txtLatenciaEsquerda";
-            this.txtLatenciaEsquerda.Size = new System.Drawing.Size(141, 20);
-            this.txtLatenciaEsquerda.TabIndex = 20;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(447, 21);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(118, 13);
-            this.label13.TabIndex = 21;
-            this.label13.Text = "Latência Esquerda (ms)";
-            // 
-            // txtLatenciaEsperada
-            // 
-            this.txtLatenciaEsperada.Enabled = false;
-            this.txtLatenciaEsperada.Location = new System.Drawing.Point(6, 76);
-            this.txtLatenciaEsperada.MaxLength = 8;
-            this.txtLatenciaEsperada.Name = "txtLatenciaEsperada";
-            this.txtLatenciaEsperada.Size = new System.Drawing.Size(141, 20);
-            this.txtLatenciaEsperada.TabIndex = 22;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 60);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(118, 13);
-            this.label14.TabIndex = 23;
-            this.label14.Text = "Latência Esperada (ms)";
-            // 
-            // txtLimiteInferior
-            // 
-            this.txtLimiteInferior.Enabled = false;
-            this.txtLimiteInferior.Location = new System.Drawing.Point(153, 76);
-            this.txtLimiteInferior.MaxLength = 8;
-            this.txtLimiteInferior.Name = "txtLimiteInferior";
-            this.txtLimiteInferior.Size = new System.Drawing.Size(141, 20);
-            this.txtLimiteInferior.TabIndex = 24;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(153, 60);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(91, 13);
-            this.label15.TabIndex = 25;
-            this.label15.Text = "Limite Inferior (ms)";
-            // 
-            // txtlimiteSuperior
-            // 
-            this.txtlimiteSuperior.Enabled = false;
-            this.txtlimiteSuperior.Location = new System.Drawing.Point(300, 76);
-            this.txtlimiteSuperior.MaxLength = 8;
-            this.txtlimiteSuperior.Name = "txtlimiteSuperior";
-            this.txtlimiteSuperior.Size = new System.Drawing.Size(141, 20);
-            this.txtlimiteSuperior.TabIndex = 26;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(300, 60);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(98, 13);
-            this.label16.TabIndex = 27;
-            this.label16.Text = "Limite Superior (ms)";
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 60);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(130, 13);
+            this.label10.TabIndex = 29;
+            this.label10.Text = "Diferença entre lados (ms)";
             // 
             // frmResultadoMusculoNeuro
             // 
@@ -698,7 +731,7 @@
         private System.Windows.Forms.Button btnComentario;
         private System.Windows.Forms.Button btnGravar;
         private System.Windows.Forms.GroupBox grpReflexo;
-        private System.Windows.Forms.TextBox txtlimiteSuperior;
+        private System.Windows.Forms.TextBox txtLimiteSuperior;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtLimiteInferior;
         private System.Windows.Forms.Label label15;
@@ -712,5 +745,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtIdade;
         private System.Windows.Forms.Label lblIdade;
+        private System.Windows.Forms.TextBox txtDiferenca;
+        private System.Windows.Forms.Label label10;
     }
 }

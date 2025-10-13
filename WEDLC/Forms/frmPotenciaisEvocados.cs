@@ -819,7 +819,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtN75OlhoDireito.Text))
             {
-                txtN75OlhoDireito.Text = "0,0";
+                txtN75OlhoDireito.Text = String.Empty;
             }
 
         }
@@ -834,7 +834,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtN75OlhoEsquerdo.Text))
             {
-                txtN75OlhoEsquerdo.Text = "0,0";
+                txtN75OlhoEsquerdo.Text = String.Empty;
             }
 
         }
@@ -851,7 +851,7 @@ namespace WEDLC.Forms
 
             if (string.IsNullOrEmpty(txtP100OlhoDireito.Text))
             {
-                txtP100OlhoDireito.Text = "0,0";
+                txtP100OlhoDireito.Text = String.Empty;
             }
 
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(txtP100Diferenca, e);
@@ -874,7 +874,7 @@ namespace WEDLC.Forms
             }
             if (string.IsNullOrEmpty(txtP100OlhoEsquerdo.Text))
             {
-                txtP100OlhoEsquerdo.Text = "0,0";
+                txtP100OlhoEsquerdo.Text = String.Empty;
             }
 
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(txtP100Diferenca, e);
@@ -891,7 +891,7 @@ namespace WEDLC.Forms
 
             if (string.IsNullOrEmpty(txtN145OlhoDireito.Text))
             {
-                txtN145OlhoDireito.Text = "0,0";
+                txtN145OlhoDireito.Text = String.Empty;
             }
         }
         private void txtN145OlhoDireito_KeyPress(object sender, KeyPressEventArgs e)
@@ -904,7 +904,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtN145OlhoEsquerdo.Text))
             {
-                txtN145OlhoEsquerdo.Text = "0,0";
+                txtN145OlhoEsquerdo.Text = String.Empty;
             }
         }
 
@@ -918,7 +918,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtAmplitudeOlhoDireito.Text))
             {
-                txtAmplitudeOlhoDireito.Text = "0,0";
+                txtAmplitudeOlhoDireito.Text = String.Empty;
             }
         }
 
@@ -932,7 +932,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtAmplitudeOlhoEsquerdo.Text))
             {
-                txtAmplitudeOlhoEsquerdo.Text = "0,0";
+                txtAmplitudeOlhoEsquerdo.Text = String.Empty;
             }
         }
 
@@ -996,7 +996,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda1direito.Text))
             {
-                txtonda1direito.Text = "0,00";
+                txtonda1direito.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1011,7 +1011,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda1esquerdo.Text))
             {
-                txtonda1esquerdo.Text = "0,00";
+                txtonda1esquerdo.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1031,7 +1031,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda2direito.Text))
             {
-                txtonda2direito.Text = "0,00";
+                txtonda2direito.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1051,7 +1051,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda2esquerdo.Text))
             {
-                txtonda2esquerdo.Text = "0,00";
+                txtonda2esquerdo.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1071,7 +1071,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda3direito.Text))
             {
-                txtonda3direito.Text = "0,00";
+                txtonda3direito.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1091,7 +1091,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda3esquerdo.Text))
             {
-                txtonda3esquerdo.Text = "0,00";
+                txtonda3esquerdo.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1111,7 +1111,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda4direito.Text))
             {
-                txtonda4direito.Text = "0,00";
+                txtonda4direito.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1131,7 +1131,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda4esquerdo.Text))
             {
-                txtonda4esquerdo.Text = "0,00";
+                txtonda4esquerdo.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1151,7 +1151,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda5direito.Text))
             {
-                txtonda5direito.Text = "0,00";
+                txtonda5direito.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1171,7 +1171,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtonda5esquerdo.Text))
             {
-                txtonda5esquerdo.Text = "0,00";
+                txtonda5esquerdo.Text = String.Empty;
             }
             CalculaDiferençaPEA();
         }
@@ -1371,7 +1371,7 @@ namespace WEDLC.Forms
 
             if (string.IsNullOrEmpty(txtP1Ni1DireitoObitida.Text))
             {
-                txtP1Ni1DireitoObitida.Text = "0,0";
+                txtP1Ni1DireitoObitida.Text = String.Empty;
             }
 
             AtualizaValoresGridPessTXT();
@@ -1397,7 +1397,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtP1Ni1DireitoEsperada.Text))
             {
-                txtP1Ni1DireitoEsperada.Text = "0,0";
+                txtP1Ni1DireitoEsperada.Text = String.Empty;
             }
             AtualizaValoresGridPessTXT();
         }
@@ -1417,7 +1417,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtP1Ni1EsquerdoObidida.Text))
             {
-                txtP1Ni1EsquerdoObidida.Text = "0,0";
+                txtP1Ni1EsquerdoObidida.Text = String.Empty;
             }
             AtualizaValoresGridPessTXT();
         }
@@ -1437,7 +1437,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtP1Ni1EsquerdoEsperada.Text))
             {
-                txtP1Ni1EsquerdoEsperada.Text = "0,0";
+                txtP1Ni1EsquerdoEsperada.Text = String.Empty;
             }
             AtualizaValoresGridPessTXT();
         }
@@ -1457,7 +1457,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtDiferencaEsperada.Text))
             {
-                txtDiferencaEsperada.Text = "0,0";
+                txtDiferencaEsperada.Text = String.Empty;
             }
             AtualizaValoresGridPessTXT();
         }
@@ -1598,7 +1598,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtp1inicio.Text))
             {
-                txtp1inicio.Text = "0,0";
+                txtp1inicio.Text = String.Empty;
             }
         }
 
@@ -1617,7 +1617,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtp1pico.Text))
             {
-                txtp1pico.Text = "0,0";
+                txtp1pico.Text = String.Empty;
             }
         }
 
@@ -1636,7 +1636,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtn1pico.Text))
             {
-                txtn1pico.Text = "0,0";
+                txtn1pico.Text = String.Empty;
             }
         }
 
@@ -1655,7 +1655,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtp2pico.Text))
             {
-                txtp2pico.Text = "0,0";
+                txtp2pico.Text = String.Empty;
             }
         }
 
@@ -1674,7 +1674,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtn2pico.Text))
             {
-                txtn2pico.Text = "0,0";
+                txtn2pico.Text = String.Empty;
             }
         }
 
@@ -1693,7 +1693,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtp3pico.Text))
             {
-                txtp3pico.Text = "0,0";
+                txtp3pico.Text = String.Empty;
             }
         }
 
@@ -1712,7 +1712,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtn3pico.Text))
             {
-                txtn3pico.Text = "0,0";
+                txtn3pico.Text = String.Empty;
             }
         }
 
@@ -1731,7 +1731,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
             if (string.IsNullOrEmpty(txtrepostaespinhal.Text))
             {
-                txtrepostaespinhal.Text = "0,0";
+                txtrepostaespinhal.Text = String.Empty;
             }
         }
 
@@ -1771,14 +1771,14 @@ namespace WEDLC.Forms
                 else
                 {
                     // Limpa os campos de texto
-                    txtp1inicio.Text = "0,0";
-                    txtp1pico.Text = "0,0";
-                    txtn1pico.Text = "0,0";
-                    txtp2pico.Text = "0,0";
-                    txtn2pico.Text = "0,0";
-                    txtp3pico.Text = "0,0";
-                    txtn3pico.Text = "0,0";
-                    txtrepostaespinhal.Text = "0,0";
+                    txtp1inicio.Text = String.Empty;
+                    txtp1pico.Text = String.Empty;
+                    txtn1pico.Text = String.Empty;
+                    txtp2pico.Text = String.Empty;
+                    txtn2pico.Text = String.Empty;
+                    txtp3pico.Text = String.Empty;
+                    txtn3pico.Text = String.Empty;
+                    txtrepostaespinhal.Text = String.Empty;
 
                     return false;
                 }
@@ -1862,22 +1862,22 @@ namespace WEDLC.Forms
                 else
                 {
                     // Limpa os campos de texto
-                    txtErbsDireito.Text = "0,00";
-                    txtErbsEsquerdo.Text = "0,00";
-                    txtN11N13Direito.Text = "0,00";
-                    txtN11N13Esquerdo.Text = "0,00";
-                    txtN19Direito.Text = "0,00";
-                    txtN19Esquerdo.Text = "0,00";
-                    txtP22Direito.Text = "0,00";
-                    txtP22Esquerdo.Text = "0,00";
-                    txtEpN11N13Direito.Text = "0,00";
-                    txtEpN11N13Esquerdo.Text = "0,00";
-                    txtEpN19Direito.Text = "0,00";
-                    txtEpN19Esquerdo.Text = "0,00";
-                    txtEpp22Direito.Text = "0,00";
-                    txtEpp22Esquerdo.Text = "0,00";
-                    txtN11N13N19Direito.Text = "0,00";
-                    txtN11N13N19Esquerdo.Text = "0,00";
+                    txtErbsDireito.Text = String.Empty;
+                    txtErbsEsquerdo.Text = String.Empty;
+                    txtN11N13Direito.Text = String.Empty;
+                    txtN11N13Esquerdo.Text = String.Empty;
+                    txtN19Direito.Text = String.Empty;
+                    txtN19Esquerdo.Text = String.Empty;
+                    txtP22Direito.Text = String.Empty;
+                    txtP22Esquerdo.Text = String.Empty;
+                    txtEpN11N13Direito.Text = String.Empty;
+                    txtEpN11N13Esquerdo.Text = String.Empty;
+                    txtEpN19Direito.Text = String.Empty;
+                    txtEpN19Esquerdo.Text = String.Empty;
+                    txtEpp22Direito.Text = String.Empty;
+                    txtEpp22Esquerdo.Text = String.Empty;
+                    txtN11N13N19Direito.Text = String.Empty;
+                    txtN11N13N19Esquerdo.Text = String.Empty;
 
                     return false;
                 }
@@ -1900,7 +1900,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtErbsDireito.Text))
             {
-                txtErbsDireito.Text = "0,00";
+                txtErbsDireito.Text = String.Empty;
             }
             CalculaCamposPESSMED();
         }
@@ -1920,7 +1920,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtErbsEsquerdo.Text))
             {
-                txtErbsEsquerdo.Text = "0,00";
+                txtErbsEsquerdo.Text = String.Empty;
             }
             CalculaCamposPESSMED();
         }
@@ -1940,7 +1940,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtN11N13Direito.Text))
             {
-                txtN11N13Direito.Text = "0,00";
+                txtN11N13Direito.Text = String.Empty;
             }
             CalculaCamposPESSMED();
         }
@@ -1960,7 +1960,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtN11N13Esquerdo.Text))
             {
-                txtN11N13Esquerdo.Text = "0,00";
+                txtN11N13Esquerdo.Text = String.Empty;
             }
             CalculaCamposPESSMED();
         }
@@ -1980,7 +1980,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtN19Direito.Text))
             {
-                txtN19Direito.Text = "0,00";
+                txtN19Direito.Text = String.Empty;
             }
             CalculaCamposPESSMED();
         }
@@ -2000,7 +2000,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtN19Esquerdo.Text))
             {
-                txtN19Esquerdo.Text = "0,00";
+                txtN19Esquerdo.Text = String.Empty;
             }
             CalculaCamposPESSMED();
         }
@@ -2020,7 +2020,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtP22Direito.Text))
             {
-                txtP22Direito.Text = "0,00";
+                txtP22Direito.Text = String.Empty;
             }
             CalculaCamposPESSMED();
         }
@@ -2040,7 +2040,7 @@ namespace WEDLC.Forms
             ValidacaoTextBox.FormatarAoPerderFocoDuasCasasDecimais(sender, e);
             if (string.IsNullOrEmpty(txtP22Esquerdo.Text))
             {
-                txtP22Esquerdo.Text = "0,00";
+                txtP22Esquerdo.Text = String.Empty;
             }
             CalculaCamposPESSMED();
         }

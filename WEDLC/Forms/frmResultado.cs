@@ -22,6 +22,7 @@ namespace WEDLC.Forms
         public int NumeroLinha = -1; // Variável para controlar a linha do grid da folha
         public int CodGrupoFolha = 0; // Variável para controlar o código do grupo da folha
         public int IdResultado = 0; //Variável para controlar o código do resultado
+        public string IdadePaciente = string.Empty; //Variável para controlar a idade do paciente
 
         public const int codModulo = 13; //Código do módulo
 
@@ -104,6 +105,7 @@ namespace WEDLC.Forms
                     //Preenche os campos com os dados da linha selecionada
                     txtCodigoProntuario.Text = row.Cells[0].Value.ToString();
                     txtNome.Text = row.Cells[1].Value.ToString();
+                    IdadePaciente = row.Cells[3].Value.ToString(); // Nascimento
 
                     //Busca a folha do paciente
                     if (buscaResultadoFolha() == false)
@@ -398,6 +400,7 @@ namespace WEDLC.Forms
                         Int32 idfolha = Convert.ToInt32(row.Cells[1].Value);
                         string sigla = row.Cells[2].Value.ToString();
                         string nome = row.Cells[3].Value.ToString();
+                        string idade = IdadePaciente; // Nascimento
 
                         // Armazena o número da linha selecionada do Grupo da folha
                         CodGrupoFolha = Convert.ToInt32(row.Cells[4].Value);
@@ -423,6 +426,7 @@ namespace WEDLC.Forms
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.IdResultado = IdResultado;
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Sigla = sigla;
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Nome = nome;
+                                    objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Idade = idade;
                                     objResultadoMusculoNeuro.grupoFolha = CodGrupoFolha;
 
                                     //Abre o form de senha modal

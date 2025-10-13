@@ -14,6 +14,7 @@ namespace WEDLC.Banco
         public string Sigla { get; set; }
         public string Nome { get; set; }
         public string Lado { get; set; }
+        public string Idade { get; set; }
 
         // Construtor
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();

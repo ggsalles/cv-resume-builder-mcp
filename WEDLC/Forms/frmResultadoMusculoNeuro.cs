@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Windows.Forms;
 using WEDLC.Banco;
 using WinFormsZoom;
+using static WEDLC.Banco.cUtil;
 
 namespace WEDLC.Forms
 {
@@ -60,6 +62,12 @@ namespace WEDLC.Forms
             {
                 return;
             }
+
+            if (CarregaReflexoH() == false)
+            {
+                return;
+            }
+
             if (CarregaAtividadeInsercao() == false)
             {
                 return;
@@ -432,6 +440,47 @@ namespace WEDLC.Forms
             }
         }
 
+        public bool CarregaReflexoH()
+        {
+            try
+            {
+                // Cria uma instância do objeto cResultadoNeuroCondMotora
+                cResultadoReflexoH objResultadoReflexoH = new cResultadoReflexoH();
+
+                // IdResultado com base no objeto atual
+                objResultadoReflexoH.IdResultado = this.objResultadoAvaliacaoMuscular.IdResultado;
+
+                // Busca os dados da avaliação muscular
+                DataTable dtResultadoReflexoH = objResultadoReflexoH.buscaResultadoReflexoH();
+
+                // Popula os campos de texto com os dados retornados
+                if (dtResultadoReflexoH.Rows.Count > 0)
+                {
+                    DataRow row = dtResultadoReflexoH.Rows[0];
+                    txtIdade.Text = row["idade"].ToString();
+                    txtComprimentoPerna.Text = row["comprimentoperna"].ToString();
+                    txtLatenciaDireita.Text = row["latenciadireita"].ToString();
+                    txtLatenciaEsquerda.Text = row["latenciaesquerda"].ToString();
+                    txtLatenciaEsperada.Text = row["latenciaesperada"].ToString();
+                    txtLimiteInferior.Text = row["limiteinferior"].ToString();
+                    txtLimiteSuperior.Text = row["limitesuperior"].ToString();
+                    txtDiferenca.Text = row["diferencalados"].ToString();
+                }
+                else
+                {
+                    LimpaCamposReflexoH();
+                }
+
+                return true; // Sucesso ao carregar os dados
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar avaliação muscular: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Falha ao carregar os dados
+            }
+        }
+
         private void configuraGridNeuroCondSensorial()
         {
             try
@@ -579,6 +628,12 @@ namespace WEDLC.Forms
                         return;
                     }
 
+
+                    if (GravaReflexoH() == false)
+                    {
+                        return;
+                    }
+
                     if (GravaAtividadeInsercao() == false)
                     {
                         return;
@@ -640,7 +695,7 @@ namespace WEDLC.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao gravar avaliação muscular: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao gravar gravaResultadoAvaliacaoMuscular: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false; // Falha ao gravar os dados
             }
         }
@@ -679,7 +734,7 @@ namespace WEDLC.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao gravar avaliação muscular: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao gravar gravaResultadoNeuroConducaoMotora: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false; // Falha ao gravar os dados
             }
         }
@@ -716,7 +771,43 @@ namespace WEDLC.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao gravar avaliação muscular: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao gravar gravaResultadoNeuroConducaoSensorial: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Falha ao gravar os dados
+            }
+        }
+
+        private bool GravaReflexoH()
+        {
+            try
+            {
+                //verifica se o comprimento da perna foi informado
+                if (!string.IsNullOrEmpty(txtComprimentoPerna.Text))
+                {
+                    // Cria uma instância do objeto 
+                    cResultadoReflexoH objResultadoReflexoH = new cResultadoReflexoH();
+                    objResultadoReflexoH.IdResultado = this.objResultadoAvaliacaoMuscular.IdResultado;
+                    objResultadoReflexoH.idade = txtIdade.Text;
+                    objResultadoReflexoH.comprimentoperna = txtComprimentoPerna.Text;
+                    objResultadoReflexoH.latenciadireita = txtLatenciaDireita.Text;
+                    objResultadoReflexoH.latenciaesquerda = txtLatenciaEsquerda.Text;
+                    objResultadoReflexoH.latenciaesperada = txtLatenciaEsperada.Text;
+                    objResultadoReflexoH.limiteinferior = txtLimiteInferior.Text;
+                    objResultadoReflexoH.limitesuperior = txtLimiteSuperior.Text;
+                    objResultadoReflexoH.diferencalados = txtDiferenca.Text;
+
+                    // Chama o método para gravar os dados
+                    if (!objResultadoReflexoH.gravaResultadoReflexoH())
+                    {
+                        MessageBox.Show("Erro ao gravar Resultado do ReflexoH.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false; // Falha ao gravar os dados
+                    }
+                }
+
+                return true; // Sucesso ao gravar os dados
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao gravar gravaResultadoReflexoH: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false; // Falha ao gravar os dados
             }
         }
@@ -891,7 +982,7 @@ namespace WEDLC.Forms
         }
 
         private bool GravaComentario()
-         {
+        {
             try
             {
                 if (!string.IsNullOrEmpty(txtCodigoComentario.Text))
@@ -918,6 +1009,99 @@ namespace WEDLC.Forms
                 MessageBox.Show("Erro ao gravar GravaComentario: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false; // Falha ao gravar os dados
             }
+        }
+
+        private void txtComprimentoPerna_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtComprimentoPerna), e);
+        }
+
+        private void txtComprimentoPerna_Leave(object sender, EventArgs e)
+        {
+
+            if (string.IsNullOrEmpty(txtComprimentoPerna.Text))
+            {
+                LimpaCamposReflexoH();
+                return;
+            }
+
+            //Calcula a latência esperada
+            var comprimentoPerna = txtComprimentoPerna.Text != string.Empty ? Double.Parse(txtComprimentoPerna.Text) : 0;
+            var idade = txtIdade.Text != string.Empty ? Int32.Parse(txtIdade.Text) : 0;
+            var latenciaesperada = 9.14 + (0.46 * comprimentoPerna) + (0.1 * idade);
+            txtLatenciaEsperada.Text = latenciaesperada.ToString("N1");
+
+            // Calcula a diferença do limite superior e do limite inferior
+            txtLimiteInferior.Text = Convert.ToString(latenciaesperada - 5.5);
+            txtLimiteSuperior.Text = Convert.ToString(latenciaesperada + 5.5);
+        }
+
+        private void txtComprimentoPerna_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
+                e.Handled = true;
+            }
+        }
+
+        private void txtLatenciaDireita_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtLatenciaDireita), e);
+        }
+
+        private void txtLatenciaDireita_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtLatenciaDireita.Text))
+            {
+                txtLatenciaDireita.Text = "0,0";
+            }
+
+            var diferenca = Math.Abs(Decimal.Parse(txtLatenciaDireita.Text) - Decimal.Parse(txtLatenciaEsquerda.Text));
+            txtDiferenca.Text = diferenca.ToString();
+
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+        }
+
+        private void txtLatenciaDireita_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void txtLatenciaEsquerda_Enter(object sender, EventArgs e)
+        {
+            ValidacaoTextBox.SelecionaTextoTextBox((txtLatenciaEsquerda), e);
+        }
+
+        private void txtLatenciaEsquerda_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtLatenciaEsquerda.Text))
+            {
+                txtLatenciaEsquerda.Text = "0,0";
+            }
+
+            var diferenca = Math.Abs(Decimal.Parse(txtLatenciaDireita.Text) - Decimal.Parse(txtLatenciaEsquerda.Text));
+            txtDiferenca.Text = diferenca.ToString();
+
+            ValidacaoTextBox.FormatarAoPerderFocoUmaCasaDecimal(sender, e);
+        }
+
+        private void txtLatenciaEsquerda_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
+        }
+
+        private void LimpaCamposReflexoH()
+        {
+            txtIdade.Text = cUtil.DataNascimentoValidator.IdadeCalculator.CalcularIdade(DateTime.Parse(objResultadoAvaliacaoMuscular.Idade)).ToString();
+            txtComprimentoPerna.Text = string.Empty;
+            txtLatenciaDireita.Text = "0,0";
+            txtLatenciaEsquerda.Text = "0,0";
+            txtLatenciaEsperada.Text = "0,0";
+            txtLimiteInferior.Text = string.Empty;
+            txtLimiteSuperior.Text = string.Empty;
+            txtDiferenca.Text = string.Empty;
         }
     }
 }

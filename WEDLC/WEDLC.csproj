@@ -156,6 +156,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Banco\cResultadoReflexoH.cs" />
     <Compile Include="Banco\CryptoHelper.cs" />
     <Compile Include="Banco\cPotenciaisEvocadosTecnica.cs" />
     <Compile Include="Banco\cAvaliacaoMuscular.cs" />
