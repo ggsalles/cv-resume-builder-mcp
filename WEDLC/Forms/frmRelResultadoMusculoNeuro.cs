@@ -47,6 +47,7 @@ namespace WEDLC.Forms
                 DataTable dtPotenciaisUnidade = this.buscaRelResultadoPotenciaisUnidade(idResultado);
                 DataTable dtNeuroConducaoMotoraLatencia = this.buscaRelNeuroCondMotoraLatencia(pIdFolha, idResultado);
                 DataTable dtNeuroConducaoSensorial = this.buscaRelNeuroCondSensorial(pIdFolha, idResultado);
+                DataTable dtReflexoH = this.buscaRelReflexoH(idResultado);
                 DataTable dtComentarios = this.buscaRelComentarios(idResultado);
 
                 // Define a variável com base na resposta do usuário
@@ -99,6 +100,9 @@ namespace WEDLC.Forms
 
                 reportViewer1.LocalReport.DataSources.Add(
                     new ReportDataSource("dsComentario", dtComentarios));
+
+                reportViewer1.LocalReport.DataSources.Add(
+                    new ReportDataSource("dsReflexoH", dtReflexoH));
 
                 // Renderiza
                 reportViewer1.RefreshReport();
@@ -242,6 +246,27 @@ namespace WEDLC.Forms
             catch (Exception)
             {
                 MessageBox.Show("Erro na buscaRelNeuroCondSensorial!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new DataTable(); // Return an empty DataTable to fix CS0126  
+            }
+        }
+
+        private DataTable buscaRelReflexoH(Int32 idResultado)
+        {
+            try
+            {
+                DataTable dtAux = new DataTable();
+                cResultadoReflexoH objResultadoReflexoH = new cResultadoReflexoH();
+
+                objResultadoReflexoH.IdResultado = idResultado; //Código do resultado
+
+                dtAux = objResultadoReflexoH.buscaResultadoReflexoH();
+
+                return dtAux;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro na buscaRelReflexoH!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable(); // Return an empty DataTable to fix CS0126  
             }
         }

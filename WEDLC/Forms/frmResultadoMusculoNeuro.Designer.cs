@@ -65,6 +65,8 @@
             this.txtCodigoComentario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.grpReflexo = new System.Windows.Forms.GroupBox();
+            this.txtDiferenca = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.txtLimiteSuperior = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txtLimiteInferior = new System.Windows.Forms.TextBox();
@@ -79,8 +81,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.txtIdade = new System.Windows.Forms.TextBox();
             this.lblIdade = new System.Windows.Forms.Label();
-            this.txtDiferenca = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.grpBotoes.SuspendLayout();
             this.grpMusculos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdAvaliacaoMuscular)).BeginInit();
@@ -500,6 +500,24 @@
             this.grpReflexo.TabStop = false;
             this.grpReflexo.Text = "\"Reflexo H\" em N. Tibial Posterior";
             // 
+            // txtDiferenca
+            // 
+            this.txtDiferenca.Enabled = false;
+            this.txtDiferenca.Location = new System.Drawing.Point(6, 76);
+            this.txtDiferenca.MaxLength = 8;
+            this.txtDiferenca.Name = "txtDiferenca";
+            this.txtDiferenca.Size = new System.Drawing.Size(141, 20);
+            this.txtDiferenca.TabIndex = 28;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 60);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(130, 13);
+            this.label10.TabIndex = 29;
+            this.label10.Text = "Diferença entre lados (ms)";
+            // 
             // txtLimiteSuperior
             // 
             this.txtLimiteSuperior.Enabled = false;
@@ -633,24 +651,6 @@
             this.lblIdade.Size = new System.Drawing.Size(34, 13);
             this.lblIdade.TabIndex = 15;
             this.lblIdade.Text = "Idade";
-            // 
-            // txtDiferenca
-            // 
-            this.txtDiferenca.Enabled = false;
-            this.txtDiferenca.Location = new System.Drawing.Point(6, 76);
-            this.txtDiferenca.MaxLength = 8;
-            this.txtDiferenca.Name = "txtDiferenca";
-            this.txtDiferenca.Size = new System.Drawing.Size(141, 20);
-            this.txtDiferenca.TabIndex = 28;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 60);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(130, 13);
-            this.label10.TabIndex = 29;
-            this.label10.Text = "Diferença entre lados (ms)";
             // 
             // frmResultadoMusculoNeuro
             // 
