@@ -211,6 +211,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsPaciente.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmPermissao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmPermissao.Designer.cs">
+      <DependentUpon>frmPermissao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmRelResultadoMusculoNeuro.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -333,6 +339,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\frmPermissao.resx">
+      <DependentUpon>frmPermissao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmRelResultadoMusculoNeuro.resx">
       <DependentUpon>frmRelResultadoMusculoNeuro.cs</DependentUpon>
     </EmbeddedResource>

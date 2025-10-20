@@ -404,5 +404,29 @@ namespace WEDLC.Forms
             // Restaura o cursor normal
             Cursor.Current = Cursors.Default;
         }
+
+        private void permissãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (cUtil.ValidaFormulario.FormularioEstaAberto<frmPermissao>() == true)
+            {
+                MessageBox.Show("O formulário de Permissão já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Altera o cursor para "espera"
+            Cursor.Current = Cursors.WaitCursor;
+
+            // Cria um objeto para o form de potenciais abrir
+            frmPermissao objPermissao = new frmPermissao();
+
+            // Define o form pai como o form principal
+            objPermissao.MdiParent = this;
+
+            // Abre o form de potenciais não modal
+            objPermissao.Show();
+
+            // Restaura o cursor normal
+            Cursor.Current = Cursors.Default;
+        }
     }
 }
