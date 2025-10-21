@@ -14,9 +14,6 @@ namespace WEDLC.Forms
         public const int codModulo = 14; //Código do módulo
         private FormZoomHelper zoomHelper;
 
-        private Int32 idUsuario;
-        private int idNivel;
-        private int idModulo;
         public frmPermissao()
         {
             InitializeComponent();
@@ -36,8 +33,6 @@ namespace WEDLC.Forms
                 txtNome.Text = string.Empty;
                 grdUsuario.DataSource = null;
                 grdPermissao.DataSource = null;
-                txtModulo.Text = string.Empty;
-                cboPermissao.SelectedIndex = -1;
             }
             catch (Exception)
             {
@@ -70,32 +65,48 @@ namespace WEDLC.Forms
 
         private void configuraGridPermissao()
         {
-            grdPermissao.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
             //Oculta a coluna
             grdPermissao.Columns["idusuario"].Visible = false;
             grdPermissao.Columns["idmodulo"].Visible = false;
             grdPermissao.Columns["idnivel"].Visible = false;
 
-            // Desabilita a edição da coluna
-            grdPermissao.Columns[0].ReadOnly = true;
-            grdPermissao.Columns[1].ReadOnly = true;
-            grdPermissao.Columns[2].ReadOnly = true;
-            grdPermissao.Columns[3].ReadOnly = true;
-            grdPermissao.Columns[4].ReadOnly = true;
+            grdPermissao.Columns[2].ReadOnly = true; // Deixa a coluna Módulo como somente leitura
 
-            // Configurando outras propriedades
-            //grdDados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Preenche automaticamente
-            grdPermissao.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Seleciona linha inteira
-            grdPermissao.MultiSelect = false; // Impede seleção múltipla
+            // === 🔹 Cria a coluna ComboBox (Nível) ===
+            DataGridViewComboBoxColumn colNivel = new DataGridViewComboBoxColumn();
+            colNivel.HeaderText = "Nível";
+            colNivel.Name = "Nível";
+            colNivel.DataPropertyName = "idnivel"; // valor que será salvo
+
+            // 🔹 Busca níveis direto do banco
+            DataTable dtNiveis = new cPermissao().BuscaNivelPermissao();
+            colNivel.DataSource = dtNiveis;
+            colNivel.DisplayMember = "descricao";  // texto visível (ajuste o nome conforme o retorno)
+            colNivel.ValueMember = "idnivel";      // id real
+            colNivel.DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton;
+            colNivel.FlatStyle = FlatStyle.Flat;
+            colNivel.ReadOnly = false;
+
+            grdPermissao.Columns.Add(colNivel);
+
+            // === ⚙️ Outras configurações do grid ===
+            grdPermissao.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            grdPermissao.MultiSelect = false;
             grdPermissao.AllowUserToAddRows = false;
-            grdPermissao.AllowUserToDeleteRows = false; // Impede a exclusão de linhas
+            grdPermissao.AllowUserToDeleteRows = false;
+            grdPermissao.EnableHeadersVisualStyles = false;
+            //grdPermissao.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
-            //Deixa o grid zebrado
+            // === 🟦 Cores alternadas (zebrado) ===
+            grdPermissao.RowsDefaultCellStyle.BackColor = Color.White;
             grdPermissao.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue;
 
-            //Desmarca a seleção do grid
-            grdPermissao.CurrentCell = null;
+            // === ⚙️ Corrige a atualização da combo ===
+            grdPermissao.CurrentCellDirtyStateChanged -= grdPermissao_CurrentCellDirtyStateChanged;
+            grdPermissao.CurrentCellDirtyStateChanged += grdPermissao_CurrentCellDirtyStateChanged;
+
+            grdPermissao.CellValueChanged -= grdPermissao_CellValueChanged;
+            grdPermissao.CellValueChanged += grdPermissao_CellValueChanged;
         }
 
         private DataTable buscaUsuario(int idUsuario, string Nome)
@@ -172,30 +183,38 @@ namespace WEDLC.Forms
             try
             {
                 cPermissao objPermissao = new cPermissao();
-                objPermissao.IdUsuario = idUsuario;
-                objPermissao.IdModulo = idModulo;
-                objPermissao.IdNivel = cboPermissao.SelectedIndex;
 
-                if (objPermissao.IdNivel <= 0)
+                foreach (DataGridViewRow row in grdPermissao.Rows)
                 {
-                    MessageBox.Show("Selecione um nível!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+
+                    int idUsuario = Convert.ToInt32(row.Cells["idusuario"].Value);
+                    int idModulo = Convert.ToInt32(row.Cells["idmodulo"].Value);
+                    int idNivel = 0;
+
+                    if (row.Cells["Nível"] is DataGridViewComboBoxCell comboCell)
+                    {
+                        idNivel = Convert.ToInt32(comboCell.Value);
+                    }
+                    else if (row.Cells["idnivel"].Value != null)
+                    {
+                        idNivel = Convert.ToInt32(row.Cells["idnivel"].Value);
+                    }
+
+                    // instancia o objeto de permissão (ou usa o seu existente)
+                    objPermissao.IdUsuario = idUsuario;
+                    objPermissao.IdModulo = idModulo;
+                    objPermissao.IdNivel = idNivel;
+
+                    // chama a procedure de update
+                    objPermissao.atualizaPermissao();
                 }
 
-                if (objPermissao.atualizaPermissao() == true)
-                {
-                    MessageBox.Show("Atualizãção efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    carregaTelaInicial();
-                }
-                else
-                {
-                    MessageBox.Show("Erro ao tentar gravar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                MessageBox.Show("Atualização efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                carregaTelaInicial();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Erro ao tentar gravar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao gravar permissões: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -252,8 +271,6 @@ namespace WEDLC.Forms
             {
                 txtCodigo.Text = string.Empty;
                 txtNome.Text = string.Empty;
-                txtModulo.Text = string.Empty;
-                CarregaComboPermissao();
                 grdUsuario.DataSource = null;
                 grdPermissao.DataSource = null;
                 btnGravar.Enabled = false;
@@ -264,32 +281,6 @@ namespace WEDLC.Forms
             }
 
         }
-
-        private void CarregaComboPermissao()
-        {
-            try
-            {
-                //Carrega o combo de classe
-                DataTable dtPermissao = new cPermissao().BuscaNivelPermissao();
-                DataRow newRow = dtPermissao.NewRow();
-                newRow["idnivel"] = 0; // Defina o valor desejado para a primeira linha
-                newRow["descricao"] = "Selecione..."; // Defina o valor desejado para a primeira linha
-                dtPermissao.Rows.InsertAt(newRow, 0); // Insere a nova linha na primeira posição
-
-                //Carrega o combo de tipo de folha
-                cboPermissao.AutoCompleteMode = AutoCompleteMode.SuggestAppend; // Sugestão automática
-                cboPermissao.AutoCompleteSource = AutoCompleteSource.ListItems; // Fonte das sugestões: itens existentes na lista
-                cboPermissao.ValueMember = "idnivel";
-                cboPermissao.DisplayMember = "descricao";
-                cboPermissao.DataSource = dtPermissao;
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao carregar o combo de permissão!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void btnLimpar_Click(object sender, EventArgs e)
         {
             carregaTelaInicial();
@@ -306,12 +297,22 @@ namespace WEDLC.Forms
 
                     //Renomeia as colunas do datatable
                     dtPermissao.Columns["descmodulo"].ColumnName = "Módulo";
-                    dtPermissao.Columns["descricao"].ColumnName = "Nível";
+                    //dtPermissao.Columns["descricao"].ColumnName = "Nível";
 
                     grdPermissao.SuspendLayout();
+                    grdPermissao.DataSource = null;
+                    grdPermissao.Rows.Clear();
+                    grdPermissao.Columns.Clear();
                     grdPermissao.DataSource = dtPermissao;
                     configuraGridPermissao();
                     grdPermissao.ResumeLayout();
+                    // força o autoajuste (garante em todos os reloads)
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        grdPermissao.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                    }));
+
+                    btnGravar.Enabled = true; //Habilita o botão gravar
                 }
             }
             catch (Exception)
@@ -320,40 +321,27 @@ namespace WEDLC.Forms
 
             }
         }
-
-        private void grdPermissao_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-                {
-                    // Otimização: Acessa a linha apenas uma vez
-                    DataGridViewRow row = grdPermissao.Rows[e.RowIndex];
-
-                    idUsuario = Convert.ToInt32(row.Cells[0].Value.ToString());
-                    idModulo = Convert.ToInt32(row.Cells[1].Value.ToString());
-
-                    // Preenche as TextBoxes com os valores da linha selecionada
-                    txtModulo.Text = row.Cells[2].Value.ToString();
-                    cboPermissao.SelectedValue = row.Cells[3].Value.ToString();
-                    cboPermissao.Enabled = true;
-                    cboPermissao.Focus();
-
-                    btnGravar.Enabled = true;
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao tentar selecionar a permissão.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
         private void carregaTelaInicial()
         {
             limpaControles();
-            CarregaComboPermissao();
 
             int codigo = 0; //Código da especialização
             this.populaGridUsuario(codigo, "");
+        }
+
+        private void grdPermissao_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (grdPermissao.IsCurrentCellDirty)
+                grdPermissao.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        }
+
+        private void grdPermissao_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && grdPermissao.Columns[e.ColumnIndex].Name == "Nível")
+            {
+                var idNivel = grdPermissao.Rows[e.RowIndex].Cells["Nível"].Value;
+                var modulo = grdPermissao.Rows[e.RowIndex].Cells["Módulo"].Value;
+            }
         }
     }
 }

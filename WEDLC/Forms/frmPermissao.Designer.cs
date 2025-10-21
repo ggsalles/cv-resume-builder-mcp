@@ -38,10 +38,6 @@
             this.btnGravar = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.grpPermissao = new System.Windows.Forms.GroupBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.cboPermissao = new System.Windows.Forms.ComboBox();
-            this.txtModulo = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.grdPermissao = new System.Windows.Forms.DataGridView();
             this.grdUsuario = new System.Windows.Forms.DataGridView();
             this.grpBoxDados.SuspendLayout();
@@ -105,7 +101,7 @@
             this.grpBotoes.Controls.Add(this.btnLimpar);
             this.grpBotoes.Controls.Add(this.btnGravar);
             this.grpBotoes.Controls.Add(this.btnSair);
-            this.grpBotoes.Location = new System.Drawing.Point(11, 483);
+            this.grpBotoes.Location = new System.Drawing.Point(11, 438);
             this.grpBotoes.Name = "grpBotoes";
             this.grpBotoes.Size = new System.Drawing.Size(502, 49);
             this.grpBotoes.TabIndex = 1;
@@ -150,52 +146,13 @@
             // 
             // grpPermissao
             // 
-            this.grpPermissao.Controls.Add(this.label14);
-            this.grpPermissao.Controls.Add(this.cboPermissao);
-            this.grpPermissao.Controls.Add(this.txtModulo);
-            this.grpPermissao.Controls.Add(this.label1);
             this.grpPermissao.Controls.Add(this.grdPermissao);
             this.grpPermissao.Controls.Add(this.grdUsuario);
             this.grpPermissao.Location = new System.Drawing.Point(12, 73);
             this.grpPermissao.Name = "grpPermissao";
-            this.grpPermissao.Size = new System.Drawing.Size(501, 405);
+            this.grpPermissao.Size = new System.Drawing.Size(501, 363);
             this.grpPermissao.TabIndex = 2;
             this.grpPermissao.TabStop = false;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(304, 357);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(94, 13);
-            this.label14.TabIndex = 35;
-            this.label14.Text = "Tipo da Permissão";
-            // 
-            // cboPermissao
-            // 
-            this.cboPermissao.FormattingEnabled = true;
-            this.cboPermissao.Location = new System.Drawing.Point(304, 373);
-            this.cboPermissao.Name = "cboPermissao";
-            this.cboPermissao.Size = new System.Drawing.Size(187, 21);
-            this.cboPermissao.TabIndex = 34;
-            // 
-            // txtModulo
-            // 
-            this.txtModulo.Enabled = false;
-            this.txtModulo.Location = new System.Drawing.Point(12, 374);
-            this.txtModulo.MaxLength = 10;
-            this.txtModulo.Name = "txtModulo";
-            this.txtModulo.Size = new System.Drawing.Size(286, 20);
-            this.txtModulo.TabIndex = 33;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 358);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Módulo";
             // 
             // grdPermissao
             // 
@@ -204,7 +161,8 @@
             this.grdPermissao.Name = "grdPermissao";
             this.grdPermissao.Size = new System.Drawing.Size(480, 170);
             this.grdPermissao.TabIndex = 31;
-            this.grdPermissao.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdPermissao_CellClick);
+            this.grdPermissao.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdPermissao_CellValueChanged);
+            this.grdPermissao.CurrentCellDirtyStateChanged += new System.EventHandler(this.grdPermissao_CurrentCellDirtyStateChanged);
             // 
             // grdUsuario
             // 
@@ -219,7 +177,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(523, 542);
+            this.ClientSize = new System.Drawing.Size(523, 497);
             this.ControlBox = false;
             this.Controls.Add(this.grpPermissao);
             this.Controls.Add(this.grpBotoes);
@@ -236,7 +194,6 @@
             this.grpBoxDados.PerformLayout();
             this.grpBotoes.ResumeLayout(false);
             this.grpPermissao.ResumeLayout(false);
-            this.grpPermissao.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdPermissao)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdUsuario)).EndInit();
             this.ResumeLayout(false);
@@ -255,10 +212,6 @@
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.Button btnLimpar;
         private System.Windows.Forms.GroupBox grpPermissao;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox cboPermissao;
-        private System.Windows.Forms.TextBox txtModulo;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView grdPermissao;
         private System.Windows.Forms.DataGridView grdUsuario;
     }
