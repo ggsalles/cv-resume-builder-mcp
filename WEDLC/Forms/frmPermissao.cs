@@ -20,8 +20,16 @@ namespace WEDLC.Forms
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
         }
-        private void frmPermissão_Load(object sender, EventArgs e)
+        private void frmPermissao_Load(object sender, EventArgs e)
         {
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
             carregaTelaInicial();
         }
         public void limparTela()
@@ -182,6 +190,12 @@ namespace WEDLC.Forms
         {
             try
             {
+                if (!cPermissao.PodeGravarModulo(codModulo))
+                {
+                    MessageBox.Show("Você não tem permissão para gravar neste módulo","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    return;
+                }
+
                 cPermissao objPermissao = new cPermissao();
 
                 foreach (DataGridViewRow row in grdPermissao.Rows)
@@ -342,6 +356,6 @@ namespace WEDLC.Forms
                 var idNivel = grdPermissao.Rows[e.RowIndex].Cells["Nível"].Value;
                 var modulo = grdPermissao.Rows[e.RowIndex].Cells["Módulo"].Value;
             }
-        }
+        }    
     }
 }

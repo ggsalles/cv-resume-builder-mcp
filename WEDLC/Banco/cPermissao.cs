@@ -2,7 +2,9 @@
 using System;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
+using static WEDLC.Forms.frmLogin;
 
 namespace WEDLC.Banco
 {
@@ -27,6 +29,25 @@ namespace WEDLC.Banco
         // Construtor
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
+
+        // Permissões globais (nível do usuário)
+        public static bool PodeAcessar => Sessao.Nivel != NivelAcesso.NIVEL4_SEMACESSO;
+        public static bool PodeAdministrar => Sessao.Nivel == NivelAcesso.NIVEL1_ADM;
+        public static bool PodeGravar => Sessao.Nivel == NivelAcesso.NIVEL1_ADM || Sessao.Nivel == NivelAcesso.NIVEL2_USUCOMPLETO;
+        public static bool PodeLer => Sessao.Nivel != NivelAcesso.NIVEL4_SEMACESSO;
+
+        // Permissões específicas por módulo (opcional)
+        public static bool PodeGravarModulo(int idModulo)
+        {
+            var perm = Sessao.Permissoes.FirstOrDefault(p => p.IdModulo == idModulo);
+            return perm != null && (perm.Nivel == NivelAcesso.NIVEL1_ADM || perm.Nivel == NivelAcesso.NIVEL2_USUCOMPLETO);
+        }
+
+        public static bool PodeAcessarModulo(int idModulo)
+        {
+            var perm = Sessao.Permissoes.FirstOrDefault(p => p.IdModulo == idModulo);
+            return perm != null && (perm.Nivel != NivelAcesso.NIVEL4_SEMACESSO);
+        }
 
         public bool conectaBanco()
         {

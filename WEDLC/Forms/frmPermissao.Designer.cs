@@ -189,7 +189,7 @@
             this.Name = "frmPermissao";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Permissao";
-            this.Load += new System.EventHandler(this.frmPermissão_Load);
+            this.Load += new System.EventHandler(this.frmPermissao_Load);
             this.grpBoxDados.ResumeLayout(false);
             this.grpBoxDados.PerformLayout();
             this.grpBotoes.ResumeLayout(false);

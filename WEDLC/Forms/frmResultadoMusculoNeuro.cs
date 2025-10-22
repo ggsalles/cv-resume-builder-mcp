@@ -12,6 +12,8 @@ namespace WEDLC.Forms
 {
     public partial class frmResultadoMusculoNeuro : Form
     {
+        public const int codModulo = 16; //Código do módulo
+
         DataTable dadosXML = new DataTable();
 
         // Create a ToolTip component
@@ -47,6 +49,15 @@ namespace WEDLC.Forms
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             //int var = grupoFolha; // Apenas para evitar o aviso de variável não utilizada
             IdResultado = objResultadoAvaliacaoMuscular.IdResultado;
+
+            //Verifica permissão de acesso
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
 
             if (CarregaAvaliacaoMuscular() == false)
             {

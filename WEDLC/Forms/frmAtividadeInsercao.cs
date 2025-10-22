@@ -41,7 +41,16 @@ namespace WEDLC.Forms
 
         private void frmAtividadeInsercao_Load(object sender, EventArgs e)
         {
-            carregaTela();
+            //Verifica permissão de acesso ao módulo
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
+            carregaTela(); //Carrega a tela
 
             // Se a chamada for do formulário de resultado, desabilita o botão novo
             if (VemdeResultado == true)
@@ -256,6 +265,13 @@ namespace WEDLC.Forms
         {
             try
             {
+                //Verifica permissão de gravação no módulo
+                if (!cPermissao.PodeGravarModulo(codModulo))
+                {
+                    MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 cAtividadeInsercao objAtividadeInsercao = new cAtividadeInsercao();
 
                 objAtividadeInsercao.Nome = txtNome.Text;

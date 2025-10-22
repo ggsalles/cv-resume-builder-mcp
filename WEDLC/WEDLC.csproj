@@ -198,6 +198,7 @@
     <Compile Include="Banco\cSequence.cs" />
     <Compile Include="Banco\cSimNao.cs" />
     <Compile Include="Banco\FormZoomHelper.cs" />
+    <Compile Include="Banco\Sessao.cs" />
     <Compile Include="DataSetsReport\dsAvaliacaoMuscular.cs">
       <DependentUpon>dsAvaliacaoMuscular.xsd</DependentUpon>
     </Compile>

@@ -59,6 +59,15 @@ namespace WEDLC.Forms
 
         private void frmPaciente_Load(object sender, EventArgs e)
         {
+            //Verifica permissão de acesso
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
             carregaCombo(); // Carrega os combos 
@@ -1010,6 +1019,13 @@ namespace WEDLC.Forms
         {
             try
             {
+                //Verifica permissão de gravação
+                if (!cPermissao.PodeGravarModulo(codModulo))
+                {
+                    MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 //Valida os campos
                 if (ValidaCampos() == false)
                 {

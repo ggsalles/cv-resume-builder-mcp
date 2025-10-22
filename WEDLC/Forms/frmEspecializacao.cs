@@ -32,6 +32,15 @@ namespace WEDLC.Forms
 
         private void frmEspecializacao_Load(object sender, EventArgs e)
         {
+            //Verifica permissão de acesso
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
             carregaTela();
         }
 
@@ -215,6 +224,15 @@ namespace WEDLC.Forms
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
+            //Verifica permissão de acesso
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
             cEspecializacao objEspecializacao = new cEspecializacao();
 
             objEspecializacao.Nome = txtNome.Text;

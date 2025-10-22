@@ -12,7 +12,7 @@ namespace WEDLC.Forms
     public partial class frmPotenciaisEvocados : Form
     {
         //Código do módulo
-        public const int codModulo = 1;
+        public const int codModulo = 15;
 
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
         public int IdResultado { get; set; }
@@ -52,6 +52,15 @@ namespace WEDLC.Forms
 
         private void frmPotenciaisEvocados_Load(object sender, EventArgs e)
         {
+            //Verifica permissão de acesso
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
             iniciaTela();
@@ -210,6 +219,13 @@ namespace WEDLC.Forms
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
+            //Verifica permissão de gravação
+            if (!cPermissao.PodeGravarModulo(codModulo))
+            {
+                MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 switch ((int)codGrupoFolha)

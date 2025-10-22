@@ -19,6 +19,8 @@ namespace WEDLC.Forms
             NIVEL4_SEMACESSO = 4
         }
 
+        public const int codModulo = 0; //Código do módulo
+
         public frmLogin()
         {
             InitializeComponent();
@@ -82,14 +84,29 @@ namespace WEDLC.Forms
                     return;
                 }
 
-                // Se encontrou, valida a permissão de acesso
-                if (dtAux.Rows.Count > 0)
+                // 2. Popular Sessao
+                Sessao.IdUsuario = Convert.ToInt32(dtAux.Rows[0]["idusuario"].ToString());
+                Sessao.NomeUsuario = dtAux.Rows[0]["nome"].ToString();
+                Sessao.Nivel = (NivelAcesso)Convert.ToInt32(dtAux.Rows[0]["idnivel"].ToString());
+
+                // 4. Popular lista de permissões por módulo
+                Sessao.Permissoes.Clear();
+                foreach (DataRow row in dtAux.Rows)
                 {
-                    if (Convert.ToInt32(dtAux.Rows[0]["idnivel"].ToString()) == (Int32)NivelAcesso.NIVEL4_SEMACESSO)
+                    Sessao.Permissoes.Add(new PermissaoModulo
                     {
-                        MessageBox.Show("Você não tem permissão de acesso.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                        IdModulo = Convert.ToInt32(row["idmodulo"]),
+                        NomeModulo = row["descmodulo"].ToString(),
+                        Nivel = (NivelAcesso)Convert.ToInt32(row["idnivel"])
+                    });
+                }
+
+                // 5. Verificar se usuário pode logar
+                if (!cPermissao.PodeAcessarModulo(codModulo))
+                {
+                    MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                    return;
                 }
 
                 // Se encontrou e for troca de senha...

@@ -9,6 +9,8 @@ namespace WEDLC.Forms
 {
     public partial class frmRelResultadoMusculoNeuro : Form
     {
+        public const int codModulo = 17; //Código do módulo
+
         public Int32 pIdPaciente { get; set; }
         public Int32 pIdFolha { get; set; }
         public string pSigla { get; set; }
@@ -29,6 +31,15 @@ namespace WEDLC.Forms
 
         private void frmRelResultadoMusculoNeuro_Load(object sender, EventArgs e)
         {
+            //Verifica permissão de acesso
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
             try
             {
                 // Pergunta ao usuário

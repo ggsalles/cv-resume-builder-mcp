@@ -72,6 +72,15 @@ namespace WEDLC.Forms
 
         private void frmResultado_Load(object sender, EventArgs e)
         {
+            //Verifica permissão de acesso
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
             // Configurações iniciais do formulário, se necessário
             this.DoubleBuffered = true;
             btnLimpar_Click(sender, e); //Simula o clique no botão cancelar   

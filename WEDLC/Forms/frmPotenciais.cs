@@ -41,6 +41,15 @@ namespace WEDLC.Forms
 
         private void frmPotenciais_Load(object sender, EventArgs e)
         {
+            //Verifica permissão de acesso
+            if (!cPermissao.PodeAcessarModulo(codModulo))
+            {
+                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Fecha de forma segura depois que o handle estiver pronto
+                this.BeginInvoke(new Action(() => this.Close()));
+                return;
+            }
+
             carregaTela();
 
             // Se a chamada for do formulário de resultado, desabilita o botão novo
@@ -255,6 +264,13 @@ namespace WEDLC.Forms
         {
             try
             {
+                //Verifica permissão de gravação
+                if (!cPermissao.PodeGravarModulo(codModulo))
+                {
+                    MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 cPotenciais objPotenciais = new cPotenciais();
 
                 objPotenciais.Nome = txtNome.Text;
