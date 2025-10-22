@@ -19,6 +19,7 @@ namespace WEDLC.Forms
             InitializeComponent();
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
         private void frmPermissao_Load(object sender, EventArgs e)
         {
@@ -31,6 +32,13 @@ namespace WEDLC.Forms
             }
 
             carregaTelaInicial();
+
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
         public void limparTela()
         {
@@ -224,11 +232,26 @@ namespace WEDLC.Forms
                 }
 
                 MessageBox.Show("Atualização efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 carregaTelaInicial();
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name;
+                objcLog.incluiLog();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao gravar permissões: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;
+                objcLog.incluiLog();
             }
 
         }

@@ -39,12 +39,11 @@ namespace WEDLC.Forms
             toolTip1.ShowAlways = true; // Sempre mostrar o ToolTip
 
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
 
         private void frmResultadoMusculoNeuro_Load(object sender, EventArgs e)
         {
-            // Configurações iniciais do formulário, se necessário
-            this.DoubleBuffered = true;
             this.Text = "Folha: " + objResultadoAvaliacaoMuscular.Sigla.ToString() + " - " + objResultadoAvaliacaoMuscular.Nome.ToString();
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             //int var = grupoFolha; // Apenas para evitar o aviso de variável não utilizada
@@ -93,6 +92,13 @@ namespace WEDLC.Forms
             {
                 return;
             }
+
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
 
         private void btnSair_Click(object sender, EventArgs e)
@@ -667,10 +673,22 @@ namespace WEDLC.Forms
 
                     Close();
 
+                    // GRAVA LOG
+                    clLog objcLog = new clLog();
+                    objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                    objcLog.IdUsuario = Sessao.IdUsuario;
+                    objcLog.Descricao = this.Name;
+                    objcLog.incluiLog();
+
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    // GRAVA LOG
+                    clLog objcLog = new clLog();
+                    objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                    objcLog.IdUsuario = Sessao.IdUsuario;
+                    objcLog.Descricao = this.Name + " - " + ex.Message;
+                    objcLog.incluiLog();
                 }
             }
         }

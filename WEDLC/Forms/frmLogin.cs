@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySqlX.XDevAPI;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
@@ -172,9 +173,9 @@ namespace WEDLC.Forms
                     // GRAVA LOG
                     objclLog.IdLogDescricao = 1; // descrição LOGIN na tabela LOGDESCRICAO
                     objclLog.IdUsuario = Int32.Parse(dtAux.Rows[0]["idusuario"].ToString());
-                    objclLog.DescErro = "";
+                    objclLog.Descricao = this.Name;
 
-                    if (objclLog.incluiLogin() == false)
+                    if (objclLog.incluiLog() == false)
                     {
                         // Se não conseguiu gravar o log, exibe mensagem de erro
                         MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -207,10 +208,10 @@ namespace WEDLC.Forms
                 // GRAVA LOG
                 clLog objclLog = new clLog();
                 objclLog.IdLogDescricao = 3; // descrição GENÉRICO na tabela LOGDESCRICAO
-                objclLog.IdUsuario = 9999;
-                objclLog.DescErro = ex.Message.ToString();
+                objclLog.IdUsuario = Sessao.IdUsuario;
+                objclLog.Descricao = ex.Message.ToString();
 
-                if (objclLog.incluiLogin() == false)
+                if (objclLog.incluiLog() == false)
                 {
                     MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

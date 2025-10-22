@@ -143,6 +143,7 @@
             this.Name = "frmTrocaSenha";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Troca Senha";
+            this.Load += new System.EventHandler(this.frmTrocaSenha_Load);
             this.Shown += new System.EventHandler(this.frmTrocaSenha_Shown);
             this.grpLogin.ResumeLayout(false);
             this.grpLogin.PerformLayout();

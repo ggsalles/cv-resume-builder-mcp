@@ -52,6 +52,7 @@ namespace WEDLC.Forms
 
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
 
         private void frmPaciente_Load(object sender, EventArgs e)
@@ -65,9 +66,15 @@ namespace WEDLC.Forms
                 return;
             }
 
-            // Configurações iniciais do formulário, se necessário
-            this.DoubleBuffered = true;
             this.CarregaComboClasse();
+
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
+
         }
 
         private async void txtCep_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -775,58 +782,16 @@ namespace WEDLC.Forms
 
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            //Verifica permissão de gravação
-            if (!cPermissao.PodeGravarModulo(codModulo))
+            try
             {
-                MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (cAcao == Acao.INSERT)
-            {
-                if (ValidaCampos() == true)
+                //Verifica permissão de gravação
+                if (!cPermissao.PodeGravarModulo(codModulo))
                 {
-                    // Verifica se os campos estão preenchidos corretamente
-                    if (PopularCampos(out cMedico objMedico) == false)
-                    {
-                        MessageBox.Show("Erro ao tentar popular os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    // sequence
-                    Int32 sequence = 0;
-
-                    // Atualiza a especialização do médico
-                    if (objMedico.incluiMedico(objMedico, out sequence) == true)
-                    {
-                        foreach (DataRow row in dtGrdEspecialidade.Rows)
-                        {
-                            // Acessar os valores das colunas
-                            objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
-                            objMedico.IdMedico = sequence; // Atribui o ID do médico recém-criado
-
-                            // Atualiza a especialização do médico
-                            if (objMedico.incluiEspecialidadeMedico(objMedico) == false)
-                            {
-                                MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-
-                        MessageBox.Show("Inclusão efetuada com sucesso!. Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                        return;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-            }
-            else
-            {
-                if (cAcao == Acao.UPDATE)
+
+                if (cAcao == Acao.INSERT)
                 {
                     if (ValidaCampos() == true)
                     {
@@ -836,43 +801,104 @@ namespace WEDLC.Forms
                             MessageBox.Show("Erro ao tentar popular os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        // limpa o contador
-                        int contador = 0;
 
-                        foreach (DataRow row in dtGrdEspecialidade.Rows)
+                        // sequence
+                        Int32 sequence = 0;
+
+                        // Atualiza a especialização do médico
+                        if (objMedico.incluiMedico(objMedico, out sequence) == true)
                         {
+                            foreach (DataRow row in dtGrdEspecialidade.Rows)
+                            {
+                                // Acessar os valores das colunas
+                                objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
+                                objMedico.IdMedico = sequence; // Atribui o ID do médico recém-criado
 
-                            // Acessar os valores das colunas
-                            objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
+                                // Atualiza a especialização do médico
+                                if (objMedico.incluiEspecialidadeMedico(objMedico) == false)
+                                {
+                                    MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
 
-                            //Se for a primeira linha do loop da especialidade, o sistema entende que é necesseário apagar a tabela de especializacao do medico
-                            if (contador == 0)
-                            {
-                                objMedico.Apaga = true;
-                            }
-                            //Se não... apagar não é necessário
-                            else
-                            {
-                                objMedico.Apaga = false;
-                            }
-                            // Atualiza a especialização do médico
-                            if (objMedico.atualizaMedico() == true)
-                            {
-                                //incrementa contador
-                                contador++;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Erro ao tentar atualizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
+                            MessageBox.Show("Inclusão efetuada com sucesso!. Código gerado: " + sequence, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                            return;
                         }
-
-                        MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
-                        return;
+                        else
+                        {
+                            MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
                 }
+                else
+                {
+                    if (cAcao == Acao.UPDATE)
+                    {
+                        if (ValidaCampos() == true)
+                        {
+                            // Verifica se os campos estão preenchidos corretamente
+                            if (PopularCampos(out cMedico objMedico) == false)
+                            {
+                                MessageBox.Show("Erro ao tentar popular os campos!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                            // limpa o contador
+                            int contador = 0;
+
+                            foreach (DataRow row in dtGrdEspecialidade.Rows)
+                            {
+
+                                // Acessar os valores das colunas
+                                objMedico.IdEspecializacao = int.Parse(row["idespecializacao"].ToString());
+
+                                //Se for a primeira linha do loop da especialidade, o sistema entende que é necesseário apagar a tabela de especializacao do medico
+                                if (contador == 0)
+                                {
+                                    objMedico.Apaga = true;
+                                }
+                                //Se não... apagar não é necessário
+                                else
+                                {
+                                    objMedico.Apaga = false;
+                                }
+                                // Atualiza a especialização do médico
+                                if (objMedico.atualizaMedico() == true)
+                                {
+                                    //incrementa contador
+                                    contador++;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Erro ao tentar atualizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+
+                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            btnCancelar_Click(sender, e); // Chama o método de cancelar para limpar os campos e voltar ao estado inicial    
+                            return;
+                        }
+                    }
+                }
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name;
+                objcLog.incluiLog();
+            }
+            catch (Exception ex)
+            {
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;   
+                objcLog.incluiLog();
             }
         }
 

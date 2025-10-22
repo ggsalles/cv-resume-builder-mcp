@@ -55,6 +55,7 @@ namespace WEDLC.Forms
 
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
 
         private void frmPaciente_Load(object sender, EventArgs e)
@@ -68,11 +69,15 @@ namespace WEDLC.Forms
                 return;
             }
 
-            // Configurações iniciais do formulário, se necessário
-            this.DoubleBuffered = true;
             carregaCombo(); // Carrega os combos 
             btnCancelar_Click(sender, e); //Simula o clique no botão cancelar   
 
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
 
         private async void txtCep_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1060,11 +1065,25 @@ namespace WEDLC.Forms
                         throw; // Re-lança a exceção para o TransactionScope fazer rollback
                     }
                 }
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name;
+                objcLog.incluiLog();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao tentar gravar o paciente: " + ex.Message,
                                "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;
+                objcLog.incluiLog();
             }
         }
 

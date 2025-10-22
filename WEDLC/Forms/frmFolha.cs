@@ -39,6 +39,7 @@ namespace WEDLC.Forms
             InitializeComponent();
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
 
         private void frmFolha_Load(object sender, EventArgs e)
@@ -53,9 +54,15 @@ namespace WEDLC.Forms
             }
 
             // Configurações iniciais do formulário, se necessário
-            this.DoubleBuffered = true;
             carregaCombo();
             carregaTela();
+
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
         public void carregaTela()
         {
@@ -314,99 +321,116 @@ namespace WEDLC.Forms
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            //Verifica permissão de gravação
-            if (!cPermissao.PodeGravarModulo(codModulo))
+            try
             {
-                MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            //Valida campos
-            if (validaCampos() == true)
-            {
-                Int32 ultimoIdFolha = 0; // Inicializa o ID da folha
-                cFolha objFolha = new cFolha();
-
-                objFolha.Sigla = txtSigla.Text;
-                objFolha.Nome = txtNome.Text;
-                objFolha.IdTipoFolha = int.Parse(cboTipo.SelectedValue.ToString());
-                objFolha.IdGrupoFolha = int.Parse(cboGrupo.SelectedValue.ToString());
-
-                if (cAcao == Acao.INSERT)
+                //Verifica permissão de gravação
+                if (!cPermissao.PodeGravarModulo(codModulo))
                 {
-                    if (objFolha.incluiFolha(objFolha, out ultimoIdFolha))
-                    {
-                        MessageBox.Show("Folha " + ultimoIdFolha + " foi incluida com sucesso! ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        if (cboTipo.SelectedIndex == 1) //ENMG
-                        {
-                            cTestesEspeciais objTestesEspeciais = new cTestesEspeciais();
-
-                            objTestesEspeciais.IdFolha = ultimoIdFolha;
-                            objTestesEspeciais.blinkreflex = cboSimNaoBlink.SelectedIndex == 0 ? 1 : 2;
-                            objTestesEspeciais.rbc = cboSimNaoRBC.SelectedIndex == 0 ? 1 : 2;
-                            objTestesEspeciais.reflexoh = cboSimNaoReflexo.SelectedIndex == 0 ? 1 : 2;
-                            objTestesEspeciais.nspd = cboSimNaoNSPD.SelectedIndex == 0 ? 1 : 2;
-                            objTestesEspeciais.IncluiTestesEspeciais();
-
-                        }
-
-                        txtCodigo.Text = ultimoIdFolha.ToString(); // Atualiza o campo de código com o ID da nova folha
-                        carregaTela(); // Recarrega a tela para mostrar a nova folha incluída
-                        cAcao = Acao.SAVE; // Muda a ação para SAVE após inclusão bem-sucedida
-                        controlaBotao(); // Atualiza os botões para o estado de SAVE
-                        grdDados.Enabled = true; // Habilita o grid de dados
-                        btnComplemento.Enabled = true; // Habilita o botão de complemento
-                        btnComplemento_Click(sender, e); // Chama o evento de complemento para carregar os dados adicionais
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else if (cAcao == Acao.UPDATE)
-                {
-                    objFolha.IdFolha = int.Parse(txtCodigo.Text);
 
-                    //Solicita a confirmação do usuário para alteração
-                    if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                //Valida campos
+                if (validaCampos() == true)
+                {
+                    Int32 ultimoIdFolha = 0; // Inicializa o ID da folha
+                    cFolha objFolha = new cFolha();
+
+                    objFolha.Sigla = txtSigla.Text;
+                    objFolha.Nome = txtNome.Text;
+                    objFolha.IdTipoFolha = int.Parse(cboTipo.SelectedValue.ToString());
+                    objFolha.IdGrupoFolha = int.Parse(cboGrupo.SelectedValue.ToString());
+
+                    if (cAcao == Acao.INSERT)
                     {
-                        if (objFolha.atualizaFolha() == true)
+                        if (objFolha.incluiFolha(objFolha, out ultimoIdFolha))
                         {
-                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Folha " + ultimoIdFolha + " foi incluida com sucesso! ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            if (cboTipo.SelectedIndex == 1) //ENMG
+                            {
+                                cTestesEspeciais objTestesEspeciais = new cTestesEspeciais();
+
+                                objTestesEspeciais.IdFolha = ultimoIdFolha;
+                                objTestesEspeciais.blinkreflex = cboSimNaoBlink.SelectedIndex == 0 ? 1 : 2;
+                                objTestesEspeciais.rbc = cboSimNaoRBC.SelectedIndex == 0 ? 1 : 2;
+                                objTestesEspeciais.reflexoh = cboSimNaoReflexo.SelectedIndex == 0 ? 1 : 2;
+                                objTestesEspeciais.nspd = cboSimNaoNSPD.SelectedIndex == 0 ? 1 : 2;
+                                objTestesEspeciais.IncluiTestesEspeciais();
+
+                            }
+
+                            txtCodigo.Text = ultimoIdFolha.ToString(); // Atualiza o campo de código com o ID da nova folha
+                            carregaTela(); // Recarrega a tela para mostrar a nova folha incluída
+                            cAcao = Acao.SAVE; // Muda a ação para SAVE após inclusão bem-sucedida
+                            controlaBotao(); // Atualiza os botões para o estado de SAVE
+                            grdDados.Enabled = true; // Habilita o grid de dados
+                            btnComplemento.Enabled = true; // Habilita o botão de complemento
+                            btnComplemento_Click(sender, e); // Chama o evento de complemento para carregar os dados adicionais
+
                         }
                         else
                         {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        btnCancelar_Click(sender, e);
                     }
-                }
-                else if (cAcao == Acao.DELETE)
-                {
-                    objFolha.IdFolha = int.Parse(txtCodigo.Text);
+                    else if (cAcao == Acao.UPDATE)
+                    {
+                        objFolha.IdFolha = int.Parse(txtCodigo.Text);
 
-                    ////Solicita a confirmação do usuário para alteração
-                    //if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    //{
-                    //    if (objEspecializacao.excluiEspecializacao() == true)
-                    //    {
-                    //        MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //        return;
-                    //    }
-                    //}
-                }
+                        //Solicita a confirmação do usuário para alteração
+                        if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            if (objFolha.atualizaFolha() == true)
+                            {
+                                MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                            btnCancelar_Click(sender, e);
+                        }
+                    }
+                    else if (cAcao == Acao.DELETE)
+                    {
+                        objFolha.IdFolha = int.Parse(txtCodigo.Text);
 
-                //Chama o evento cancelar
-                //btnCancelar_Click(sender, e);
+                        ////Solicita a confirmação do usuário para alteração
+                        //if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        //{
+                        //    if (objEspecializacao.excluiEspecializacao() == true)
+                        //    {
+                        //        MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //    }
+                        //    else
+                        //    {
+                        //        MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //        return;
+                        //    }
+                        //}
+                    }
+
+                    // GRAVA LOG
+                    clLog objcLog = new clLog();
+                    objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                    objcLog.IdUsuario = Sessao.IdUsuario;
+                    objcLog.Descricao = this.Name;
+                    objcLog.incluiLog();
+                }
             }
+            catch (Exception ex)
+            {
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;
+                objcLog.incluiLog();
+            }
+
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -458,7 +482,7 @@ namespace WEDLC.Forms
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
             //Determina a acao
-            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT && cAcao != Acao.COMPLEMENTO)   
+            if (cAcao != Acao.UPDATE && cAcao != Acao.INSERT && cAcao != Acao.COMPLEMENTO)
             {
                 int tipopesquisa = 0; //Código que retorna todo select   
                 int idespecializacao = 0; //Código da especialização
@@ -1288,7 +1312,7 @@ namespace WEDLC.Forms
                 grpNeuroCondSensorial.Enabled = false; // Habilita o grupo de neuro condução sensorial
                 grpEstudoPotenEvocado.Enabled = false; // Desabilita o grupo de estudo potencial
                 btnComplemento.Enabled = true;
-                MessageBox.Show("Para este tipo de folha, não existe complemento.","Aviso",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Para este tipo de folha, não existe complemento.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 

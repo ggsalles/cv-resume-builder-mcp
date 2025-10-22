@@ -11,7 +11,7 @@ namespace WEDLC.Banco
         public int IdLogDescricao { get; set; }
         public string DataLog { get; set; }
         public int IdUsuario { get; set; }
-        public string DescErro { get; set; }
+        public string Descricao { get; set; }
 
         GerenciadorConexaoMySQL objcConexao = new GerenciadorConexaoMySQL();
         MySqlConnection conexao = new MySqlConnection();
@@ -30,7 +30,7 @@ namespace WEDLC.Banco
             }
         }
 
-        public bool incluiLogin()
+        public bool incluiLog()
         {
             try
             {
@@ -56,8 +56,7 @@ namespace WEDLC.Banco
                     {
                         new MySqlParameter("pIdLogDescricao", MySqlDbType.Int32) { Value = IdLogDescricao },
                         new MySqlParameter("pIdUsuario", MySqlDbType.Int32) { Value = IdUsuario },
-                        new MySqlParameter("pDescErro", MySqlDbType.VarChar) { Value = DescErro },
-                        new MySqlParameter("pDataLog", MySqlDbType.DateTime) { Value = DataLog }
+                        new MySqlParameter("pDesc", MySqlDbType.VarChar) { Value = Descricao },
                     });
 
                     int affectedRows = command.ExecuteNonQuery();

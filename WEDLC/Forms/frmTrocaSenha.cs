@@ -56,15 +56,11 @@ namespace WEDLC.Forms
                     }
 
                     // GRAVA LOG
-                    clLog objclLog = new clLog();
-                    objclLog.IdLogDescricao = 2; // descrição LOGIN na tabela LOGDESCRICAO
-                    objclLog.IdUsuario = objCllogin.Idusuario;
-                    objclLog.DescErro = "";
-
-                    if (objclLog.incluiLogin() == false)
-                    {
-                        MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    clLog objcLog = new clLog();
+                    objcLog.IdLogDescricao = 2; // descrição na tabela LOGDESCRICAO 
+                    objcLog.IdUsuario = Sessao.IdUsuario;
+                    objcLog.Descricao = this.Name;
+                    objcLog.incluiLog();
 
                     Close();
                 }
@@ -76,10 +72,10 @@ namespace WEDLC.Forms
                 // GRAVA LOG
                 clLog objclLog = new clLog();
                 objclLog.IdLogDescricao = 3; // descrição GENÉRICO na tabela LOGDESCRICAO
-                objclLog.IdUsuario = 9999;
-                objclLog.DescErro = ex.Message.ToString();
+                objclLog.IdUsuario = Sessao.IdUsuario;
+                objclLog.Descricao = ex.Message.ToString();
 
-                if (objclLog.incluiLogin() == false)
+                if (objclLog.incluiLog() == false)
                 {
                     MessageBox.Show("Erro ao tentar gravar o log!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -111,6 +107,16 @@ namespace WEDLC.Forms
         private void frmTrocaSenha_Shown(object sender, EventArgs e)
         {
             txtNovaSenha.Focus();
+        }
+
+        private void frmTrocaSenha_Load(object sender, EventArgs e)
+        {
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
     }
 }

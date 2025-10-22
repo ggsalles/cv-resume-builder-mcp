@@ -29,6 +29,7 @@ namespace WEDLC.Forms
             InitializeComponent();
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
 
         private void frmNervo_Load(object sender, EventArgs e)
@@ -43,6 +44,13 @@ namespace WEDLC.Forms
             }
 
             carregaTela();
+
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
 
         public void carregaTela()
@@ -168,7 +176,6 @@ namespace WEDLC.Forms
             dt.Columns["normncs"].ColumnName = "Nome NCS";
             grdDados.DataSource = dt;
             this.configuraGrid();
-
         }
 
         public bool validaCampos()
@@ -229,80 +236,100 @@ namespace WEDLC.Forms
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            //Verifica permissão de gravação
-            if (!cPermissao.PodeGravarModulo(codModulo))
+            try
             {
-                MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                //Verifica permissão de gravação
+                if (!cPermissao.PodeGravarModulo(codModulo))
+                {
+                    MessageBox.Show("Você não tem permissão para gravar neste módulo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                cNervo objNervo = new cNervo();
+
+                objNervo.Nome = txtNome.Text;
+                objNervo.Sigla = txtSigla.Text;
+                objNervo.NormLmd = txtNormLmd.Text;
+                objNervo.NormNcm = txtNormNcm.Text;
+                objNervo.NormNcs = txtNormNcs.Text;
+
+                //Valida campos
+                if (validaCampos() == true)
+                {
+                    if (cAcao == Acao.INSERT)
+                    {
+                        if (objNervo.incluiNervo() == true)
+                        {
+                            MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+
+                        }
+                    }
+                    else if (cAcao == Acao.UPDATE)
+                    {
+                        objNervo.IdNervo = int.Parse(txtCodigo.Text);
+
+                        //Solicita a confirmação do usuário para alteração
+                        if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            if (objNervo.AtualizaNervo() == true)
+                            {
+                                MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+                        }
+                    }
+                    else if (cAcao == Acao.DELETE)
+                    {
+                        objNervo.IdNervo = int.Parse(txtCodigo.Text);
+
+                        //Solicita a confirmação do usuário para alteração
+                        if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            if (objNervo.ExcluiNervo() == true)
+                            {
+                                MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                    }
+
+                    //Chama o evento cancelar
+                    btnCancelar_Click(sender, e);
+
+                    // GRAVA LOG
+                    clLog objcLog = new clLog();
+                    objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                    objcLog.IdUsuario = Sessao.IdUsuario;
+                    objcLog.Descricao = this.Name;
+                    objcLog.incluiLog();
+                }
             }
-
-            cNervo objNervo = new cNervo();
-
-            objNervo.Nome = txtNome.Text;
-            objNervo.Sigla = txtSigla.Text;
-            objNervo.NormLmd = txtNormLmd.Text;
-            objNervo.NormNcm = txtNormNcm.Text;
-            objNervo.NormNcs = txtNormNcs.Text;
-
-            //Valida campos
-            if (validaCampos() == true)
+            catch (Exception ex)
             {
-                if (cAcao == Acao.INSERT)
-                {
-                    if (objNervo.incluiNervo() == true)
-                    {
-                        MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-
-                    }
-                }
-                else if (cAcao == Acao.UPDATE)
-                {
-                    objNervo.IdNervo = int.Parse(txtCodigo.Text);
-
-                    //Solicita a confirmação do usuário para alteração
-                    if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        if (objNervo.AtualizaNervo() == true)
-                        {
-                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-
-                    }
-                }
-                else if (cAcao == Acao.DELETE)
-                {
-                    objNervo.IdNervo = int.Parse(txtCodigo.Text);
-
-                    //Solicita a confirmação do usuário para alteração
-                    if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        if (objNervo.ExcluiNervo() == true)
-                        {
-                            MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
-                }
-
-                //Chama o evento cancelar
-                btnCancelar_Click(sender, e);
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;
+                objcLog.incluiLog();
             }
         }
+
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             //Determina a acao

@@ -27,6 +27,7 @@ namespace WEDLC.Forms
             InitializeComponent();
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
         private void frmMusculo_Load(object sender, EventArgs e)
         {
@@ -40,7 +41,15 @@ namespace WEDLC.Forms
             }
 
             carregaTela();
+
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
+
         public void carregaTela()
         {
             try
@@ -298,11 +307,25 @@ namespace WEDLC.Forms
 
                     //Chama o evento cancelar
                     btnCancelar_Click(sender, e);
+
+                    // GRAVA LOG
+                    clLog objcLog = new clLog();
+                    objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                    objcLog.IdUsuario = Sessao.IdUsuario;
+                    objcLog.Descricao = this.Name;
+                    objcLog.incluiLog();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show("Erro ao tentar gravar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;
+                objcLog.incluiLog();
             }
 
         }

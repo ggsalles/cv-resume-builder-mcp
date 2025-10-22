@@ -48,6 +48,7 @@ namespace WEDLC.Forms
         {
             InitializeComponent();
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
 
         private void frmPotenciaisEvocados_Load(object sender, EventArgs e)
@@ -61,11 +62,16 @@ namespace WEDLC.Forms
                 return;
             }
 
-            // Configurações iniciais do formulário, se necessário
-            this.DoubleBuffered = true;
             iniciaTela();
             this.Text = "Folha: " + sigla + " - " + nome;
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
+
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
 
         private void frmPotenciaisEvocados_Shown(object sender, EventArgs e)
@@ -441,10 +447,24 @@ namespace WEDLC.Forms
 
                         break;
                 }
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name;
+                objcLog.incluiLog();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show("Erro ao tentar gravar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;
+                objcLog.incluiLog();
             }
         }
         private void btnSair_Click(object sender, EventArgs e)

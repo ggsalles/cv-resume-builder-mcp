@@ -28,6 +28,7 @@ namespace WEDLC.Forms
             InitializeComponent();
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
 
         private void frmEspecializacao_Load(object sender, EventArgs e)
@@ -42,6 +43,13 @@ namespace WEDLC.Forms
             }
 
             carregaTela();
+
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
 
         public void carregaTela()
@@ -224,78 +232,96 @@ namespace WEDLC.Forms
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            //Verifica permissão de acesso
-            if (!cPermissao.PodeAcessarModulo(codModulo))
+            try
             {
-                MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // Fecha de forma segura depois que o handle estiver pronto
-                this.BeginInvoke(new Action(() => this.Close()));
-                return;
-            }
-
-            cEspecializacao objEspecializacao = new cEspecializacao();
-
-            objEspecializacao.Nome = txtNome.Text;
-            objEspecializacao.Sigla = txtSigla.Text;
-
-            //Valida campos
-            if (validaCampos() == true)
-            {
-                if (cAcao == Acao.INSERT)
+                //Verifica permissão de acesso
+                if (!cPermissao.PodeAcessarModulo(codModulo))
                 {
-                    if (objEspecializacao.incluiEspecialidade() == true)
-                    {
-                        MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-
-                    }
+                    MessageBox.Show("Usuário sem acesso", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Fecha de forma segura depois que o handle estiver pronto
+                    this.BeginInvoke(new Action(() => this.Close()));
+                    return;
                 }
-                else if (cAcao == Acao.UPDATE)
-                {
-                    objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
 
-                    //Solicita a confirmação do usuário para alteração
-                    if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                cEspecializacao objEspecializacao = new cEspecializacao();
+
+                objEspecializacao.Nome = txtNome.Text;
+                objEspecializacao.Sigla = txtSigla.Text;
+
+                //Valida campos
+                if (validaCampos() == true)
+                {
+                    if (cAcao == Acao.INSERT)
                     {
-                        if (objEspecializacao.atualizaEspecializacao() == true)
+                        if (objEspecializacao.incluiEspecialidade() == true)
                         {
-                            MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Inclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Erro ao tentar incluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-
                     }
-                }
-                else if (cAcao == Acao.DELETE)
-                {
-                    objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
-
-                    //Solicita a confirmação do usuário para alteração
-                    if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    else if (cAcao == Acao.UPDATE)
                     {
-                        if (objEspecializacao.excluiEspecializacao() == true)
+                        objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
+
+                        //Solicita a confirmação do usuário para alteração
+                        if (MessageBox.Show("Tem certeza que deseja alterar este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
+                            if (objEspecializacao.atualizaEspecializacao() == true)
+                            {
+                                MessageBox.Show("Alteração efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
                         }
                     }
-                }
+                    else if (cAcao == Acao.DELETE)
+                    {
+                        objEspecializacao.IdEspecializacao = int.Parse(txtCodigo.Text);
 
-                //Chama o evento cancelar
-                btnCancelar_Click(sender, e);
+                        //Solicita a confirmação do usuário para alteração
+                        if (MessageBox.Show("Tem certeza que deseja excluir este dado?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            if (objEspecializacao.excluiEspecializacao() == true)
+                            {
+                                MessageBox.Show("Exclusão efetuada com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao tentar atualilzar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                    }
+
+                    //Chama o evento cancelar
+                    btnCancelar_Click(sender, e);
+
+                    // GRAVA LOG
+                    clLog objcLog = new clLog();
+                    objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                    objcLog.IdUsuario = Sessao.IdUsuario;
+                    objcLog.Descricao = this.Name;
+                    objcLog.incluiLog();
+                }
             }
+            catch (Exception ex)
+            {
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;
+                objcLog.incluiLog();
+            }
+            
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {

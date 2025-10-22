@@ -68,6 +68,7 @@ namespace WEDLC.Forms
 
             zoomHelper = new FormZoomHelper(this); // Inicializa o helper de zoom
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
+            this.DoubleBuffered = true;
         }
 
         private void frmResultado_Load(object sender, EventArgs e)
@@ -81,11 +82,16 @@ namespace WEDLC.Forms
                 return;
             }
 
-            // Configurações iniciais do formulário, se necessário
-            this.DoubleBuffered = true;
             btnLimpar_Click(sender, e); //Simula o clique no botão cancelar   
 
+            // GRAVA LOG
+            clLog objcLog = new clLog();
+            objcLog.IdLogDescricao = 4; // descrição na tabela LOGDESCRICAO 
+            objcLog.IdUsuario = Sessao.IdUsuario;
+            objcLog.Descricao = this.Name;
+            objcLog.incluiLog();
         }
+
         private void btnSair_Click(object sender, EventArgs e)
         {
             Close();

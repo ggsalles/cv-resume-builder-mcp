@@ -120,6 +120,13 @@ namespace WEDLC.Forms
 
                 // Restaura o cursor normal
                 Cursor.Current = Cursors.Default;
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name;
+                objcLog.incluiLog();
             }
             catch (Exception ex)
             {
@@ -128,6 +135,13 @@ namespace WEDLC.Forms
                                 "Atenção",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
+
+                // GRAVA LOG
+                clLog objcLog = new clLog();
+                objcLog.IdLogDescricao = 3; // descrição na tabela LOGDESCRICAO 
+                objcLog.IdUsuario = Sessao.IdUsuario;
+                objcLog.Descricao = this.Name + " - " + ex.Message;
+                objcLog.incluiLog();
             }
         }
 
