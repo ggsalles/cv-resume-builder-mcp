@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WEDLC.Banco;
@@ -9,7 +11,19 @@ using WEDLC.Banco;
 namespace WEDLC.Forms
 {
     public partial class frmPrincipal : Form
+
     {
+        private Timer timerInatividade;
+        private const int LIMITE_INATIVIDADE_SEGUNDOS = 60; // total
+        private const int AVISO_SEGUNDOS = 30; // antes do fechamento
+        private const int TEMPO_CONFIRMACAO_SEGUNDOS = 15; // tempo limite para confirmar
+
+        private Label lblAviso;
+        private Label lblDebug;
+        private bool avisoExibido = false;
+        private bool caixaAberta = false;
+
+
         // Step 2: Update the constructor to await ObterIPExterno and set ip
         public frmPrincipal(string pUsuario, string pSenha)
         {
@@ -31,7 +45,110 @@ namespace WEDLC.Forms
                 this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac + " || Versão: " + version;
             }
             SetFormTextAsync();
+
+            lblAviso = new Label
+            {
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.FromArgb(200, Color.Yellow),
+                ForeColor = Color.Black,
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                Dock = DockStyle.Top,
+                Height = 40,
+                Visible = false
+            };
+            Controls.Add(lblAviso);
+
+            lblDebug = new Label
+            {
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleLeft,
+                BackColor = Color.FromArgb(220, Color.LightGray),
+                ForeColor = Color.Black,
+                Font = new Font("Segoe UI", 9),
+                Dock = DockStyle.Bottom,
+                Height = 24
+            };
+            Controls.Add(lblDebug);
+
+            timerInatividade = new Timer();
+            timerInatividade.Interval = 1000;
+            timerInatividade.Tick += TimerInatividade_Tick;
+            timerInatividade.Start();
         }
+
+        private void TimerInatividade_Tick(object sender, EventArgs e)
+        {
+            int segundosInativo = GetIdleTime() / 1000;
+            int tempoRestante = LIMITE_INATIVIDADE_SEGUNDOS - segundosInativo;
+
+            lblDebug.Text = $"Inativo: {segundosInativo}s | Restante: {tempoRestante}s";
+
+            if (!avisoExibido && tempoRestante <= AVISO_SEGUNDOS && tempoRestante > 0)
+            {
+                avisoExibido = true;
+                lblAviso.Visible = true;
+            }
+
+            if (avisoExibido)
+            {
+                lblAviso.Text = $"Atenção: O aplicativo será encerrado em {tempoRestante} segundos por inatividade.";
+            }
+
+            if (tempoRestante <= 0 && !caixaAberta)
+            {
+                caixaAberta = true;
+                timerInatividade.Stop();
+                MostrarCaixaConfirmacao();
+            }
+        }
+        private void MostrarCaixaConfirmacao()
+        {
+            using (var frm = new frmConfirmacaoSessao(TEMPO_CONFIRMACAO_SEGUNDOS))
+            {
+                var resultado = frm.ShowDialog();
+
+                if (frm.ContinuarSessao && resultado == DialogResult.OK)
+                {
+                    // Usuário optou por continuar
+                    avisoExibido = false;
+                    caixaAberta = false;
+                    lblAviso.Visible = false;
+                    timerInatividade.Start();
+                }
+                else
+                {
+                    // Usuário não respondeu ou deixou o tempo acabar
+                    Application.Exit();
+                }
+            }
+        }
+
+
+        // Retorna tempo ocioso (em milissegundos)
+        private static int GetIdleTime()
+        {
+            LASTINPUTINFO lastInputInfo = new LASTINPUTINFO();
+            lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
+            if (!GetLastInputInfo(ref lastInputInfo))
+                return 0;
+
+            uint tickCount = GetTickCount();
+            return (int)(tickCount - lastInputInfo.dwTime);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct LASTINPUTINFO
+        {
+            public uint cbSize;
+            public uint dwTime;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+
+        [DllImport("kernel32.dll")]
+        private static extern uint GetTickCount();
 
         static string GetExternalExeFileVersion(string path = @"C:\WEDLC\WEDLC.exe")
         {
@@ -48,11 +165,11 @@ namespace WEDLC.Forms
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Tem certeza que deseja sair?","Atenção!",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Tem certeza que deseja sair?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 this.Close();
             }
-            
+
         }
         private void especializacaoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -224,7 +341,7 @@ namespace WEDLC.Forms
             Cursor.Current = Cursors.WaitCursor;
 
             // Cria um objeto para o form de troca de senhas abrir
-            frmPaciente objPaciente= new frmPaciente();
+            frmPaciente objPaciente = new frmPaciente();
 
             // Define o form pai como o form principal
             objPaciente.MdiParent = this;

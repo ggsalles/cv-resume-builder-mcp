@@ -156,6 +156,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Banco\FormBaseVerdeGradient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Banco\FiltroAtividade.cs" />
     <Compile Include="Banco\cResultadoReflexoH.cs" />
     <Compile Include="Banco\CryptoHelper.cs" />
     <Compile Include="Banco\cPotenciaisEvocadosTecnica.cs" />
@@ -211,6 +215,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsPaciente.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmConfirmacaoSessao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmConfirmacaoSessao.Designer.cs">
+      <DependentUpon>frmConfirmacaoSessao.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmPermissao.cs">
       <SubType>Form</SubType>
