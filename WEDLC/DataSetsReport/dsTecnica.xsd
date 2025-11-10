@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsTecninca" targetNamespace="http://tempuri.org/dsTecninca.xsd" xmlns:mstns="http://tempuri.org/dsTecninca.xsd" xmlns="http://tempuri.org/dsTecninca.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsTecninca" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsTecninca" msprop:Generator_DataSetName="dsTecninca">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtTecnica" msprop:Generator_RowEvHandlerName="dtTecnicaRowChangeEventHandler" msprop:Generator_RowDeletedName="dtTecnicaRowDeleted" msprop:Generator_RowDeletingName="dtTecnicaRowDeleting" msprop:Generator_RowEvArgName="dtTecnicaRowChangeEvent" msprop:Generator_TablePropName="dtTecnica" msprop:Generator_RowChangedName="dtTecnicaRowChanged" msprop:Generator_RowChangingName="dtTecnicaRowChanging" msprop:Generator_TableClassName="dtTecnicaDataTable" msprop:Generator_RowClassName="dtTecnicaRow" msprop:Generator_TableVarName="tabledtTecnica" msprop:Generator_UserTableName="dtTecnica">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idpaciente" msprop:Generator_ColumnPropNameInRow="idpaciente" msprop:Generator_ColumnPropNameInTable="idpacienteColumn" msprop:Generator_ColumnVarNameInTable="columnidpaciente" msprop:Generator_UserColumnName="idpaciente" type="xs:string" minOccurs="0" />
+              <xs:element name="idresultado" msprop:Generator_ColumnPropNameInRow="idresultado" msprop:Generator_ColumnPropNameInTable="idresultadoColumn" msprop:Generator_ColumnVarNameInTable="columnidresultado" msprop:Generator_UserColumnName="idresultado" type="xs:string" minOccurs="0" />
+              <xs:element name="idresultadopotevoctecnica" msprop:Generator_ColumnPropNameInRow="idresultadopotevoctecnica" msprop:Generator_ColumnPropNameInTable="idresultadopotevoctecnicaColumn" msprop:Generator_ColumnVarNameInTable="columnidresultadopotevoctecnica" msprop:Generator_UserColumnName="idresultadopotevoctecnica" type="xs:string" minOccurs="0" />
+              <xs:element name="captacao" msprop:Generator_ColumnPropNameInRow="captacao" msprop:Generator_ColumnPropNameInTable="captacaoColumn" msprop:Generator_ColumnVarNameInTable="columncaptacao" msprop:Generator_UserColumnName="captacao" type="xs:string" minOccurs="0" />
+              <xs:element name="sensibilidade" msprop:Generator_ColumnPropNameInRow="sensibilidade" msprop:Generator_ColumnPropNameInTable="sensibilidadeColumn" msprop:Generator_ColumnVarNameInTable="columnsensibilidade" msprop:Generator_UserColumnName="sensibilidade" type="xs:string" minOccurs="0" />
+              <xs:element name="uvdivtempo" msprop:Generator_ColumnPropNameInRow="uvdivtempo" msprop:Generator_ColumnPropNameInTable="uvdivtempoColumn" msprop:Generator_ColumnVarNameInTable="columnuvdivtempo" msprop:Generator_UserColumnName="uvdivtempo" type="xs:string" minOccurs="0" />
+              <xs:element name="filtros" msprop:Generator_ColumnPropNameInRow="filtros" msprop:Generator_ColumnPropNameInTable="filtrosColumn" msprop:Generator_ColumnVarNameInTable="columnfiltros" msprop:Generator_UserColumnName="filtros" type="xs:string" minOccurs="0" />
+              <xs:element name="estimulacao" msprop:Generator_ColumnPropNameInRow="estimulacao" msprop:Generator_ColumnPropNameInTable="estimulacaoColumn" msprop:Generator_ColumnVarNameInTable="columnestimulacao" msprop:Generator_UserColumnName="estimulacao" type="xs:string" minOccurs="0" />
+              <xs:element name="freqestimada" msprop:Generator_ColumnPropNameInRow="freqestimada" msprop:Generator_ColumnPropNameInTable="freqestimadaColumn" msprop:Generator_ColumnVarNameInTable="columnfreqestimada" msprop:Generator_UserColumnName="freqestimada" type="xs:string" minOccurs="0" />
+              <xs:element name="nestimulo" msprop:Generator_ColumnPropNameInRow="nestimulo" msprop:Generator_ColumnPropNameInTable="nestimuloColumn" msprop:Generator_ColumnVarNameInTable="columnnestimulo" msprop:Generator_UserColumnName="nestimulo" type="xs:string" minOccurs="0" />
+              <xs:element name="intensidade" msprop:Generator_ColumnPropNameInRow="intensidade" msprop:Generator_ColumnPropNameInTable="intensidadeColumn" msprop:Generator_ColumnVarNameInTable="columnintensidade" msprop:Generator_UserColumnName="intensidade" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

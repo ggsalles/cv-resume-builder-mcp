@@ -512,8 +512,23 @@ namespace WEDLC.Forms
                     dtAux = objResultado.buscaIdResultado();
                     IdResultado = Convert.ToInt32(dtAux.Rows[0]["idresultado"]);
 
-                    var frm = new frmRelResultadoMusculoNeuro(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
-                    frm.ShowDialog();
+
+                    switch ((int)relCodGrupoFolha)
+                    {
+                        case (int)GrupoFolha.ENG:
+                            var frmENG = new frmRelResultadoMusculoNeuro(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
+                            frmENG.ShowDialog();
+                            break;
+                        case (int)GrupoFolha.PEV:
+                            var frmPEV = new frmRelResultadoPEV(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
+                            frmPEV.ShowDialog();
+                            break;
+                        case (int)GrupoFolha.PEA:
+                        case (int)GrupoFolha.PESS:
+                        case (int)GrupoFolha.PEGC:
+                        case (int)GrupoFolha.PESSMED:
+                        break;
+                    }                   
                 }
 
                 else
@@ -526,7 +541,7 @@ namespace WEDLC.Forms
             {
                 MessageBox.Show("Erro ao tentar imprimir o relatório!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-           
+
         }
 
         private void grdFolhaPaciente_CellClick(object sender, DataGridViewCellEventArgs e)

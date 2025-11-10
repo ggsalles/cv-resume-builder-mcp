@@ -211,10 +211,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAvaliacaoMuscular.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSetsReport\dsComentarioPEV.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsComentarioPEV.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSetsReport\dsPaciente.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsPaciente.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetsReport\dsPEV.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPEV.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetsReport\dsTecnica.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsTecnica.xsd</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmConfirmacaoSessao.cs">
       <SubType>Form</SubType>
@@ -227,6 +242,12 @@
     </Compile>
     <Compile Include="Forms\frmPermissao.Designer.cs">
       <DependentUpon>frmPermissao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmRelResultadoPEV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmRelResultadoPEV.Designer.cs">
+      <DependentUpon>frmRelResultadoPEV.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmRelResultadoMusculoNeuro.cs">
       <SubType>Form</SubType>
@@ -353,6 +374,9 @@
     <EmbeddedResource Include="Forms\frmPermissao.resx">
       <DependentUpon>frmPermissao.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmRelResultadoPEV.resx">
+      <DependentUpon>frmRelResultadoPEV.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmRelResultadoMusculoNeuro.resx">
       <DependentUpon>frmRelResultadoMusculoNeuro.cs</DependentUpon>
     </EmbeddedResource>
@@ -423,7 +447,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Relatorios\relResultadoMusculoNeuro.rdlc">
+    <EmbeddedResource Include="Relatorios\relResultadoPEV.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\relResultadoMusculoNeuro .rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="DataSetsReport\dsAvaliacaoMuscular.xsc">
@@ -437,6 +464,17 @@
     <None Include="DataSetsReport\dsAvaliacaoMuscular.xss">
       <DependentUpon>dsAvaliacaoMuscular.xsd</DependentUpon>
     </None>
+    <None Include="DataSetsReport\dsComentarioPEV.xsc">
+      <DependentUpon>dsComentarioPEV.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsComentarioPEV.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsComentarioPEV.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetsReport\dsComentarioPEV.xss">
+      <DependentUpon>dsComentarioPEV.xsd</DependentUpon>
+    </None>
     <None Include="DataSetsReport\dsPaciente.xsc">
       <DependentUpon>dsPaciente.xsd</DependentUpon>
     </None>
@@ -447,6 +485,28 @@
     </None>
     <None Include="DataSetsReport\dsPaciente.xss">
       <DependentUpon>dsPaciente.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsPEV.xsc">
+      <DependentUpon>dsPEV.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsPEV.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPEV.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetsReport\dsPEV.xss">
+      <DependentUpon>dsPEV.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsTecnica.xsc">
+      <DependentUpon>dsTecnica.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsTecnica.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsTecnica.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetsReport\dsTecnica.xss">
+      <DependentUpon>dsTecnica.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

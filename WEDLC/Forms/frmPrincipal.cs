@@ -93,6 +93,19 @@ namespace WEDLC.Forms
             if (avisoExibido)
             {
                 lblAviso.Text = $"Atenção: O aplicativo será encerrado em {tempoRestante} segundos por inatividade.";
+
+                if (segundosInativo <= 1)
+                {
+                    lblAviso.Visible = false;
+                }
+                else
+                {
+                    if (tempoRestante <= AVISO_SEGUNDOS && tempoRestante > 0)
+                    {
+                        avisoExibido = true;
+                        lblAviso.Visible = true;
+                    }
+                }
             }
 
             if (tempoRestante <= 0 && !caixaAberta)

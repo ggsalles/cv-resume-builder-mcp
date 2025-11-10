@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsPEV" targetNamespace="http://tempuri.org/dsPEV.xsd" xmlns:mstns="http://tempuri.org/dsPEV.xsd" xmlns="http://tempuri.org/dsPEV.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsPEV" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsPEV" msprop:Generator_DataSetName="dsPEV">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtResultados" msprop:Generator_RowEvHandlerName="dtResultadosRowChangeEventHandler" msprop:Generator_RowDeletedName="dtResultadosRowDeleted" msprop:Generator_RowDeletingName="dtResultadosRowDeleting" msprop:Generator_RowEvArgName="dtResultadosRowChangeEvent" msprop:Generator_TablePropName="dtResultados" msprop:Generator_RowChangedName="dtResultadosRowChanged" msprop:Generator_RowChangingName="dtResultadosRowChanging" msprop:Generator_TableClassName="dtResultadosDataTable" msprop:Generator_RowClassName="dtResultadosRow" msprop:Generator_TableVarName="tabledtResultados" msprop:Generator_UserTableName="dtResultados">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idpaciente" msprop:Generator_ColumnPropNameInRow="idpaciente" msprop:Generator_ColumnPropNameInTable="idpacienteColumn" msprop:Generator_ColumnVarNameInTable="columnidpaciente" msprop:Generator_UserColumnName="idpaciente" type="xs:string" minOccurs="0" />
+              <xs:element name="idresultado" msprop:Generator_ColumnPropNameInRow="idresultado" msprop:Generator_ColumnPropNameInTable="idresultadoColumn" msprop:Generator_ColumnVarNameInTable="columnidresultado" msprop:Generator_UserColumnName="idresultado" type="xs:string" minOccurs="0" />
+              <xs:element name="n75olhodireito" msprop:Generator_ColumnPropNameInRow="n75olhodireito" msprop:Generator_ColumnPropNameInTable="n75olhodireitoColumn" msprop:Generator_ColumnVarNameInTable="columnn75olhodireito" msprop:Generator_UserColumnName="n75olhodireito" type="xs:string" minOccurs="0" />
+              <xs:element name="n75olhoesquerdo" msprop:Generator_ColumnPropNameInRow="n75olhoesquerdo" msprop:Generator_ColumnPropNameInTable="n75olhoesquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnn75olhoesquerdo" msprop:Generator_UserColumnName="n75olhoesquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="p100olhodireito" msprop:Generator_ColumnPropNameInRow="p100olhodireito" msprop:Generator_ColumnPropNameInTable="p100olhodireitoColumn" msprop:Generator_ColumnVarNameInTable="columnp100olhodireito" msprop:Generator_UserColumnName="p100olhodireito" type="xs:string" minOccurs="0" />
+              <xs:element name="p100olhoesquerdo" msprop:Generator_ColumnPropNameInRow="p100olhoesquerdo" msprop:Generator_ColumnPropNameInTable="p100olhoesquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnp100olhoesquerdo" msprop:Generator_UserColumnName="p100olhoesquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="p100diferenca" msprop:Generator_ColumnPropNameInRow="p100diferenca" msprop:Generator_ColumnPropNameInTable="p100diferencaColumn" msprop:Generator_ColumnVarNameInTable="columnp100diferenca" msprop:Generator_UserColumnName="p100diferenca" type="xs:string" minOccurs="0" />
+              <xs:element name="n145olhodireito" msprop:Generator_ColumnPropNameInRow="n145olhodireito" msprop:Generator_ColumnPropNameInTable="n145olhodireitoColumn" msprop:Generator_ColumnVarNameInTable="columnn145olhodireito" msprop:Generator_UserColumnName="n145olhodireito" type="xs:string" minOccurs="0" />
+              <xs:element name="n145olhoesquerdo" msprop:Generator_ColumnPropNameInRow="n145olhoesquerdo" msprop:Generator_ColumnPropNameInTable="n145olhoesquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnn145olhoesquerdo" msprop:Generator_UserColumnName="n145olhoesquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="amplitudeolhodireito" msprop:Generator_ColumnPropNameInRow="amplitudeolhodireito" msprop:Generator_ColumnPropNameInTable="amplitudeolhodireitoColumn" msprop:Generator_ColumnVarNameInTable="columnamplitudeolhodireito" msprop:Generator_UserColumnName="amplitudeolhodireito" type="xs:string" minOccurs="0" />
+              <xs:element name="amplitudeolhoesquerdo" msprop:Generator_ColumnPropNameInRow="amplitudeolhoesquerdo" msprop:Generator_ColumnPropNameInTable="amplitudeolhoesquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnamplitudeolhoesquerdo" msprop:Generator_UserColumnName="amplitudeolhoesquerdo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
