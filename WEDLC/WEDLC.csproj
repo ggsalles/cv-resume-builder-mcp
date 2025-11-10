@@ -450,7 +450,7 @@
     <EmbeddedResource Include="Relatorios\relResultadoPEV.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\relResultadoMusculoNeuro .rdlc">
+    <EmbeddedResource Include="Relatorios\relResultadoMusculoNeuro.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="DataSetsReport\dsAvaliacaoMuscular.xsc">
