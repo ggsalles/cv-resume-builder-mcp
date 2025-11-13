@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsPEGC" targetNamespace="http://tempuri.org/dsPEGC.xsd" xmlns:mstns="http://tempuri.org/dsPEGC.xsd" xmlns="http://tempuri.org/dsPEGC.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsPEGC" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsPEGC" msprop:Generator_DataSetName="dsPEGC">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtPEGC" msprop:Generator_RowEvHandlerName="dtPEGCRowChangeEventHandler" msprop:Generator_RowDeletedName="dtPEGCRowDeleted" msprop:Generator_RowDeletingName="dtPEGCRowDeleting" msprop:Generator_RowEvArgName="dtPEGCRowChangeEvent" msprop:Generator_TablePropName="dtPEGC" msprop:Generator_RowChangedName="dtPEGCRowChanged" msprop:Generator_RowChangingName="dtPEGCRowChanging" msprop:Generator_TableClassName="dtPEGCDataTable" msprop:Generator_RowClassName="dtPEGCRow" msprop:Generator_TableVarName="tabledtPEGC" msprop:Generator_UserTableName="dtPEGC">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idresultado" msprop:Generator_ColumnPropNameInRow="idresultado" msprop:Generator_ColumnPropNameInTable="idresultadoColumn" msprop:Generator_ColumnVarNameInTable="columnidresultado" msprop:Generator_UserColumnName="idresultado" type="xs:string" minOccurs="0" />
+              <xs:element name="idresultadopegc" msprop:Generator_ColumnPropNameInRow="idresultadopegc" msprop:Generator_ColumnPropNameInTable="idresultadopegcColumn" msprop:Generator_ColumnVarNameInTable="columnidresultadopegc" msprop:Generator_UserColumnName="idresultadopegc" type="xs:string" minOccurs="0" />
+              <xs:element name="p1iniciovalobtido" msprop:Generator_ColumnPropNameInRow="p1iniciovalobtido" msprop:Generator_ColumnPropNameInTable="p1iniciovalobtidoColumn" msprop:Generator_ColumnVarNameInTable="columnp1iniciovalobtido" msprop:Generator_UserColumnName="p1iniciovalobtido" type="xs:string" minOccurs="0" />
+              <xs:element name="p1picovalobtido" msprop:Generator_ColumnPropNameInRow="p1picovalobtido" msprop:Generator_ColumnPropNameInTable="p1picovalobtidoColumn" msprop:Generator_ColumnVarNameInTable="columnp1picovalobtido" msprop:Generator_UserColumnName="p1picovalobtido" type="xs:string" minOccurs="0" />
+              <xs:element name="n1picovalobtido" msprop:Generator_ColumnPropNameInRow="n1picovalobtido" msprop:Generator_ColumnPropNameInTable="n1picovalobtidoColumn" msprop:Generator_ColumnVarNameInTable="columnn1picovalobtido" msprop:Generator_UserColumnName="n1picovalobtido" type="xs:string" minOccurs="0" />
+              <xs:element name="p2picovalobtido" msprop:Generator_ColumnPropNameInRow="p2picovalobtido" msprop:Generator_ColumnPropNameInTable="p2picovalobtidoColumn" msprop:Generator_ColumnVarNameInTable="columnp2picovalobtido" msprop:Generator_UserColumnName="p2picovalobtido" type="xs:string" minOccurs="0" />
+              <xs:element name="n2picovalobtido" msprop:Generator_ColumnPropNameInRow="n2picovalobtido" msprop:Generator_ColumnPropNameInTable="n2picovalobtidoColumn" msprop:Generator_ColumnVarNameInTable="columnn2picovalobtido" msprop:Generator_UserColumnName="n2picovalobtido" type="xs:string" minOccurs="0" />
+              <xs:element name="p3picovalobtido" msprop:Generator_ColumnPropNameInRow="p3picovalobtido" msprop:Generator_ColumnPropNameInTable="p3picovalobtidoColumn" msprop:Generator_ColumnVarNameInTable="columnp3picovalobtido" msprop:Generator_UserColumnName="p3picovalobtido" type="xs:string" minOccurs="0" />
+              <xs:element name="n3picovalobtido" msprop:Generator_ColumnPropNameInRow="n3picovalobtido" msprop:Generator_ColumnPropNameInTable="n3picovalobtidoColumn" msprop:Generator_ColumnVarNameInTable="columnn3picovalobtido" msprop:Generator_UserColumnName="n3picovalobtido" type="xs:string" minOccurs="0" />
+              <xs:element name="respostaespinhal" msprop:Generator_ColumnPropNameInRow="respostaespinhal" msprop:Generator_ColumnPropNameInTable="respostaespinhalColumn" msprop:Generator_ColumnVarNameInTable="columnrespostaespinhal" msprop:Generator_UserColumnName="respostaespinhal" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

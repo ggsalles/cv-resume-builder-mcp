@@ -14,7 +14,7 @@ namespace WEDLC.Forms
 
     {
         private Timer timerInatividade;
-        private const int LIMITE_INATIVIDADE_SEGUNDOS = 60; // total
+        private const int LIMITE_INATIVIDADE_SEGUNDOS = 600; // total
         private const int AVISO_SEGUNDOS = 30; // antes do fechamento
         private const int TEMPO_CONFIRMACAO_SEGUNDOS = 15; // tempo limite para confirmar
 

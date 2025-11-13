@@ -526,9 +526,12 @@ namespace WEDLC.Forms
                         case (int)GrupoFolha.PEA:
                         case (int)GrupoFolha.PESS:
                         case (int)GrupoFolha.PEGC:
+                            var frmPEGC = new frmRelResultadoPEGC(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
+                            frmPEGC.ShowDialog();
+                            break;
                         case (int)GrupoFolha.PESSMED:
-                        break;
-                    }                   
+                            break;
+                    }
                 }
 
                 else
