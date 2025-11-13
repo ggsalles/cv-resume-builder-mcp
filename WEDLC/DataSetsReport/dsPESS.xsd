@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsPESS" targetNamespace="http://tempuri.org/dsPESS.xsd" xmlns:mstns="http://tempuri.org/dsPESS.xsd" xmlns="http://tempuri.org/dsPESS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsPESS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsPESS" msprop:Generator_DataSetName="dsPESS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtPESS" msprop:Generator_RowEvHandlerName="dtPESSRowChangeEventHandler" msprop:Generator_RowDeletedName="dtPESSRowDeleted" msprop:Generator_RowDeletingName="dtPESSRowDeleting" msprop:Generator_RowEvArgName="dtPESSRowChangeEvent" msprop:Generator_TablePropName="dtPESS" msprop:Generator_RowChangedName="dtPESSRowChanged" msprop:Generator_RowChangingName="dtPESSRowChanging" msprop:Generator_TableClassName="dtPESSDataTable" msprop:Generator_RowClassName="dtPESSRow" msprop:Generator_TableVarName="tabledtPESS" msprop:Generator_UserTableName="dtPESS">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idresultado" msprop:Generator_ColumnPropNameInRow="idresultado" msprop:Generator_ColumnPropNameInTable="idresultadoColumn" msprop:Generator_ColumnVarNameInTable="columnidresultado" msprop:Generator_UserColumnName="idresultado" type="xs:string" minOccurs="0" />
+              <xs:element name="idfolha" msprop:Generator_ColumnPropNameInRow="idfolha" msprop:Generator_ColumnPropNameInTable="idfolhaColumn" msprop:Generator_ColumnVarNameInTable="columnidfolha" msprop:Generator_UserColumnName="idfolha" type="xs:string" minOccurs="0" />
+              <xs:element name="idestudopotenevocado" msprop:Generator_ColumnPropNameInRow="idestudopotenevocado" msprop:Generator_ColumnPropNameInTable="idestudopotenevocadoColumn" msprop:Generator_ColumnVarNameInTable="columnidestudopotenevocado" msprop:Generator_UserColumnName="idestudopotenevocado" type="xs:string" minOccurs="0" />
+              <xs:element name="idresultadopess" msprop:Generator_ColumnPropNameInRow="idresultadopess" msprop:Generator_ColumnPropNameInTable="idresultadopessColumn" msprop:Generator_ColumnVarNameInTable="columnidresultadopess" msprop:Generator_UserColumnName="idresultadopess" type="xs:string" minOccurs="0" />
+              <xs:element name="idpaciente" msprop:Generator_ColumnPropNameInRow="idpaciente" msprop:Generator_ColumnPropNameInTable="idpacienteColumn" msprop:Generator_ColumnVarNameInTable="columnidpaciente" msprop:Generator_UserColumnName="idpaciente" type="xs:string" minOccurs="0" />
+              <xs:element name="descricao" msprop:Generator_ColumnPropNameInRow="descricao" msprop:Generator_ColumnPropNameInTable="descricaoColumn" msprop:Generator_ColumnVarNameInTable="columndescricao" msprop:Generator_UserColumnName="descricao" type="xs:string" minOccurs="0" />
+              <xs:element name="p1n1ladodireitorespobt" msprop:Generator_ColumnPropNameInRow="p1n1ladodireitorespobt" msprop:Generator_ColumnPropNameInTable="p1n1ladodireitorespobtColumn" msprop:Generator_ColumnVarNameInTable="columnp1n1ladodireitorespobt" msprop:Generator_UserColumnName="p1n1ladodireitorespobt" type="xs:string" minOccurs="0" />
+              <xs:element name="p1n1ladodireitorespoesp" msprop:Generator_ColumnPropNameInRow="p1n1ladodireitorespoesp" msprop:Generator_ColumnPropNameInTable="p1n1ladodireitorespoespColumn" msprop:Generator_ColumnVarNameInTable="columnp1n1ladodireitorespoesp" msprop:Generator_UserColumnName="p1n1ladodireitorespoesp" type="xs:string" minOccurs="0" />
+              <xs:element name="p1n1ladoesquerdorespobt" msprop:Generator_ColumnPropNameInRow="p1n1ladoesquerdorespobt" msprop:Generator_ColumnPropNameInTable="p1n1ladoesquerdorespobtColumn" msprop:Generator_ColumnVarNameInTable="columnp1n1ladoesquerdorespobt" msprop:Generator_UserColumnName="p1n1ladoesquerdorespobt" type="xs:string" minOccurs="0" />
+              <xs:element name="p1n1ladoesquerdorespoesp" msprop:Generator_ColumnPropNameInRow="p1n1ladoesquerdorespoesp" msprop:Generator_ColumnPropNameInTable="p1n1ladoesquerdorespoespColumn" msprop:Generator_ColumnVarNameInTable="columnp1n1ladoesquerdorespoesp" msprop:Generator_UserColumnName="p1n1ladoesquerdorespoesp" type="xs:string" minOccurs="0" />
+              <xs:element name="diferencaobitida" msprop:Generator_ColumnPropNameInRow="diferencaobitida" msprop:Generator_ColumnPropNameInTable="diferencaobitidaColumn" msprop:Generator_ColumnVarNameInTable="columndiferencaobitida" msprop:Generator_UserColumnName="diferencaobitida" type="xs:string" minOccurs="0" />
+              <xs:element name="diferencaesperada" msprop:Generator_ColumnPropNameInRow="diferencaesperada" msprop:Generator_ColumnPropNameInTable="diferencaesperadaColumn" msprop:Generator_ColumnVarNameInTable="columndiferencaesperada" msprop:Generator_UserColumnName="diferencaesperada" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

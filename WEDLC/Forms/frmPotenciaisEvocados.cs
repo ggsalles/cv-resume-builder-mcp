@@ -1500,12 +1500,7 @@ namespace WEDLC.Forms
 
         private void txtDiferencaEsperada_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verifica se o caractere digitado é um número (e.Control para permitir teclas como Backspace)
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {
-                // Cancela o evento, impedindo que o caractere não-numérico seja inserido
-                e.Handled = true;
-            }
+            ValidacaoTextBox.PermitirDecimaisPositivosNegativos((TextBox)sender, e);
         }
 
         private bool GravaGrupoFolhaPess()
