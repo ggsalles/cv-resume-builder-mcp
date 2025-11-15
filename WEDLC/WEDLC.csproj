@@ -231,6 +231,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsPESS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSetsReport\dsPESSMED.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPESSMED.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSetsReport\dsPEV.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -252,6 +257,12 @@
     </Compile>
     <Compile Include="Forms\frmPermissao.Designer.cs">
       <DependentUpon>frmPermissao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmRelResultadoPESSMED.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmRelResultadoPESSMED.Designer.cs">
+      <DependentUpon>frmRelResultadoPESSMED.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmRelResultadoPESS.cs">
       <SubType>Form</SubType>
@@ -396,6 +407,9 @@
     <EmbeddedResource Include="Forms\frmPermissao.resx">
       <DependentUpon>frmPermissao.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmRelResultadoPESSMED.resx">
+      <DependentUpon>frmRelResultadoPESSMED.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmRelResultadoPESS.resx">
       <DependentUpon>frmRelResultadoPESS.cs</DependentUpon>
     </EmbeddedResource>
@@ -475,6 +489,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Relatorios\relResultadoPESSMED.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\relResultadoPESS.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -541,6 +558,17 @@
     </None>
     <None Include="DataSetsReport\dsPESS.xss">
       <DependentUpon>dsPESS.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsPESSMED.xsc">
+      <DependentUpon>dsPESSMED.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsPESSMED.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPESSMED.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetsReport\dsPESSMED.xss">
+      <DependentUpon>dsPESSMED.xsd</DependentUpon>
     </None>
     <None Include="DataSetsReport\dsPEV.xsc">
       <DependentUpon>dsPEV.xsd</DependentUpon>

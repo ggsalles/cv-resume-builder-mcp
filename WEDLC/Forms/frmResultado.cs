@@ -533,6 +533,8 @@ namespace WEDLC.Forms
                             frmPEGC.ShowDialog();
                             break;
                         case (int)GrupoFolha.PESSMED:
+                            var frmPESSMED= new frmRelResultadoPESSMED(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
+                            frmPESSMED.ShowDialog();
                             break;
                     }
                 }

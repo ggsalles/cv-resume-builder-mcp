@@ -666,19 +666,19 @@ namespace WEDLC.Forms
                         return;
                     }
 
-                    // Se tudo ok, commit na transação
-                    scope.Complete();
-
-                    MessageBox.Show("Dados gravados com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    Close();
-
                     // GRAVA LOG
                     clLog objcLog = new clLog();
                     objcLog.IdLogDescricao = 5; // descrição na tabela LOGDESCRICAO 
                     objcLog.IdUsuario = Sessao.IdUsuario;
                     objcLog.Descricao = this.Name;
                     objcLog.incluiLog();
+
+                    // Se tudo ok, commit na transação
+                    scope.Complete();
+
+                    MessageBox.Show("Dados gravados com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    Close();
 
                 }
                 catch (Exception ex)

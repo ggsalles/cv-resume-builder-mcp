@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsPESSMED" targetNamespace="http://tempuri.org/dsPESSMED.xsd" xmlns:mstns="http://tempuri.org/dsPESSMED.xsd" xmlns="http://tempuri.org/dsPESSMED.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsPESSMED" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsPESSMED" msprop:Generator_DataSetName="dsPESSMED">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtPESSMED" msprop:Generator_RowEvHandlerName="dtPESSMEDRowChangeEventHandler" msprop:Generator_RowDeletedName="dtPESSMEDRowDeleted" msprop:Generator_RowDeletingName="dtPESSMEDRowDeleting" msprop:Generator_RowEvArgName="dtPESSMEDRowChangeEvent" msprop:Generator_TablePropName="dtPESSMED" msprop:Generator_RowChangedName="dtPESSMEDRowChanged" msprop:Generator_RowChangingName="dtPESSMEDRowChanging" msprop:Generator_TableClassName="dtPESSMEDDataTable" msprop:Generator_RowClassName="dtPESSMEDRow" msprop:Generator_TableVarName="tabledtPESSMED" msprop:Generator_UserTableName="dtPESSMED">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idresultado" msprop:Generator_ColumnPropNameInRow="idresultado" msprop:Generator_ColumnPropNameInTable="idresultadoColumn" msprop:Generator_ColumnVarNameInTable="columnidresultado" msprop:Generator_UserColumnName="idresultado" type="xs:string" minOccurs="0" />
+              <xs:element name="idresultadopessmed" msprop:Generator_ColumnPropNameInRow="idresultadopessmed" msprop:Generator_ColumnPropNameInTable="idresultadopessmedColumn" msprop:Generator_ColumnVarNameInTable="columnidresultadopessmed" msprop:Generator_UserColumnName="idresultadopessmed" type="xs:string" minOccurs="0" />
+              <xs:element name="erbsdireito" msprop:Generator_ColumnPropNameInRow="erbsdireito" msprop:Generator_ColumnPropNameInTable="erbsdireitoColumn" msprop:Generator_ColumnVarNameInTable="columnerbsdireito" msprop:Generator_UserColumnName="erbsdireito" type="xs:string" minOccurs="0" />
+              <xs:element name="erbsesquerdo" msprop:Generator_ColumnPropNameInRow="erbsesquerdo" msprop:Generator_ColumnPropNameInTable="erbsesquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnerbsesquerdo" msprop:Generator_UserColumnName="erbsesquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="n11n13direito" msprop:Generator_ColumnPropNameInRow="n11n13direito" msprop:Generator_ColumnPropNameInTable="n11n13direitoColumn" msprop:Generator_ColumnVarNameInTable="columnn11n13direito" msprop:Generator_UserColumnName="n11n13direito" type="xs:string" minOccurs="0" />
+              <xs:element name="n11n13esquerdo" msprop:Generator_ColumnPropNameInRow="n11n13esquerdo" msprop:Generator_ColumnPropNameInTable="n11n13esquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnn11n13esquerdo" msprop:Generator_UserColumnName="n11n13esquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="n19direito" msprop:Generator_ColumnPropNameInRow="n19direito" msprop:Generator_ColumnPropNameInTable="n19direitoColumn" msprop:Generator_ColumnVarNameInTable="columnn19direito" msprop:Generator_UserColumnName="n19direito" type="xs:string" minOccurs="0" />
+              <xs:element name="n19esquerdo" msprop:Generator_ColumnPropNameInRow="n19esquerdo" msprop:Generator_ColumnPropNameInTable="n19esquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnn19esquerdo" msprop:Generator_UserColumnName="n19esquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="p22direito" msprop:Generator_ColumnPropNameInRow="p22direito" msprop:Generator_ColumnPropNameInTable="p22direitoColumn" msprop:Generator_ColumnVarNameInTable="columnp22direito" msprop:Generator_UserColumnName="p22direito" type="xs:string" minOccurs="0" />
+              <xs:element name="p22esquerdo" msprop:Generator_ColumnPropNameInRow="p22esquerdo" msprop:Generator_ColumnPropNameInTable="p22esquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnp22esquerdo" msprop:Generator_UserColumnName="p22esquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="epn11n13direito" msprop:Generator_ColumnPropNameInRow="epn11n13direito" msprop:Generator_ColumnPropNameInTable="epn11n13direitoColumn" msprop:Generator_ColumnVarNameInTable="columnepn11n13direito" msprop:Generator_UserColumnName="epn11n13direito" type="xs:string" minOccurs="0" />
+              <xs:element name="epn11n13esquerdo" msprop:Generator_ColumnPropNameInRow="epn11n13esquerdo" msprop:Generator_ColumnPropNameInTable="epn11n13esquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnepn11n13esquerdo" msprop:Generator_UserColumnName="epn11n13esquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="epn19direito" msprop:Generator_ColumnPropNameInRow="epn19direito" msprop:Generator_ColumnPropNameInTable="epn19direitoColumn" msprop:Generator_ColumnVarNameInTable="columnepn19direito" msprop:Generator_UserColumnName="epn19direito" type="xs:string" minOccurs="0" />
+              <xs:element name="epn19esquerdo" msprop:Generator_ColumnPropNameInRow="epn19esquerdo" msprop:Generator_ColumnPropNameInTable="epn19esquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnepn19esquerdo" msprop:Generator_UserColumnName="epn19esquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="epp22direito" msprop:Generator_ColumnPropNameInRow="epp22direito" msprop:Generator_ColumnPropNameInTable="epp22direitoColumn" msprop:Generator_ColumnVarNameInTable="columnepp22direito" msprop:Generator_UserColumnName="epp22direito" type="xs:string" minOccurs="0" />
+              <xs:element name="epp22esquerdo" msprop:Generator_ColumnPropNameInRow="epp22esquerdo" msprop:Generator_ColumnPropNameInTable="epp22esquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnepp22esquerdo" msprop:Generator_UserColumnName="epp22esquerdo" type="xs:string" minOccurs="0" />
+              <xs:element name="n11n13n19direito" msprop:Generator_ColumnPropNameInRow="n11n13n19direito" msprop:Generator_ColumnPropNameInTable="n11n13n19direitoColumn" msprop:Generator_ColumnVarNameInTable="columnn11n13n19direito" msprop:Generator_UserColumnName="n11n13n19direito" type="xs:string" minOccurs="0" />
+              <xs:element name="n11n13n19esquerdo" msprop:Generator_ColumnPropNameInRow="n11n13n19esquerdo" msprop:Generator_ColumnPropNameInTable="n11n13n19esquerdoColumn" msprop:Generator_ColumnVarNameInTable="columnn11n13n19esquerdo" msprop:Generator_UserColumnName="n11n13n19esquerdo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
