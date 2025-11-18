@@ -133,7 +133,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(566, 19);
+            this.label3.Location = new System.Drawing.Point(668, 19);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(28, 13);
             this.label3.TabIndex = 7;
@@ -142,7 +142,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(718, 19);
+            this.label2.Location = new System.Drawing.Point(820, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
             this.label2.TabIndex = 6;
@@ -152,7 +152,7 @@
             // 
             this.cboGrupo.Enabled = false;
             this.cboGrupo.FormattingEnabled = true;
-            this.cboGrupo.Location = new System.Drawing.Point(718, 35);
+            this.cboGrupo.Location = new System.Drawing.Point(820, 35);
             this.cboGrupo.Name = "cboGrupo";
             this.cboGrupo.Size = new System.Drawing.Size(140, 21);
             this.cboGrupo.TabIndex = 5;
@@ -162,7 +162,7 @@
             // 
             this.cboTipo.Enabled = false;
             this.cboTipo.FormattingEnabled = true;
-            this.cboTipo.Location = new System.Drawing.Point(566, 35);
+            this.cboTipo.Location = new System.Drawing.Point(668, 35);
             this.cboTipo.Name = "cboTipo";
             this.cboTipo.Size = new System.Drawing.Size(146, 21);
             this.cboTipo.TabIndex = 4;
@@ -189,9 +189,9 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(223, 35);
-            this.txtNome.MaxLength = 50;
+            this.txtNome.MaxLength = 60;
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(337, 20);
+            this.txtNome.Size = new System.Drawing.Size(439, 20);
             this.txtNome.TabIndex = 3;
             this.txtNome.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNome_KeyUp);
             // 

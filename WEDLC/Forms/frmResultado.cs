@@ -53,6 +53,7 @@ namespace WEDLC.Forms
             PEA = 4,
             PEGC = 5,
             PESSMED = 6,
+            AVJ = 7,
         }
 
         public frmResultado()
@@ -444,8 +445,50 @@ namespace WEDLC.Forms
                                     objResultadoMusculoNeuro.objResultadoAvaliacaoMuscular.Idade = idade;
                                     objResultadoMusculoNeuro.grupoFolha = CodGrupoFolha;
 
-                                    //Abre o form de senha modal
+                                    // Altera o cursor para "espera"
+                                    Cursor.Current = Cursors.WaitCursor;
+
+                                    // Define o form pai como o form principal
+                                    objResultadoMusculoNeuro.MdiParent = this.MdiParent;
+
+                                    //Abre o form modal
                                     objResultadoMusculoNeuro.Show();
+
+                                    // Restaura o cursor normal
+                                    Cursor.Current = Cursors.Default;
+
+                                    break;
+
+                                case (int)GrupoFolha.AVJ:
+
+                                    if (cUtil.ValidaFormulario.FormularioEstaAberto<frmAVJ>() == true)
+                                    {
+                                        MessageBox.Show("O formulário de Potenciais Evocados já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        return;
+                                    }
+
+                                    // Cria um objeto para o form de troca de senhas abrir
+                                    frmAVJ objfrmAVJ = new frmAVJ();
+
+                                    objfrmAVJ.codGrupoFolha = CodGrupoFolha;
+                                    objfrmAVJ.IdFolha = idfolha;
+                                    objfrmAVJ.IdPaciente = idpaciente;
+                                    objfrmAVJ.IdResultado = IdResultado;
+                                    objfrmAVJ.sigla = sigla;
+                                    objfrmAVJ.nome = nome;
+
+                                    // Altera o cursor para "espera"
+                                    Cursor.Current = Cursors.WaitCursor;
+
+                                    // Define o form pai como o form principal
+                                    objfrmAVJ.MdiParent = this.MdiParent;
+
+                                    //Abre o form de especialização não modal
+                                    objfrmAVJ.Show();
+
+                                    // Restaura o cursor normal
+                                    Cursor.Current = Cursors.Default;
+
                                     break;
 
                                 case (int)GrupoFolha.PEV:
@@ -456,7 +499,7 @@ namespace WEDLC.Forms
 
                                     if (cUtil.ValidaFormulario.FormularioEstaAberto<frmPotenciaisEvocados>() == true)
                                     {
-                                        MessageBox.Show("O formulário de Potenciais Evocados já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        MessageBox.Show("O formulário de AVJ já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         return;
                                     }
 
@@ -535,6 +578,11 @@ namespace WEDLC.Forms
                         case (int)GrupoFolha.PESSMED:
                             var frmPESSMED= new frmRelResultadoPESSMED(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
                             frmPESSMED.ShowDialog();
+                            break;
+
+                        case (int)GrupoFolha.AVJ:
+                            var frmAvj = new frmRelResultadoAVJ(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
+                            frmAvj.ShowDialog();
                             break;
                     }
                 }

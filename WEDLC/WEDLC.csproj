@@ -156,6 +156,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Banco\cAVJ.cs" />
     <Compile Include="Banco\FormBaseVerdeGradient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +212,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAvaliacaoMuscular.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSetsReport\dsAVJ.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAVJ.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSetsReport\dsComentarioPEV.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -258,6 +264,12 @@
     <Compile Include="Forms\frmPermissao.Designer.cs">
       <DependentUpon>frmPermissao.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmAVJ.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAVJ.Designer.cs">
+      <DependentUpon>frmAVJ.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmRelResultadoPESSMED.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,6 +287,12 @@
     </Compile>
     <Compile Include="Forms\frmRelResultadoPEGC.Designer.cs">
       <DependentUpon>frmRelResultadoPEGC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmRelResultadoAVJ.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmRelResultadoAVJ.Designer.cs">
+      <DependentUpon>frmRelResultadoAVJ.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmRelResultadoPEV.cs">
       <SubType>Form</SubType>
@@ -407,6 +425,9 @@
     <EmbeddedResource Include="Forms\frmPermissao.resx">
       <DependentUpon>frmPermissao.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAVJ.resx">
+      <DependentUpon>frmAVJ.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmRelResultadoPESSMED.resx">
       <DependentUpon>frmRelResultadoPESSMED.cs</DependentUpon>
     </EmbeddedResource>
@@ -415,6 +436,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmRelResultadoPEGC.resx">
       <DependentUpon>frmRelResultadoPEGC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmRelResultadoAVJ.resx">
+      <DependentUpon>frmRelResultadoAVJ.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmRelResultadoPEV.resx">
       <DependentUpon>frmRelResultadoPEV.cs</DependentUpon>
@@ -498,6 +522,9 @@
     <EmbeddedResource Include="Relatorios\relResultadoPEGC.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\relResultadoAVJ.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Relatorios\relResultadoPEV.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -514,6 +541,17 @@
     </None>
     <None Include="DataSetsReport\dsAvaliacaoMuscular.xss">
       <DependentUpon>dsAvaliacaoMuscular.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsAVJ.xsc">
+      <DependentUpon>dsAVJ.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetsReport\dsAVJ.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAVJ.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetsReport\dsAVJ.xss">
+      <DependentUpon>dsAVJ.xsd</DependentUpon>
     </None>
     <None Include="DataSetsReport\dsComentarioPEV.xsc">
       <DependentUpon>dsComentarioPEV.xsd</DependentUpon>
