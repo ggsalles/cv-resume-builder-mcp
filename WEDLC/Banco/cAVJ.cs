@@ -58,7 +58,6 @@ namespace WEDLC.Banco
                 return false;
             }
         }
-
         public DataTable BuscaResultadoAVJ()
         {
             if (IdPaciente < 0)
@@ -98,7 +97,6 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
-
         public bool AtualizarResultadoAVJ()
         {
             if (!conectaBanco())
@@ -143,7 +141,6 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
-
         public DataTable BuscaResultadoComentarioAVJ()
         {
             if (IdResultado < 0)
@@ -182,7 +179,6 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
-
         public bool AtualizarResultadoComentarioAVJ()
         {
             if (!conectaBanco())
