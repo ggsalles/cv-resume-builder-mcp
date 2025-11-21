@@ -43,6 +43,16 @@ namespace WEDLC.Forms
             {
                 ip = await ObterIPExterno();
                 this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac + " || Versão: " + version;
+                // Verificar acesso rede
+                cIp objcIP = new cIp();
+                objcIP.Endereco = ip;
+
+                if (objcIP.buscaEndereco() == false)
+                {
+                    MessageBox.Show("Tentativa de acesso fora da rede autorizada. ", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                    return;
+                }
             }
             SetFormTextAsync();
 

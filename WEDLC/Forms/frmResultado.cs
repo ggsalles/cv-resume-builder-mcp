@@ -54,6 +54,7 @@ namespace WEDLC.Forms
             PEGC = 5,
             PESSMED = 6,
             AVJ = 7,
+            COM = 8,
         }
 
         public frmResultado()
