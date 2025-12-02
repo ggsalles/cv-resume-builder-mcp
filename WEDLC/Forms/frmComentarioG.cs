@@ -8,19 +8,19 @@ using static WEDLC.Banco.cUtil;
 
 namespace WEDLC.Forms
 {
-    public partial class frmAVJ : Form
+    public partial class frmComentarioG : Form
     {
         //Código do módulo
         public const int codModulo = 15;
 
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
         public Int32 IdResultado { get; set; }
-        public Int32 IdResultadoAVJ { get; set; } // Usado para identificar o resultado PEV
+        public Int32 IdResultadoG { get; set; }
         public Int32 IdFolha { get; set; }
         public Int32 IdPaciente { get; set; }
 
-        public int codGrupoFolha; //Código do grupo de folha (PEV, PESS, PEA, PEGC, PESSMED)
-        public Int32 IdResultadoComentarioAVJ { get; set; } // Usado para identificar o resultado PEV
+        public int codGrupoFolha; //Código do grupo de folha (ComentarioG)
+        public Int32 IdResultadoComentarioG { get; set; } // Usado para identificar o resultado PEV
 
         public bool jaIniciou = false;
 
@@ -31,17 +31,17 @@ namespace WEDLC.Forms
         private FormZoomHelper zoomHelper;
         public enum GrupoFolha
         {
-            AVJ = 7
+            ComentarioG = 8
         }
 
-        public frmAVJ()
+        public frmComentarioG()
         {
             InitializeComponent();
             this.FormClosed += (s, e) => zoomHelper.Dispose(); // Descarta automaticamente quando o form for fechado
             this.DoubleBuffered = true;
         }
 
-        private void frmAVJ_Load(object sender, EventArgs e)
+        private void frmComentarioG_Load(object sender, EventArgs e)
         {
             //Verifica permissão de acesso
             if (!cPermissao.PodeAcessarModulo(codModulo))
@@ -64,18 +64,12 @@ namespace WEDLC.Forms
             objcLog.incluiLog();
         }
 
-        private void frmAVJ_Shown(object sender, EventArgs e)
-        {
-            txtEstimulacao.Focus();
-            ValidacaoTextBox.SelecionaTextoTextBox((txtEstimulacao), e);
-        }
         public void iniciaTela()
         {
             try
             {
                 //De acordo com o grupo de folha, formata a tela
                 CarregaTela();
-
             }
             catch (Exception)
             {
@@ -85,15 +79,15 @@ namespace WEDLC.Forms
         }
         public void CarregaTela()
         {
-            if (CarregaDadosAVJ() == false)
+            if (CarregaDadosG() == false)
             {
-                throw new Exception("Erro na CarregaDadosPev");
+                throw new Exception("Erro na CarregaDadosG");
             }
 
 
-            if (CarregaDadosComentarioAVJ() == false)
+            if (CarregaDadosComentarioG() == false)
             {
-                throw new Exception("Erro na CarregaDadosComentarioAVJ"); ;
+                throw new Exception("Erro na CarregaDadosComentarioG"); ;
             }
         }
 
@@ -110,19 +104,14 @@ namespace WEDLC.Forms
             {
                 using (var scope = new TransactionScope())
                 {
-                    if (GravaGrupoFolhaAVJ() == false)
-                    {
-                        throw new Exception("Falha ao gravar AVJ");
-                    }
-
-                    if (ValidaComentarioPEV() == false)
+                    if (ValidaComentarioG() == false)
                     {
                         return;
                     }
 
-                    if (GravaGrupoFolhaComentarioAVJ() == false)
+                    if (GravaGrupoFolhaComentarioG() == false)
                     {
-                        throw new Exception("Falha ao gravar comentário AVJ");
+                        throw new Exception("Falha ao gravar comentário G");
                     }
 
                     // GRAVA LOG
@@ -159,75 +148,40 @@ namespace WEDLC.Forms
             this.Close();
         }
 
-        private bool CarregaDadosAVJ()
+        private bool CarregaDadosG()
         {
             try
             {
-                cAVJ objAvj = new cAVJ();
+                cComentarioG objComnetarioG = new cComentarioG();
 
-                objAvj.IdPaciente = this.IdPaciente;
-                objAvj.IdResultado = this.IdResultado;
-                objAvj.IdFolha = this.IdFolha;
-                objAvj.IdResultadoAVJ = this.IdResultadoAVJ;
+                objComnetarioG.IdPaciente = this.IdPaciente;
+                objComnetarioG.IdResultado = this.IdResultado;
+                objComnetarioG.IdFolha = this.IdFolha;
+                objComnetarioG.IdResultadoG = this.IdResultadoG;
 
-                DataTable dt = objAvj.BuscaResultadoAVJ();
+                DataTable dt = objComnetarioG.BuscaResultadoG();
 
                 if (dt.Rows.Count > 0)
                 {
                     // Preenche os campos com os dados retornados
-                    this.IdResultadoAVJ = Convert.ToInt32(dt.Rows[0]["IdResultadoAVJ"].ToString());
-                    txtCodigo.Text = dt.Rows[0]["IdResultadoAVJ"].ToString();
-                    txtEstimulacao.Text = dt.Rows[0]["Estimulacao"].ToString();
-                    txtNervo.Text = dt.Rows[0]["Nervo"].ToString();
-                    txtMusculo.Text = dt.Rows[0]["Musculo"].ToString();
-                    txtAntes.Text = dt.Rows[0]["AntesdoExercicio"].ToString();
-                    txtLogo.Text = dt.Rows[0]["LogoAposExercicio"].ToString();
-                    txttres.Text = dt.Rows[0]["TresMinutosApos"].ToString();
+                    this.IdResultadoG = Convert.ToInt32(dt.Rows[0]["IdResultadoG"].ToString());
+                    txtCodigo.Text = dt.Rows[0]["IdResultadoG"].ToString();
+
                     return true;
                 }
                 else
                 {
-                    txtEstimulacao.Text = "";
-                    txtNervo.Text = "";
-                    txtMusculo.Text = "";
-                    txtAntes.Text = "";
-                    txtLogo.Text = "";
-                    txttres.Text = "";
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao CarregaDadosAVJ: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Erro ao CarregaDadosG: " + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
 
-        private bool GravaGrupoFolhaAVJ()
-        {
-            cAVJ objcAVJ = new cAVJ();
-
-            objcAVJ.IdResultadoAVJ = this.IdResultadoAVJ;
-            objcAVJ.IdResultado = this.IdResultado;
-            objcAVJ.IdPaciente = this.IdPaciente;
-            objcAVJ.Estimulacao = txtEstimulacao.Text;
-            objcAVJ.Nervo = txtNervo.Text;
-            objcAVJ.Musculo = txtMusculo.Text;
-            objcAVJ.AntesExercicio = txtAntes.Text;
-            objcAVJ.LogoAposExercicio = txtLogo.Text;
-            objcAVJ.TresMinutosApos = txttres.Text;
-
-            if (objcAVJ.AtualizarResultadoAVJ() == false)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private bool GravaGrupoFolhaComentarioAVJ()
+        private bool GravaGrupoFolhaComentarioG()
         {
             if (string.IsNullOrEmpty(txtCodigoComentario.Text))
             {
@@ -235,15 +189,15 @@ namespace WEDLC.Forms
                 return true;
             }
 
-            cAVJ objcAVJ= new cAVJ();
+            cComentarioG objcComentarioG = new cComentarioG();
 
-            objcAVJ.IdResultadoComentario = this.IdResultadoComentarioAVJ;
-            objcAVJ.IdResultado = this.IdResultado;
-            objcAVJ.IdPaciente = this.IdPaciente;
-            objcAVJ.IdComentario = Convert.ToInt32(txtCodigoComentario.Text);
-            objcAVJ.Texto = txtTextoComentario.Text.ToUpper();
+            objcComentarioG.IdResultadoComentarioG = this.IdResultadoComentarioG;
+            objcComentarioG.IdResultado = this.IdResultado;
+            objcComentarioG.IdPaciente = this.IdPaciente;
+            objcComentarioG.IdComentario = Convert.ToInt32(txtCodigoComentario.Text);
+            objcComentarioG.Texto = txtTextoComentario.Text.ToUpper();
 
-            if (objcAVJ.AtualizarResultadoComentarioAVJ() == false)
+            if (objcComentarioG.AtualizarResultadoComentarioG() == false)
             {
                 return false;
             }
@@ -253,21 +207,22 @@ namespace WEDLC.Forms
             }
         }
 
-        private bool CarregaDadosComentarioAVJ()
+        private bool CarregaDadosComentarioG()
         {
             try
             {
-                cAVJ objcAVJ = new cAVJ();
+                cComentarioG objcComentarioG = new cComentarioG();
 
-                objcAVJ.IdResultado = this.IdResultado;
-                objcAVJ.IdPaciente = this.IdPaciente;
+                objcComentarioG.IdResultado = this.IdResultado;
+                objcComentarioG.IdPaciente = this.IdPaciente;
+                objcComentarioG.IdFolha = this.IdFolha;
 
-                DataTable dt = objcAVJ.BuscaResultadoComentarioAVJ();
+                DataTable dt = objcComentarioG.BuscaResultadoComentarioG();
 
                 if (dt.Rows.Count > 0)
                 {
                     // Preenche os campos com os dados retornados
-                    this.IdResultadoComentarioAVJ = dt.Rows[0]["idresultadocomentarioavj"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultadocomentarioavj"].ToString()) : 0;
+                    this.IdResultadoComentarioG = dt.Rows[0]["idresultadocomentariog"] != DBNull.Value ? Int32.Parse(dt.Rows[0]["idresultadocomentariog"].ToString()) : 0;
                     txtCodigoComentario.Text = dt.Rows[0]["idcomentario"].ToString();
                     txtSiglaComentario.Text = dt.Rows[0]["sigla"].ToString();
                     txtNomeComentario.Text = dt.Rows[0]["nome"].ToString();
@@ -276,7 +231,7 @@ namespace WEDLC.Forms
                 else
                 {
                     // Preenche os campos com os dados retornados
-                    this.IdResultadoComentarioAVJ = 0;
+                    this.IdResultadoComentarioG = 0;
                     txtCodigoComentario.Text = string.Empty;
                     txtSiglaComentario.Text = string.Empty;
                     txtNomeComentario.Text = string.Empty;
@@ -291,7 +246,7 @@ namespace WEDLC.Forms
                 return false;
             }
         }
-        private bool ValidaComentarioPEV()
+        private bool ValidaComentarioG()
         {
             if (string.IsNullOrEmpty(txtCodigoComentario.Text))
             {
@@ -305,7 +260,7 @@ namespace WEDLC.Forms
         {
             frmComentarios objfrmComentarios = new frmComentarios();
 
-            // Passa o objeto cAtividadeInsercao para o formulário B
+            // Indica que a chamada é para resultado
             objfrmComentarios.VemdeResultado = true;
 
             // Mostra o diálogo e verifica se foi preenchido

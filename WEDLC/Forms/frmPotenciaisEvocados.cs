@@ -15,15 +15,15 @@ namespace WEDLC.Forms
         public const int codModulo = 15;
 
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
-        public int IdResultado { get; set; }
-        public int IdResultadoPEV { get; set; } // Usado para identificar o resultado PEV
-        public int IdResultadoPEA { get; set; } // Usado para identificar o resultado PEV
-        public int IdResultadoPESS { get; set; } // Usado para identificar o resultado PESS
-        public int IdResultadoPEGC { get; set; } // Usado para identificar o resultado PEGC
-        public int IdResultadoPESSMED { get; set; } // Usado para identificar o resultado PESSMED
-        public int IdResultadoComentarioPEV { get; set; } // Usado para identificar o resultado PEV
-        public int IdFolha { get; set; }
-        public int IdPaciente { get; set; }
+        public Int32 IdResultado { get; set; }
+        public Int32 IdResultadoPEV { get; set; } // Usado para identificar o resultado PEV
+        public Int32 IdResultadoPEA { get; set; } // Usado para identificar o resultado PEV
+        public Int32 IdResultadoPESS { get; set; } // Usado para identificar o resultado PESS
+        public Int32 IdResultadoPEGC { get; set; } // Usado para identificar o resultado PEGC
+        public Int32 IdResultadoPESSMED { get; set; } // Usado para identificar o resultado PESSMED
+        public Int32 IdResultadoComentarioPEV { get; set; } // Usado para identificar o resultado PEV
+        public Int32 IdFolha { get; set; }
+        public Int32 IdPaciente { get; set; }
 
         public int codGrupoFolha; //Código do grupo de folha (PEV, PESS, PEA, PEGC, PESSMED)
 

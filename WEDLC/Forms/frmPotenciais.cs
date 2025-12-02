@@ -26,7 +26,7 @@ namespace WEDLC.Forms
 
         //Variável para identificar se a chamada vem do fomrmulário de resultado do paciente
         public bool VemdeResultado { get; set; } = false;
-        public int IdPotencial { get; set; }
+        public Int32 IdPotencial { get; set; }
         public string Nome { get; set; }
         public string Sigla { get; set; }
         public string Texto { get; set; }

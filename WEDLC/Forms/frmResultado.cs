@@ -21,7 +21,7 @@ namespace WEDLC.Forms
         public DataTable dtComboFolha;
         public int NumeroLinha = -1; // Variável para controlar a linha do grid da folha
         public int CodGrupoFolha = 0; // Variável para controlar o código do grupo da folha
-        public int IdResultado = 0; //Variável para controlar o código do resultado
+        public Int32 IdResultado = 0; //Variável para controlar o código do resultado
         public string IdadePaciente = string.Empty; //Variável para controlar a idade do paciente
 
         public const int codModulo = 13; //Código do módulo
@@ -54,7 +54,7 @@ namespace WEDLC.Forms
             PEGC = 5,
             PESSMED = 6,
             AVJ = 7,
-            COM = 8,
+            COMG = 8,
         }
 
         public frmResultado()
@@ -486,6 +486,38 @@ namespace WEDLC.Forms
 
                                     //Abre o form de especialização não modal
                                     objfrmAVJ.Show();
+
+                                    // Restaura o cursor normal
+                                    Cursor.Current = Cursors.Default;
+
+                                    break;
+
+                                case (int)GrupoFolha.COMG:
+
+                                    if (cUtil.ValidaFormulario.FormularioEstaAberto<frmComentarioG>() == true)
+                                    {
+                                        MessageBox.Show("O formulário de ComentáriosG já está aberto!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        return;
+                                    }
+
+                                    // Cria um objeto para o form de troca de senhas abrir
+                                    frmComentarioG objfrmComentarioG = new frmComentarioG();
+
+                                    objfrmComentarioG.codGrupoFolha = CodGrupoFolha;
+                                    objfrmComentarioG.IdFolha = idfolha;
+                                    objfrmComentarioG.IdPaciente = idpaciente;
+                                    objfrmComentarioG.IdResultado = IdResultado;
+                                    objfrmComentarioG.sigla = sigla;
+                                    objfrmComentarioG.nome = nome;
+
+                                    // Altera o cursor para "espera"
+                                    Cursor.Current = Cursors.WaitCursor;
+
+                                    // Define o form pai como o form principal
+                                    objfrmComentarioG.MdiParent = this.MdiParent;
+
+                                    //Abre o form de especialização não modal
+                                    objfrmComentarioG.Show();
 
                                     // Restaura o cursor normal
                                     Cursor.Current = Cursors.Default;

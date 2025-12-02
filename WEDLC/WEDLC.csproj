@@ -156,6 +156,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Banco\cComentarioG.cs" />
     <Compile Include="Banco\cAVJ.cs" />
     <Compile Include="Banco\FormBaseVerdeGradient.cs">
       <SubType>Form</SubType>
@@ -251,6 +252,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsTecnica.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmComentarioG.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmComentarioG.Designer.cs">
+      <DependentUpon>frmComentarioG.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmConfirmacaoSessao.cs">
       <SubType>Form</SubType>
@@ -422,6 +429,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\frmComentarioG.resx">
+      <DependentUpon>frmComentarioG.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmPermissao.resx">
       <DependentUpon>frmPermissao.cs</DependentUpon>
     </EmbeddedResource>
