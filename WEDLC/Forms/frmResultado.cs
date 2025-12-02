@@ -617,6 +617,11 @@ namespace WEDLC.Forms
                             var frmAvj = new frmRelResultadoAVJ(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
                             frmAvj.ShowDialog();
                             break;
+
+                        case (int)GrupoFolha.COMG:
+                            var frmG = new frmRelResultadoG(relIdpaciente, relIdfolha, relCodGrupoFolha, relSigla, relNome, IdResultado); // passando ID do cliente
+                            frmG.ShowDialog();
+                            break;
                     }
                 }
 

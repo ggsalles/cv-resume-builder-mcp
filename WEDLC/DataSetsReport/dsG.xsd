@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsG" targetNamespace="http://tempuri.org/dsG.xsd" xmlns:mstns="http://tempuri.org/dsG.xsd" xmlns="http://tempuri.org/dsG.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsG" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsG" msprop:Generator_DataSetName="dsG">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtComentarios" msprop:Generator_RowEvHandlerName="dtComentariosRowChangeEventHandler" msprop:Generator_RowDeletedName="dtComentariosRowDeleted" msprop:Generator_RowDeletingName="dtComentariosRowDeleting" msprop:Generator_RowEvArgName="dtComentariosRowChangeEvent" msprop:Generator_TablePropName="dtComentarios" msprop:Generator_RowChangedName="dtComentariosRowChanged" msprop:Generator_RowChangingName="dtComentariosRowChanging" msprop:Generator_TableClassName="dtComentariosDataTable" msprop:Generator_RowClassName="dtComentariosRow" msprop:Generator_TableVarName="tabledtComentarios" msprop:Generator_UserTableName="dtComentarios">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idresultado" msprop:Generator_ColumnPropNameInRow="idresultado" msprop:Generator_ColumnPropNameInTable="idresultadoColumn" msprop:Generator_ColumnVarNameInTable="columnidresultado" msprop:Generator_UserColumnName="idresultado" type="xs:string" minOccurs="0" />
+              <xs:element name="idresultadocomentariog" msdata:Caption="idresultadocomentarioavj" msprop:Generator_ColumnPropNameInRow="idresultadocomentariog" msprop:Generator_ColumnPropNameInTable="idresultadocomentariogColumn" msprop:Generator_ColumnVarNameInTable="columnidresultadocomentariog" msprop:Generator_UserColumnName="idresultadocomentariog" type="xs:string" minOccurs="0" />
+              <xs:element name="idcomentario" msprop:Generator_ColumnPropNameInRow="idcomentario" msprop:Generator_ColumnPropNameInTable="idcomentarioColumn" msprop:Generator_ColumnVarNameInTable="columnidcomentario" msprop:Generator_UserColumnName="idcomentario" type="xs:string" minOccurs="0" />
+              <xs:element name="descricao" msprop:Generator_ColumnPropNameInRow="descricao" msprop:Generator_ColumnPropNameInTable="descricaoColumn" msprop:Generator_ColumnVarNameInTable="columndescricao" msprop:Generator_UserColumnName="descricao" type="xs:string" minOccurs="0" />
+              <xs:element name="sigla" msprop:Generator_ColumnPropNameInRow="sigla" msprop:Generator_ColumnPropNameInTable="siglaColumn" msprop:Generator_ColumnVarNameInTable="columnsigla" msprop:Generator_UserColumnName="sigla" type="xs:string" minOccurs="0" />
+              <xs:element name="nome" msprop:Generator_ColumnPropNameInRow="nome" msprop:Generator_ColumnPropNameInTable="nomeColumn" msprop:Generator_ColumnVarNameInTable="columnnome" msprop:Generator_UserColumnName="nome" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtResultado" msprop:Generator_RowEvHandlerName="dtResultadoRowChangeEventHandler" msprop:Generator_RowDeletedName="dtResultadoRowDeleted" msprop:Generator_RowDeletingName="dtResultadoRowDeleting" msprop:Generator_RowEvArgName="dtResultadoRowChangeEvent" msprop:Generator_TablePropName="dtResultado" msprop:Generator_RowChangedName="dtResultadoRowChanged" msprop:Generator_RowChangingName="dtResultadoRowChanging" msprop:Generator_TableClassName="dtResultadoDataTable" msprop:Generator_RowClassName="dtResultadoRow" msprop:Generator_TableVarName="tabledtResultado" msprop:Generator_UserTableName="dtResultado">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idresultado" msprop:Generator_ColumnPropNameInRow="idresultado" msprop:Generator_ColumnPropNameInTable="idresultadoColumn" msprop:Generator_ColumnVarNameInTable="columnidresultado" msprop:Generator_UserColumnName="idresultado" type="xs:string" minOccurs="0" />
+              <xs:element name="idresultadog" msdata:Caption="idresultadoavj" msprop:Generator_ColumnPropNameInRow="idresultadog" msprop:Generator_ColumnPropNameInTable="idresultadogColumn" msprop:Generator_ColumnVarNameInTable="columnidresultadog" msprop:Generator_UserColumnName="idresultadog" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
