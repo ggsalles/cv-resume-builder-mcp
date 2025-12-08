@@ -132,6 +132,14 @@ You should see tools like `get_git_log`, `read_cv`, `parse_cv_pdf`, etc.
 "Show me the stats for my recent commits to highlight achievements"
 ```
 
+### Career guidance
+```
+"Based on my commits, Jira tickets, and certifications, what seniority level am I at?"
+"Analyze my work and suggest what skills I need for senior/staff/principal level"
+"Review my achievements and help me position myself for a promotion"
+"What's missing from my profile to reach the next level?"
+```
+
 ## Optional Integrations
 
 Add these to your MCP configuration's `env` section:
