@@ -24,7 +24,10 @@ keywords = [
     "git",
     "jira",
     "credly",
-    "linkedin"
+    "linkedin",
+    "ats",
+    "ats-compliant",
+    "applicant-tracking-system"
 ]
 authors = [
     { name = "CV Resume Builder MCP Contributors" }

@@ -2,7 +2,7 @@
 
 > AI-powered CV and resume builder using Model Context Protocol (MCP)
 
-Automatically generate and update your CV/resume from git commits, Jira tickets, Credly certifications, and LinkedIn. Built for developers who want their CV to stay current without manual updates.
+Automatically generate and update your CV/resume from git commits, Jira tickets, Credly certifications, and LinkedIn. Built for professionals who want their CV to stay current without manual updates. Generates ATS-compliant LaTeX CVs that pass Applicant Tracking Systems.
 
 [![MCP](https://img.shields.io/badge/MCP-Model%20Context%20Protocol-blue)](https://modelcontextprotocol.io)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -16,7 +16,8 @@ Automatically generate and update your CV/resume from git commits, Jira tickets,
 - 💼 **LinkedIn profile** - Not implemented yet 🚧 (authentication required)
 - 📄 **PDF parsing** - Extract content from existing CVs ✅
 - 🚀 **Enhanced CV generation** - Combine all data sources ✅
-- 📝 **LaTeX support** - Generate professional CVs ✅
+- 📝 **LaTeX support** - Generate professional, ATS-compliant CVs ✅
+- 🤖 **ATS-friendly** - Clean formatting that passes Applicant Tracking Systems ✅
 
 ## Quick Start
 
@@ -290,6 +291,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Keywords:** cv builder, resume builder, mcp, model context protocol, ai resume, ai cv, automatic cv, career tracker, latex cv, resume generator, cv generator, developer resume, tech resume
+**Keywords:** cv builder, resume builder, mcp, model context protocol, ai resume, ai cv, automatic cv, career tracker, latex cv, resume generator, cv generator, developer resume, tech resume, ats compliant, ats friendly, applicant tracking system
 
 Made with ❤️ for developers who hate updating their CVs manually
