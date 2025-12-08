@@ -10,13 +10,13 @@ Automatically generate and update your CV/resume from git commits, Jira tickets,
 
 ## Features
 
-- 📊 **Git commits** - Track your code contributions automatically
-- 🎫 **Jira tickets** - Pull completed projects and tasks
-- 🏆 **Credly badges** - Sync certifications and achievements
-- 💼 **LinkedIn profile** - Read your public profile
-- 📄 **PDF parsing** - Extract content from existing CVs
-- 🚀 **Enhanced CV generation** - Combine all data sources
-- 📝 **LaTeX support** - Generate professional CVs
+- 📊 **Git commits** - Track your code contributions automatically ✅
+- 🎫 **Jira tickets** - Pull completed projects and tasks ⚠️ (requires testing)
+- 🏆 **Credly badges** - Sync certifications and achievements ✅
+- 💼 **LinkedIn profile** - Not implemented yet 🚧 (authentication required)
+- 📄 **PDF parsing** - Extract content from existing CVs ✅
+- 🚀 **Enhanced CV generation** - Combine all data sources ✅
+- 📝 **LaTeX support** - Generate professional CVs ✅
 
 ## Quick Start
 
@@ -126,7 +126,7 @@ You should see tools like `get_git_log`, `read_cv`, `parse_cv_pdf`, etc.
 
 Add these to your MCP configuration's `env` section:
 
-### Jira
+### Jira (⚠️ Requires Testing)
 ```json
 "JIRA_URL": "https://your-company.atlassian.net",
 "JIRA_EMAIL": "your-email@example.com",
@@ -136,17 +136,21 @@ Add these to your MCP configuration's `env` section:
 
 Get API token: https://id.atlassian.com/manage-profile/security/api-tokens
 
-### Credly
+**Note:** Jira integration is functional but requires more testing across different Jira configurations. Please report any issues!
+
+### Credly (✅ Fully Tested)
 ```json
 "CREDLY_USER_ID": "your-credly-username"
 ```
 
 Find your username in your Credly profile URL: `https://www.credly.com/users/YOUR-USERNAME`
 
-### LinkedIn
+### LinkedIn (🚧 Not Implemented)
 ```json
 "LINKEDIN_PROFILE_URL": "https://www.linkedin.com/in/yourprofile"
 ```
+
+**Note:** LinkedIn integration is not yet implemented due to authentication requirements. The tool currently only returns your profile URL. For now, manually copy your LinkedIn achievements to `wins.md` file. Contributions welcome!
 
 ### CV Formatting
 ```json
