@@ -36,6 +36,8 @@ Just configure your MCP client and uvx handles the rest.
 pip install cv-resume-builder-mcp
 ```
 
+> **Note:** The configurations below use `uvx` which automatically downloads and runs the latest version from PyPI. If you're developing locally or want to test unreleased features, see [TESTING.md](TESTING.md) for local development setup.
+
 ### Configuration
 
 #### For Claude Desktop
@@ -202,12 +204,28 @@ cv-resume-builder-mcp/
 
 ## Development
 
-### Setup
+### For End Users (Production)
+Use the `uvx` configuration shown above. It automatically downloads the latest stable version from PyPI.
+
+### For Contributors (Local Development)
+
+**Just testing locally?** Clone the repo:
+```bash
+git clone https://github.com/eyaab/cv-resume-builder-mcp.git
+cd cv-resume-builder-mcp
+pip install -e ".[dev]"
+```
+
+**Want to contribute changes?** Fork first, then clone your fork:
+1. Click "Fork" on GitHub
+2. Clone your fork:
 ```bash
 git clone https://github.com/YOUR-USERNAME/cv-resume-builder-mcp.git
 cd cv-resume-builder-mcp
 pip install -e ".[dev]"
 ```
+
+Then use the local development configuration from [TESTING.md](TESTING.md) which uses `python3 -m` instead of `uvx`.
 
 ### Run Tests
 ```bash
