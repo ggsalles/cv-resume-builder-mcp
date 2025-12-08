@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cv-resume-builder-mcp"
-version = "1.0.0"
+version = "1.1.0"
 description = "AI-powered CV and resume builder using Model Context Protocol. Automatically generates and updates your CV/resume from git commits, Jira tickets, Credly badges, and LinkedIn profile."
 readme = "README.md"
 requires-python = ">=3.10"
