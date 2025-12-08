@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cv-resume-builder-mcp"
-version = "1.1.0"
+version = "1.1.2"
 description = "AI-powered CV and resume builder using Model Context Protocol. Automatically generates and updates your CV/resume from git commits, Jira tickets, Credly badges, and LinkedIn profile."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -61,7 +61,7 @@ Repository = "https://github.com/eyaab/cv-resume-builder-mcp"
 Issues = "https://github.com/eyaab/cv-resume-builder-mcp/issues"
 
 [project.scripts]
-cv-resume-builder-mcp = "cv_resume_builder_mcp.server:main"
+cv-resume-builder-mcp = "cv_resume_builder_mcp.server:run"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/cv_resume_builder_mcp"]

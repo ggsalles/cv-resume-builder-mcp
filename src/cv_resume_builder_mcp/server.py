@@ -985,6 +985,12 @@ async def main():
         )
 
 
+def run():
+    """Synchronous entry point for the MCP server (used by uvx)."""
+    import asyncio
+    asyncio.run(main())
+
+
 if __name__ == "__main__":
     import asyncio
     asyncio.run(main())
