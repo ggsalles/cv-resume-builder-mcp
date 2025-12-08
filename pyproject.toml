@@ -55,10 +55,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YOUR-USERNAME/cv-resume-builder-mcp"
-Documentation = "https://github.com/YOUR-USERNAME/cv-resume-builder-mcp#readme"
-Repository = "https://github.com/YOUR-USERNAME/cv-resume-builder-mcp"
-Issues = "https://github.com/YOUR-USERNAME/cv-resume-builder-mcp/issues"
+Homepage = "https://github.com/eyaab/cv-resume-builder-mcp"
+Documentation = "https://github.com/eyaab/cv-resume-builder-mcp#readme"
+Repository = "https://github.com/eyaab/cv-resume-builder-mcp"
+Issues = "https://github.com/eyaab/cv-resume-builder-mcp/issues"
 
 [project.scripts]
 cv-resume-builder-mcp = "cv_resume_builder_mcp.server:main"

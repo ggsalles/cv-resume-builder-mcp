@@ -13,16 +13,20 @@ Edit `~/.kiro/settings/mcp.json`:
       "command": "python3",
       "args": ["-m", "cv_resume_builder_mcp.server"],
       "env": {
-        "PYTHONPATH": "/Users/eyaabdelmoula/Desktop/devoteam_projects/poc-mpc-cv/src",
-        "REPO_PATH": "/Users/eyaabdelmoula/Desktop/devoteam_projects/poc-mpc-cv",
-        "AUTHOR_NAME": "eya",
-        "CREDLY_USER_ID": "eya-abdelmoula",
-        "LINKEDIN_PROFILE_URL": "https://www.linkedin.com/in/eya-abdelmoula"
+        "PYTHONPATH": "/absolute/path/to/cv-resume-builder-mcp/src",
+        "AUTHOR_NAME": "your-git-username",
+        "REPOS": "default:/absolute/path/to/your-repo",
+        "CREDLY_USER_ID": "your-credly-username",
+        "LINKEDIN_PROFILE_URL": "https://www.linkedin.com/in/yourprofile"
       }
     }
   }
 }
 ```
+
+**For multiple repositories:** Change `REPOS` to: `"CompanyA:/path1,CompanyB:/path2"`
+
+**Note:** Replace paths with your actual absolute paths. Use `pwd` in each directory to get the full path.
 
 ### Step 2: Install Dependencies
 
@@ -69,6 +73,13 @@ You should see:
 "Get my Credly badges"
 ```
 
+**With multiple repositories:**
+```
+"List all my configured repositories"
+"Get my commits from CompanyA for the last 3 months"
+"Show me all my work across all repositories in the last year"
+```
+
 ## Alternative: Test with uvx (After Publishing to PyPI)
 
 Once published to PyPI, users can use:
@@ -80,13 +91,15 @@ Once published to PyPI, users can use:
       "command": "uvx",
       "args": ["cv-resume-builder-mcp"],
       "env": {
-        "REPO_PATH": "/path/to/repo",
-        "AUTHOR_NAME": "your-name"
+        "AUTHOR_NAME": "your-name",
+        "REPOS": "default:/path/to/repo"
       }
     }
   }
 }
 ```
+
+**For multiple repositories:** Change `REPOS` to: `"CompanyA:/path1,CompanyB:/path2"`
 
 No installation needed - uvx handles everything!
 
