@@ -17,8 +17,37 @@ import pypdf
 
 
 # Configuration from environment variables
-REPO_PATH = os.getenv("REPO_PATH", os.getcwd())
 AUTHOR_NAME = os.getenv("AUTHOR_NAME", "your-git-username")
+
+# Repository configuration
+# Format: "CompanyA:/path/to/repo1,CompanyB:/path/to/repo2"
+# Or single: "default:/path/to/repo"
+REPOS = os.getenv("REPOS", "")
+# Backward compatibility: support old REPO_PATH
+REPO_PATH = os.getenv("REPO_PATH", "")
+
+def parse_repos() -> dict:
+    """Parse REPOS environment variable into a dictionary."""
+    repos = {}
+    
+    # Parse REPOS if provided
+    if REPOS:
+        for repo_entry in REPOS.split(","):
+            if ":" in repo_entry:
+                name, path = repo_entry.split(":", 1)
+                repos[name.strip()] = path.strip()
+    
+    # Backward compatibility: if REPO_PATH is set and no REPOS, use it as default
+    if REPO_PATH and not repos:
+        repos["default"] = REPO_PATH
+    
+    # If nothing configured, use current directory as default
+    if not repos:
+        repos["default"] = os.getcwd()
+    
+    return repos
+
+REPO_DICT = parse_repos()
 
 # Jira Configuration
 JIRA_URL = os.getenv("JIRA_URL")
@@ -72,7 +101,48 @@ async def list_tools() -> list[Tool]:
     return [
         Tool(
             name="get_git_log",
-            description="Get latest git commits by author (excludes merge commits)",
+            description="Get latest git commits by author from default repo (excludes merge commits)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "since": {
+                        "type": "string",
+                        "description": "Time range for commits",
+                        "default": "6 months ago"
+                    }
+                }
+            }
+        ),
+        Tool(
+            name="list_repos",
+            description="List all configured git repositories",
+            inputSchema={
+                "type": "object",
+                "properties": {}
+            }
+        ),
+        Tool(
+            name="get_git_log_by_repo",
+            description="Get git commits from a specific repository by name",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "repo_name": {
+                        "type": "string",
+                        "description": "Name of the repository (e.g., 'CompanyA', 'Personal')"
+                    },
+                    "since": {
+                        "type": "string",
+                        "description": "Time range for commits",
+                        "default": "6 months ago"
+                    }
+                },
+                "required": ["repo_name"]
+            }
+        ),
+        Tool(
+            name="get_git_log_all_repos",
+            description="Get git commits from all configured repositories, grouped by repo",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -193,6 +263,18 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
         if name == "get_git_log":
             return await get_git_log(arguments.get("since", "6 months ago"))
         
+        elif name == "list_repos":
+            return await list_repos_tool()
+        
+        elif name == "get_git_log_by_repo":
+            return await get_git_log_by_repo(
+                arguments.get("repo_name"),
+                arguments.get("since", "6 months ago")
+            )
+        
+        elif name == "get_git_log_all_repos":
+            return await get_git_log_all_repos(arguments.get("since", "6 months ago"))
+        
         elif name == "read_cv":
             return await read_cv()
         
@@ -231,7 +313,14 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
 
 
 async def get_git_log(since: str) -> list[TextContent]:
-    """Get git commits by author."""
+    """Get git commits by author from first/default repo."""
+    # Get first repo (usually 'default' or first configured)
+    if not REPO_DICT:
+        return [TextContent(type="text", text="No repositories configured")]
+    
+    first_repo_name = list(REPO_DICT.keys())[0]
+    first_repo_path = REPO_DICT[first_repo_name]
+    
     try:
         cmd = [
             "git", "log",
@@ -243,7 +332,72 @@ async def get_git_log(since: str) -> list[TextContent]:
         
         result = subprocess.run(
             cmd,
-            cwd=REPO_PATH,
+            cwd=first_repo_path,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        
+        output = result.stdout.strip()
+        repo_label = f"'{first_repo_name}'" if first_repo_name != "default" else "default repo"
+        return [TextContent(
+            type="text",
+            text=f"Git commits from {repo_label}:\n\n{output if output else 'No commits found'}"
+        )]
+    
+    except subprocess.CalledProcessError as e:
+        return [TextContent(type="text", text=f"Git error: {e.stderr}")]
+
+
+async def list_repos_tool() -> list[TextContent]:
+    """List all configured repositories."""
+    if not REPO_DICT:
+        return [TextContent(
+            type="text",
+            text="No repositories configured"
+        )]
+    
+    output = "Configured Repositories:\n\n"
+    for name, path in REPO_DICT.items():
+        output += f"- {name}: {path}\n"
+    
+    output += f"\nTotal: {len(REPO_DICT)} repository" + ("ies" if len(REPO_DICT) > 1 else "")
+    output += "\n\nUsage:\n"
+    output += "- Use 'get_git_log_by_repo' to get commits from a specific repo\n"
+    output += "- Use 'get_git_log_all_repos' to get commits from all repos"
+    
+    return [TextContent(type="text", text=output)]
+
+
+async def get_git_log_by_repo(repo_name: Optional[str], since: str) -> list[TextContent]:
+    """Get git commits from a specific repository."""
+    if not repo_name:
+        return [TextContent(type="text", text="Error: repo_name is required")]
+    
+    if not REPO_DICT:
+        return [TextContent(type="text", text="No repositories configured")]
+    
+    if repo_name not in REPO_DICT:
+        available = ", ".join(REPO_DICT.keys())
+        return [TextContent(
+            type="text",
+            text=f"Repository '{repo_name}' not found.\n\nAvailable repositories: {available}"
+        )]
+    
+    repo_path = REPO_DICT[repo_name]
+    
+    try:
+        cmd = [
+            "git", "log",
+            f"--author={AUTHOR_NAME}",
+            "--no-merges",
+            f"--since={since}",
+            "--pretty=format:%h - %s (%cr)"
+        ]
+        
+        result = subprocess.run(
+            cmd,
+            cwd=repo_path,
             capture_output=True,
             text=True,
             check=True
@@ -252,11 +406,64 @@ async def get_git_log(since: str) -> list[TextContent]:
         output = result.stdout.strip()
         return [TextContent(
             type="text",
-            text=f"Git commits:\n\n{output if output else 'No commits found'}"
+            text=f"Git commits from '{repo_name}' ({repo_path}):\n\n{output if output else 'No commits found'}"
         )]
     
     except subprocess.CalledProcessError as e:
-        return [TextContent(type="text", text=f"Git error: {e.stderr}")]
+        return [TextContent(type="text", text=f"Git error for '{repo_name}': {e.stderr}")]
+
+
+async def get_git_log_all_repos(since: str) -> list[TextContent]:
+    """Get git commits from all configured repositories."""
+    if not REPO_DICT:
+        return [TextContent(type="text", text="No repositories configured")]
+    
+    all_output = f"Git commits from all repositories ({since}):\n\n"
+    all_output += "="*60 + "\n\n"
+    
+    total_commits = 0
+    
+    for repo_name, repo_path in REPO_DICT.items():
+        try:
+            cmd = [
+                "git", "log",
+                f"--author={AUTHOR_NAME}",
+                "--no-merges",
+                f"--since={since}",
+                "--pretty=format:%h - %s (%cr)"
+            ]
+            
+            result = subprocess.run(
+                cmd,
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            
+            output = result.stdout.strip()
+            commit_count = len(output.split('\n')) if output else 0
+            total_commits += commit_count
+            
+            all_output += f"## {repo_name}\n"
+            all_output += f"Path: {repo_path}\n"
+            all_output += f"Commits: {commit_count}\n\n"
+            
+            if output:
+                all_output += output + "\n\n"
+            else:
+                all_output += "No commits found\n\n"
+            
+            all_output += "-"*60 + "\n\n"
+        
+        except subprocess.CalledProcessError as e:
+            all_output += f"## {repo_name}\n"
+            all_output += f"Error: {e.stderr}\n\n"
+            all_output += "-"*60 + "\n\n"
+    
+    all_output += f"Total commits across all repositories: {total_commits}"
+    
+    return [TextContent(type="text", text=all_output)]
 
 
 async def read_cv() -> list[TextContent]:

@@ -49,13 +49,15 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
       "command": "uvx",
       "args": ["cv-resume-builder-mcp"],
       "env": {
-        "REPO_PATH": "/absolute/path/to/your-repo",
-        "AUTHOR_NAME": "your-git-username"
+        "AUTHOR_NAME": "your-git-username",
+        "REPOS": "default:/absolute/path/to/your-repo"
       }
     }
   }
 }
 ```
+
+**For multiple repositories:** Change `REPOS` to: `"CompanyA:/path1,CompanyB:/path2,Personal:/path3"`
 
 #### For Kiro IDE
 
@@ -68,13 +70,15 @@ Edit `~/.kiro/settings/mcp.json`:
       "command": "uvx",
       "args": ["cv-resume-builder-mcp"],
       "env": {
-        "REPO_PATH": "/absolute/path/to/your-repo",
-        "AUTHOR_NAME": "your-git-username"
+        "AUTHOR_NAME": "your-git-username",
+        "REPOS": "default:/absolute/path/to/your-repo"
       }
     }
   }
 }
 ```
+
+**For multiple repositories:** Change `REPOS` to: `"CompanyA:/path1,CompanyB:/path2,Personal:/path3"`
 
 **Important:** Use absolute paths (no `~`). Get it with `pwd` in your repo directory.
 
@@ -92,9 +96,15 @@ You should see tools like `get_git_log`, `read_cv`, `parse_cv_pdf`, etc.
 
 ## Usage Examples
 
-### Update your CV
 ```
 "Get my git commits from the last 6 months and suggest CV updates"
+```
+
+**With multiple repositories:**
+```
+"List all my configured repositories"
+"Get my commits from CompanyA for the last 3 months"
+"Show me all my work across all repositories in the last year"
 ```
 
 ### Parse existing CV
@@ -147,7 +157,10 @@ Find your username in your Credly profile URL: `https://www.credly.com/users/YOU
 
 | Tool | Description |
 |------|-------------|
-| `get_git_log` | Get your git commits (excludes merge commits) |
+| `get_git_log` | Get your git commits from default repo (excludes merge commits) |
+| `list_repos` | **NEW!** List all configured repositories |
+| `get_git_log_by_repo` | **NEW!** Get commits from a specific repository |
+| `get_git_log_all_repos` | **NEW!** Get commits from all repos, grouped by project |
 | `read_cv` | Read your current LaTeX CV |
 | `read_wins` | Read your wins.md achievements file |
 | `get_jira_tickets` | Get completed Jira tickets |
