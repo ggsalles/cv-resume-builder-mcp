@@ -155,6 +155,52 @@ async def list_tools() -> list[Tool]:
             }
         ),
         Tool(
+            name="get_commit_details",
+            description="Get detailed commit information including code changes (diff) to analyze impact. Use this to understand what was actually done in commits.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "repo_name": {
+                        "type": "string",
+                        "description": "Name of the repository (use 'default' for single repo or first repo)"
+                    },
+                    "commit_hash": {
+                        "type": "string",
+                        "description": "Commit hash (short or full)"
+                    },
+                    "max_lines": {
+                        "type": "number",
+                        "description": "Maximum lines of diff to return (default: 500)",
+                        "default": 500
+                    }
+                },
+                "required": ["commit_hash"]
+            }
+        ),
+        Tool(
+            name="analyze_commits_impact",
+            description="Get commits with their code changes for impact analysis. Returns commit messages + diffs to help AI understand the actual work done.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "repo_name": {
+                        "type": "string",
+                        "description": "Name of the repository (optional, uses default if not specified)"
+                    },
+                    "since": {
+                        "type": "string",
+                        "description": "Time range for commits",
+                        "default": "1 month ago"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Maximum number of commits to analyze (default: 10)",
+                        "default": 10
+                    }
+                }
+            }
+        ),
+        Tool(
             name="read_cv",
             description="Read current CV (LaTeX)",
             inputSchema={
@@ -274,6 +320,20 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
         
         elif name == "get_git_log_all_repos":
             return await get_git_log_all_repos(arguments.get("since", "6 months ago"))
+        
+        elif name == "get_commit_details":
+            return await get_commit_details(
+                arguments.get("commit_hash"),
+                arguments.get("repo_name", "default"),
+                arguments.get("max_lines", 500)
+            )
+        
+        elif name == "analyze_commits_impact":
+            return await analyze_commits_impact(
+                arguments.get("repo_name"),
+                arguments.get("since", "1 month ago"),
+                arguments.get("limit", 10)
+            )
         
         elif name == "read_cv":
             return await read_cv()
@@ -464,6 +524,137 @@ async def get_git_log_all_repos(since: str) -> list[TextContent]:
     all_output += f"Total commits across all repositories: {total_commits}"
     
     return [TextContent(type="text", text=all_output)]
+
+
+async def get_commit_details(commit_hash: Optional[str], repo_name: str, max_lines: int) -> list[TextContent]:
+    """Get detailed commit information including code changes (diff)."""
+    if not commit_hash:
+        return [TextContent(type="text", text="Error: commit_hash is required")]
+    
+    # Resolve repo
+    if repo_name == "default" or not repo_name:
+        repo_name = list(REPO_DICT.keys())[0] if REPO_DICT else "default"
+    
+    if repo_name not in REPO_DICT:
+        available = ", ".join(REPO_DICT.keys())
+        return [TextContent(
+            type="text",
+            text=f"Repository '{repo_name}' not found.\n\nAvailable repositories: {available}"
+        )]
+    
+    repo_path = REPO_DICT[repo_name]
+    
+    try:
+        # Get commit details
+        cmd_show = [
+            "git", "show",
+            "--stat",
+            "--format=fuller",
+            commit_hash
+        ]
+        
+        result = subprocess.run(
+            cmd_show,
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        
+        output = result.stdout
+        
+        # Limit output if too long
+        lines = output.split('\n')
+        if len(lines) > max_lines:
+            output = '\n'.join(lines[:max_lines])
+            output += f"\n\n... (truncated, showing first {max_lines} lines)"
+        
+        return [TextContent(
+            type="text",
+            text=f"Commit Details from '{repo_name}':\n\n{output}"
+        )]
+    
+    except subprocess.CalledProcessError as e:
+        return [TextContent(type="text", text=f"Git error: {e.stderr}")]
+
+
+async def analyze_commits_impact(repo_name: Optional[str], since: str, limit: int) -> list[TextContent]:
+    """Get commits with their code changes for impact analysis."""
+    # Resolve repo
+    if not repo_name:
+        repo_name = list(REPO_DICT.keys())[0] if REPO_DICT else "default"
+    
+    if repo_name not in REPO_DICT:
+        available = ", ".join(REPO_DICT.keys())
+        return [TextContent(
+            type="text",
+            text=f"Repository '{repo_name}' not found.\n\nAvailable repositories: {available}"
+        )]
+    
+    repo_path = REPO_DICT[repo_name]
+    
+    try:
+        # Get commit hashes
+        cmd_log = [
+            "git", "log",
+            f"--author={AUTHOR_NAME}",
+            "--no-merges",
+            f"--since={since}",
+            f"-{limit}",
+            "--pretty=format:%H"
+        ]
+        
+        result = subprocess.run(
+            cmd_log,
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        
+        commit_hashes = result.stdout.strip().split('\n')
+        if not commit_hashes or commit_hashes == ['']:
+            return [TextContent(
+                type="text",
+                text=f"No commits found in '{repo_name}' for {since}"
+            )]
+        
+        # Get details for each commit
+        all_output = f"Commit Impact Analysis for '{repo_name}' ({since}):\n"
+        all_output += f"Analyzing {len(commit_hashes)} commits\n\n"
+        all_output += "="*60 + "\n\n"
+        
+        for i, commit_hash in enumerate(commit_hashes, 1):
+            try:
+                # Get commit with stats (no full diff, just summary)
+                cmd_show = [
+                    "git", "show",
+                    "--stat",
+                    "--format=## Commit %h - %s%n%nAuthor: %an%nDate: %ar%n",
+                    commit_hash
+                ]
+                
+                result = subprocess.run(
+                    cmd_show,
+                    cwd=repo_path,
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+                
+                all_output += result.stdout + "\n"
+                all_output += "-"*60 + "\n\n"
+                
+            except subprocess.CalledProcessError:
+                all_output += f"## Commit {commit_hash[:7]}\nError retrieving details\n\n"
+        
+        all_output += f"\n\nTotal commits analyzed: {len(commit_hashes)}\n"
+        all_output += f"\nUse 'get_commit_details' with a specific commit hash to see full code changes."
+        
+        return [TextContent(type="text", text=all_output)]
+    
+    except subprocess.CalledProcessError as e:
+        return [TextContent(type="text", text=f"Git error: {e.stderr}")]
 
 
 async def read_cv() -> list[TextContent]:

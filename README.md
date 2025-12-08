@@ -122,6 +122,13 @@ You should see tools like `get_git_log`, `read_cv`, `parse_cv_pdf`, etc.
 "Get my Credly badges and add them to my CV"
 ```
 
+### Analyze commit impact (NEW!)
+```
+"Analyze my commits from the last month and show me what I actually built"
+"Get detailed code changes for commit abc123 to understand the impact"
+"Show me the stats for my recent commits to highlight achievements"
+```
+
 ## Optional Integrations
 
 Add these to your MCP configuration's `env` section:
@@ -162,9 +169,11 @@ Find your username in your Credly profile URL: `https://www.credly.com/users/YOU
 | Tool | Description |
 |------|-------------|
 | `get_git_log` | Get your git commits from default repo (excludes merge commits) |
-| `list_repos` | **NEW!** List all configured repositories |
-| `get_git_log_by_repo` | **NEW!** Get commits from a specific repository |
-| `get_git_log_all_repos` | **NEW!** Get commits from all repos, grouped by project |
+| `list_repos` | List all configured repositories |
+| `get_git_log_by_repo` | Get commits from a specific repository |
+| `get_git_log_all_repos` | Get commits from all repos, grouped by project |
+| `get_commit_details` | **NEW!** Get detailed commit info including code changes (diff) for impact analysis |
+| `analyze_commits_impact` | **NEW!** Analyze multiple commits with stats to understand actual work done |
 | `read_cv` | Read your current LaTeX CV |
 | `read_wins` | Read your wins.md achievements file |
 | `get_jira_tickets` | Get completed Jira tickets |
