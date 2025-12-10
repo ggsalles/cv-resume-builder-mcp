@@ -34,7 +34,7 @@ Just configure your MCP client and uvx handles the rest.
 
 **Or install with pip:**
 ```bash
-pip install cv-resume-builder-mcp
+pip3 install cv-resume-builder-mcp
 ```
 
 > **Note:** The configurations below use `uvx` which automatically downloads and runs the latest version from PyPI. If you're developing locally or want to test unreleased features, see [TESTING.md](TESTING.md) for local development setup.
