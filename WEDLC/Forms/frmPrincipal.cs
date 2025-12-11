@@ -43,9 +43,22 @@ namespace WEDLC.Forms
             {
                 ip = await ObterIPExterno();
                 this.Text = "Usuário: " + pUsuario + " || Conectado no ambiente: " + objcConexao._ambiente.ToString() + " || Servidor: " + ip + " || Endereço MAC: " + mac + " || Versão: " + version;
+
                 // Verificar acesso rede
                 cIp objcIP = new cIp();
-                objcIP.Endereco = ip;
+
+                // Formatar o IP                
+                string ipPrefixo ="";
+
+                // Verifica se o IP está no formato correto
+                if (objcIP.RetornaIpPrefixo(ip, out ipPrefixo) == false)
+                {
+                    MessageBox.Show("Erro ao tentar localizar o IP da rede autorizada. ", "Acesso Negado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                    return;
+                }
+
+                objcIP.Endereco = ipPrefixo;
 
                 if (objcIP.buscaEndereco() == false)
                 {

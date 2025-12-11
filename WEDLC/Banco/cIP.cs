@@ -114,5 +114,35 @@ namespace WEDLC.Banco
                 conexao?.Close();
             }
         }
+
+        // storedBlock exemplo: "10.15.123"
+        public bool RetornaIpPrefixo(string ipAddress, out string ipPrefix)
+        {
+            ipPrefix = null;
+
+            if (string.IsNullOrWhiteSpace(ipAddress))
+                return false;
+
+            ipAddress = ipAddress.Trim();
+            var parts = ipAddress.Split('.');
+
+            // IP precisa ter exatamente 4 blocos
+            if (parts.Length != 4)
+                return false;
+
+            // Valida cada octeto
+            for (int i = 0; i < 4; i++)
+            {
+                if (!int.TryParse(parts[i], out int octet))
+                    return false;
+
+                if (octet < 0 || octet > 255)
+                    return false;
+            }
+
+            // Monta apenas os 3 primeiros
+            ipPrefix = $"{parts[0]}.{parts[1]}.{parts[2]}";
+            return true;
+        }
     }
 }

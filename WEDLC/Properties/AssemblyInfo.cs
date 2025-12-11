@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 
 // Impressão Laudo: 1.0.0.0
 // 09/10/2025 - Bloco Velocidade Neuro 
@@ -40,3 +40,7 @@ using System.Runtime.InteropServices;
 
 // Impressão Laudo: 1.0.2.0
 // 13/10/2025 - Término da Tela de Permissões de Usuários
+
+// Impressão Laudo: 1.1.0.0 e fim do desenvolvimento
+// Ajuste na validação do IP externo
+// 16/10/2025 - Versão Final do WEDLC com todos os módulos concluídos - Aguardando testes finais e homologação.
